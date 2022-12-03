@@ -33,3 +33,10 @@
 .nav--container__list li {
     display: inline-block
 }
+
+
+@media (max-width: 840px) {
+    .nav--container__list {
+        display: none;
+    }
+}

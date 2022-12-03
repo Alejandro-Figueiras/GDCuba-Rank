@@ -1,0 +1,82 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* --main-color: #082032;
+    --second-color: #2C394B;
+    --third-color: #334756;
+    --item-color: #FF4C29; */
+
+    --very-light-pink: #C7C7C7;
+    --text-input-field: #F7F7F7;
+    --hospital-green: #ACD9B2;
+    --white: #FFF;
+    --black: #000;
+}
+
+body {
+    font-family: "Quicksand", sans-serif;
+    min-height: 100vh;
+    /* background: linear-gradient(to bottom, rgb(5, 0, 53), rgb(7, 21, 83)); */
+    
+    color: #444446;
+}
+
+.global {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    width: 100%;
+}
+
+.cards--container {
+    padding-top: 60px;
+    width: 80%;
+    height: calc(100vh - 50px - 90px);
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.cards--container div {
+    min-height: 100px;
+}
+
+.cards--container--card {
+    border-radius: 20px;
+    box-shadow: 1px 3px 8px 1px rgba(0,0,0,0.75);
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.cards--container--card img {
+    width: auto;
+    height: 70%;
+}
+
+.cards--container--card h2 {
+    margin-left: 20px;
+    font-size: 4rem;
+}
+
+footer {
+    /* color: var(--off-white); */
+    font-size: 1.1rem;
+    width: 90%;
+    margin: 0 auto;
+    text-align: center;
+    height: 90px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}

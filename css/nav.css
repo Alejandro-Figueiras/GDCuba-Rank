@@ -1,0 +1,35 @@
+.nav {
+    /* background-color: rgba(0,0,0,0.5);; */
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(89, 73, 30, 0.16);
+}
+
+.nav--container {
+    width: 90%;
+    margin: auto;
+}
+
+.nav--container--flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 50px;
+}
+
+.nav--container--flex--section {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.nav--container--flex--section h1 {
+    padding-right: 30px;
+}
+
+.nav--container__list {
+    list-style: none;
+}
+
+.nav--container__list li {
+    display: inline-block
+}

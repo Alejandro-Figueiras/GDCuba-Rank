@@ -1,33 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-:root {
-    /* --main-color: #082032;
-    --second-color: #2C394B;
-    --third-color: #334756;
-    --item-color: #FF4C29; */
-
-    --very-light-pink: #C7C7C7;
-    --text-input-field: #F7F7F7;
-    --hospital-green: #ACD9B2;
-    --white: #FFF;
-    --black: #000;
-}
-
-.global {
-    font-family: "Quicksand", sans-serif;
-    color: #444446;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: auto;
-    min-height: 100vh;
-    width: 100%;
-}
-
 .cards--container {
     padding-top: 60px;
     width: 80%;
@@ -46,7 +16,7 @@
 
 .cards--container--card {
     border-radius: 20px;
-    box-shadow: 1px 3px 8px 1px rgba(0,0,0,0.75);
+    box-shadow: 1px 3px 8px 1px rgba(54, 45, 19, 0.247);
     padding: 20px;
     display: flex;
     flex-direction: row;

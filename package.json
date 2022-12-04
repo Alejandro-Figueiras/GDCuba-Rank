@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/Alejandro-Figueiras/gdcubarank#readme",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "express": "^4.18.2"
   }
 }

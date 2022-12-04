@@ -1,0 +1,29 @@
+{
+  "name": "gd-cuba-rank",
+  "version": "0.1.0",
+  "description": "A Ranking for Geometry Dash Cuban Players",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Alejandro-Figueiras/gdcubarank.git"
+  },
+  "keywords": [
+    "ranking",
+    "geometrydash",
+    "gd",
+    "cuba"
+  ],
+  "author": "Alejandro",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Alejandro-Figueiras/gdcubarank/issues"
+  },
+  "homepage": "https://github.com/Alejandro-Figueiras/gdcubarank#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

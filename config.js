@@ -1,4 +1,4 @@
-module.exports = {
+export default {
 
     // Siempre se debe enviar estos datos a los servidores
     params: {

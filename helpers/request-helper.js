@@ -1,7 +1,7 @@
-const config = require("../config")
-const request = require("request")
+import config from "../config.js";
+import request from "request";
 
-const gdParams = (req, obj={}) => {
+export const gdParams = (req, obj={}) => {
     Object.keys(config.params).forEach(x => { 
         if (!obj[x]) 
             obj[x] = config.params[x] 
@@ -16,7 +16,7 @@ const gdParams = (req, obj={}) => {
     return params
 }
 
-const gdRequest = function(req, target, params={}, cb=function(){}) {
+export const gdRequest = function(req, target, params={}, cb=function(){}) {
     if (!target) return cb(true)
     
     let parameters = params.headers ? params : gdParams(req, params)
@@ -31,7 +31,3 @@ const gdRequest = function(req, target, params={}, cb=function(){}) {
     })
 }
 
-module.exports = {
-    gdParams,
-    gdRequest
-}

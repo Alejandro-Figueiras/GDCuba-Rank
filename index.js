@@ -1,24 +1,10 @@
-const express = require('express');
-const { gdRequest } = require('./helpers/request-helper');
-require('dotenv').config()
+import app from "./src/app.js";
+import exppress from 'express'
+import { projectConfig } from "./src/config/main.config.js";
 
-const app = express()
-const port = process.env.PORT;
+// Configure static file for render
+app.use('/', exppress.static('public'))
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World!')
-// })
-
-app.use("/req", async(req, res, next) => {
-	console.log("asdasd")
-    gdRequest(req, "getGJSongInfo", {songID: 693041}, (err, res, body) => {
-		console.log("ERROR: " + err)
-		console.log("RES: " + res),
-		console.log("BODY: " + body)
-    })
-    next()
-})
-app.use('/', express.static('public'))
-app.listen(port, () => {
-    console.log(`GD Cuba Rank app listening on port ${port}`)
-})
+app.listen(projectConfig.port, () => {
+  console.log(`GD Cuba Rank app listening on port ${projectConfig.port}`);
+});

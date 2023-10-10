@@ -35,3 +35,27 @@ export const createUserTable = async () => {
     console.error("Error at create table: ", err);
   }
 };
+
+// Prueba de Backend 1
+
+export const testUserQuery = async() => {
+  const query = `SELECT * FROM users WHERE username='test'`
+  try {
+    const result = await pool.query(query);
+    return result;
+  } catch (err) {
+    console.error("Error at test user create: ", err);
+    return -1;
+  }
+}
+
+export const testUserInsertQuery = async() => {
+  const query = "INSERT INTO users (username, accountID) VALUES('test', 10)";
+  try {
+    const result = await pool.query(query);
+    console.log("Test user create successfuly");
+  } catch (err) {
+    console.error("Error at test user create: ", err);
+  }
+
+}

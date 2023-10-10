@@ -46,7 +46,7 @@ router.get("/users/:id", async (req, res) => {
 
   const usersQuery = await getUsers(id);
 
-  if (usersQuery.status == "ok") return res.status(200).send(usersQuery.result);
+  if (!usersQuery.error) return res.status(200).send(usersQuery.result.rows);
   else return res.status(500).send(usersQuery.error);
 });
 

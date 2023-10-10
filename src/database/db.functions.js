@@ -1,5 +1,20 @@
 import pool from "./db.config.js";
 
+export const secureQuery = async (query) => {
+  const queryResult = { result: undefined, error: undefined };
+
+  try {
+    const client = await pool.connect();
+    const result = await pool.query(query);
+
+    queryResult.result = result;
+    client.release();
+  } catch (err) {
+    queryResult.error = err;
+  }
+
+  return queryResult;
+};
 
 export const addUser = async ({ user, acount }) => {
   const insertQuery = `INSERT INTO users(username, accountID) VALUES('${user}','${acount}')`;
@@ -16,16 +31,8 @@ export const getUsers = async (id) => {
     id == "all"
       ? "SELECT * from users"
       : `SELECT * from users WHERE id = '${id}'`;
-  try {
-    const result = await pool.query(query);
-    return {
-      status: 'ok',
-      result: result.rows
-    }
-  } catch (err) {
-    return {
-      status: 'err',
-      error: err
-    }
-  }
+  
+    const result = await secureQuery(query)
+    return result;
+  
 };

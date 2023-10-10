@@ -1,4 +1,5 @@
 import pool from "./db.config.js";
+import { secureQuery } from "./db.functions.js";
 
 export const databaseConnect = () => {
   pool.connect((err, client, done) => {
@@ -38,24 +39,23 @@ export const createUserTable = async () => {
 
 // Prueba de Backend 1
 
-export const testUserQuery = async() => {
-  const query = `SELECT * FROM users WHERE username='test'`
-  try {
-    const result = await pool.query(query);
-    return result;
-  } catch (err) {
-    console.error("Error at test user create: ", err);
+export const testUserQuery = async () => {
+  const query = `SELECT * FROM users WHERE username='test'`;
+  const queryResult = await secureQuery(query);
+  if (!queryResult.error) {
+    return queryResult.result;
+  } else {
+    console.error("Error at test user create: ", queryResult.error);
     return -1;
   }
-}
+};
 
-export const testUserInsertQuery = async() => {
+export const testUserInsertQuery = async () => {
   const query = "INSERT INTO users (username, accountID) VALUES('test', 10)";
-  try {
-    const result = await pool.query(query);
+  const queryResult = await secureQuery(query);
+  if (!queryResult.error) {
     console.log("Test user create successfuly");
-  } catch (err) {
-    console.error("Error at test user create: ", err);
+  } else {
+    console.error("Error at test user create: ", queryResult.error);
   }
-
-}
+};

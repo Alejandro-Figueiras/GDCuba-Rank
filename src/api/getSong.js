@@ -6,9 +6,11 @@ export default async(req, songID) => {
     if (typeof songID != 'number') throw new Error("Se esperaba un id numerico");
 
     try {
-        const body = await gdRequest(req, "getGJSongInfo", {songID});
+        const body = await gdRequest("getGJSongInfo", {songID});
+        console.log(body)
         return new Song(responseToObj(body));
     } catch (err) {
-        return 404; // Si no existe la canción va a tirar un server error con -1
+        console.log(err)
+        return err; // Si no existe la canción va a tirar un server error con -1
     }
 }

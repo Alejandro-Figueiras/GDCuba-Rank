@@ -6,7 +6,6 @@ export const secureQuery = async (query) => {
   try {
     const client = await pool.connect();
     const result = await pool.query(query);
-    await pool.end()
 
     queryResult.result = result;
     client.release();

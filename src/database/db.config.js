@@ -16,7 +16,6 @@ pool.connect()
 .then(() => log('conectado'))
 .catch((err) => {
   log(err)
-  log(dbCredentials)
 })
 
 export default pool;

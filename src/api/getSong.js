@@ -2,7 +2,7 @@ import { gdRequest } from "../../helpers/request-helper.js";
 import Song from '../models/Song.js'
 import responseToObj from '../../helpers/responseToObj.js';
 
-export default async(req, songID) => {
+export default async(songID) => {
     if (typeof songID != 'number') throw new Error("Se esperaba un id numerico");
 
     try {

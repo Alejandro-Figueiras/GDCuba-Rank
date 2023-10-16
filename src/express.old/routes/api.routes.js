@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { song, emptySong } from '../controllers/api.js';
 import { check } from 'express-validator'
 import checkApi from '../middlewares/checkApi.js';
-import { getUser } from '../api/gbbrowser/getUser.js';
+import { getUser } from '../api/gdbrowser/getUser.js';
 
 const router = Router();
 

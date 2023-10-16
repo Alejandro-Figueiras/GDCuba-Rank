@@ -1,5 +1,4 @@
 import pkg from "pg";
-import { log } from "../libs/utils.js";
 const { Pool } = pkg;
 
 const dbCredentials = {
@@ -15,7 +14,7 @@ const pool = new Pool(dbCredentials);
 pool.connect()
 .then(() => log('conectado'))
 .catch((err) => {
-  log(err)
+  console.log(err)
 })
 
 export default pool;

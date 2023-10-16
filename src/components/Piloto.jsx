@@ -1,5 +1,6 @@
 import getSong from "@/api/getSong";
 import { testUserQuery } from "@/database/db.devFunctions";
+import pilotocss from "./piloto.module.css"
 
 export default async() => {
     const song = await getSong(693041);
@@ -8,15 +9,15 @@ export default async() => {
     console.log(testUser)
     testUser = (testUser != -1)?testUser.rows[0] : {error: 'too many connections for role in db'}
     return (
-        <>
-            <h1 className="text-4xl">GD Cuba ΔΔΔ: Prueba de Backend</h1>
-            <hr/>
+        <div className={pilotocss.piloto}>
+            <h1 className="text-4xl pb-2">GD Cuba ΔΔΔ: Prueba de Backend</h1>
+            <hr className="pb-4"/>
             
-            <h2>Integración con los servers de Robtop</h2>
-            <p>{JSON.stringify(song)}</p>
+            <h2 className="text-2xl pb-2">Integración con los servers de Robtop</h2>
+            <p className="pb-4">{JSON.stringify(song)}</p>
         
-            <h2>Integración con la base de datos</h2>
-            <p>{JSON.stringify(testUser)}</p>
-        </>
+            <h2 className="text-2xl pb-2">Integración con la base de datos</h2>
+            <p className="pb-4">{JSON.stringify(testUser)}</p>
+        </div>
     )
 }

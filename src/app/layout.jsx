@@ -1,5 +1,14 @@
+export const dynamic = 'force-dynamic'
+
 import { Providers } from './Providers'
 import './globals.css'
+
+import { Inter } from 'next/font/google'
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+})
+ 
 
 export const metadata = {
   title: 'GD Cuba ΔΔΔ',
@@ -9,7 +18,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="es">
-      <body>
+      <body className={inter.className}>
         <Providers>
           {children}
         </Providers>

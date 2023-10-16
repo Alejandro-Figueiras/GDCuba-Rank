@@ -1,12 +1,14 @@
+
+
 import getSong from "@/api/getSong";
-import { testUserQuery } from "@/database/db.devFunctions";
+import { testUserChange, testUserQuery } from "@/database/db.devFunctions";
 import pilotocss from "./piloto.module.css"
 
 export default async() => {
     const song = await getSong(693041);
+    await testUserChange()
     let testUser;
     testUser = await testUserQuery()
-    console.log(testUser)
     testUser = (testUser != -1)?testUser.rows[0] : {error: 'too many connections for role in db'}
     return (
         <div className={pilotocss.piloto}>

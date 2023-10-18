@@ -1,4 +1,4 @@
-import RequestResult from "@/models/RequestResult.js";
+import { RequestResult } from "@/models/RequestResult.js";
 import config from "./db.config.js";
 import { Pool } from "pg"
 
@@ -8,7 +8,7 @@ const createPool = async() => {
 }
 
 export const secureQuery = async (query) => {
-  const queryResult = new RequestResult({});
+  const queryResult = new RequestResult()//{ result: undefined, error: undefined };
 
   const pool = await createPool();
   try {

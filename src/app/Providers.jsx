@@ -1,11 +1,12 @@
-'use client'
+"use client";
 
-import {NextUIProvider} from '@nextui-org/react'
+import { NextUIProvider } from "@nextui-org/react";
+import GlobalContextProvider from "./context/GlobalContext";
 
-export function Providers({children}) {
+export function Providers({ children }) {
   return (
-    <NextUIProvider>
-      {children}
-    </NextUIProvider>
-  )
+    <GlobalContextProvider>
+      <NextUIProvider>{children}</NextUIProvider>
+    </GlobalContextProvider>
+  );
 }

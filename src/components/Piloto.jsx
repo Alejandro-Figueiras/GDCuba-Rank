@@ -1,6 +1,6 @@
 
 
-import getSong from "@/api/getSong";
+import getSong from "@/app/api/getSong";
 import { testUserChange, testUserQuery } from "@/database/db.devFunctions";
 import pilotocss from "./piloto.module.css"
 

@@ -13,7 +13,7 @@ import {
 } from "@nextui-org/modal";
 import { Input } from "@nextui-org/input";
 import { Link } from "@nextui-org/link";
-import { log } from "../../../helpers/log";
+import { log } from "../../helpers/log";
 
 export default ({ isOpen, onOpenChange }) => {
   const userRef = useRef();

@@ -21,7 +21,7 @@ export const POST = async (req, res) => {
 
   if (!queryResult.isError()) {
     const rows = queryResult.getRows();
-    if (rows.length > 0) {
+    if (rows.length > 0 && rows[0].password == data.password) {
       const token = jwt.sign(
         {
           exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30,
@@ -37,7 +37,7 @@ export const POST = async (req, res) => {
         path: "/",
       });
 
-      return NextResponse.json({status: "ok"},
+      return NextResponse.json({status: "ok", message: 'Acceso permitido'},
         {
           status: 200,
           headers: { "Set-Cookie": serialized },

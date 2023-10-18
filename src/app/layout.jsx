@@ -1,7 +1,11 @@
 export const dynamic = 'force-dynamic'
 
+import { Flip, ToastContainer } from 'react-toastify'
 import { Providers } from './Providers'
+
 import './globals.css'
+import 'react-toastify/dist/ReactToastify.css';
+
 
 import { Inter } from 'next/font/google'
 const inter = Inter({
@@ -21,6 +25,7 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <Providers>
           {children}
+          <ToastContainer transition={Flip}/>
         </Providers>
       </body>
     </html>

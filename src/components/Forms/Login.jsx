@@ -16,6 +16,8 @@ import { Link } from "@nextui-org/link";
 import { log } from "../../helpers/log";
 import { SelectSection } from "@nextui-org/react";
 import { GlobalContext } from "@/app/context/GlobalContext";
+import { toast } from "react-toastify";
+import { notify, notifyDismiss } from "@/libs/toastNotifications";
 
 export default ({ isOpen, onOpenChange }) => {
   const userRef = useRef();
@@ -32,6 +34,8 @@ export default ({ isOpen, onOpenChange }) => {
       };
       setLoading(true);
 
+      const info = notify('Loggin, wait a moment...', 'loading');
+
       const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         body: JSON.stringify(formData),
@@ -40,13 +44,15 @@ export default ({ isOpen, onOpenChange }) => {
         },
       });
       const data = await response.json();
+      notifyDismiss(info);
 
       setLoading(false);
       if (data.status == "error") {
+        notify(data.message, 'error')
         console.log(data.message);
         return;
       }
-      console.log("Login Successfuly");
+      notify(data.message, 'success')
       setCurrentUser(prev => ({...prev, username: formData.username}));
       onClose();
     }

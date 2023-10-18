@@ -1,13 +1,13 @@
-'use client'
+"use client";
 import React from "react";
 import {
-  Navbar, 
-  NavbarBrand, 
-  NavbarContent, 
-  NavbarItem, 
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+  NavbarItem,
   NavbarMenuToggle,
   NavbarMenu,
-  NavbarMenuItem
+  NavbarMenuItem,
 } from "@nextui-org/navbar";
 
 import {
@@ -15,21 +15,37 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownSection,
-  DropdownItem
+  DropdownItem,
 } from "@nextui-org/dropdown";
 
-import { User } from "@nextui-org/user"
-import {Button} from "@nextui-org/button";
+import { User } from "@nextui-org/user";
+import { Button } from "@nextui-org/button";
 
 // Modals
 import { useDisclosure } from "@nextui-org/modal";
-import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter} from "@nextui-org/modal";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+} from "@nextui-org/modal";
 import { Input } from "@nextui-org/input";
 import { Link } from "@nextui-org/link";
+import Login from "../Forms/Login";
+import SignUp from "../Forms/SignUp";
 
 export default () => {
-  const {isOpen: isOpenLogin, onOpen: onOpenLogin, onOpenChange: onOpenChangeLogin} = useDisclosure();
-  const {isOpen: isOpenSignUp, onOpen: onOpenSignUp, onOpenChange: onOpenChangeSignUp} = useDisclosure();
+  const {
+    isOpen: isOpenLogin,
+    onOpen: onOpenLogin,
+    onOpenChange: onOpenChangeLogin,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenSignUp,
+    onOpen: onOpenSignUp,
+    onOpenChange: onOpenChangeSignUp,
+  } = useDisclosure();
 
   return (
     <>
@@ -38,9 +54,7 @@ export default () => {
           <NavbarItem>
             <p className="font-bold text-inherit text-xl pr-4">GD Cuba ΔΔΔ</p>
           </NavbarItem>
-          <NavbarItem>
-            NavBar Provisional
-          </NavbarItem>
+          <NavbarItem>NavBar Provisional</NavbarItem>
         </NavbarContent>
 
         <NavbarContent justify="end">
@@ -89,12 +103,13 @@ export default () => {
                     />
                   </DropdownItem>
                   {/* <LoginModal/> */}
-                  <DropdownItem key="login-btn" onPress={onOpenLogin} >
+                  <DropdownItem key="login-btn" onPress={onOpenLogin}>
                     Iniciar Sesión
                   </DropdownItem>
-                  <DropdownItem key="signup-btn" onPress={onOpenChangeSignUp}>Registrarse</DropdownItem>
+                  <DropdownItem key="signup-btn" onPress={onOpenChangeSignUp}>
+                    Registrarse
+                  </DropdownItem>
                 </DropdownSection>
-
               </DropdownMenu>
             </Dropdown>
           </NavbarItem>
@@ -102,102 +117,10 @@ export default () => {
       </Navbar>
 
       {/* Modal Login */}
-      <Modal 
-          isOpen={isOpenLogin} 
-          onOpenChange={onOpenChangeLogin}
-          placement="top-center"
-        >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">Inicia sesión</ModalHeader>
-              <ModalBody>
-                <Input
-                  autoFocus
-                  label="Usuario"
-                  placeholder="Introduce tu nombre de usuario"
-                  variant="bordered"
-                />
-                <Input
-                  label="Contraseña"
-                  placeholder="Introduce tu contraseña"
-                  type="password"
-                  variant="bordered"
-                />
-                <div className="flex py-2 px-1 justify-between">
-                  <Link color="primary" href="#" size="sm">
-                    ¿Olvidaste tu contraseña?
-                  </Link>
-                </div>
-              </ModalBody>
-              <ModalFooter>
-                <Button color="default" variant="flat" onPress={onClose}>
-                  Cerrar
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Adelante
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+      <Login isOpen={isOpenLogin} onOpenChange={onOpenChangeLogin}/>
 
       {/* Sign up Form */}
-      <Modal 
-        isOpen={isOpenSignUp} 
-        onOpenChange={onOpenChangeSignUp}
-        placement="top-center"
-        backdrop="blur"
-      >
-        <ModalContent>
-          {(onClose) => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">Registrarse</ModalHeader>
-              <ModalBody>
-              <Input
-                autoFocus
-                label="Número de Teléfono"
-                placeholder="+53 XDXDXD"
-                type="phone"
-                variant="bordered"
-              />
-              <Input
-                label="Cuenta de Geometry Dash"
-                placeholder="Introduce tu cuenta de GD"
-                variant="bordered"
-              />
-              <Input
-                label="Usuario"
-                placeholder="Introduce tu nombre de usuario"
-                variant="bordered"
-              />
-              <Input
-                label="Contraseña"
-                placeholder="Introduce tu contraseña"
-                type="password"
-                variant="bordered"
-              />
-              <Input
-                label="Repite la Contraseña"
-                placeholder="Introduce tu contraseña otra vez, para estar seguros"
-                type="password"
-                variant="bordered"
-              />
-
-              </ModalBody>
-              <ModalFooter>
-                <Button color="default" variant="flat" onPress={onClose}>
-                  Cerrar
-                </Button>
-                <Button color="primary" onPress={onClose}>
-                  Registrarse
-                </Button>
-              </ModalFooter>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
+      <SignUp isOpen={isOpenSignUp} onOpenChange={onOpenChangeSignUp}/>
     </>
-  )
-}
+  );
+};

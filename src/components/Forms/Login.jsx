@@ -22,7 +22,7 @@ export default ({ isOpen, onOpenChange }) => {
   const passwordRef = useRef();
   const [loading, setLoading] = useState(false);
   const {setCurrentUser} = useContext(GlobalContext);
-
+  
 
   const handleSubmitButton = async (action, onClose) => {
     if (action == "submit") {

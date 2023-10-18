@@ -32,7 +32,7 @@ export default ({ isOpen, onOpenChange }) => {
       };
       setLoading(true);
 
-      const response = await fetch("http://localhost:3000/api/users/", {
+      const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {

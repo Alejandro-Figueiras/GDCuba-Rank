@@ -37,6 +37,15 @@ export const createUserTable = async () => {
   }
 };
 
+export const addColumn = async() => {
+  const r = await secureQuery('ALTER TABLE users ADD COLUMN phone INTEGER NOT NULL DEFAULT 5555555');
+  return r;
+}
+
+export const consult = async(table) => {
+  return await secureQuery(`SELECT * FROM ${table}`);
+}
+
 // Prueba de Backend 1
 
 export const testUserQuery = async () => {

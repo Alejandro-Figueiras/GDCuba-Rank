@@ -47,6 +47,7 @@ export default () => {
     onOpenChange: onOpenChangeSignUp,
   } = useDisclosure();
 
+
   return (
     <>
       <Navbar isBordered maxWidth="2xl">

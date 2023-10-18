@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 
 import { Button } from "@nextui-org/button";
 
@@ -14,19 +14,52 @@ import {
 import { Input } from "@nextui-org/input";
 import { Link } from "@nextui-org/link";
 import { log } from "../../helpers/log";
+import { SelectSection } from "@nextui-org/react";
+import { GlobalContext } from "@/app/context/GlobalContext";
 
 export default ({ isOpen, onOpenChange }) => {
   const userRef = useRef();
   const passwordRef = useRef();
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmitButton = (action, onClose) => {
+
+  const handleSubmitButton = async (action, onClose) => {
     if (action == "submit") {
-      const user = userRef.current.value;
-      const passwordRef = passwordRef.current.value;
-      
+      const formData = {
+        username: userRef.current.value,
+        password: passwordRef.current.value,
+      };
+      setLoading(true);
+
+      const response = await fetch("http://localhost:3000/api/users/", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json", // Tipo de contenido del cuerpo (en este caso, JSON)
+        },
+      });
+      const data = await response.json();
+
+      setLoading(false);
+      if (data.status == "error") {
+        console.log(data.message);
+        return;
+      }
+      console.log("Login Successfuly");
+      onClose();
     }
-    onClose();
   };
+
+  const onFetched = (data) => {
+    if (data.status == "ok") {
+      setLoading(false);
+      log("Login successfuly");
+      return;
+    }
+
+    log(data.message);
+  };
+
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
       <ModalContent>
@@ -60,13 +93,14 @@ export default ({ isOpen, onOpenChange }) => {
               <Button
                 color="default"
                 variant="flat"
-                onPress={() => handleSubmitButton("close", onClose)}
+                onPress={onClose}
               >
                 Cerrar
               </Button>
               <Button
                 color="primary"
                 onPress={() => handleSubmitButton("submit", onClose)}
+                isLoading={loading}
               >
                 Adelante
               </Button>

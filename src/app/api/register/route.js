@@ -1,9 +1,16 @@
 import { addUser, secureQuery } from "@/database/db.functions";
 import { NextResponse } from "next/server"
+import {hash} from 'bcryptjs'
+
 
 export const POST = async(req) => {
     const data = await req.json();
-    const fields = {user: data.username, password: data.password, phone: data.phone};
+    let fields = {user: data.username, password: data.password, phone: data.phone};
+
+    const passwordEncrypt = await hash(fields.password, 5);
+    fields.password = passwordEncrypt;
+
+
     // console.log("data: ", fields);
     const query = await addUser(fields);
 

@@ -24,11 +24,19 @@ export const secureQuery = async (query) => {
   return queryResult;
 };
 
-export const addUser = async ({ user, account, password, phone }) => {
-  const insertQuery = `INSERT INTO users(username, password, phone) VALUES('${user}', '${password}', '${phone}')`;
+export const addUser = async ({ user, password, phone }) => {
+  const insertQuery = `INSERT INTO users(username, password, phone, status) VALUES('${user}', '${password}', '${phone}', 'v')`;
   console.log(insertQuery);
   return await secureQuery(insertQuery);
 };
+
+export const cleanTable = async (table) => {
+  const insertQuery = `DELETE FROM ${table}`;
+  console.log(insertQuery);
+  return await secureQuery(insertQuery);
+};
+
+
 
 export const getUsers = async (id) => {
   const query =

@@ -38,7 +38,7 @@ export const createUserTable = async () => {
 };
 
 export const addColumn = async() => {
-  const r = await secureQuery('ALTER TABLE users ADD COLUMN phone INTEGER NOT NULL DEFAULT 5555555');
+  const r = await secureQuery('ALTER TABLE users ALTER COLUMN password SET DATA TYPE TEXT');
   return r;
 }
 

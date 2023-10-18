@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { serialize } from "cookie";
 import { cookies } from "next/headers";
 import { COOKIES_INFO } from "@/models/constants";
+import { compare } from 'bcryptjs'
 
 export const GET = async (req, { params }) => {
   const data = await secureQuery("SELECT * FROM users");
@@ -21,32 +22,64 @@ export const POST = async (req, res) => {
 
   if (!queryResult.isError()) {
     const rows = queryResult.getRows();
-    if (rows.length > 0 && rows[0].password == data.password) {
-      const token = jwt.sign(
-        {
-          exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30,
-          username: data.username,
-        },
-        process.env.JWT_SECRET
-      );
+    if (rows.length > 0) {
+      const errorInAuth = await getErrorsInAuth(rows, data);
+      
+      if (!errorInAuth) {
+        const token = jwt.sign(
+          {
+            exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30,
+            username: data.username,
+          },
+          process.env.JWT_SECRET
+        );
 
-      const serialized = serialize(COOKIES_INFO.name, token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        path: "/",
+        const serialized = serialize(COOKIES_INFO.name, token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          sameSite: "strict",
+          path: "/",
+        });
+        return NextResponse.json(
+          { status: "ok", message: "Acceso permitido" },
+          {
+            status: 200,
+            headers: { "Set-Cookie": serialized },
+          }
+        );
+      } else {
+        return NextResponse.json({
+          status: "error",
+          message: errorInAuth.message,
+        });
+      }
+    } else {
+      return NextResponse.json({
+        status: "error",
+        message: `El usuario ${data.username} no existe...`,
       });
-
-      return NextResponse.json({status: "ok", message: 'Acceso permitido'},
-        {
-          status: 200,
-          headers: { "Set-Cookie": serialized },
-        }
-      );
     }
   }
   return NextResponse.json({
     status: "error",
-    message: "Usuario o contraseña incorrecta",
+    message: "Ha ocurrido un error",
   });
 };
+
+
+const getErrorsInAuth = async(rows, dataInBody) => {
+  let error = null;
+  if (rows[0].status !== "v") {
+    error = {
+      message: "Usuario pendiente a verificación",
+    };
+  }
+  // console.log(rows[0].password);
+  const match = await compare(dataInBody.password, rows[0].password);
+  if (!match) {
+    error = {
+      message: "Contraseña incorrecta",
+    };
+  }
+  return error;
+}

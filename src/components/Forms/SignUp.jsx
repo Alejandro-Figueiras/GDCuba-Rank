@@ -16,7 +16,6 @@ import { notify, notifyDismiss } from "@/libs/toastNotifications";
 
 export default ({ isOpen, onOpenChange }) => {
   const phoneRef = useRef();
-  const accountRef = useRef();
   const userRef = useRef();
   const passwordRef = useRef();
   const passwordSecureRef = useRef();
@@ -25,7 +24,7 @@ export default ({ isOpen, onOpenChange }) => {
     const password = passwordRef.current.value;
     const passwordSecure = passwordSecureRef.current.value;
 
-    if (!password.includes(passwordSecure)) {
+    if (password.trim() != passwordSecure.trim()) {
       return notify("Las contraseñas no coinciden", "error");
     }
 
@@ -77,12 +76,6 @@ export default ({ isOpen, onOpenChange }) => {
                 type="phone"
                 variant="bordered"
                 ref={phoneRef}
-              />
-              <Input
-                label="Cuenta de Geometry Dash"
-                placeholder="Introduce tu cuenta de GD"
-                variant="bordered"
-                ref={accountRef}
               />
               <Input
                 label="Usuario"

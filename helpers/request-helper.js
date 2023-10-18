@@ -1,6 +1,5 @@
 import axios from "axios";
 import config from "../config.js";
-import request from "request";
 
 const makeParams = (params = {}) => {
     let res = '';
@@ -21,6 +20,11 @@ export const gdRequest = (target, params) => {
             headers: {
                 'User-Agent': '',
             },
+            proxy: (process.env.ROBTOP_PROXY == 1) ? {
+                protocol: `${process.env.ROBTOP_PROXY_PROTOCOL}`,
+                host: process.env.ROBTOP_PROXY_HOST,
+                port: process.env.ROBTOP_PROXY_PORT
+            } : null
             // httpAgent: new http.Agent({ keepAlive: true }),
             // httpsAgent: new https.Agent({ keepAlive: true })
         })
@@ -33,7 +37,7 @@ export const gdRequest = (target, params) => {
 
             if (error) {
                 reject(error);
-                console.log(error)
+                console.log(error) 
                 return;
             }
 

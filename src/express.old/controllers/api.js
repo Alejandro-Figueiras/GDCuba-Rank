@@ -1,4 +1,4 @@
-import getSong from '../api/getSong.js';
+import getSong from '../../api/getSong.js';
 
 export const song = async(req, res) => {
     const song = await getSong(req, parseInt(req.params.id));

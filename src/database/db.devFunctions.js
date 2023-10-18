@@ -1,4 +1,4 @@
-import pool from "./db.config.js";
+import { random } from "lodash";
 import { secureQuery } from "./db.functions.js";
 
 export const databaseConnect = () => {
@@ -59,3 +59,14 @@ export const testUserInsertQuery = async () => {
     console.error("Error at test user create: ", queryResult.error);
   }
 };
+
+export const testUserChange = async() => {
+  let rm = random(0,50); console.log(`Changing test user ${rm}`);
+  const query = `UPDATE users SET accountid=${rm} WHERE username='test'`;
+  const queryResult = await secureQuery(query);
+  if (!queryResult.error) {
+    console.log("Test user change successfuly");
+  } else {
+    console.error("Error at test user change: ", queryResult.error);
+  }
+}

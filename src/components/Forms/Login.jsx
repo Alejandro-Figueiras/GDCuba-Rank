@@ -21,6 +21,7 @@ export default ({ isOpen, onOpenChange }) => {
   const userRef = useRef();
   const passwordRef = useRef();
   const [loading, setLoading] = useState(false);
+  const {setCurrentUser} = useContext(GlobalContext);
 
 
   const handleSubmitButton = async (action, onClose) => {
@@ -46,6 +47,7 @@ export default ({ isOpen, onOpenChange }) => {
         return;
       }
       console.log("Login Successfuly");
+      setCurrentUser(prev => ({...prev, username: formData.username}));
       onClose();
     }
   };

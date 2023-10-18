@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useContext } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -34,6 +34,7 @@ import { Input } from "@nextui-org/input";
 import { Link } from "@nextui-org/link";
 import Login from "../Forms/Login";
 import SignUp from "../Forms/SignUp";
+import { GlobalContext } from "@/app/context/GlobalContext";
 
 export default () => {
   const {
@@ -47,7 +48,7 @@ export default () => {
     onOpenChange: onOpenChangeSignUp,
   } = useDisclosure();
 
-
+  const {currentUser} = useContext(GlobalContext);
   return (
     <>
       <Navbar isBordered maxWidth="2xl">
@@ -63,7 +64,7 @@ export default () => {
             <Dropdown placement="bottom-end">
               <DropdownTrigger>
                 <Button color="default" variant="flat">
-                  Sin cuenta
+                  {currentUser.username ?? 'Sin cuenta'}
                 </Button>
               </DropdownTrigger>
               <DropdownMenu

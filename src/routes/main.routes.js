@@ -2,6 +2,8 @@ import { Router } from "express";
 import { getUsers } from "../database/db.functions.js";
 import { testUserInsertQuery, testUserQuery } from "../database/db.devFunctions.js";
 import getSong from "../api/getSong.js";
+import { log } from "../libs/utils.js";
+import { createUser } from "../controllers/main.controller.js";
 
 const router = Router();
 
@@ -40,6 +42,9 @@ router.get('/', async(req, res) => {
 	</html>`)
 })
 
+router.post('/c/user', createUser)
+
+
 // Comming Soon
 router.get("/users/:id", async (req, res) => {
   const { id } = req.params;
@@ -49,5 +54,4 @@ router.get("/users/:id", async (req, res) => {
   if (!usersQuery.error) return res.status(200).send(usersQuery.result.rows);
   else return res.status(500).send(usersQuery.error);
 });
-
 export default router;

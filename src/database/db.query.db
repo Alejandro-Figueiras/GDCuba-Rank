@@ -1,5 +1,22 @@
 CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    username VARCHAR(15) NOT NULL,
-    accountID INTEGER
+    id SERIAL PRIMARY KEY NOT NULL,
+    username VARCHAR(15) NOT NULL UNIQUE,
+    accountID INTEGER UNIQUE,
+	password VARCHAR(30) ,
+	status VARCHAR(1) NOT NULL DEFAULT 'u'
 );
+
+
+-- Datos para poblar la tabla
+INSERT INTO users (username, accountID, password, status)
+VALUES
+    ('SrMDK', 6079944, 'SrMDK', 'v'),
+    ('xSrAlejandrox', 11454790, 'xSrAlejandrox', 'v'),
+    ('Abeeeeeeeeeel', 13597595, 'Abeeeeeeeeeel', 'v'),
+    ('AnielChasseur', 7425214, 'AnielChasseur', 'v'),
+    ('Danest7', 8753380, 'Danest7', 'v'),
+    ('FarnndesGM', 9601473, 'FarnndesGM', 'v'),
+    ('iIDariusIi', 11611376, 'iIDariusIi', 'v'),
+    ('KiroUwU', 10525932, 'KiroUwU', 'v'),
+    ('KriticSoul', 9015462, 'KriticSoul', 'v'),
+    ('LNoah', 8442161, 'LNoah', 'v');

@@ -1,4 +1,4 @@
-export class RequestResult {
+export default class RequestResult {
     constructor({result, error, message}) {
         this.result = result;
         this.error = error;

@@ -1,3 +1,3 @@
 export const gdBrowserAPI = {
-    base: 'https://gdbrowser.com/api'
+    base: 'https://gdbrowser.com/api/'
 }

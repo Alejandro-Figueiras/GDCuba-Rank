@@ -1,3 +1,4 @@
+import RequestResult from "@/models/RequestResult.js";
 import config from "./db.config.js";
 import { Pool } from "pg"
 

@@ -1,9 +1,7 @@
-
-
-import getSong from "@/app/api/getSong";
+import getSong from "@/robtop/getSong";
 import { testUserChange, testUserQuery } from "@/database/db.devFunctions";
 import pilotocss from "./piloto.module.css"
-import { getAccount } from "@/app/api/getAccount";
+import { getAccount } from "@/robtop/getAccount";
 
 export default async() => {
     const song = await getSong(693041);

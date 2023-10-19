@@ -72,8 +72,8 @@ export default ({ isOpen, onOpenChange }) => {
               <Input
                 autoFocus
                 label="Número de Teléfono"
-                placeholder="+53 XDXDXD"
-                type="phone"
+                placeholder="Ej: 55390833"
+                type="number"
                 variant="bordered"
                 ref={phoneRef}
               />

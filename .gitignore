@@ -34,3 +34,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+# inconsistencias entre package managers
+yarn.lock
+package-lock.json

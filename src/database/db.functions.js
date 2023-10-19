@@ -25,7 +25,8 @@ export const secureQuery = async (query) => {
 };
 
 export const addUser = async ({ user, password, phone }) => {
-  const insertQuery = `INSERT INTO users(username, password, phone, status) VALUES('${user}', '${password}', '${phone}', 'v')`;
+  // const insertQuery = `INSERT INTO users(username, password, phone, status) VALUES('${user}', '${password}', '${phone}', 'v')`;
+  const insertQuery = `INSERT INTO users(username, password, phone) VALUES('${user}', '${password}', '${phone}')`;
   console.log(insertQuery);
   return await secureQuery(insertQuery);
 };
@@ -36,6 +37,10 @@ export const cleanTable = async (table) => {
   return await secureQuery(insertQuery);
 };
 
+export const validateUser = async(username) => {
+  const modifyQuery = `UPDATE users SET status = 'v' WHERE username = '${username}'`;
+  return await secureQuery(modifyQuery);
+}
 
 
 export const getUsers = async (id) => {

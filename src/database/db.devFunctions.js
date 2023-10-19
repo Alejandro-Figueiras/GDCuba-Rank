@@ -38,7 +38,7 @@ export const createUserTable = async () => {
 };
 
 export const addColumn = async() => {
-  const r = await secureQuery('ALTER TABLE users ALTER COLUMN password SET DATA TYPE TEXT');
+  const r = await secureQuery(`ALTER TABLE users ADD COLUMN role VARCHAR(10) NOT NULL DEFAULT 'user'`);
   return r;
 }
 

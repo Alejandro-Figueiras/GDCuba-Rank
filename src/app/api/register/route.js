@@ -1,26 +1,51 @@
 import { addUser, secureQuery } from "@/database/db.functions";
-import { NextResponse } from "next/server"
-import {hash} from 'bcryptjs'
+import { NextResponse } from "next/server";
+import { hash } from "bcryptjs";
+import { getAccount } from "@/robtop/getAccount";
 
+export const POST = async (req) => {
+  const data = await req.json();
 
-export const POST = async(req) => {
-    const data = await req.json();
-    let fields = {user: data.username, password: data.password, phone: data.phone};
+  let errorMessage = "La cuenta solicitada no existe en Geometry Dash";
 
-    const passwordEncrypt = await hash(fields.password, 5);
-    fields.password = passwordEncrypt;
+  let fields = {
+    user: data.username,
+    password: data.password,
+    phone: data.phone,
+  };
 
+  const accountRegistered =
+    (
+      await secureQuery(`SELECT * FROM users WHERE username = '${fields.user}'`)
+    ).getRows().length !== 0;
+  console.log("Cuenta registrada: ", accountRegistered);
+  if (!accountRegistered) {
+    const gdAccount = await getAccount(data.username);
 
-    // console.log("data: ", fields);
-    const query = await addUser(fields);
+    if (gdAccount !== -1) {
+      const passwordEncrypt = await hash(fields.password, 5);
+      fields.password = passwordEncrypt;
 
-    if (!query.isError()) {
-        return NextResponse.json({message: 'Usuario creado satisfactoriamente'}, {
-            status: 200
-        })
+      // console.log("data: ", fields);
+      const query = await addUser(fields);
+
+      if (!query.isError(false)) {
+        return NextResponse.json(
+          { message: "Usuario creado satisfactoriamente" },
+          {
+            status: 200,
+          }
+        );
+      }
     }
-    return NextResponse.json({error: 'Ha ocrrido un error'}, {
-        status: 500
-    })
-    
-}
+  } else {
+      errorMessage = `La cuenta ${fields.user} ya fue solicitada`;
+  }
+
+  return NextResponse.json(
+    { error: errorMessage },
+    {
+      status: 500,
+    }
+  );
+};

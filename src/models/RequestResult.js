@@ -25,8 +25,8 @@ export class RequestResult {
   }
 
   isError(logError = true) {
-    if (this.error && logError) {
-        this.show();
+    if (this.error) {
+        if (logError) this.show();
         return true;
     }
     return false

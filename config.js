@@ -11,5 +11,6 @@ export default {
     ipForwarding: true, // Forwards 'x-real-ip' to the servers. (requested by robtop)
 
 
-    endpoint: "http://www.boomlings.com/database/"
+    endpoint: "http://www.boomlings.com/database/",
+    apiURL: 'http://localhost:3000/api/'
 }

@@ -24,8 +24,8 @@ export class RequestResult {
     return this.result.rows;
   }
 
-  isError() {
-    if (this.error) {
+  isError(logError = true) {
+    if (this.error && logError) {
         this.show();
         return true;
     }

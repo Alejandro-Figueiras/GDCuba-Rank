@@ -10,7 +10,7 @@ export const GET = async(req) => {
     // console.log(gdcuba);
     const cookie = cookies().get(COOKIES_INFO.name);
 
-    try {
+    if (cookie) {
         const me = verify(cookie.value, process.env.JWT_SECRET);
 
         const queryResult = await secureQuery(`SELECT * FROM users WHERE username ILIKE '${me.username}'`);
@@ -26,9 +26,7 @@ export const GET = async(req) => {
 
         }
 
-    } catch(err) {
-        console.error(err);
-    }
+    } 
     return NextResponse.json({error: 'Unauthorize'}, {status: 401});
 
 }

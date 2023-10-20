@@ -25,14 +25,11 @@ export const POST = async (req, res) => {
     const rows = queryResult.getRows();
     if (rows.length > 0) {
       const errorInAuth = await getErrorsInAuth(rows, data);
-      
       if (!errorInAuth) {
         const token = jwt.sign(
           {
             exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * COOKIES_INFO.exp,
-            username: data.username,
-            accountid: data.accountid,
-            role: data.role
+            accountid: rows[0].accountid,
           },
           process.env.JWT_SECRET
         );
@@ -72,11 +69,11 @@ export const POST = async (req, res) => {
 
 const getErrorsInAuth = async(rows, dataInBody) => {
   let error = null;
-  if (rows[0].status !== "v") {
-    error = {
-      message: "Usuario pendiente a verificación",
-    };
-  }
+  // if (rows[0].status !== "v") {
+  //   error = {
+  //     message: "Usuario pendiente a verificación",
+  //   };
+  // }
   // console.log(rows[0].password);
   const match = await compare(dataInBody.password, rows[0].password);
   if (!match) {

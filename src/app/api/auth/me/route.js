@@ -13,7 +13,7 @@ export const GET = async(req) => {
     if (cookie) {
         const me = verify(cookie.value, process.env.JWT_SECRET);
 
-        const queryResult = await secureQuery(`SELECT * FROM users WHERE username ILIKE '${me.username}'`);
+        const queryResult = await secureQuery(`SELECT * FROM users WHERE accountid = '${me.accountid}'`);
         if (!queryResult.isError() && queryResult.getRows().length > 0) {
             const user = {
                 username: queryResult.getRows()[0].username,

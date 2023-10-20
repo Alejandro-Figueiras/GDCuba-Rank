@@ -41,11 +41,11 @@ export default () => {
         <Button onClick={handleButton}>Send</Button>
 
       </div>
-      <h2 class="text-3xl pb-2">Respuesta</h2>
+      <h2 className="text-3xl pb-2">Respuesta</h2>
       {
         JSON.stringify(resultado)
       }
-      <h2 class="text-3xl pt-4 pb-2">Historial</h2>
+      <h2 className="text-3xl pt-4 pb-2">Historial</h2>
       <div className="historial_container">
         <ul>
           {historial.map((h, key) => (

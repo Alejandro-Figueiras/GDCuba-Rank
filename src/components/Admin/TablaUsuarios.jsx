@@ -13,7 +13,7 @@ export default ({usuarios}) => {
           <TableColumn>Estado</TableColumn>
         </TableHeader>
         <TableBody>
-          {usuarios.map((user, i) => (
+          {usuarios && usuarios.map((user, i) => (
             <TableRow key={i+1}>
               <TableCell>{user.id}</TableCell>
               <TableCell>{user.username}</TableCell>

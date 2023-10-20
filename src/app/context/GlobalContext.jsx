@@ -15,13 +15,11 @@ export default function GlobalContextProvider({ children }) {
   useEffect(() => {
     async function auth() {
       const apiResult = await apiRequest(config.apiURL + "auth/me");
-      const gdAccount = await getAccount('SrMDK');
-
-      console.log(gdAccount);
       
       if (!apiResult.isError(false)) {
         const data = apiResult.result;
-        setCurrentUser({username: data.username, accountID: data.accountID});
+        if (data)
+          setCurrentUser({username: data.username, accountID: data.accountID});
       }
       // const result = await fetch("http://localhost:3000/api/auth/me");
       // const data = await result.json();      

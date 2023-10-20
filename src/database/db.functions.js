@@ -44,10 +44,18 @@ export const validateUser = async(username) => {
 
 
 export const getUsers = async (id) => {
-  const query =
-    id == "all"
-      ? "SELECT * from users"
-      : `SELECT * from users WHERE accountid = '${id}'`;
+  
+  let query;
+  switch(id) {
+    case "all": 
+      query = "SELECT * from users";
+      break;
+    case "u":
+      query = `SELECT * from users WHERE status = 'u'`
+      break;
+    default: 
+      query = `SELECT * from users WHERE accountid = '${id}'`
+  }
 
   const queryResult = await secureQuery(query);
   if (!queryResult.error) {

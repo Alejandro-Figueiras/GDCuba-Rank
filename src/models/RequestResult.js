@@ -21,8 +21,10 @@ export class RequestResult {
         this.show();
         return [];
     }
-    console.log(this.result.result.rows)
-    return this.result.result.rows;
+    if (this.result.rows == undefined) {
+      return this.result.result.rows;
+    }
+    return this.result.rows;
   }
 
   isError(logError = true) {

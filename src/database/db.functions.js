@@ -49,6 +49,11 @@ export const getUsers = async (id) => {
       ? "SELECT * from users"
       : `SELECT * from users WHERE accountid = '${id}'`;
 
-  const result = await secureQuery(query);
-  return result;
+  const queryResult = await secureQuery(query);
+  if (!queryResult.error) {
+    return queryResult.result;
+  } else {
+    console.error("Error at getUsers: ", queryResult.error);
+    return -1;
+  }
 };

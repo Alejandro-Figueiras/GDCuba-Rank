@@ -1,7 +1,0 @@
-
-
-export default ({children}) => {
-  return (
-    <></>
-  )
-}

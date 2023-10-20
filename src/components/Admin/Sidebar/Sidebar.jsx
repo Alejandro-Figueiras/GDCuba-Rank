@@ -9,6 +9,7 @@ import ReportsIcon from "@/components/Icons/ReportsIcon";
 import { SettingsIcon } from "@/components/Icons/SettingsIcon";
 import ChangelogIcon from "@/components/Icons/ChangelogIcon";
 import { usePathname } from "next/navigation";
+import DatabaseIcon from "@/components/Icons/DatabaseIcon";
 
 export default () => {
   const { collapsed, setCollapsed } = useSidebarContext();
@@ -48,36 +49,41 @@ export default () => {
               />
               <SidebarMenu title="Main Menu">
                 <SidebarItem
-                  isActive={ruta === "/accounts"}
-                  title="Accounts"
+                  isActive={ruta === "/admin/users"}
+                  title="Usuarios"
                   icon={<AccountsIcon />}
-                  href="#"
+                  href="/admin/users"
                 />
-                <SidebarItem
+                <CollapseItems
+                  icon={<DatabaseIcon/>}
+                  title="Base de Datos"
+                  items={[]}
+                />
+                {/* <SidebarItem
                   isActive={ruta === "/reports"}
                   title="Reports"
                   icon={<ReportsIcon />}
                   href="#"
-                />
+                /> */}
               </SidebarMenu>
 
-              <SidebarMenu title="General">
+              {/* <SidebarMenu title="General">
                 <SidebarItem
                   isActive={ruta === "/settings"}
                   title="Settings"
                   icon={<SettingsIcon />}
                   href="#"
                 />
-              </SidebarMenu>
+              </SidebarMenu> */}
 
-              <SidebarMenu title="Updates">
+              {/* <SidebarMenu title="Updates">
                 <SidebarItem
                   isActive={ruta === "/changelog"}
                   title="Changelog"
                   icon={<ChangelogIcon />}
                   href="#"
                 />
-              </SidebarMenu>
+              </SidebarMenu> */}
             </div>
           </div>
         </div>

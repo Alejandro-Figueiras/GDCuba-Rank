@@ -10,6 +10,8 @@ export default ({usuarios}) => {
           <TableColumn>ID</TableColumn>
           <TableColumn>Usuario</TableColumn>
           <TableColumn>Teléfono</TableColumn>
+          <TableColumn>AccountID</TableColumn>
+          <TableColumn>Rol</TableColumn>
           <TableColumn>Estado</TableColumn>
         </TableHeader>
         <TableBody>
@@ -17,8 +19,10 @@ export default ({usuarios}) => {
             <TableRow key={i+1}>
               <TableCell>{user.id}</TableCell>
               <TableCell>{user.username}</TableCell>
-              <TableCell>Comming Soon</TableCell>
-              <TableCell>Comming Soon</TableCell>
+              <TableCell>{user.phone}</TableCell>
+              <TableCell>{user.accountid}</TableCell>
+              <TableCell>{user.role}</TableCell>
+              <TableCell>{user.status}</TableCell>
             </TableRow>
           ))}
         </TableBody>

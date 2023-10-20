@@ -21,7 +21,8 @@ export class RequestResult {
         this.show();
         return [];
     }
-    return this.result.rows;
+    console.log(this.result.result.rows)
+    return this.result.result.rows;
   }
 
   isError(logError = true) {

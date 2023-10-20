@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
 import ChevronUpIcon from "@/components/Icons/ChevronUpIcon";
+import Link from "next/link";
 
 export const CollapseItems = ({ icon, items, title }) => {
   const [open, setOpen] = useState(false);
@@ -28,12 +29,13 @@ export const CollapseItems = ({ icon, items, title }) => {
         >
           <div className="pl-12">
             {items.map((item, index) => (
-              <span
+              <Link
                 key={index}
                 className="w-full flex  text-default-500 hover:text-default-900 transition-colors"
+                href={item.href}
               >
-                {item}
-              </span>
+                {item.title}
+              </Link>
             ))}
           </div>
         </AccordionItem>

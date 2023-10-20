@@ -47,17 +47,12 @@ export default () => {
                 isActive={ruta === "/admin"}
                 href="/admin"
               />
-              <SidebarMenu title="Main Menu">
+              <SidebarMenu title="Administración">
                 <SidebarItem
                   isActive={ruta === "/admin/users"}
                   title="Usuarios"
                   icon={<AccountsIcon />}
                   href="/admin/users"
-                />
-                <CollapseItems
-                  icon={<DatabaseIcon/>}
-                  title="Base de Datos"
-                  items={[]}
                 />
                 {/* <SidebarItem
                   isActive={ruta === "/reports"}
@@ -65,6 +60,14 @@ export default () => {
                   icon={<ReportsIcon />}
                   href="#"
                 /> */}
+              </SidebarMenu>
+              <SidebarMenu title="Base de Datos">
+                <SidebarItem
+                  isActive={ruta === "/admin/database/query"}
+                  title="Send Query"
+                  icon={<DatabaseIcon/>}
+                  href="/admin/database/query"
+                />
               </SidebarMenu>
 
               {/* <SidebarMenu title="General">

@@ -12,5 +12,5 @@ export default {
 
 
     endpoint: "http://www.boomlings.com/database/",
-    apiURL: 'http://localhost:3000/api/'
+    apiURL: 'http://localhost:3000/api/',
 }

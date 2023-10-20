@@ -6,6 +6,7 @@ import { serialize } from "cookie";
 import { cookies } from "next/headers";
 import { COOKIES_INFO } from "@/models/constants";
 import { compare } from 'bcryptjs'
+import config from "../../../../../config";
 
 export const GET = async (req, { params }) => {
   const data = await secureQuery("SELECT * FROM users");
@@ -28,17 +29,19 @@ export const POST = async (req, res) => {
       if (!errorInAuth) {
         const token = jwt.sign(
           {
-            exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 30,
+            exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * COOKIES_INFO.exp,
             username: data.username,
+            accountid: data.accountid,
+            role: data.role
           },
           process.env.JWT_SECRET
         );
 
         const serialized = serialize(COOKIES_INFO.name, token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "strict",
-          path: "/",
+          httpOnly: true, // esto es algo de privadicad pero no recuerdo q
+          secure: process.env.NODE_ENV === "production", // Esto es para solo permitir su uso con protocolo ssl
+          sameSite: "strict", // Permitir solo cuando se genere en un mismo dominio
+          path: "/", // Esto nunca lo entendi xd
         });
         return NextResponse.json(
           { status: "ok", message: "Acceso permitido" },

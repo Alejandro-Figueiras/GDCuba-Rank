@@ -24,9 +24,9 @@ export const secureQuery = async (query) => {
   return queryResult;
 };
 
-export const addUser = async ({ user, password, phone }) => {
+export const addUser = async ({ user, password, phone, accountID }) => {
   // const insertQuery = `INSERT INTO users(username, password, phone, status) VALUES('${user}', '${password}', '${phone}', 'v')`;
-  const insertQuery = `INSERT INTO users(username, password, phone) VALUES('${user}', '${password}', '${phone}')`;
+  const insertQuery = `INSERT INTO users(username, password, phone, accountID) VALUES('${user}', '${password}', '${phone}', '${accountID}')`;
   console.log(insertQuery);
   return await secureQuery(insertQuery);
 };

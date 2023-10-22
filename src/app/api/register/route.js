@@ -2,6 +2,7 @@ import { addUser, secureQuery } from "@/database/db.functions";
 import { NextResponse } from "next/server";
 import { hash } from "bcryptjs";
 import { getAccount } from "@/robtop/getAccount";
+import { responseText } from "@/locales/siteText";
 
 export const POST = async (req) => {
   const data = await req.json();
@@ -38,7 +39,7 @@ export const POST = async (req) => {
             status: 200,
           }
         );
-      } else {errorMessage = 'Ha ocurrido un error...'}
+      } else {errorMessage = responseText.error}
     }
   } else {
       errorMessage = `La cuenta ${fields.user} ya fue solicitada`;

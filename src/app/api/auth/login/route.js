@@ -7,6 +7,7 @@ import { cookies } from "next/headers";
 import { COOKIES_INFO } from "@/models/constants";
 import { compare } from 'bcryptjs'
 import config from "../../../../../config";
+import { responseText } from "@/locales/siteText";
 
 export const GET = async (req, { params }) => {
   const data = await secureQuery("SELECT * FROM users");
@@ -62,7 +63,7 @@ export const POST = async (req, res) => {
   }
   return NextResponse.json({
     status: "error",
-    message: "Ha ocurrido un error",
+    message: responseText.error,
   });
 };
 

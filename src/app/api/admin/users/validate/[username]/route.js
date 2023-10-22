@@ -1,14 +1,13 @@
 import { validateUser } from "@/database/db.functions";
+import { authorize } from "@/libs/secure";
 import { NextResponse } from "next/server";
+import {responseText} from '@/locales/siteText';
 
 export const GET = async (req, { params }) => {
-  if (authorized()) {
-    return NextResponse.json(
-      { error: "Unauthorize" },
-      {
-        status: 401,
-      }
-    );
+  const authorized = await authorize();
+
+  if (!authorized) {
+    return NextResponse.json({ error: responseText.unauthorize }, { status: 401 });
   }
 
   const queryResult = await validateUser(params.username);
@@ -19,9 +18,5 @@ export const GET = async (req, { params }) => {
     );
   }
 
-  return NextResponse.json({ error: "Ha ocurrido un error" }, { status: 500 });
-};
-
-const authorized = () => {
-  return process.env.NODE_ENV !== "development";
+  return NextResponse.json({ error: responseText.badRequest }, { status: 400 });
 };

@@ -35,8 +35,14 @@ import { Link } from "@nextui-org/link";
 import Login from "../Forms/Login";
 import SignUp from "../Forms/SignUp";
 import { GlobalContext } from "@/app/context/GlobalContext";
+import { apiRequest } from "@/libs/serverRequest";
+import config from "../../../config";
+import { notify, notifyDismiss } from "@/libs/toastNotifications";
+import { operationText } from "@/locales/siteText";
 
 export default () => {
+  const { currentUser, setCurrentUser } = useContext(GlobalContext);
+
   const {
     isOpen: isOpenLogin,
     onOpen: onOpenLogin,
@@ -48,7 +54,19 @@ export default () => {
     onOpenChange: onOpenChangeSignUp,
   } = useDisclosure();
 
-  const {currentUser} = useContext(GlobalContext);
+  const handleLogout = async () => {
+    const loading = notify(operationText.quit, "loading");
+    const apiResult = await apiRequest(config.apiURL + "logout");
+    notifyDismiss(loading);
+    if (apiResult.isError()) {
+      return notify(operationText.error, "error");
+    }
+    setCurrentUser({
+      username: undefined,
+      accountID: undefined,
+    });
+  };
+
   return (
     <>
       <Navbar isBordered maxWidth="2xl">
@@ -64,7 +82,7 @@ export default () => {
             <Dropdown placement="bottom-end">
               <DropdownTrigger>
                 <Button color="default" variant="flat">
-                  {currentUser.username ?? 'Sin cuenta'}
+                  {currentUser.username ?? "Sin cuenta"}
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
@@ -111,6 +129,11 @@ export default () => {
                   <DropdownItem key="signup-btn" onPress={onOpenChangeSignUp}>
                     Registrarse
                   </DropdownItem>
+                  {currentUser.username && (
+                    <DropdownItem key="logout-btn" onPress={handleLogout}>
+                      Logout
+                    </DropdownItem>
+                  )}
                 </DropdownSection>
               </DropdownMenu>
             </Dropdown>
@@ -119,10 +142,10 @@ export default () => {
       </Navbar>
 
       {/* Modal Login */}
-      <Login isOpen={isOpenLogin} onOpenChange={onOpenChangeLogin}/>
+      <Login isOpen={isOpenLogin} onOpenChange={onOpenChangeLogin} />
 
       {/* Sign up Form */}
-      <SignUp isOpen={isOpenSignUp} onOpenChange={onOpenChangeSignUp}/>
+      <SignUp isOpen={isOpenSignUp} onOpenChange={onOpenChangeSignUp} />
     </>
   );
 };

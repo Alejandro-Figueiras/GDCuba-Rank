@@ -3,6 +3,7 @@ import {verify} from 'jsonwebtoken'
 import {cookies} from 'next/headers'
 import { COOKIES_INFO } from "@/models/constants";
 import { secureQuery } from "@/database/db.functions";
+import { responseText } from "@/locales/siteText";
 
 export const GET = async(req) => {
     // const {gdcuba} = req.cookies;
@@ -22,11 +23,11 @@ export const GET = async(req) => {
             return NextResponse.json(user, {status: 200});
         }
         else {
-            return NextResponse.json({error: 'Someting went wrong...'}, {status: 500});
+            return NextResponse.json({error: responseText.badRequest}, {status: 400});
 
         }
 
     } 
-    return NextResponse.json({error: 'Unauthorize'}, {status: 401});
+    return NextResponse.json({error: responseText.badRequest}, {status: 401});
 
 }

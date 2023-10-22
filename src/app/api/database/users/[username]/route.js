@@ -14,5 +14,5 @@ export const GET = async (req, { params }) => {
       status: 200,
     });
   }
-  return NextResponse.json(queryResult.error, { status: 500 });
+  return NextResponse.json(queryResult.error, { status: 400 });
 };

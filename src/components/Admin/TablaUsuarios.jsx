@@ -9,6 +9,10 @@ const renderRoleOrStatus = (arg) => {
       color = "default"
       texto = "Usuario"  
       break;
+    case "admin":
+      color = "success"
+      texto = "Admin"  
+      break;
     case "v":
       color = "default"
       texto = "Verificado"
@@ -18,10 +22,7 @@ const renderRoleOrStatus = (arg) => {
       texto = "No Verificado"
       break;
   }
-  if (arg=="user") {
-    color = "default"
-    texto = "Usuario"
-  } 
+
   return (
     <Chip
       size="sm"
@@ -31,10 +32,6 @@ const renderRoleOrStatus = (arg) => {
       <span className="capitalize text-xs">{texto}</span>
     </Chip>
   )
-}
-
-const renderStatus = (status) => {
-  
 }
 
 export default ({usuarios}) => {

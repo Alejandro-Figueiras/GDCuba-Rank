@@ -12,6 +12,8 @@ import CheckIcon from "../Icons/CheckIcon";
 import { apiRequest } from "@/libs/serverRequest";
 import config from "../../../config";
 import { notify, notifyDismiss } from "@/libs/toastNotifications";
+import ModalAccept from "./ModalAccept";
+import { useDisclosure } from "@nextui-org/react";
 
 export default ({ usuarios }) => {
   const handleValidateButton = async (user) => {
@@ -55,37 +57,40 @@ export default ({ usuarios }) => {
         </TableHeader>
         <TableBody>
           {usuarios &&
-            usuarios.map((user, i) => (
+            usuarios.map((user, i) => {
+              const {isOpen: isOpenAccept, onOpen: onOpenAccept, onOpenChange: onOpenChangeAccept} = useDisclosure()
+              const {isOpen: isOpenDelete, onOpen: onOpenDelete, onOpenChange: onOpenChangeDelete} = useDisclosure()
+              return (
               <TableRow key={user.username}>
                 <TableCell>{user.id}</TableCell>
                 <TableCell>{user.username}</TableCell>
                 <TableCell>{user.phone}</TableCell>
                 <TableCell>
+                  <ModalAccept 
+                    isOpen={isOpenAccept} 
+                    onOpenChange={onOpenChangeAccept} 
+                    title={"Esta seguro de que desea verificar el usuario "+user.username+"?"}
+                    submit={() => handleValidateButton(user.username)}/>
+                  <ModalAccept 
+                    isOpen={isOpenDelete} 
+                    onOpenChange={onOpenChangeDelete} 
+                    title={"Esta seguro de que desea eliminar el usuario "+user.username+"?"}
+                    submit={() => handleDeletionButton(user.username)}/>
                   <div className="flex items-center gap-4 ">
                     <div>
-                      <button
-                        onClick={() => {
-                          // TODO para Dayniel
-                          handleValidateButton(user.username);
-                        }}
-                      >
+                      <button onClick={onOpenAccept}>
                         <CheckIcon size={20} fill="#18c964" />
                       </button>
                     </div>
                     <div>
-                      <button
-                        onClick={() => {
-                          // TODO para Dayniel
-                          handleDeletionButton(user.username);
-                        }}
-                      >
+                      <button onClick={onOpenDelete}>
                         <DeleteIcon size={20} fill="#FF0080" />
                       </button>
                     </div>
                   </div>
                 </TableCell>
               </TableRow>
-            ))}
+            )})}
         </TableBody>
       </Table>
     </>

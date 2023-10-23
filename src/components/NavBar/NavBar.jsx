@@ -39,9 +39,11 @@ import { apiRequest } from "@/libs/serverRequest";
 import config from "../../../config";
 import { notify, notifyDismiss } from "@/libs/toastNotifications";
 import { operationText } from "@/locales/siteText";
+import { ModalContext } from "@/app/context/ModalContext";
 
 export default () => {
   const { currentUser, setCurrentUser } = useContext(GlobalContext);
+  const { openModal } = useContext(ModalContext);
 
   const {
     isOpen: isOpenLogin,
@@ -130,7 +132,17 @@ export default () => {
                     Registrarse
                   </DropdownItem>
                   {currentUser.username && (
-                    <DropdownItem key="logout-btn" onPress={handleLogout}>
+                    <DropdownItem
+                      key="logout-btn"
+                      onPress={() => {
+                        openModal({
+                          title: `Logout`,
+                          desc: `¿Seguro que deseas salir de la cuenta actual?`,
+                          action: "action",
+                          onSubmit: () => handleLogout(),
+                        });
+                      }}
+                    >
                       Logout
                     </DropdownItem>
                   )}

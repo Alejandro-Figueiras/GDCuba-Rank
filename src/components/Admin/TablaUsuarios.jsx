@@ -1,6 +1,8 @@
 "use client"
+import { AdminContext } from "@/app/context/AdminContext";
 import { Chip } from "@nextui-org/chip";
 import {  Table,  TableHeader,  TableBody,  TableColumn,  TableRow,  TableCell} from "@nextui-org/table";
+import { useContext } from "react";
 
 const renderRoleOrStatus = (arg) => {
   let color, texto;
@@ -35,7 +37,7 @@ const renderRoleOrStatus = (arg) => {
 }
 
 export default ({usuarios}) => {
-  
+  const {openUserGestorFor} = useContext(AdminContext);
   return (
     <>
       <Table aria-label="Todos los usuarios">
@@ -49,7 +51,7 @@ export default ({usuarios}) => {
         </TableHeader>
         <TableBody>
           {usuarios && usuarios.map((user, i) => (
-            <TableRow key={user.username}>
+            <TableRow key={user.username} className="cursor-pointer hover:bg-zinc-700 duration-75" onClick={() => openUserGestorFor(user)}>
               <TableCell>{user.id}</TableCell>
               <TableCell>{user.username}</TableCell>
               <TableCell>{user.phone}</TableCell>

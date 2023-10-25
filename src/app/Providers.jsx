@@ -8,7 +8,7 @@ export function Providers({ children }) {
   return (
     <GlobalContextProvider>
       <ModalProvider>
-        <NextUIProvider>{children}</NextUIProvider>
+          <NextUIProvider>{children}</NextUIProvider>
       </ModalProvider>
     </GlobalContextProvider>
   );

@@ -43,6 +43,85 @@ export const removeUser = async (id) => {
   return await secureQuery(removeQuery);
 };
 
+export const addAccount = async (account) => {
+  const timestamp = (new Date()).getTime()
+  const insertQuery = `INSERT INTO gdaccounts (
+      username,
+      userID,
+      accountID,
+      isRegistered,
+
+      stars,
+      demons,
+      secretCoins,
+      userCoins,
+      globalRank,
+      diamonds,
+      creatorpoints,
+      modlevel,
+
+      playerColor,
+      playerColor2,
+      accIcon,
+      accShip,
+      accBall,
+      accBird,
+      accWave,
+      accRobot,
+      accGlow,
+      accSpider,
+      accExplosion,
+
+      friendsRqState,
+      messageState,
+      friendstate,
+      commentHistoryState,
+
+      youTube,
+      twitter,
+      twitch,
+      timestamp
+    ) VALUES(
+      '${account.username}',
+      '${account.userID}',
+      '${account.accountID}',
+      '${account.isRegistered}',
+
+      '${account.stars}',
+      '${account.demons}',
+      '${account.secretCoins}',
+      '${account.userCoins}',
+      '${account.globalRank}',
+      '${account.diamonds}',
+      '${account.creatorpoints}',
+      '${account.modlevel}',
+
+      '${account.playerColor}',
+      '${account.playerColor2}',
+      '${account.accIcon}',
+      '${account.accShip}',
+      '${account.accBall}',
+      '${account.accBird}',
+      '${account.accWave}',
+      '${account.accRobot}',
+      '${account.accGlow}',
+      '${account.accSpider}',
+      '${account.accExplosion}',
+
+      '${account.friendsRqState}',
+      '${account.messageState}',
+      '${account.friendstate}',
+      '${account.commentHistoryState}',
+
+      '${account.youTube}',
+      '${account.twitter}',
+      '${account.twitch}',
+      '${account.timestamp}'
+    )`;
+  console.log(insertQuery);
+  return await secureQuery(insertQuery);
+};
+
 export const cleanTable = async (table) => {
   const insertQuery = `DELETE FROM ${table}`;
   console.log(insertQuery);

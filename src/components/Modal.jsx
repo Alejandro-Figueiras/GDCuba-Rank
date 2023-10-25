@@ -6,10 +6,18 @@ import {
   ModalFooter,
 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
+import { useState } from "react";
 
 export default ({ isOpen, onOpenChange, title, action, desc, submit }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
+  const onOpen = (e) => {
+    onOpenChange(e);
+    setIsLoading(false);
+  };
+
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+    <Modal isOpen={isOpen} onOpenChange={onOpen} placement="top-center">
       <ModalContent>
         {(onClose) => (
           <>
@@ -29,6 +37,7 @@ export default ({ isOpen, onOpenChange, title, action, desc, submit }) => {
             <ModalBody>{desc}</ModalBody>
             <ModalFooter>
               <Button
+                isLoading={isLoading}
                 color={
                   action != "delete"
                     ? action != "validate"
@@ -36,8 +45,11 @@ export default ({ isOpen, onOpenChange, title, action, desc, submit }) => {
                       : "success"
                     : "danger"
                 }
-                onPress={(e) => {
-                  submit(e);
+                onPress={async (e) => {
+                  setIsLoading(true);
+                  await submit(e);
+
+                  setIsLoading(false);
                   onClose();
                 }}
               >

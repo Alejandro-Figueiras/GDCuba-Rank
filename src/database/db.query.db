@@ -6,6 +6,9 @@ CREATE TABLE users (
 );
 
 
+ALTER TABLE users ALTER COLUMN phone SET DATA TYPE VARCHAR(15)
+ALTER TABLE users ADD COLUMN playerType VARCHAR(8) DEFAULT 'player'
+
 -- Datos para poblar la tabla
 INSERT INTO users (username, accountid, password, status, phone, role)
 VALUES

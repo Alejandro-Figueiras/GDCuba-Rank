@@ -16,12 +16,12 @@ import { notify, notifyDismiss } from "@/libs/toastNotifications";
 
 export default ({ isOpen, onOpenChange }) => {
   const [fieldsError, setFieldsError] = useState({
-    phoneField: false,
     userField: false,
     notMatchPassword: false,
   });
 
   const [canSubmit, setCanSubmit] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
 
   const phoneRef = useRef();
   const userRef = useRef();
@@ -29,13 +29,11 @@ export default ({ isOpen, onOpenChange }) => {
   const passwordSecureRef = useRef();
 
   const updateCanSubmit = () => {
-    const validPhone =
-      phoneRef.current.value.length > 0 && !fieldsError.phoneField;
     const validUser = !fieldsError.userField;
     const validPassword =
       passwordRef.current.value.length > 0 && !fieldsError.notMatchPassword;
 
-    setCanSubmit(validPassword && validUser && validPhone);
+    setCanSubmit(validPassword && validUser);
     console.log(fieldsError.notMatchPassword);
   };
 
@@ -54,9 +52,8 @@ export default ({ isOpen, onOpenChange }) => {
 
   const handleSubmit = async (onClose) => {
 
-    const laodingNotift = notify("Loading, please wait", "loading");
     setCanSubmit(false);
-
+    setIsLoading(true);
     const formData = {
       username: userRef.current.value,
       phone: phoneRef.current.value,
@@ -70,7 +67,6 @@ export default ({ isOpen, onOpenChange }) => {
         "Content-Type": "application/json", // Tipo de contenido del cuerpo (en este caso, JSON)
       },
     });
-    notifyDismiss(laodingNotift);
     const data = await response.json();
     console.log(data);
 
@@ -82,6 +78,7 @@ export default ({ isOpen, onOpenChange }) => {
     }
 
     setCanSubmit(true);
+    setIsLoading(false);
   };
 
   return (
@@ -101,15 +98,10 @@ export default ({ isOpen, onOpenChange }) => {
               <Input
                 autoFocus
                 label="Número de Teléfono"
-                placeholder="Ej: 55390833"
+                placeholder="Ej: +53 55390833"
                 type="number"
                 variant="bordered"
                 ref={phoneRef}
-                errorMessage={
-                  fieldsError.phoneField
-                    ? "El numero introducido no es válido"
-                    : ""
-                }
                 onChange={(e) => {
                   console.log(e.target.value.startsWith('5', 0))
                   if (phoneRef.current.value.length !== 8 || !phoneRef.current.value.startsWith('5'))
@@ -163,6 +155,7 @@ export default ({ isOpen, onOpenChange }) => {
                 Cerrar
               </Button>
               <Button
+              isLoading = {isLoading}
                 color={canSubmit ? "primary" : "default"}
                 onPress={() => canSubmit && handleSubmit(onClose)}
               >

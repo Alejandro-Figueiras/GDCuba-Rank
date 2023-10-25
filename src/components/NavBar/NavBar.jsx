@@ -57,9 +57,7 @@ export default () => {
   } = useDisclosure();
 
   const handleLogout = async () => {
-    const loading = notify(operationText.quit, "loading");
     const apiResult = await apiRequest(config.apiURL + "logout");
-    notifyDismiss(loading);
     if (apiResult.isError()) {
       return notify(operationText.error, "error");
     }

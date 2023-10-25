@@ -34,7 +34,6 @@ export default ({ isOpen, onOpenChange }) => {
       };
       setLoading(true);
 
-      const info = notify('Loggin, wait a moment...', 'loading');
 
       const response = await fetch("http://localhost:3000/api/auth/login", {
         method: "POST",
@@ -44,7 +43,6 @@ export default ({ isOpen, onOpenChange }) => {
         },
       });
       const data = await response.json();
-      notifyDismiss(info);
 
       setLoading(false);
       if (data.status == "error") {

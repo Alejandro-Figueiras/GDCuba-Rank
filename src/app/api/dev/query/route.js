@@ -1,5 +1,5 @@
-import { addColumn } from "@/database/db.devFunctions";
-import { secureQuery } from "@/database/db.functions";
+import { addColumn } from "@/database/cloud/functions/db.devFunctions";
+import { secureQuery } from "@/database/cloud/functions/db.functions";
 import { NextResponse } from "next/server";
 
 export const POST = async (req) => {

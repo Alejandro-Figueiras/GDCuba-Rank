@@ -1,4 +1,4 @@
-import { secureQuery } from "@/database/db.functions";
+import { secureQuery } from "@/database/cloud/functions/db.functions";
 import { log } from "@/helpers/log";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";

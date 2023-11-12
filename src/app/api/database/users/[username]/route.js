@@ -1,4 +1,4 @@
-import { secureQuery } from "@/database/db.functions";
+import { secureQuery } from "@/database/cloud/functions/db.functions";
 import { isNumeric } from "@/libs/utils";
 import { NextResponse } from "next/server";
 

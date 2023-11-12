@@ -1,4 +1,4 @@
-import { getUsers } from "@/database/db.functions";
+import { getUsers } from "@/database/cloud/functions/db.functions";
 import { responseText } from "@/locales/siteText";
 import Account from "@/models/Account";
 import { getAccountByID } from "@/robtop/getAccount";

@@ -1,4 +1,4 @@
-import { validateUser } from "@/database/db.functions";
+import { validateUser } from "@/database/cloud/functions/db.functions";
 import { authorize } from "@/libs/secure";
 import { NextResponse } from "next/server";
 import {responseText} from '@/locales/siteText';

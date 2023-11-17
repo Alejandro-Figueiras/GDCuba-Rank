@@ -2,6 +2,15 @@ import { gdRequest } from "@/helpers/request-helper.js";
 import Song from '@/models/Song.js'
 import responseToObj from '@/helpers/responseToObj.js';
 
+/**
+ * Hace una request a los servidores de RobTop y con el body construye un objecto Song
+ * 
+ * Si la canción no existe, o por alguna razón ocurre un error, devuelve -1
+ * @async
+ * @param {number} songID
+ * @returns {Song | -1} Song object
+ * @author Alejandro-Figueiras
+ */
 export default async(songID) => {
     if (typeof songID != 'number') throw new Error("Se esperaba un id numerico");
 
@@ -9,6 +18,6 @@ export default async(songID) => {
         const body = await gdRequest("getGJSongInfo", {songID});
         return new Song(responseToObj(body, "~|~"));
     } catch (err) {
-        return 404; // Si no existe la canción va a tirar un server error con -1
+        return -1; // Si no existe la canción va a tirar un server error con -1
     }
 }

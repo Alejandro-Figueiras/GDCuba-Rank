@@ -23,6 +23,17 @@ const parseResponse = (body) => {
     }
 }
 
+/**
+ * 
+ * Hace una request a los servidores de robtop buscando por la id, coge el primer (y único) nivel que sale, y hace el objeto result (consultar [documentación web](http://localhost:9508/#/robtop/getLevel))
+ * 
+ * Si no existe, devuelve -1
+ * 
+ * **IMPORTANTE**: Si no tienes el LevelID, usa la función `getLevels` primero
+ * @async
+ * @param {Number} id LevelID
+ * @returns {{level, author, song}}
+ */
 export const getLevelByID = async(id) => {
     try {
         // TODO filtrar query para evitar sql injection
@@ -43,6 +54,14 @@ export const getLevelByID = async(id) => {
     }
 }
 
+/**
+ * Hace una request a los servidores de robtop buscando la query, y devuelve un objeto (consultar [documentación web](http://localhost:9508/#/robtop/getLevel)) con los resultados
+ * 
+ * Si no hay resultados, devuelve -1
+ * @async
+ * @param {String} query
+ * @returns {{levels, authors, songs}}
+ */
 export const getLevels = async(query) => {
     try {
         // TODO filtrar query para evitar sql injection
@@ -56,4 +75,4 @@ export const getLevels = async(query) => {
         console.log(err)
         return -1;
     }
-}   
+}

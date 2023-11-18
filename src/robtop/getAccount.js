@@ -3,7 +3,7 @@ import responseToObj from '@/helpers/responseToObj.js';
 import Account from "@/models/Account";
 
 /**
- * Hace una request a los servidores de RobTop usando la id y devuelve un objeto Account con los datos objenidos
+ * Hace una request a los servidores de RobTop usando la id y devuelve un objeto Account con los datos obtenidos
  * 
  * Si no hay resultados devuelve -1
  * @async
@@ -21,7 +21,7 @@ export const getAccountByID = async(targetAccountID) => {
 }
 
 /**
- * Hace una request a los servidores de RobTop usando el usuario, luego hace otra con la id para obtener los datos completos, y posteriormente devuelve un objeto Account con los datos objenidos
+ * Hace una request a los servidores de RobTop usando el usuario, luego hace otra con la id para obtener los datos completos, y posteriormente devuelve un objeto Account con los datos obtenidos
  * 
  * Si no hay resultados devuelve -1
  * 

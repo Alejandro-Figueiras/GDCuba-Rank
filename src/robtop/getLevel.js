@@ -29,7 +29,7 @@ const parseResponse = (body) => {
  * 
  * Si no existe, devuelve -1
  * 
- * **IMPORTANTE**: Si no tienes el LevelID, usa la función `getLevels` primero
+ * **IMPORTANTE**: Si no tienes el LevelID, usa la función `getLevels`
  * @async
  * @param {Number} id LevelID
  * @returns {{level, author, song}}

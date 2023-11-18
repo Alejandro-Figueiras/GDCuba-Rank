@@ -25,6 +25,14 @@ export const secureQuery = async (query) => {
   return queryResult;
 };
 
+export const cleanTable = async (table) => {
+  const insertQuery = `DELETE FROM ${table}`;
+  console.log(insertQuery);
+  return await secureQuery(insertQuery);
+};
+
+// --------------- USER -------------------
+
 export const addUser = async ({ user, password, phone, accountID }) => {
   // const insertQuery = `INSERT INTO users(username, password, phone, status) VALUES('${user}', '${password}', '${phone}', 'v')`;
   const insertQuery = `INSERT INTO users(username, password, phone, accountID) VALUES('${user}', '${password}', '${phone}', '${accountID}')`;
@@ -43,8 +51,31 @@ export const removeUser = async (id) => {
   return await secureQuery(removeQuery);
 };
 
+export const validateUser = async (username) => {
+  const modifyQuery = `UPDATE users SET status = 'v' WHERE username = '${username}'`;
+  return await secureQuery(modifyQuery);
+};
+
+export const getUsers = async (id) => {
+  let query;
+  switch (id) {
+    case "all": query = "SELECT * from users"; break;
+    case "u":   query = `SELECT * from users WHERE status = 'u'`; break;
+    default:    query = `SELECT * from users WHERE accountid = '${id}'`;
+  }
+
+  const queryResult = await secureQuery(query);
+  if (!queryResult.error) {
+    return queryResult.result;
+  } else {
+    console.error("Error at getUsers: ", queryResult.error);
+    return -1;
+  }
+};
+
+// --------------- GD ACCOUNT -------------------
+
 export const addAccount = async (account) => {
-  const timestamp = (new Date()).getTime()
   const insertQuery = `INSERT INTO gdaccounts (
       username,
       userID,
@@ -120,37 +151,4 @@ export const addAccount = async (account) => {
     )`;
   console.log(insertQuery);
   return await secureQuery(insertQuery);
-};
-
-export const cleanTable = async (table) => {
-  const insertQuery = `DELETE FROM ${table}`;
-  console.log(insertQuery);
-  return await secureQuery(insertQuery);
-};
-
-export const validateUser = async (username) => {
-  const modifyQuery = `UPDATE users SET status = 'v' WHERE username = '${username}'`;
-  return await secureQuery(modifyQuery);
-};
-
-export const getUsers = async (id) => {
-  let query;
-  switch (id) {
-    case "all":
-      query = "SELECT * from users";
-      break;
-    case "u":
-      query = `SELECT * from users WHERE status = 'u'`;
-      break;
-    default:
-      query = `SELECT * from users WHERE accountid = '${id}'`;
-  }
-
-  const queryResult = await secureQuery(query);
-  if (!queryResult.error) {
-    return queryResult.result;
-  } else {
-    console.error("Error at getUsers: ", queryResult.error);
-    return -1;
-  }
 };

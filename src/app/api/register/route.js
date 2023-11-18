@@ -1,4 +1,4 @@
-import { addAccount, addUser, secureQuery } from "@/database/cloud/functions/db.functions";
+import { addAccount, addUser, secureQuery } from "@/database/db.functions";
 import { NextResponse } from "next/server";
 import { hash } from "bcryptjs";
 import { getAccount } from "@/robtop/getAccount";

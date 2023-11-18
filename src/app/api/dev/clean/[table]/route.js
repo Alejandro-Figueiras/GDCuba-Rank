@@ -1,5 +1,5 @@
-import { consult } from "@/database/cloud/functions/db.devFunctions";
-import { cleanTable } from "@/database/cloud/functions/db.functions";
+import { consult } from "@/database/db.devFunctions";
+import { cleanTable } from "@/database/db.functions";
 import { NextResponse } from "next/server";
 
 export const GET = async(req, {params}) => {

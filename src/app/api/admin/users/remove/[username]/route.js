@@ -1,4 +1,4 @@
-import { removeUser } from "@/database/cloud/functions/db.functions";
+import { removeUser } from "@/database/db.functions";
 import { authorize } from "@/libs/secure";
 import { responseText } from "@/locales/siteText";
 import { NextResponse } from "next/server";

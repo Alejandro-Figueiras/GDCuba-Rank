@@ -1,6 +1,6 @@
 import TablaUsuarios from "@/components/Admin/TablaUsuarios";
 import TablaUsuariosNoVerificados from "@/components/Admin/TablaUsuariosNoVerificados";
-import { getUsers } from "@/database/cloud/functions/db.functions";
+import { getUsers } from "@/database/db.functions";
 
 export default async () => {
   const usuarios = (await getUsers("all")).rows;

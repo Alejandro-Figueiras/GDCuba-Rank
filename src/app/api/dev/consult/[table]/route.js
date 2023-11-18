@@ -1,4 +1,4 @@
-import { consult } from "@/database/cloud/functions/db.devFunctions";
+import { consult } from "@/database/db.devFunctions";
 import { NextResponse } from "next/server";
 
 export const GET = async(req, {params}) => {

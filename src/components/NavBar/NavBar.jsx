@@ -40,9 +40,10 @@ import config from "../../../config";
 import { notify, notifyDismiss } from "@/libs/toastNotifications";
 import { operationText } from "@/locales/siteText";
 import { ModalContext } from "@/app/context/ModalContext";
+import { useSesion } from "@/hooks/useSesion";
 
 export default () => {
-  const { currentUser, setCurrentUser } = useContext(GlobalContext);
+  const {currentUser, logout} = useSesion();
   const { openModal } = useContext(ModalContext);
 
   const {
@@ -61,10 +62,7 @@ export default () => {
     if (apiResult.isError()) {
       return notify(operationText.error, "error");
     }
-    setCurrentUser({
-      username: undefined,
-      accountID: undefined,
-    });
+    logout();
   };
 
   return (
@@ -110,7 +108,7 @@ export default () => {
                     className="h-14 gap-2 opacity-100"
                   >
                     <User
-                      name="Invitado"
+                      name={currentUser.username == undefined ? "Invitado" : currentUser.username}
                       description="@none"
                       classNames={{
                         name: "text-default-600",

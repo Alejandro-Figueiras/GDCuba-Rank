@@ -1,4 +1,4 @@
-import { addAccount, addUser, secureQuery } from "@/database/cloud/db.functions";
+import { addAccountCloud, addUserCloud, secureQuery } from "@/database/cloud/db.functions";
 import { NextResponse } from "next/server";
 import { hash } from "bcryptjs";
 import { getAccount } from "@/robtop/getAccount";
@@ -30,9 +30,9 @@ export const POST = async (req) => {
       fields.accountID = gdAccount.accountID;
 
       // console.log("data: ", fields);
-      const query = await addUser(fields);
+      const query = await addUserCloud(fields);
       // TODO comprobar si esta en la db
-      const queryGD = await addAccount(gdAccount);
+      const queryGD = await addAccountCloud(gdAccount);
       if (!query.isError()) {
         return NextResponse.json(
           { message: "Usuario creado satisfactoriamente" },

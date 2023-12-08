@@ -33,14 +33,14 @@ export const cleanTable = async (table) => {
 
 // --------------- USER -------------------
 
-export const addUser = async ({ user, password, phone, accountID }) => {
+export const addUserCloud = async ({ user, password, phone, accountID }) => {
   // const insertQuery = `INSERT INTO users(username, password, phone, status) VALUES('${user}', '${password}', '${phone}', 'v')`;
   const insertQuery = `INSERT INTO users(username, password, phone, accountID) VALUES('${user}', '${password}', '${phone}', '${accountID}')`;
   console.log(insertQuery);
   return await secureQuery(insertQuery);
 };
 
-export const removeUser = async (id) => {
+export const removeUserCloud = async (id) => {
   // const insertQuery = `INSERT INTO users(username, password, phone, status) VALUES('${user}', '${password}', '${phone}', 'v')`;
   const removeQuery = isNumeric(id)
     ? `DELETE FROM users WHERE accountid = '${id}'`
@@ -51,12 +51,12 @@ export const removeUser = async (id) => {
   return await secureQuery(removeQuery);
 };
 
-export const validateUser = async (username) => {
+export const validateUserCloud = async (username) => {
   const modifyQuery = `UPDATE users SET status = 'v' WHERE username = '${username}'`;
   return await secureQuery(modifyQuery);
 };
 
-export const getUsers = async (id) => {
+export const getUsersCloud = async (id) => {
   let query;
   switch (id) {
     case "all": query = "SELECT * from users"; break;
@@ -75,7 +75,7 @@ export const getUsers = async (id) => {
 
 // --------------- GD ACCOUNT -------------------
 
-export const addAccount = async (account) => {
+export const addAccountCloud = async (account) => {
   const insertQuery = `INSERT INTO gdaccounts (
       username,
       userID,

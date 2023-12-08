@@ -1,4 +1,4 @@
-import { addAccount } from "@/database/cloud/db.functions";
+import { addAccountCloud } from "@/database/cloud/db.functions";
 import { getAccount } from "@/robtop/getAccount";
 import { getLevelByID, getLevels } from "@/robtop/getLevel"
 

@@ -1,4 +1,4 @@
-import { removeUser } from "@/database/cloud/db.functions";
+import { removeUserCloud } from "@/database/cloud/db.functions";
 import { authorize } from "@/libs/secure";
 import { responseText } from "@/locales/siteText";
 import { NextResponse } from "next/server";
@@ -9,7 +9,7 @@ export const GET = async (req, { params }) => {
   if (!(await authorize())) {
     return NextResponse.json({ error: responseText.unauthorize }, { status: 401 });
   }
-  const queryResult = await removeUser(params.username);
+  const queryResult = await removeUserCloud(params.username);
 
   if (!queryResult.isError()) {
     let response = {

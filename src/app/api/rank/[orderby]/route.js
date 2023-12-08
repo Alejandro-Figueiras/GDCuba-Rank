@@ -1,4 +1,4 @@
-import { getUsers } from "@/database/cloud/db.functions";
+import { getUsersCloud } from "@/database/cloud/db.functions";
 import { responseText } from "@/locales/siteText";
 import Account from "@/models/Account";
 import { getAccountByID } from "@/robtop/getAccount";
@@ -8,7 +8,7 @@ export const GET = async (req, { params }) => {
   const orderBy = params.orderby;
 
   if (isValid(orderBy)) {
-    const registredPlayersQuery = await getUsers("all");
+    const registredPlayersQuery = await getUsersCloud("all");
     if (registredPlayersQuery != -1) {
       const registredPlayers = registredPlayersQuery.rows;
       const gdAccountsList = [];

@@ -21,12 +21,13 @@ export const POST = async (req, res) => {
     `SELECT * FROM users WHERE username ILIKE '${body.username}'`
   );
 
+
   if (!queryResult.isError()) {
     const rows = queryResult.getRows();
     const userExists = rows.length > 0;
     if (userExists) {
       const passwordMatch = await compare(body.password, rows[0].password);
-      if (!passwordMatch) {
+      if (passwordMatch) {
         const serializedToken = createAndSerializeToken(rows[0]);
         return NextResponse.json(SUCCESS_MESSAGE,
           {

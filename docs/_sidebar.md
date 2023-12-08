@@ -6,6 +6,10 @@
 - [Level](/models/Level)
 - [Song](/models/Song)
 
+## Database
+- [Como Funciona?](/database/ComoFunciona)
+- [db.users](/database/db.users)
+
 ## **RobTop Endpoint**
 
 - [gd.docs](https://github.com/gd-programming/gd.docs)

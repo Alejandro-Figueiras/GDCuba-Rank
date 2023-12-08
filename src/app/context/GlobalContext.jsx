@@ -16,7 +16,6 @@ export default function GlobalContextProvider({ children }) {
   useEffect(() => {
     async function auth() {
       if (firstAssembly) return;
-      setGlobaLoading(true);
       const apiResult = await apiRequest(config.apiURL + "auth/me");
 
       if (!apiResult.isError(false)) {
@@ -27,7 +26,6 @@ export default function GlobalContextProvider({ children }) {
             accountID: data.accountID,
           });
       }
-      setGlobaLoading(false);
     }
 
     auth();

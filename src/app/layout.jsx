@@ -19,8 +19,7 @@ export const metadata = {
 }
 
 export default async({ children }) => {
-  // if (!dbExists()) await dbInit();
-  await dbInit(); // Dev
+  if (!dbExists()) await dbInit();
   return (
     <html lang="es">
       <body className={inter.className}>

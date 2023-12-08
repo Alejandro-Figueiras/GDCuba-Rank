@@ -65,16 +65,6 @@ export default function UserModalPanel({
         {value}
       </AccordionItem>
     );
-    // return (
-    //   <article className="account-field w-full flex justify-center items-center flex-col">
-    //     <header>
-    //       <h2 className="font-bold text-xs">{label}</h2>
-    //     </header>
-    //     <section>
-    //       <p>{value}</p>
-    //     </section>
-    //   </article>
-    // );
   }
 
   function CardSelect({ items, placeholder, label, onChange, selectedKeys }) {
@@ -167,6 +157,12 @@ export default function UserModalPanel({
     });
   };
 
+  function AccountIcon({href = null}) {
+    return <div className="h-10 aspect-[1/1] bg-slate-200 rounded-md">
+    </div>
+  }
+
+
   // const
   return (
     <Modal
@@ -198,8 +194,14 @@ export default function UserModalPanel({
                     </div>
                   </div>
                   <Card className="bg-default-200">
-                    <CardBody>
-                      <div>ICONOS</div>
+                    <CardBody className="flex justify-evenly flex-row p-4">
+                      <AccountIcon/>
+                      <AccountIcon/>
+                      <AccountIcon/>
+                      <AccountIcon/>
+                      <AccountIcon/>
+                      <AccountIcon/>
+                      <AccountIcon/>
                     </CardBody>
                   </Card>
                   <div className="h-[300px] grid grid-cols-[0.5fr,_1fr] gap-2">

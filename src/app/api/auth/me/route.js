@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import {verify} from 'jsonwebtoken'
 import {cookies} from 'next/headers'
 import { COOKIES_INFO } from "@/models/constants";
-import { secureQuery } from "@/database/db.functions";
+import { secureQuery } from "@/database/cloud/db.functions";
 import { responseText } from "@/locales/siteText";
 
 export const GET = async(req) => {

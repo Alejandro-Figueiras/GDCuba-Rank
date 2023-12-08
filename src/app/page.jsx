@@ -9,7 +9,6 @@ import { ModalContext } from "./context/ModalContext";
 
 export default function Home() {
   const { openModal } = useContext(ModalContext);
-
   return (
     <>
       <NavBar />

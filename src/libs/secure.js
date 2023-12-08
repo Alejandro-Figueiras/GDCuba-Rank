@@ -1,4 +1,4 @@
-import { getUsers } from "@/database/db.functions";
+import { getUsers } from "@/database/cloud/db.functions";
 import { COOKIES_INFO } from "@/models/constants";
 import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";

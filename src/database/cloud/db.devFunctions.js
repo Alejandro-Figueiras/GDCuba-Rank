@@ -4,6 +4,7 @@ export const createUserTable = async () => {
   const createQuery = `CREATE TABLE users (
         id SERIAL PRIMARY KEY,
         username VARCHAR(15) NOT NULL,
+        password VARCHAR(255) NOT NULL,
         accountID INTEGER,
         phone VARCHAR(25),
         role VARCHAR(10) NOT NULL DEFAULT 'user',

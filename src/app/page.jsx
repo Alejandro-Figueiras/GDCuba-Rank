@@ -6,6 +6,7 @@ import { notify, notifyDismiss } from "@/libs/toastNotifications";
 import config from "../../config";
 import { useContext } from "react";
 import { ModalContext } from "./context/ModalContext";
+import GDIcon from "@/robtop/iconkit/GDIcon";
 
 export default function Home() {
   const { openModal } = useContext(ModalContext);
@@ -19,6 +20,7 @@ export default function Home() {
       >
         Test
       </button>
+      <GDIcon type="cube"/>
     </>
   );
 }

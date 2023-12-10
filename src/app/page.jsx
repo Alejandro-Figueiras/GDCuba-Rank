@@ -20,7 +20,7 @@ export default function Home() {
       >
         Test
       </button>
-      <GDIcon type="cube"/>
+      <GDIcon type="ufo" imageStyles={{border: "2px solid red"}} glow={true}/>
     </>
   );
 }

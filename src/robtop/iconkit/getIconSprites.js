@@ -1,3 +1,4 @@
+"use server"
 import gameSheet from './gameSheet.json'
 
 const types = {
@@ -11,7 +12,6 @@ const types = {
 }
 
 export const getIconSprites = ({type, iconNumber}) => {
-  // ------- Getting Sprites
   const sprites = []
   let WS = 0, WI = 0, HS = 0, HI = 0;
   for (const sprite of Object.keys(gameSheet)) {
@@ -33,5 +33,5 @@ export const getIconSprites = ({type, iconNumber}) => {
     }
   }
 
-  return {sprites, WS, WI, HS, HI}
+  return { sprites, WS, WI, HS, HI}
 }

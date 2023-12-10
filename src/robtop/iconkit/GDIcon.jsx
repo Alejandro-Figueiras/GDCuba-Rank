@@ -55,13 +55,18 @@ const GDIcon = ({type = "cube", iconNumber = 1, c1 = 1, c2 = 2, glow = false, im
     const ctx = printCanvas.current.getContext(`2d`)
     for (const sprite of sprites) {
       let color = null;
-      if (sprite[2]=='001.png') {
+
+      const spriteLayer = (['robot', 'spider'].includes(sprite[0]))
+       ? sprite[3]
+       : sprite[2]
+      if (spriteLayer=='001.png') {
         color = colors[c1];
-      } else if (sprite[2]=='2') {
+      } else if (spriteLayer=='2') {
         color = colors[c2];
-      } else if (sprite[2] == 'glow' && !glow) {
+      } else if (spriteLayer == 'glow' && !glow) {
         continue;
       }
+
       const path = sprite.join('_');
       const currentUrl = window.location.href;
       const hostURL = currentUrl.split("/").slice(0,3).join("/")

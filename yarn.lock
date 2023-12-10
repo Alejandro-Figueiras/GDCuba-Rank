@@ -904,7 +904,7 @@
     "@nextui-org/react-rsc-utils" "2.0.10"
     "@nextui-org/shared-utils" "2.0.4"
 
-"@nextui-org/react@^2.1.13":
+"@nextui-org/react@^2.2.9":
   version "2.2.9"
   resolved "https://registry.yarnpkg.com/@nextui-org/react/-/react-2.2.9.tgz#aa4e872492a710fdffffd431679e6cbd857d3653"
   integrity sha512-QHkUQTxI9sYoVjrvTpYm5K68pMDRqD13+DVzdsrkJuETGhbvE2c2CCGc4on9EwXC3JsOxuP/OyqaAmOIuHhYkA==
@@ -3504,7 +3504,7 @@ fraction.js@^4.3.6:
   resolved "https://registry.yarnpkg.com/fraction.js/-/fraction.js-4.3.7.tgz#06ca0085157e42fda7f9e726e79fefc4068840f7"
   integrity sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==
 
-framer-motion@^10.16.4:
+framer-motion@^10.16.16:
   version "10.16.16"
   resolved "https://registry.yarnpkg.com/framer-motion/-/framer-motion-10.16.16.tgz#a10a03e1190a717109163cfff212a84c8ad11b0c"
   integrity sha512-je6j91rd7NmUX7L1XHouwJ4v3R+SO4umso2LUcgOct3rHZ0PajZ80ETYZTajzEXEl9DlKyzjyt4AvGQ+lrebOw==

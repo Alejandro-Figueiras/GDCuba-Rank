@@ -1,6 +1,5 @@
 'use client'
-import iconData from './iconData.json'
-const gameSheet = iconData.gameSheet;
+import gameSheet from './gameSheet.json'
 import colors from './colors.json'
 import Jimp from 'jimp'
 import { getLayer } from './getLayer';
@@ -16,8 +15,9 @@ const types = {
   ball: 'player_ball'
 }
 
-const GDIcon = ({type = "cube", iconNumber = 1, c1 = 1, c2 = 2}) => {
+const GDIcon = ({type = "cube", iconNumber = 1, c1 = 1, c2 = 2, imageStyles = {}, imageClassNames = ""}) => {
   const printCanvas = useRef()
+  const finalImage = useRef()
 
   // ------- Getting Sprites
   const sprites = []
@@ -33,10 +33,6 @@ const GDIcon = ({type = "cube", iconNumber = 1, c1 = 1, c2 = 2}) => {
       }
       spriteInfo = newSprite;
     }
-    
-    if (Object.values(types).includes(spriteInfo[0])) {
-      
-    }
 
     if (spriteInfo[0] == types[type] && parseInt(spriteInfo[1]) == iconNumber) {
       sprites.push(spriteInfo)
@@ -47,6 +43,7 @@ const GDIcon = ({type = "cube", iconNumber = 1, c1 = 1, c2 = 2}) => {
   
   // Coloring sprites
   useEffect(() => {
+    console.log("Starting...")
     const layers = []
     const ctx = printCanvas.current.getContext(`2d`)
     for (const sprite of sprites) {
@@ -68,6 +65,8 @@ const GDIcon = ({type = "cube", iconNumber = 1, c1 = 1, c2 = 2}) => {
           fullW/2 - spriteSize[0]/2 + spriteOffset[0],
           fullH/2 - spriteSize[1]/2 + spriteOffset[1]
         )
+        const data = printCanvas.current.toDataURL();
+        finalImage.current.src = data;
       })
       // TODO glow
     }
@@ -75,8 +74,8 @@ const GDIcon = ({type = "cube", iconNumber = 1, c1 = 1, c2 = 2}) => {
   
   return (
     <>
-      <p>{type}: {iconNumber}</p>
-      <canvas ref={printCanvas} width={fullW} height={fullH}></canvas>
+      <canvas style={{display: 'none'}} ref={printCanvas} width={fullW} height={fullH}></canvas>
+      <img src="/assets/default_icon.png" alt="Icon" ref={finalImage} style={imageStyles} className={imageClassNames}/>
     </>
   )
 }

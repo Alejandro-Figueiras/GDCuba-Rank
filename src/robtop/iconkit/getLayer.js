@@ -1,8 +1,7 @@
 "use server"
 
 import Jimp from "jimp";
-import iconData from './iconData.json'
-const gameSheet = iconData.gameSheet;
+import gameSheet from './gameSheet.json'
 import colors from './colors.json'
 
 export const getLayer = ({url, path, color = null}) => {

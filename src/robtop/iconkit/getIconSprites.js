@@ -26,10 +26,10 @@ export const getIconSprites = ({type, iconNumber}) => {
 
     if (spriteInfo[0] == types[type] && parseInt(spriteInfo[1]) == iconNumber) {
       sprites.push(spriteInfo)
-      WS = Math.max(Math.abs(gameSheet[sprite].spriteSize[0]/2-gameSheet[sprite].spriteOffset[0]), WS)
-      WI = Math.max(Math.abs(gameSheet[sprite].spriteSize[0]/2+gameSheet[sprite].spriteOffset[0]), WI)
-      HS = Math.max(Math.abs(gameSheet[sprite].spriteSize[1]/2+gameSheet[sprite].spriteOffset[1]), HS)
-      HI = Math.max(Math.abs(gameSheet[sprite].spriteSize[1]/2-gameSheet[sprite].spriteOffset[1]), HI)
+      WS = Math.max(Math.abs(gameSheet[sprite].spriteSourceSize[0]/2-gameSheet[sprite].spriteOffset[0]), WS)
+      WI = Math.max(Math.abs(gameSheet[sprite].spriteSourceSize[0]/2+gameSheet[sprite].spriteOffset[0]), WI)
+      HS = Math.max(Math.abs(gameSheet[sprite].spriteSourceSize[1]/2+gameSheet[sprite].spriteOffset[1]), HS)
+      HI = Math.max(Math.abs(gameSheet[sprite].spriteSourceSize[1]/2-gameSheet[sprite].spriteOffset[1]), HI)
     }
   }
 

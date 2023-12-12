@@ -26,7 +26,11 @@ const printSprites = async(spritesToPrint) => {
   }
   const fullImage = new Jimp(WS+WI, HS+HI);
   for (const sprite of spritesToPrint) {
-    fullImage.composite(sprite.layer, WS+sprite.x, HS+sprite.y)
+    fullImage.composite(sprite.layer, WS+sprite.x, HS+sprite.y, {
+      mode: Jimp.BLEND_SOURCE_OVER,
+      opacityDest: 1,
+      opacitySource: 1
+    })
   }
   return await fullImage.getBase64Async(Jimp.MIME_PNG)
 }
@@ -53,7 +57,7 @@ export const makeIcon = async({type, iconNumber, c1, c2, glow, hostURL}) => {
     const url = `${hostURL}/assets/iconkit/${path}`
     
     const spriteOffset = gameSheet[path].spriteOffset
-    const layer = await getLayer({url, path, color, rotate})
+    const layer = await getLayer({url, path, color, rotate, scale})
     spritesToPrint.push({
       path,
       layer, 

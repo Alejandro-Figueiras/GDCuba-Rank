@@ -2,18 +2,17 @@
 
 import Jimp from "jimp";
 import gameSheet from './gameSheet.json'
-import colors from './colors.json'
 
-export const getLayer = async({url, path, color = null, rotate = null, scale = [1,1], spriteSize = [0,0]}) => {
+export const getLayer = async({url, path, color = null, rotate = null, scale = [1,1]}) => {
   const image = await Jimp.read(url);
   if (gameSheet[path].textureRotated) image.rotate(90);
+  image.resize(image.getWidth() * scale[0], image.getHeight() * scale[1])
   if (rotate) {
     image.scale(8)
     image.rotate(rotate)
     image.scale(0.125)
   }
   
-  //image.resize(spriteSize[0]*scale[0], spriteSize[1]*scale[1] )
   if (color) image.color([
     {apply: 'red', params: [-255+color.r]},
     {apply: 'green', params: [-255+color.g]},

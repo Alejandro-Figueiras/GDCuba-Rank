@@ -5,6 +5,7 @@ import { getIconSprites } from './getIconSprites';
 import gameSheet from './gameSheet.json'
 import colors from './colors.json'
 import robotInfo from './robotInfo.json'
+import spiderInfo from './spiderInfo.json'
 import { getLayer } from './getLayer';
 
 const layerPriority = {
@@ -15,11 +16,26 @@ const layerPriority = {
   'extra': 5
 }
 
-export const makeIcon = async({type, iconNumber, c1, c2, glow, hostURL}) => {
-  const {sprites, WS, WI, HS, HI} = getIconSprites({type, iconNumber})
-  const fullImage = new Jimp(WS+WI, HS+HI)
+const printSprites = async(spritesToPrint) => {
+  let WS = 0, WI = 0, HS = 0, HI = 0;
+  for (const sprite of spritesToPrint) {
+    WS = Math.max(Math.abs(sprite.w/2-gameSheet[sprite.path].spriteOffset[0]+sprite.offsetX), WS)
+    WI = Math.max(Math.abs(sprite.w/2+gameSheet[sprite.path].spriteOffset[0]+sprite.offsetX), WI)
+    HS = Math.max(Math.abs(sprite.h/2+gameSheet[sprite.path].spriteOffset[1]+sprite.offsetY), HS)
+    HI = Math.max(Math.abs(sprite.h/2-gameSheet[sprite.path].spriteOffset[1]+sprite.offsetY), HI)  
+  }
+  const fullImage = new Jimp(WS+WI, HS+HI);
+  for (const sprite of spritesToPrint) {
+    fullImage.composite(sprite.layer, WS+sprite.x, HS+sprite.y)
+  }
+  return await fullImage.getBase64Async(Jimp.MIME_PNG)
+}
 
-  const printSprite = async({sprite, rotate = null, offsetX = 0, offsetY = 0, scale = null}) => {
+export const makeIcon = async({type, iconNumber, c1, c2, glow, hostURL}) => {
+  const {sprites} = getIconSprites({type, iconNumber})
+  const spritesToPrint = []
+  
+  const makeSprites = async({sprite, rotate = null, offsetX = 0, offsetY = 0, scale = null}) => {
     let color = null;
     
     const spriteLayer = (['robot', 'spider'].includes(sprite[0]))
@@ -38,11 +54,16 @@ export const makeIcon = async({type, iconNumber, c1, c2, glow, hostURL}) => {
     
     const spriteOffset = gameSheet[path].spriteOffset
     const layer = await getLayer({url, path, color, rotate})
-    fullImage.composite(
+    spritesToPrint.push({
+      path,
       layer, 
-      WS - layer.getWidth()/2 + spriteOffset[0] + offsetX,
-      HS - layer.getHeight()/2 - spriteOffset[1] - offsetY
-      )
+      x: 0-layer.getWidth()/2 + spriteOffset[0] + offsetX,
+      y: 0-layer.getHeight()/2 - spriteOffset[1] - offsetY,
+      w: layer.getWidth(),
+      h: layer.getHeight(),
+      offsetX,
+      offsetY
+    })
   }
 
   sprites.sort((a,b) => {
@@ -51,11 +72,11 @@ export const makeIcon = async({type, iconNumber, c1, c2, glow, hostURL}) => {
     return aP - bP; 
   })
 
-  if (type == "robot") {
-    for (const frame of robotInfo) {
+  if (type == "robot" || type == "spider") {
+    for (const frame of (type == "robot") ? robotInfo : spiderInfo) {
       for (const sprite of sprites) {
         if (parseInt(sprite[2]) == frame.part)
-          await printSprite({
+          await makeSprites({
             sprite, 
             rotate: frame.rotation*-1,
             offsetX: frame.pos[0]*4,
@@ -66,9 +87,9 @@ export const makeIcon = async({type, iconNumber, c1, c2, glow, hostURL}) => {
     }
   } else { // demas iconos
     for (const sprite of sprites) {
-      await printSprite({sprite})
+      await makeSprites({sprite})
     }
   }
 
-  return await fullImage.getBase64Async(Jimp.MIME_PNG)
+  return await printSprites(spritesToPrint);
 }

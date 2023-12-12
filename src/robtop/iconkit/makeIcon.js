@@ -71,8 +71,8 @@ export const makeIcon = async({type, iconNumber, c1, c2, glow, hostURL}) => {
   }
 
   sprites.sort((a,b) => {
-    const aP = layerPriority[a[3]] | 8;
-    const bP = layerPriority[b[3]] | 8;
+    const aP = layerPriority[a[(['robot', 'spider'].includes(type))?3:2]] | 8;
+    const bP = layerPriority[b[(['robot', 'spider'].includes(type))?3:2]] | 8;
     return aP - bP; 
   })
 

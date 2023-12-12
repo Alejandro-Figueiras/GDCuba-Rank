@@ -20,8 +20,8 @@ export default function Home() {
       >
         Test
       </button>
-      <GDIcon type="robot" iconNumber={15} imageStyles={{border: "2px solid red"}} c2={5} glow={true}/>
-      <GDIcon type="spider" iconNumber={14} imageStyles={{border: "2px solid red"}} c2={5} glow={true}/>
+      {/* <GDIcon type="robot" iconNumber={25} imageStyles={{border: "2px solid red"}} c2={5} glow={true}/> */}
+      <GDIcon type="ship" iconNumber={28} imageStyles={{border: "2px solid red"}} c2={5} glow={true}/>
       {/* <GDIcon type="cube" iconNumber={1} imageStyles={{border: "2px solid red"}} c2={6} glow={true}/> */}
     </>
   );

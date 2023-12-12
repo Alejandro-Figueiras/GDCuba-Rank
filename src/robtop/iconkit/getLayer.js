@@ -4,6 +4,7 @@ import Jimp from "jimp";
 import gameSheet from './gameSheet.json'
 
 export const getLayer = async({url, path, color = null, rotate = null, scale = [1,1]}) => {
+  if (!scale) scale=[1,1]
   const image = await Jimp.read(url);
   if (gameSheet[path].textureRotated) image.rotate(90);
   image.resize(image.getWidth() * scale[0], image.getHeight() * scale[1])

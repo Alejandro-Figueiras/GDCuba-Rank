@@ -35,6 +35,11 @@ const printSprites = async(spritesToPrint) => {
   return await fullImage.getBase64Async(Jimp.MIME_PNG)
 }
 
+/**
+ * Se utiliza para renderizar la imagen en formado Base64Url de un icono seleccionado
+ * @param {*} Consultar documentación
+ * @returns Image Base64Url
+ */
 export const makeIcon = async({type, iconNumber, c1, c2, glow, hostURL}) => {
   const {sprites} = getIconSprites({type, iconNumber})
   const spritesToPrint = []

@@ -22,6 +22,7 @@ import {
 } from "@nextui-org/react";
 import React, { useContext, useEffect, useId, useRef, useState } from "react";
 import config from "../../../config";
+import { useGDIcon } from "@/robtop/iconkit/useGDIcon";
 export default function UserModalPanel({
   user,
   isOpen,
@@ -31,11 +32,11 @@ export default function UserModalPanel({
   function AccountStat({ value, icon = null }) {
     return (
       <div className="flex gap-3 items-center justify-center relative">
-        <span className="bg-default-300 w-5 h-5 flex items-center justify-center p-2">
+        <span className="w-7 h-7 flex items-center justify-center">
           {icon ? (
             <img
               src={icon}
-              className="object-cover w-full absolute top-0 left-0"
+              className="w-100 top-0 left-0"
             />
           ) : (
             "ic"
@@ -157,9 +158,21 @@ export default function UserModalPanel({
     });
   };
 
-  function AccountIcon({href = null}) {
-    return <div className="h-10 aspect-[1/1] bg-slate-200 rounded-md">
-    </div>
+  function AccountIcon({
+    type = 'cube',
+    iconNumber = 1,
+    c1 = 0,
+    c2 = 5,
+    glow = false
+  }) {
+    const { icon } = useGDIcon({
+      type, iconNumber, c1, c2, glow
+    })
+    return (
+      <div className="rounded-md">
+        <img ref={icon} alt="Icon" className='h-10' />
+      </div>
+    )
   }
 
 
@@ -185,75 +198,42 @@ export default function UserModalPanel({
                 <ModalBody>
                   <div className="h-8">
                     <div className="flex justify-between">
-                      <AccountStat value={user.stars} />
-                      <AccountStat value={user.diamonds} />
-                      <AccountStat value={user.secretCoins} />
-                      <AccountStat value={user.usercoins} />
-                      <AccountStat value={user.demons} />
-                      <AccountStat value={user.creatorpoints} />
+                      <AccountStat value={user.stars} icon="/img/star.png"/>
+                      <AccountStat value={user.diamonds} icon='/img/diamond.png'/>
+                      <AccountStat value={user.secretCoins} icon='/img/secretcoin.png'/>
+                      <AccountStat value={user.userCoins} icon='/img/coin.png'/>
+                      <AccountStat value={user.demons} icon='/img/demon.png'/>
+                      <AccountStat value={user.creatorpoints} icon="/img/cp.png"/>
                     </div>
                   </div>
                   <Card className="bg-default-200">
                     <CardBody className="flex justify-evenly flex-row p-4">
-                      <AccountIcon/>
-                      <AccountIcon/>
-                      <AccountIcon/>
-                      <AccountIcon/>
-                      <AccountIcon/>
-                      <AccountIcon/>
-                      <AccountIcon/>
+                      <AccountIcon type={"cube"} iconNumber={user.accIcon} c1={user.playerColor} c2={user.playerColor2} glow={user.accGlow} />
+                      <AccountIcon type={"ship"} iconNumber={user.accShip} c1={user.playerColor} c2={user.playerColor2} glow={user.accGlow} />
+                      <AccountIcon type={"ball"} iconNumber={user.accBall} c1={user.playerColor} c2={user.playerColor2} glow={user.accGlow} />
+                      <AccountIcon type={"ufo"} iconNumber={user.accBird} c1={user.playerColor} c2={user.playerColor2} glow={user.accGlow} />
+                      <AccountIcon type={"wave"} iconNumber={user.accWave} c1={user.playerColor} c2={user.playerColor2} glow={user.accGlow} />
+                      <AccountIcon type={"robot"} iconNumber={user.accRobot} c1={user.playerColor} c2={user.playerColor2} glow={user.accGlow} />
+                      <AccountIcon type={"spider"} iconNumber={user.accSpider} c1={user.playerColor} c2={user.playerColor2} glow={user.accGlow} />
                     </CardBody>
                   </Card>
                   <div className="h-[300px] grid grid-cols-[0.5fr,_1fr] gap-2">
                     {/* grid grid-cols-[0.5fr,_1fr] gap-2 */}
-                    <BodyCard cardTitle={"Detalles"}>
-                      <Accordion variant="splitted" className="text-[12px]">
-                        <AccordionItem
-                          key="1"
-                          aria-label="CuentaID"
-                          title={
-                            <Tooltip
-                              showArrow={true}
-                              content={`ID de ${user.username} en los Servidores de GD`}
-                            >
-                              <p className="text-sm">ID</p>
-                            </Tooltip>
-                          }
-                        >
-                          {user.accountID}
-                        </AccordionItem>
-                        <AccordionItem
-                          key="2"
-                          aria-label="Telefono"
-                          label="Telefono"
-                          title={
-                            <Tooltip
-                              showArrow={true}
-                              content={`Telefono asociado a su cuenta en GDQW`}
-                            >
-                              <p className="text-sm">Telefono</p>
-                            </Tooltip>
-                          }
-                        >
-                          {user.phone}
-                        </AccordionItem>
+                    <div>
+                      <Card classNames={{base: "mb-2"}}>
+                        <CardHeader className="text-small justify-between">
+                          <b>ID</b>
+                          <p>{user.accountID}</p>
+                        </CardHeader>
+                      </Card>
 
-                        <AccordionItem
-                          key="3"
-                          aria-label="Fecha de inicio"
-                          title={
-                            <Tooltip
-                              showArrow={true}
-                              content={`Cuando ${user.username} se unió a GDQW`}
-                            >
-                              <p className="text-sm">Fecha de cuenta</p>
-                            </Tooltip>
-                          }
-                        >
-                          {user.phone}
-                        </AccordionItem>
-                      </Accordion>
-                    </BodyCard>
+                      <Card classNames={{base: "mb-2"}}>
+                        <CardHeader className="text-small justify-between">
+                          <b>Teléfono</b>
+                          <p>{user.phone}</p>
+                        </CardHeader>
+                      </Card>
+                    </div>
                     <BodyCard cardTitle={"Datos y Permisos"}>
                       <CardSelect
                         items={roles}
@@ -267,12 +247,12 @@ export default function UserModalPanel({
                         selectedKeys={fields.status}
                         onChange={(e) => handleSelectionChange(e, "status")}
                       />
-                      <CardSelect
+                      {/* <CardSelect
                         items={types}
                         label={"Tipo de cuenta"}
                         selectedKeys={fields.type}
                         onChange={(e) => handleSelectionChange(e, "types")}
-                      />
+                      /> */}
                     </BodyCard>
                   </div>
                 </ModalBody>

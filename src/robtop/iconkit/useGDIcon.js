@@ -10,12 +10,17 @@ export const useGDIcon = ({
     const currentUrl = window.location.href;
     const hostURL = currentUrl.split("/").slice(0,3).join("/")
     const logic = async() => {
-      const final = await makeIcon({type, iconNumber, c1, c2, glow, hostURL})
-      console.log(final)
-      finalImage.current.src = final
+      let img = localStorage.getItem(`${type}_${iconNumber}_${c1}_${c2}_${glow?1:0}`)
+      if (!img) {
+        img = await makeIcon({type, iconNumber, c1, c2, glow, hostURL})
+        localStorage.setItem(`${type}_${iconNumber}_${c1}_${c2}_${glow?1:0}`, img)
+      }
+      if (finalImage.current) {
+        finalImage.current.src = img
+      }
     }
     logic()
   }, [])
 
-  return { finalImage }
+  return { icon: finalImage }
 }

@@ -1,8 +1,11 @@
-import { getUsersCloud } from "./cloud/db.functions"
+'use server'
+import { getAllAccounts, getUsersCloud } from "./cloud/db.functions"
 
 export const dbInit = async() => {
   global.cache = {
-    users: {}
+    users: {},
+    gdaccounts: {},
+    accUpdateLimit: 0,
   }
 
   // ------- USERS ----------
@@ -10,7 +13,13 @@ export const dbInit = async() => {
   for(const user of users.rows) {
     global.cache.users[user.username] = user
   }
-  console.log(global.cache.users)
+  
+  // ------- ACCOUNTS -----------
+  const accounts = await getAllAccounts();
+  for(const acc of accounts.result.rows) {
+    global.cache.gdaccounts[acc.username] = acc;
+  }
+  console.log(global.cache)
   console.log("Inicializa cache global")
 }
 

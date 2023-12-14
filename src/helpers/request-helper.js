@@ -30,6 +30,7 @@ export const gdRequest = (target, params) => {
         })
         .then(response => {
             const body = response.data;
+            if (body == -1) reject(body)
             let error;
             if (!body || body.match(/^-\d$/) || body.startsWith("error") || body.startsWith("<")) {
                 error = {serverError: true, response: body}

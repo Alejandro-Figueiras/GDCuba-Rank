@@ -16,9 +16,9 @@ export default ({ jugadores, ranking }) => {
           ranking.map((player, i) => 
             <TableRow key={i+1}>
               <TableCell>{i+1}</TableCell>
-              <TableCell>{jugadores[player].username}</TableCell>
-              <TableCell>⭐ {jugadores[player].stars}</TableCell>
-              <TableCell>🏆 {jugadores[player].globalRank}</TableCell>
+              <TableCell>{player.username}</TableCell>
+              <TableCell>⭐ {player.stars}</TableCell>
+              <TableCell>🏆 {player.globalrank}</TableCell>
             </TableRow>
           )
         }

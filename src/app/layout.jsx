@@ -8,6 +8,7 @@ import './globals.css'
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Inter } from 'next/font/google'
+import { updateAccounts } from '@/database/cloud/db.functions';
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
@@ -19,15 +20,24 @@ export const metadata = {
 }
 
 export default async({ children }) => {
-  if (!dbExists()) await dbInit();
+  await updateAccounts({limit: 1}); // <- Actualiza los datos de la db
+  let serverError = ""
+  try {
+    if (!dbExists()) await dbInit();
+  } catch (e) {
+    console.log(e)
+    serverError = "ERROR 500"
+  }
   return (
     <html lang="es">
       <body className={inter.className}>
-
-        <Providers>
-          {children}
-          <ToastContainer transition={Flip}/>
-        </Providers>
+        {(serverError)?(<p>{serverError}</p>)
+        : (
+          <Providers>
+            {children}
+            <ToastContainer transition={Flip}/>
+          </Providers>
+        )}
       </body>
     </html>
   )

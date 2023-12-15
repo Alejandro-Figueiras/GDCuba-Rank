@@ -26,3 +26,7 @@ export const dbInit = async() => {
 export const dbExists = () => {
   return (global.cache != undefined)
 }
+
+export const dbClear = () => {
+  return global.cache = undefined
+}

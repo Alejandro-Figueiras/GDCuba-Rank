@@ -122,10 +122,11 @@ export default () => {
                     isReadOnly
                     key="profile"
                     className="h-14 gap-2 opacity-100"
+                    textValue="User"
                   >
                     <User
                       name={currentUser.username == undefined ? "Invitado" : currentUser.username}
-                      description="@none"
+                      description={currentUser.username == undefined ? "none" : currentUser.phone}
                       classNames={{
                         name: "text-default-600",
                         description: "text-default-500",
@@ -152,6 +153,14 @@ export default () => {
                       </DropdownItem>
                     )
                   }
+                  {
+                    // Admin Link
+                    (logged && currentUser.role == 'admin') && (
+                      <DropdownItem key="admin-link" href='/admin'>
+                        Admin Dashboard
+                      </DropdownItem>  
+                    )
+                  }
                   {logged && (
                     <DropdownItem
                       key="logout-btn"
@@ -164,7 +173,7 @@ export default () => {
                         });
                       }}
                     >
-                      Logout
+                      Cerrar Sesión
                     </DropdownItem>
                   )}
                 </DropdownSection>

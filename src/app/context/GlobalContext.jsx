@@ -9,6 +9,8 @@ export default function GlobalContextProvider({ children }) {
   const [currentUser, setCurrentUser] = useState({
     username: undefined,
     accountID: undefined,
+    phone: undefined,
+    role: undefined
   });
   const [appliactionLoading, setAppliactionLoading] = useState({ toast: null });
   let firstAssembly = false;
@@ -24,6 +26,8 @@ export default function GlobalContextProvider({ children }) {
           setCurrentUser({
             username: data.username,
             accountID: data.accountID,
+            phone: data.phone,
+            role: data.role
           });
       }
     }

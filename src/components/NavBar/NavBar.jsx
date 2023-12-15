@@ -125,7 +125,7 @@ export default () => {
                   >
                     <User
                       name={currentUser.username == undefined ? "Invitado" : currentUser.username}
-                      description="@none"
+                      description={currentUser.username == undefined ? "none" : currentUser.phone}
                       classNames={{
                         name: "text-default-600",
                         description: "text-default-500",
@@ -150,6 +150,14 @@ export default () => {
                       <DropdownItem key="signup-btn" onPress={onOpenChangeSignUp}>
                         Registrarse
                       </DropdownItem>
+                    )
+                  }
+                  {
+                    // Admin Link
+                    (logged && currentUser.role == 'admin') && (
+                      <DropdownItem key="admin-link" href='/admin'>
+                        Admin Dashboard
+                      </DropdownItem>  
                     )
                   }
                   {logged && (

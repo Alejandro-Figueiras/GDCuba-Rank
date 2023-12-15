@@ -15,6 +15,8 @@ export const GET = async (req) => {
       const user = {
         username: payload.username,
         accountID: payload.accountid,
+        phone: payload.phone,
+        role: payload.role
       };
       return NextResponse.json(user, { status: 200 });
     } catch {

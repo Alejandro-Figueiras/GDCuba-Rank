@@ -58,6 +58,8 @@ const createToken = (account) => {
       exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24 * COOKIES_INFO.exp,
       username: account.username,
       accountid: account.accountid,
+      phone: account.phone,
+      role: account.role
     },
     process.env.JWT_SECRET
   );

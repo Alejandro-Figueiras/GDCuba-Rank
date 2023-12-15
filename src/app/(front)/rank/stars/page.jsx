@@ -18,7 +18,6 @@ export default () => {
 
   return (
     <>
-      <NavBar/>
       {(rank.length==0)
         ? (<p>Cargando datos...</p>)
         : (<div className="container mx-auto my-4 max-w-2xl">

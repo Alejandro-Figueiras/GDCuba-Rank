@@ -23,14 +23,7 @@ import { Button } from "@nextui-org/button";
 
 // Modals
 import { useDisclosure } from "@nextui-org/modal";
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from "@nextui-org/modal";
-import { Input } from "@nextui-org/input";
+
 import { Link } from "@nextui-org/link";
 import Login from "../Forms/Login";
 import SignUp from "../Forms/SignUp";
@@ -41,10 +34,17 @@ import { notify, notifyDismiss } from "@/libs/toastNotifications";
 import { operationText } from "@/locales/siteText";
 import { ModalContext } from "@/app/context/ModalContext";
 import { useSesion } from "@/hooks/useSesion";
-import { useGDIcon, useGDIconRef } from "@/robtop/iconkit/useGDIcon";
-import { getGDAccount } from "@/database/db.gdaccounts";
-import { useEffect, useState } from "react";
-import { makeIcon } from "@/robtop/iconkit/makeIcon";
+import { useGDIcon } from "@/robtop/iconkit/useGDIcon";
+import { usePathname } from "next/navigation";
+
+const NavLink = ({href, children}) => {
+  const rutaActual = usePathname()
+  return (
+    <NavbarItem isActive={rutaActual==href}>
+      <Link href={href} color={rutaActual==href?"primary":"foreground"}>{children}</Link>
+    </NavbarItem>
+  )
+}
 
 export default () => {
   const {currentUser, logout} = useSesion();
@@ -86,7 +86,8 @@ export default () => {
           <NavbarItem>
             <p className="font-bold text-inherit text-xl pr-4">GD Cuba ΔΔΔ</p>
           </NavbarItem>
-          <NavbarItem>NavBar Provisional</NavbarItem>
+          <NavLink href="/">Home</NavLink>
+          <NavLink href="/rank/stars">Estrellas</NavLink>
         </NavbarContent>
 
         <NavbarContent justify="end">

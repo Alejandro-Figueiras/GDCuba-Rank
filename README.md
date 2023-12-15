@@ -4,15 +4,15 @@ Proyecto de ranking para la comunidad cubana de Geometry Dash
 
 ## Dependencias Principales
 
-- React
-- Next.js 13
+- React 18.2
+- Next.js 14
 - TailwindCSS
 - PostgreSQL (pg)
 
 ## Documentación Extra
 
 ```bash
-yarn install
+yarn
 yarn run docs
 ```
 

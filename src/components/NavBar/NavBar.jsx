@@ -77,7 +77,6 @@ export default () => {
   })
 
   const logged = currentUser.username != undefined
-  console.log("Logued: " + logged)
 
   return (
     <>

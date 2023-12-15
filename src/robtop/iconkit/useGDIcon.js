@@ -61,7 +61,6 @@ export const useGDIcon = ({
           c1 = gdacc.playercolor;
           c2 = gdacc.playercolor2;
           glow = gdacc.accglow;
-          console.log("asd")
         }
       }
       let img = localStorage.getItem(`${type}_${iconNumber}_${c1}_${c2}_${glow?1:0}`)

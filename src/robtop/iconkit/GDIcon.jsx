@@ -1,9 +1,9 @@
 'use client'
 
-import { useGDIcon } from "./useGDIcon"
+import { useGDIconRef } from "./useGDIcon"
 
 const GDIcon = ({type = "cube", iconNumber = 1, c1 = 1, c2 = 2, glow = false, imageStyles = {}, imageClassNames = ""}) => {
-  const { finalImage } = useGDIcon({
+  const { finalImage } = useGDIconRef({
     type, iconNumber, c1, c2, glow
   });
   

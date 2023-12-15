@@ -22,7 +22,7 @@ import {
 } from "@nextui-org/react";
 import React, { useContext, useEffect, useId, useRef, useState } from "react";
 import config from "../../../config";
-import { useGDIcon } from "@/robtop/iconkit/useGDIcon";
+import { useGDIconRef } from "@/robtop/iconkit/useGDIcon";
 export default function UserModalPanel({
   user,
   isOpen,
@@ -165,7 +165,7 @@ export default function UserModalPanel({
     c2 = 5,
     glow = false
   }) {
-    const { icon } = useGDIcon({
+    const { icon } = useGDIconRef({
       type, iconNumber, c1, c2, glow
     })
     return (

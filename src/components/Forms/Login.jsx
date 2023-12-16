@@ -43,7 +43,6 @@ export default ({ isOpen, onOpenChange }) => {
         },
       });
       const data = await response.json();
-
       setLoading(false);
       if (data.status == "error") {
         notify(data.message, 'error')
@@ -51,7 +50,13 @@ export default ({ isOpen, onOpenChange }) => {
         return;
       }
       notify(data.message, 'success')
-      setCurrentUser(prev => ({...prev, username: formData.username}));
+      setCurrentUser(prev => ({
+        ...prev, 
+        username: data.username,
+        accountid: data.accountid,
+        phone: data.phone,
+        role: data.role
+      }));
       onClose();
     }
   };

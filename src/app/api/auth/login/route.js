@@ -10,10 +10,6 @@ const ERROR_RESPONSE = {
   status: 'error',
   message: responseText.loginError
 }
-const SUCCESS_MESSAGE = {
-  status: 'ok',
-  message: responseText.loginSuccess
-}
 
 export const POST = async (req, res) => {
   const body = await req.json();
@@ -29,7 +25,14 @@ export const POST = async (req, res) => {
       const passwordMatch = await compare(body.password, rows[0].password);
       if (passwordMatch) {
         const serializedToken = createAndSerializeToken(rows[0]);
-        return NextResponse.json(SUCCESS_MESSAGE,
+        return NextResponse.json({
+          status: 'ok',
+          message: responseText.loginSuccess,
+          username: rows[0].username,
+          accountid: rows[0].accountid,
+          phone: rows[0].phone,
+          role: rows[0].role
+        },
           {
             status: 200,
             headers: { "Set-Cookie": serializedToken },

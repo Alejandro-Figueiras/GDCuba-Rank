@@ -1,19 +1,18 @@
 'use client'
-import NavBar from "@/components/NavBar/NavBar"
 import RankTable from "@/components/Rank/RankTable"
-import { getStarsRank } from "@/database/cloud/db.functions"
+import { getAllCubans } from "@/database/db.gdaccounts"
 import {useState, useEffect} from 'react'
 
 export default () => {
   const [rank, setRank] = useState([])
 
   useEffect(() => {
-    getStarsRank()
-      .then((rows) => {
-        if (rows)
-          setRank(rows)
+    getAllCubans().then(players => {
+      players.sort((a,b) => {
+        return b.stars-a.stars;
       })
-    
+      setRank(players)
+    })
   }, [])
 
   return (

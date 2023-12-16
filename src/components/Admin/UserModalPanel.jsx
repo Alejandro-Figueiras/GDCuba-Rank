@@ -175,7 +175,6 @@ export default function UserModalPanel({
     )
   }
 
-
   // const
   return (
     <Modal
@@ -200,21 +199,21 @@ export default function UserModalPanel({
                     <div className="flex justify-between">
                       <AccountStat value={user.stars} icon="/img/star.png"/>
                       <AccountStat value={user.diamonds} icon='/img/diamond.png'/>
-                      <AccountStat value={user.secretCoins} icon='/img/secretcoin.png'/>
-                      <AccountStat value={user.userCoins} icon='/img/coin.png'/>
+                      <AccountStat value={user.secretcoins} icon='/img/secretcoin.png'/>
+                      <AccountStat value={user.usercoins} icon='/img/coin.png'/>
                       <AccountStat value={user.demons} icon='/img/demon.png'/>
                       <AccountStat value={user.creatorpoints} icon="/img/cp.png"/>
                     </div>
                   </div>
                   <Card className="bg-default-200">
                     <CardBody className="flex justify-evenly flex-row p-4">
-                      <AccountIcon type={"cube"} iconNumber={user.accIcon} c1={user.playerColor} c2={user.playerColor2} glow={user.accGlow} />
-                      <AccountIcon type={"ship"} iconNumber={user.accShip} c1={user.playerColor} c2={user.playerColor2} glow={user.accGlow} />
-                      <AccountIcon type={"ball"} iconNumber={user.accBall} c1={user.playerColor} c2={user.playerColor2} glow={user.accGlow} />
-                      <AccountIcon type={"ufo"} iconNumber={user.accBird} c1={user.playerColor} c2={user.playerColor2} glow={user.accGlow} />
-                      <AccountIcon type={"wave"} iconNumber={user.accWave} c1={user.playerColor} c2={user.playerColor2} glow={user.accGlow} />
-                      <AccountIcon type={"robot"} iconNumber={user.accRobot} c1={user.playerColor} c2={user.playerColor2} glow={user.accGlow} />
-                      <AccountIcon type={"spider"} iconNumber={user.accSpider} c1={user.playerColor} c2={user.playerColor2} glow={user.accGlow} />
+                      <AccountIcon type={"cube"} iconNumber={user.accicon} c1={user.playercolor} c2={user.playercolor2} glow={user.accglow} />
+                      <AccountIcon type={"ship"} iconNumber={user.accship} c1={user.playercolor} c2={user.playercolor2} glow={user.accglow} />
+                      <AccountIcon type={"ball"} iconNumber={user.accball} c1={user.playercolor} c2={user.playercolor2} glow={user.accglow} />
+                      <AccountIcon type={"ufo"} iconNumber={user.accbird} c1={user.playercolor} c2={user.playercolor2} glow={user.accglow} />
+                      <AccountIcon type={"wave"} iconNumber={user.accwave} c1={user.playercolor} c2={user.playercolor2} glow={user.accglow} />
+                      <AccountIcon type={"robot"} iconNumber={user.accrobot} c1={user.playercolor} c2={user.playercolor2} glow={user.accglow} />
+                      <AccountIcon type={"spider"} iconNumber={user.accspider} c1={user.playercolor} c2={user.playercolor2} glow={user.accglow} />
                     </CardBody>
                   </Card>
                   <div className="h-[300px] grid grid-cols-[0.5fr,_1fr] gap-2">
@@ -223,7 +222,7 @@ export default function UserModalPanel({
                       <Card classNames={{base: "mb-2"}}>
                         <CardHeader className="text-small justify-between">
                           <b>ID</b>
-                          <p>{user.accountID}</p>
+                          <p>{user.accountid}</p>
                         </CardHeader>
                       </Card>
 

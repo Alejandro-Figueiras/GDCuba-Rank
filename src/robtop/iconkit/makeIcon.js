@@ -8,6 +8,17 @@ import robotInfo from './robotInfo.json'
 import spiderInfo from './spiderInfo.json'
 import { getLayer } from './getLayer';
 
+const icon21 = {
+  cube: 142,
+  ship: 51,
+  ball: 43,
+  ufo: 35,
+  wave: 35,
+  robot: 26,
+  spider: 17,
+  colors: 41,
+}
+
 const layerPriority = {
   'glow': 1,
   '3': 2, // capsula del ufo
@@ -41,6 +52,9 @@ const printSprites = async(spritesToPrint) => {
  * @returns Image Base64Url
  */
 export const makeIcon = async({type, iconNumber, c1, c2, glow, hostURL}) => {
+  if (iconNumber>icon21[type]) {iconNumber=1};
+  if (c1>icon21.colors) {c1=0};
+  if (c2>icon21.colors) {c2=5};
   const {sprites} = getIconSprites({type, iconNumber})
   const spritesToPrint = []
   

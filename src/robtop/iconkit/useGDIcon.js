@@ -14,6 +14,46 @@ const icon21 = {
   colors: 41,
 }
 
+const getIcon = async({
+  type = 'cube', iconNumber = 1, c1 = 0, c2=5, glow = false,
+  username = null, hostURL
+}) => {
+
+  if (username) {
+    const gdacc = await getGDAccount(username);
+    if (gdacc) {
+      switch(type) {
+        case 'ship':
+          iconNumber = gdacc.accship; break;
+        case 'ball':
+          iconNumber = gdacc.accball; break;
+        case 'ufo':
+          iconNumber = gdacc.accbird; break;
+        case 'wave':
+          iconNumber = gdacc.accwave; break;
+        case 'robot': 
+          iconNumber = gdacc.accrobot; break;
+        case 'spider':
+          iconNumber = gdacc.accspider; break;
+        default:
+          iconNumber = gdacc.accicon; break;
+      }
+      c1 = gdacc.playercolor;
+      c2 = gdacc.playercolor2;
+      glow = gdacc.accglow;
+    }
+  }
+  if (iconNumber>icon21[type]) {iconNumber=1};
+  if (c1>icon21.colors) {c1=0};
+  if (c2>icon21.colors) {c2=5};
+  let img = localStorage.getItem(`${type}_${iconNumber}_${c1}_${c2}_${glow?1:0}`)
+  if (!img) {
+    img = await makeIcon({type, iconNumber, c1, c2, glow, hostURL})
+    localStorage.setItem(`${type}_${iconNumber}_${c1}_${c2}_${glow?1:0}`, img)
+  }
+  return img;
+}
+
 export const useGDIconRef = ({
   type = 'cube', iconNumber = 1, c1 = 0, c2=5, glow = false, effectDeps = [],
   username = null
@@ -24,38 +64,9 @@ export const useGDIconRef = ({
     const currentUrl = window.location.href;
     const hostURL = currentUrl.split("/").slice(0,3).join("/")
     const logic = async() => {
-      if (username) {
-        const gdacc = await getGDAccount(username);
-        if (gdacc) {
-          switch(type) {
-            case 'ship':
-              iconNumber = gdacc.accship; break;
-            case 'ball':
-              iconNumber = gdacc.accball; break;
-            case 'ufo':
-              iconNumber = gdacc.accbird; break;
-            case 'wave':
-              iconNumber = gdacc.accwave; break;
-            case 'robot': 
-              iconNumber = gdacc.accrobot; break;
-            case 'spider':
-              iconNumber = gdacc.accspider; break;
-            default:
-              iconNumber = gdacc.accicon; break;
-          }
-          c1 = gdacc.playercolor;
-          c2 = gdacc.playercolor2;
-          glow = gdacc.accglow;
-        }
-      }
-      if (iconNumber>icon21[type]) {iconNumber=1};
-      if (c1>icon21.colors) {c1=0};
-      if (c2>icon21.colors) {c2=5};
-      let img = localStorage.getItem(`${type}_${iconNumber}_${c1}_${c2}_${glow?1:0}`)
-      if (!img) {
-        img = await makeIcon({type, iconNumber, c1, c2, glow, hostURL})
-        localStorage.setItem(`${type}_${iconNumber}_${c1}_${c2}_${glow?1:0}`, img)
-      }
+      const img = getIcon({
+        type, iconNumber, c1, c2, glow, hostURL, username
+      })
       if (finalImage.current) {
         finalImage.current.src = img
       }
@@ -77,39 +88,9 @@ export const useGDIcon = ({
     const currentUrl = window.location.href;
     const hostURL = currentUrl.split("/").slice(0,3).join("/")
     const logic = async() => {
-      if (username) {
-        const gdacc = await getGDAccount(username);
-        if (gdacc) {
-          switch(type) {
-            case 'ship':
-              iconNumber = gdacc.accship; break;
-            case 'ball':
-              iconNumber = gdacc.accball; break;
-            case 'ufo':
-              iconNumber = gdacc.accbird; break;
-            case 'wave':
-              iconNumber = gdacc.accwave; break;
-            case 'robot': 
-              iconNumber = gdacc.accrobot; break;
-            case 'spider':
-              iconNumber = gdacc.accspider; break;
-            default:
-              iconNumber = gdacc.accicon; break;
-          }
-          c1 = gdacc.playercolor;
-          c2 = gdacc.playercolor2;
-          glow = gdacc.accglow;
-        }
-      }
-      if (iconNumber>icon21[type]) {iconNumber=1};
-      if (c1>icon21.colors) {c1=0};
-      if (c2>icon21.colors) {c2=5};
-      let img = localStorage.getItem(`${type}_${iconNumber}_${c1}_${c2}_${glow?1:0}`)
-      if (!img) {
-        img = await makeIcon({type, iconNumber, c1, c2, glow, hostURL})
-        localStorage.setItem(`${type}_${iconNumber}_${c1}_${c2}_${glow?1:0}`, img)
-      }
-      console.log(img)
+      const img = getIcon({
+        type, iconNumber, c1, c2, glow, hostURL, username
+      })
       setIcon(img)
     }
     logic()

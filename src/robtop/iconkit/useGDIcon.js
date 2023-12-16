@@ -15,7 +15,8 @@ const icon21 = {
 }
 
 export const useGDIconRef = ({
-  type = 'cube', iconNumber = 1, c1 = 0, c2=5, glow = false, effectDeps = []
+  type = 'cube', iconNumber = 1, c1 = 0, c2=5, glow = false, effectDeps = [],
+  username = null
 }) => {
   const finalImage = useRef()
 
@@ -23,6 +24,30 @@ export const useGDIconRef = ({
     const currentUrl = window.location.href;
     const hostURL = currentUrl.split("/").slice(0,3).join("/")
     const logic = async() => {
+      if (username) {
+        const gdacc = await getGDAccount(username);
+        if (gdacc) {
+          switch(type) {
+            case 'ship':
+              iconNumber = gdacc.accship; break;
+            case 'ball':
+              iconNumber = gdacc.accball; break;
+            case 'ufo':
+              iconNumber = gdacc.accbird; break;
+            case 'wave':
+              iconNumber = gdacc.accwave; break;
+            case 'robot': 
+              iconNumber = gdacc.accrobot; break;
+            case 'spider':
+              iconNumber = gdacc.accspider; break;
+            default:
+              iconNumber = gdacc.accicon; break;
+          }
+          c1 = gdacc.playercolor;
+          c2 = gdacc.playercolor2;
+          glow = gdacc.accglow;
+        }
+      }
       if (iconNumber>icon21[type]) {iconNumber=1};
       if (c1>icon21.colors) {c1=0};
       if (c2>icon21.colors) {c2=5};

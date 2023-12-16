@@ -14,6 +14,7 @@
 - [Anatomía del ícono](/iconkit/Anatomia)
 - [makeIcon](/iconkit/makeIcon)
 - [Como Funciona?](/iconkit/ComoFunciona)
+- [useGDIcon](/iconkit/useGDIcon)
 
 ## **RobTop Endpoint**
 

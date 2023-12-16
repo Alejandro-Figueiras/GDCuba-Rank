@@ -196,23 +196,13 @@ export const updateAccount = async(id) => {
     twitter = '${account.twitter}',
     twitch = '${account.twitch}',
     timestamp = '${account.timestamp}'
-  ) WHERE accountID = '${id}'`;
+  ) WHERE accountid = '${id}'`;
   // TODO si el usuario se cambia el nombre actualizar
   await secureQuery(query)
+  const accToCache = await secureQuery(`SELECT * FROM gdaccounts WHERE accountid = '${id}'`)
+  const acc = accToCache.result.rows[0]
+  global.cache.gdaccounts[acc.username] = acc;
   return 1;
-}
-
-// -------- RANKINGS -----------
-export const getStarsRank = async() => {
-  const query = 'SELECT id, username, stars, globalRank FROM gdaccounts ORDER BY stars DESC'
-  const queryResult = await secureQuery(query);
-  if (!queryResult.error) {
-    return queryResult.result.rows;
-  } else {
-    console.error("Error at getStarsRank: ", queryResult.error);
-    return -1;
-  }
-  
 }
 
 export const updateAccounts = async({limit= 3, timeLimit = 60000}) => {

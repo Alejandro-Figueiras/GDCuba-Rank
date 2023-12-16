@@ -13,8 +13,11 @@ import { useGDIcon } from "@/robtop/iconkit/useGDIcon";
 import { useContext } from "react";
 import { apiRequest } from "@/libs/serverRequest";
 import config from "../../../config";
+import { usePathname } from "next/navigation";
 
 const UserDropdown = ({currentUser, onOpenLogin, onOpenChangeSignUp, logout}) => {
+  const ruta = usePathname()
+  const admin = ruta.startsWith('/admin')
   const { openModal } = useContext(ModalContext);
   const handleLogout = async () => {
     const apiResult = await apiRequest(config.apiURL + "logout");
@@ -32,7 +35,7 @@ const UserDropdown = ({currentUser, onOpenLogin, onOpenChangeSignUp, logout}) =>
   })
 
   const logged = currentUser.username != undefined
-  console.log(currentUser)
+
   return (
     <Dropdown placement="bottom-end">
       <DropdownTrigger>
@@ -80,6 +83,7 @@ const UserDropdown = ({currentUser, onOpenLogin, onOpenChangeSignUp, logout}) =>
               }}
             />
           </DropdownItem>
+          {/* -------- USER PATH ONLY ---------- */}
           {
             !logged && (
               <DropdownItem key="login-btn" onPress={onOpenLogin}>
@@ -97,13 +101,25 @@ const UserDropdown = ({currentUser, onOpenLogin, onOpenChangeSignUp, logout}) =>
           }
           {
             // Admin Link
-            (logged && currentUser.role == 'admin') && (
+            (!admin && logged && currentUser.role == 'admin') && (
               <DropdownItem key="admin-link" href='/admin'>
                 Admin Dashboard
               </DropdownItem>  
             )
           }
-          {logged && (
+
+          {/* -------- ADMIN PATH OYLY --------- */}
+          {
+            // Admin Link
+            (admin) && (
+              <DropdownItem key="admin-return-link" href='/'>
+                Volver al Inicio
+              </DropdownItem>  
+            )
+          }
+
+          {/* -------- END ADMIN PATH ---------- */}
+          {(logged) && (
             <DropdownItem
               key="logout-btn"
               onPress={() => {
@@ -118,6 +134,8 @@ const UserDropdown = ({currentUser, onOpenLogin, onOpenChangeSignUp, logout}) =>
               Cerrar Sesión
             </DropdownItem>
           )}
+
+
         </DropdownSection>
       </DropdownMenu>
     </Dropdown>

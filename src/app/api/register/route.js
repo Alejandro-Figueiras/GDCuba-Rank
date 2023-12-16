@@ -27,7 +27,7 @@ export const POST = async (req) => {
     if (gdAccount !== -1) {
       const passwordEncrypt = await hash(fields.password, 5);
       fields.password = passwordEncrypt;
-      fields.accountID = gdAccount.accountID;
+      fields.accountid = gdAccount.accountid;
 
       // console.log("data: ", fields);
       const query = await addUserCloud(fields);

@@ -6,12 +6,12 @@ import { addUserCloud, getUsersCloud } from "./cloud/db.functions"
  * @param {Object} { user, password, phone, accountID }
  * @returns {Object} 
  */
-export const addUser = async({ user, password, phone, accountID }) => {
-  const response = await addUserCloud({ user, password, phone, accountID });
+export const addUser = async({ user, password, phone, accountid }) => {
+  const response = await addUserCloud({ user, password, phone, accountid });
   if (response.isError()) {
     throw response.error
   } else {
-    return global.cache.users[user] = (await getUsersCloud(accountID)).rows[0]
+    return global.cache.users[user] = (await getUsersCloud(accountid)).rows[0]
   }
 }
 

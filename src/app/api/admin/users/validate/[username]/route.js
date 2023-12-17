@@ -1,7 +1,7 @@
-import { validateUserCloud } from "@/database/cloud/db.functions";
 import { authorize } from "@/libs/secure";
 import { NextResponse } from "next/server";
 import {responseText} from '@/locales/siteText';
+import { validateUser } from "@/database/db.users";
 
 export const GET = async (req, { params }) => {
   const authorized = await authorize();
@@ -10,7 +10,7 @@ export const GET = async (req, { params }) => {
     return NextResponse.json({ error: responseText.unauthorize }, { status: 401 });
   }
 
-  const queryResult = await validateUserCloud(params.username);
+  const queryResult = await validateUser({user: params.username});
   if (!queryResult.isError()) {
     return NextResponse.json(
       { message: `Usuario ${params.username} validado correctamente` },

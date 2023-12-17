@@ -78,3 +78,33 @@ Ninguna por el momento
   ...
 ]
 ```
+
+## validateUser
+
+Esta función verifica el usuario dentro del sitio. Lo actualiza primero en la nube y luego en la cache local
+
+### Propiedades
+
+```json
+{ 
+  user // String
+}
+```
+
+### Devuelve
+```js
+[
+  { 
+    id,        // Number
+    username,  // String
+    accountid, // Number
+    phone,     // String
+    role,      // String (enum)
+    status,    // Char (enum)
+    password   // String (hash)
+  },
+  ...
+]
+```
+
+O lanza un error si no fue posible actualizar el estado del usuario

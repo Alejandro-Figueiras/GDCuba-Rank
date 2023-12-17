@@ -1,4 +1,4 @@
-import { addUserCloud, getUsersCloud } from "./cloud/db.functions"
+import { addUserCloud, getUsersCloud, validateUserCloud } from "./cloud/db.functions"
 
 /**
  * Esta función agrega un usuario a la base de datos y posteriormente lo descarga a la cache local.
@@ -45,4 +45,16 @@ export const findUser = ({user = ""}) => {
  */
 export const getAllUsers = () => {
   return global.cache.users
+}
+
+/**
+ * Esta función verifica el usuario dentro del sitio. Lo actualiza primero en la nube y luego en la cache local
+ * @param {Object} { user }
+ * @returns {Object} user object, si falla se debe manejar el catch de la promesa
+ */
+export const validateUser = async({user}) => {
+  const result = await validateUserCloud(user);
+  if (result.isError()) throw new Error('Error al validar' + result.error)
+  global.cache.users[user].status = 'v'
+  return global.cache.users[user];
 }

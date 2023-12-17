@@ -68,8 +68,9 @@ export const makeIcon = async({type, iconNumber, c1, c2, glow, hostURL}) => {
       color = colors[c1];
     } else if (spriteLayer=='2') {
       color = colors[c2];
-    } else if (spriteLayer == 'glow' && !glow) {
-      return;
+    } else if (spriteLayer == 'glow') {
+      if (!glow) return;
+      color = colors[c2];
     }
 
     const path = sprite.join('_');

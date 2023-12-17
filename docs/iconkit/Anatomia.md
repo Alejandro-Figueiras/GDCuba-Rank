@@ -21,7 +21,7 @@ Capas del icono ordenadas por el z-index de más distante a más cercana
 
 | Capa | Descripción |
 | :--: | ----------- |
-| glow | La capa de glow del ícono |
+| glow | La capa de glow del ícono, se le aplica el color 2 por ahora, cambiará a un custom color en la 2.2 |
 | 3    | La capsula del ufo, no se le aplica color |
 | 2    | Se le aplica el color 2 |
 | Nada | Se le aplica el color 1, si utilizas el método split sobre el nombre del archivo, la puedes identificar con un else descartando las anteriores, o comparandola con '001.png' |

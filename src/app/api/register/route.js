@@ -1,8 +1,9 @@
-import { addAccountCloud, addUserCloud, secureQuery } from "@/database/cloud/db.functions";
 import { NextResponse } from "next/server";
 import { hash } from "bcryptjs";
 import { getAccount } from "@/robtop/getAccount";
 import { responseText } from "@/locales/siteText";
+import { addUser, findUser } from "@/database/db.users";
+import { addGDAccount } from "@/database/db.gdaccounts";
 
 export const POST = async (req) => {
   const data = await req.json();
@@ -13,27 +14,25 @@ export const POST = async (req) => {
     user: data.username,
     password: data.password,
     phone: data.phone,
-    accountID: null
+    accountid: null
   };
 
-  const accountRegistered =
-    (
-      await secureQuery(`SELECT * FROM users WHERE username = '${fields.user}'`)
-    ).getRows().length !== 0;
+  const accountRegistered = findUser({user: fields.user})
   console.log("Cuenta registrada: ", accountRegistered);
-  if (!accountRegistered) {
+  if (accountRegistered == undefined) {
     const gdAccount = await getAccount(data.username);
 
     if (gdAccount !== -1) {
       const passwordEncrypt = await hash(fields.password, 5);
       fields.password = passwordEncrypt;
+      fields.user = gdAccount.username;
       fields.accountid = gdAccount.accountid;
 
       // console.log("data: ", fields);
-      const query = await addUserCloud(fields);
+      const query = await addUser(fields);
       // TODO comprobar si esta en la db
-      const queryGD = await addAccountCloud(gdAccount);
-      if (!query.isError()) {
+      const queryGD = await addGDAccount({account: gdAccount});
+      if (query) {
         return NextResponse.json(
           { message: "Usuario creado satisfactoriamente" },
           {

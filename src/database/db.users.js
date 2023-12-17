@@ -25,7 +25,7 @@ export const getUser = ({user}) => {
 }
 
 /**
- * Esta función es igual que la función getUser pero no tiene en cuenta las mayusculas y minusculas, retorna datos del usuario directamente de la cache local, nunca toca la base de datos online
+ * Esta función es igual a la función getUser pero no tiene en cuenta las mayusculas y minusculas, retorna datos del usuario directamente de la cache local, nunca toca la base de datos online
  * @param {Object} { user }
  * @returns 
  */

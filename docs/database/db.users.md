@@ -51,6 +51,10 @@ Esta función retorna un usuario directamente de la cache local, nunca toca la b
 }
 ```
 
+## findUser
+
+Esta función es igual a la función getUser pero no tiene en cuenta las mayúsculas y minúsculas, retorna datos del usuario directamente de la cache local, nunca toca la base de datos online. Utiliza las mismas propiedades y devoluciones.
+
 ## getAllUsers
 
 Esta función retorna todos los usuarios directamente de la cache local, nunca toca la base de datos online

@@ -19,6 +19,7 @@ import AccountStatsRow from "./AccountStatsRow";
 import AccountIconsRow from "./AccountIconsRow";
 import AccountInfoColumn from "./AccountInfoColumn";
 import { roles, status, types } from "./selectKeys";
+import { validateUser } from "@/database/db.users";
 
 export default function UserModalPanel({
   user,
@@ -26,18 +27,19 @@ export default function UserModalPanel({
   onOpenChange,
   isLoading,
 }) {
+  const [loadingExtra, setLoadingExtra] = useState(false)
 
   const [oldValues, setOldValues] = useState({
     role: user.role,
     status: user.status,
-    type: user.status
+    // type: user.status
   });
 
   const [changes, setChanges] = useState([]);
   const [fields, setFields] = useState({
     role: new Set([]),
     status: new Set([]),
-    type: new Set([])
+    // type: new Set([])
   });
 
   const { openModal } = useContext(ModalContext);
@@ -56,6 +58,7 @@ export default function UserModalPanel({
   };
 
   useEffect(() => {
+    setLoadingExtra(false)
     setFields({ role: new Set([user.role]), status: new Set([user.status]), type: new Set([user.playerType]) });
     setOldValues({ role: user.role, status: user.status, type: user.playerType });
     setChanges([]);
@@ -85,6 +88,20 @@ export default function UserModalPanel({
     });
   };
 
+  const handleUpdate = async(e) => {
+    for (const change of changes) {
+      if (change == 'status') {
+        if (fields[change].has('v')) {
+          await validateUser({user: user.username, toString: true})
+        } else {
+          await validateUser({user: user.username, unvalidate: true, toString: true})
+        }
+      } else if (change == 'role') {
+        // TODO handle change role
+      }
+    }
+  }
+
   // const
   return (
     <Modal
@@ -98,7 +115,7 @@ export default function UserModalPanel({
             <ModalHeader className="flex flex-col gap-1 text-center">
               {user.username}
             </ModalHeader>
-            {isLoading ? (
+            {isLoading || loadingExtra ? (
               <div className="p-2 w-full flex justify-center items-center my-6">
                 <Spinner />
               </div>
@@ -135,7 +152,11 @@ export default function UserModalPanel({
                 <ModalFooter>
                   <Button
                     color="primary"
-                    onPress={onClose}
+                    onPress={async(e) => {
+                      setLoadingExtra(true)
+                      await handleUpdate()
+                      onClose()
+                    }}
                     isDisabled={changes.length == 0}
                   >
                     Actualizar

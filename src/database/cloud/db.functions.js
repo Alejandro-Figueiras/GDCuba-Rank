@@ -53,8 +53,8 @@ export const removeUserCloud = async (id) => {
   return await secureQuery(removeQuery);
 };
 
-export const validateUserCloud = async (username) => {
-  const modifyQuery = `UPDATE users SET status = 'v' WHERE username = '${username}'`;
+export const validateUserCloud = async (username, unvalidate = false) => {
+  const modifyQuery = `UPDATE users SET status = '${unvalidate? 'u' : 'v'}' WHERE username = '${username}'`;
   return await secureQuery(modifyQuery);
 };
 

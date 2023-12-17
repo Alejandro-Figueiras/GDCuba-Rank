@@ -1,3 +1,4 @@
+'use server'
 import { addUserCloud, getUsersCloud, validateUserCloud } from "./cloud/db.functions"
 
 /**
@@ -52,9 +53,9 @@ export const getAllUsers = () => {
  * @param {Object} { user }
  * @returns {Object} user object, si falla se debe manejar el catch de la promesa
  */
-export const validateUser = async({user}) => {
-  const result = await validateUserCloud(user);
+export const validateUser = async({user, unvalidate = false}) => {
+  const result = await validateUserCloud(user, unvalidate);
   if (result.isError()) throw new Error('Error al validar' + result.error)
-  global.cache.users[user].status = 'v'
+  global.cache.users[user].status = (!unvalidate) ? 'v' : 'u'
   return global.cache.users[user];
 }

@@ -11,14 +11,14 @@ import {
   Spinner,
 } from "@nextui-org/react";
 import React, { useContext, useEffect, useId, useRef, useState } from "react";
-import config from "../../../config";
+import config from "../../../../config";
 
-import BodyCard from "./UserModalPanel/BodyCard";
-import CardSelect from "./UserModalPanel/CardSelect";
-import AccountStatsRow from "./UserModalPanel/AccountStatsRow";
-import AccountIconsRow from "./UserModalPanel/AccountIconsRow";
-import AccountInfoColumn from "./UserModalPanel/AccountInfoColumn";
-import { roles, status, types } from "./UserModalPanel/selectKeys";
+import BodyCard from "./BodyCard";
+import CardSelect from "./CardSelect";
+import AccountStatsRow from "./AccountStatsRow";
+import AccountIconsRow from "./AccountIconsRow";
+import AccountInfoColumn from "./AccountInfoColumn";
+import { roles, status, types } from "./selectKeys";
 
 export default function UserModalPanel({
   user,

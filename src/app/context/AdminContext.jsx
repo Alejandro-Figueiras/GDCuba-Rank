@@ -1,4 +1,4 @@
-import UserModalPanel from "@/components/Admin/UserModalPanel";
+import UserModalPanel from "@/components/Admin/UserModalPanel/UserModalPanel";
 import { apiRequest } from "@/libs/serverRequest";
 import Account from "@/models/Account";
 import { getAccountByID } from "@/robtop/getAccount";

@@ -1,4 +1,3 @@
-import { secureQuery } from "@/database/cloud/db.functions";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { serialize } from "cookie";

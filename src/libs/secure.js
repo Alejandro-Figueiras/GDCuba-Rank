@@ -1,4 +1,4 @@
-import { getUsersCloud } from "@/database/cloud/db.functions";
+import { getUser } from "@/database/db.users";
 import { COOKIES_INFO } from "@/models/constants";
 import { verify } from "jsonwebtoken";
 import { cookies } from "next/headers";
@@ -7,9 +7,9 @@ export const authorize = async () => {
   const cookie = cookies().get(COOKIES_INFO.name);
   try {
     const data = verify(cookie.value, process.env.JWT_SECRET);
-    const user = await getUsersCloud(data.accountid);
+    const user = await getUser(data.username);
  
-    if (user != -1 && user.rows.length > 0 && user.rows[0].role == "admin" || user.rows[0].username === process.env.SUPER_USER) {
+    if (user != undefined && user.role == "admin" || user.username === process.env.SUPER_USER) {
       return true;
     }
   } catch (err) {

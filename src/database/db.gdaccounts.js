@@ -15,6 +15,7 @@ export const getGDAccount = async(username) => {
   return global.cache.gdaccounts[username]
 }
 
-export const getAllCubans = async() => {
-  return Object.values(global.cache.gdaccounts);
+export const getAllCubans = async({toString = false}) => {
+  const values = Object.values(global.cache.gdaccounts);
+  return toString ? JSON.stringify(values) : values
 }

@@ -7,7 +7,8 @@ export default () => {
   const [rank, setRank] = useState([])
 
   useEffect(() => {
-    getAllCubans().then(players => {
+    getAllCubans({toString: true}).then(players => {
+      players = JSON.parse(players)
       players.sort((a,b) => {
         return b.stars-a.stars;
       })

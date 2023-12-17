@@ -64,7 +64,7 @@ export const useGDIconRef = ({
     const currentUrl = window.location.href;
     const hostURL = currentUrl.split("/").slice(0,3).join("/")
     const logic = async() => {
-      const img = getIcon({
+      const img = await getIcon({
         type, iconNumber, c1, c2, glow, hostURL, username
       })
       if (finalImage.current) {
@@ -88,7 +88,7 @@ export const useGDIcon = ({
     const currentUrl = window.location.href;
     const hostURL = currentUrl.split("/").slice(0,3).join("/")
     const logic = async() => {
-      const img = getIcon({
+      const img = await getIcon({
         type, iconNumber, c1, c2, glow, hostURL, username
       })
       setIcon(img)

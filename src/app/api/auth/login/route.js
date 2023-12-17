@@ -5,6 +5,7 @@ import { serialize } from "cookie";
 import { COOKIES_INFO } from "@/models/constants";
 import { compare } from 'bcryptjs'
 import { responseText } from "@/locales/siteText";
+import { findUser } from "@/database/db.users";
 
 const ERROR_RESPONSE = {
   status: 'error',
@@ -13,32 +14,27 @@ const ERROR_RESPONSE = {
 
 export const POST = async (req, res) => {
   const body = await req.json();
-  const queryResult = await secureQuery(
-    `SELECT * FROM users WHERE username ILIKE '${body.username}'`
-  );
 
-
-  if (!queryResult.isError()) {
-    const rows = queryResult.getRows();
-    const userExists = rows.length > 0;
-    if (userExists) {
-      const passwordMatch = await compare(body.password, rows[0].password);
-      if (passwordMatch) {
-        const serializedToken = createAndSerializeToken(rows[0]);
-        return NextResponse.json({
-          status: 'ok',
-          message: responseText.loginSuccess,
-          username: rows[0].username,
-          accountid: rows[0].accountid,
-          phone: rows[0].phone,
-          role: rows[0].role
-        },
-          {
-            status: 200,
-            headers: { "Set-Cookie": serializedToken },
-          }
-        );
-      }
+  console.log(body)
+  const user = await findUser({user: body.username})
+  console.log(user)
+  if (user) {
+    const passwordMatch = await compare(body.password, user.password);
+    if (passwordMatch) {
+      const serializedToken = createAndSerializeToken(user);
+      return NextResponse.json({
+        status: 'ok',
+        message: responseText.loginSuccess,
+        username: user.username,
+        accountid: user.accountid,
+        phone: user.phone,
+        role: user.role
+      },
+        {
+          status: 200,
+          headers: { "Set-Cookie": serializedToken },
+        }
+      );
     }
   }
   return NextResponse.json(ERROR_RESPONSE);

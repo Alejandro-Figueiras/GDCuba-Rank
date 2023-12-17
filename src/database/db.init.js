@@ -4,6 +4,7 @@ import { getAllAccounts, getUsersCloud } from "./cloud/db.functions"
 export const dbInit = async() => {
   global.cache = {
     users: {},
+    usersLowercase: {},
     gdaccounts: {},
     accUpdateLimit: 0,
   }
@@ -12,6 +13,7 @@ export const dbInit = async() => {
   const users = await getUsersCloud("all")
   for(const user of users.rows) {
     global.cache.users[user.username] = user
+    global.cache.usersLowercase[user.username.toLowerCase()] = user.username
   }
   
   // ------- ACCOUNTS -----------

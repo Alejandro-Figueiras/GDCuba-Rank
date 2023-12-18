@@ -23,7 +23,6 @@ import { useState } from "react";
 
 const NavLink = ({ href, children }) => {
   const rutaActual = usePathname();
-  console.log(rutaActual);
 
   return (
     <NavbarItem isActive={rutaActual == href}>
@@ -71,68 +70,49 @@ export default () => {
   ];
 
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} isBordered>
-      <NavbarContent>
-        <NavbarMenuToggle
-          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-          className="sm:hidden"
-        />
-        <NavbarBrand>
-          {/* <GDQBA LOGO /> */}
-          <p className="font-bold text-inherit">GD Cuba</p>
-        </NavbarBrand>
-      </NavbarContent>
-
-      <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        {menuItems.map((m) => (
-          <NavLink key={m.label} href={m.href}>
-            {m.label}
-          </NavLink>
-        ))}
-      </NavbarContent>
-      <NavbarContent justify="end">
-        <NavbarItem>
-          <UserDropdown
-            currentUser={currentUser}
-            logout={logout}
-            onOpenLogin={onOpenLogin}
-            onOpenChangeSignUp={onOpenChangeSignUp}
+    <>
+      <Navbar onMenuOpenChange={setIsMenuOpen} isBordered>
+        <NavbarContent>
+          <NavbarMenuToggle
+            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+            className="sm:hidden"
           />
-        </NavbarItem>
-      </NavbarContent>
-      <NavbarMenu>
-        {menuItems.map((m) => (
-          <NavMenuLink key={m.label} href={m.href}>
-            {m.label}
-          </NavMenuLink>
-        ))}
-      </NavbarMenu>
-    </Navbar>
+          <NavbarBrand>
+            {/* <GDQBA LOGO /> */}
+            <p className="font-bold text-inherit">GD Cuba ΔΔΔ</p>
+          </NavbarBrand>
+        </NavbarContent>
+
+        <NavbarContent className="hidden sm:flex gap-4" justify="center">
+          {menuItems.map((m) => (
+            <NavLink key={m.label} href={m.href}>
+              {m.label}
+            </NavLink>
+          ))}
+        </NavbarContent>
+        <NavbarContent justify="end">
+          <NavbarItem>
+            <UserDropdown
+              currentUser={currentUser}
+              logout={logout}
+              onOpenLogin={onOpenLogin}
+              onOpenChangeSignUp={onOpenChangeSignUp}
+            />
+          </NavbarItem>
+        </NavbarContent>
+        <NavbarMenu>
+          {menuItems.map((m) => (
+            <NavMenuLink key={m.label} href={m.href}>
+              {m.label}
+            </NavMenuLink>
+          ))}
+        </NavbarMenu>
+      </Navbar>
+      {/* Modal Login */}
+      <Login isOpen={isOpenLogin} onOpenChange={onOpenChangeLogin} />
+
+      {/* Sign up Form */}
+      <SignUp isOpen={isOpenSignUp} onOpenChange={onOpenChangeSignUp} />
+    </>
   );
-
-  // return (
-  //   <>
-  //     <Navbar isBordered maxWidth="2xl">
-  //       <NavbarContent className="hidden sm:flex gap-4" justify="start">
-  //         <NavbarItem>
-  //           <p className="font-bold text-inherit text-xl pr-4">GD Cuba ΔΔΔ</p>
-  //         </NavbarItem>
-  //         <NavLink href="/">Home</NavLink>
-  //         <NavLink href="/rank/stars">Estrellas</NavLink>
-  //       </NavbarContent>
-
-  // <NavbarContent justify="end">
-  //   <NavbarItem>
-  //     <UserDropdown currentUser={currentUser} logout={logout} onOpenLogin={onOpenLogin} onOpenChangeSignUp={onOpenChangeSignUp}/>
-  //   </NavbarItem>
-  // </NavbarContent>
-  //     </Navbar>
-
-  //     {/* Modal Login */}
-  //     <Login isOpen={isOpenLogin} onOpenChange={onOpenChangeLogin} />
-
-  //     {/* Sign up Form */}
-  //     <SignUp isOpen={isOpenSignUp} onOpenChange={onOpenChangeSignUp} />
-  //   </>
-  // );
 };

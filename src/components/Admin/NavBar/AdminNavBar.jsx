@@ -25,9 +25,11 @@ import { Link } from "@nextui-org/link";
 import { GlobalContext } from "@/app/context/GlobalContext";
 import { BurguerButton } from "./BurgerButton";
 import UserDropdown from "@/components/NavBar/UserDropdown";
+import { useSesion } from "@/hooks/useSesion";
 
 export default () => {
   const {currentUser} = useContext(GlobalContext);
+  const { logout } = useSesion();
   return (
     <>
       <Navbar isBordered maxWidth="2xl">

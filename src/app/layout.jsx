@@ -8,7 +8,7 @@ import './globals.css'
 import 'react-toastify/dist/ReactToastify.css';
 
 import { Inter } from 'next/font/google'
-import { updateAccounts } from '@/database/cloud/db.functions';
+import { updateAccounts } from '@/database/db.gdaccounts';
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',

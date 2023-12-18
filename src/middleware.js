@@ -4,6 +4,7 @@ import { COOKIES_INFO } from "./models/constants";
 import { jwtVerify } from "jose";
 import generalConfig from "../config";
 // This function can be marked `async` if using `await` inside
+
 export async function middleware(request) {
   const cookie = cookies().get(COOKIES_INFO.name);
   const cookieData = cookie ? cookie.value : undefined;
@@ -14,10 +15,10 @@ export async function middleware(request) {
       const { payload } = await jwtVerify(cookieData, key);
 
       const response = await fetch(
-        generalConfig.apiURL + `/database/users/${payload.accountid}`
+        generalConfig.apiURL + `/database/users/${payload.username}`
       );
       const data = await response.json();
-      const currentUser = data.rows[0];
+      const currentUser = (data.username)?data:data.rows[0];
 
       access =
         currentUser.role === "admin" ||

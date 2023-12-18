@@ -84,7 +84,6 @@ export const useGDIcon = ({
   const [iconSrc, setIcon] = useState(DEFAULT_CUBE)
 
   useEffect(() => {
-    // TODO Misma función repetida en NavBar.jsx
     const currentUrl = window.location.href;
     const hostURL = currentUrl.split("/").slice(0,3).join("/")
     const logic = async() => {

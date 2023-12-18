@@ -20,7 +20,7 @@ export default () => {
     <>
       {(rank.length==0)
         ? (<p>Cargando datos...</p>)
-        : (<div className="container mx-auto my-4 max-w-2xl">
+        : (<div className="container mx-auto my-4 max-w-3xl">
         <RankTable ranking={rank}/>
       </div>)
       }

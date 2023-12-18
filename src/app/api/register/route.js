@@ -3,7 +3,7 @@ import { hash } from "bcryptjs";
 import { getAccount } from "@/robtop/getAccount";
 import { responseText } from "@/locales/siteText";
 import { addUser, findUser } from "@/database/db.users";
-import { addGDAccount } from "@/database/db.gdaccounts";
+import { addGDAccount, getGDAccount } from "@/database/db.gdaccounts";
 
 export const POST = async (req) => {
   const data = await req.json();
@@ -28,10 +28,10 @@ export const POST = async (req) => {
       fields.user = gdAccount.username;
       fields.accountid = gdAccount.accountid;
 
-      // console.log("data: ", fields);
       const query = await addUser(fields);
-      // TODO comprobar si esta en la db
-      const queryGD = await addGDAccount({account: gdAccount});
+      if (await getGDAccount(gdAccount)) {
+        await addGDAccount({account: gdAccount});
+      }
       if (query) {
         return NextResponse.json(
           { message: "Usuario creado satisfactoriamente" },

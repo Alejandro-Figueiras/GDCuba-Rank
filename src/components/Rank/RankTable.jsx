@@ -52,7 +52,6 @@ export default ({ ranking }) => {
               <TableCell>{i+1}</TableCell>
               <TableCell><UsernameCell player={player} /></TableCell>
               <TableCell><span className="flex align-middle"><img src="/img/star.png" alt="Star" className="h-4 mr-1"/> {player.stars}</span></TableCell>
-              {/* TODO implementar diferentes trofeos en el global rank según la posición */}
               <TableCell><span className="flex align-middle"><img src={calcularTrofeo(player.globalrank)} alt="Star" className="h-4 mr-1"/> {player.globalrank}</span></TableCell>
             </TableRow>
           )

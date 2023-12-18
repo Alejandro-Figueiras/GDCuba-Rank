@@ -45,7 +45,10 @@ export default function UserModalPanel({
   const { openModal } = useContext(ModalContext);
 
   const handleSelectionChange = (e, whatChange) => {
+    if (e.target.value == '') return;
+
     const value = new Set([e.target.value]);
+
     setFields((prev) => ({ ...prev, [whatChange]: value }));
     if (
       e.target.value != oldValues[whatChange] &&

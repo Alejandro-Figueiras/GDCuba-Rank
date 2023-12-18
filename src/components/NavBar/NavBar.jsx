@@ -19,18 +19,40 @@ import SignUp from "../Forms/SignUp";
 import { useSesion } from "@/hooks/useSesion";
 import { usePathname } from "next/navigation";
 import UserDropdown from "./UserDropdown";
+import { useState } from "react";
 
-const NavLink = ({href, children}) => {
-  const rutaActual = usePathname()
+const NavLink = ({ href, children }) => {
+  const rutaActual = usePathname();
+  console.log(rutaActual);
+
   return (
-    <NavbarItem isActive={rutaActual==href}>
-      <Link href={href} color={rutaActual==href?"primary":"foreground"}>{children}</Link>
+    <NavbarItem isActive={rutaActual == href}>
+      <Link href={href} color={rutaActual == href ? "primary" : "foreground"}>
+        {children}
+      </Link>
     </NavbarItem>
-  )
-}
+  );
+};
+
+const NavMenuLink = ({ href, children }) => {
+  const rutaActual = usePathname();
+
+  return (
+    <NavbarMenuItem isActive={rutaActual == href}>
+      <Link
+        href={href}
+        color={rutaActual == href ? "primary" : "foreground"}
+        className="w-full"
+      >
+        {children}
+      </Link>
+    </NavbarMenuItem>
+  );
+};
 
 export default () => {
-  const {currentUser, logout} = useSesion();
+  const { currentUser, logout } = useSesion();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const {
     isOpen: isOpenLogin,
@@ -43,29 +65,74 @@ export default () => {
     onOpenChange: onOpenChangeSignUp,
   } = useDisclosure();
 
+  const menuItems = [
+    { href: "/", label: "Home" },
+    { href: "/rank/stars", label: "Estrellas" },
+  ];
+
   return (
-    <>
-      <Navbar isBordered maxWidth="2xl">
-        <NavbarContent className="hidden sm:flex gap-4" justify="start">
-          <NavbarItem>
-            <p className="font-bold text-inherit text-xl pr-4">GD Cuba ΔΔΔ</p>
-          </NavbarItem>
-          <NavLink href="/">Home</NavLink>
-          <NavLink href="/rank/stars">Estrellas</NavLink>
-        </NavbarContent>
+    <Navbar onMenuOpenChange={setIsMenuOpen} isBordered>
+      <NavbarContent>
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="sm:hidden"
+        />
+        <NavbarBrand>
+          {/* <GDQBA LOGO /> */}
+          <p className="font-bold text-inherit">GD Cuba</p>
+        </NavbarBrand>
+      </NavbarContent>
 
-        <NavbarContent justify="end">
-          <NavbarItem>
-            <UserDropdown currentUser={currentUser} logout={logout} onOpenLogin={onOpenLogin} onOpenChangeSignUp={onOpenChangeSignUp}/>
-          </NavbarItem>
-        </NavbarContent>
-      </Navbar>
-
-      {/* Modal Login */}
-      <Login isOpen={isOpenLogin} onOpenChange={onOpenChangeLogin} />
-
-      {/* Sign up Form */}
-      <SignUp isOpen={isOpenSignUp} onOpenChange={onOpenChangeSignUp} />
-    </>
+      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        {menuItems.map((m) => (
+          <NavLink key={m.label} href={m.href}>
+            {m.label}
+          </NavLink>
+        ))}
+      </NavbarContent>
+      <NavbarContent justify="end">
+        <NavbarItem>
+          <UserDropdown
+            currentUser={currentUser}
+            logout={logout}
+            onOpenLogin={onOpenLogin}
+            onOpenChangeSignUp={onOpenChangeSignUp}
+          />
+        </NavbarItem>
+      </NavbarContent>
+      <NavbarMenu>
+        {menuItems.map((m) => (
+          <NavMenuLink key={m.label} href={m.href}>
+            {m.label}
+          </NavMenuLink>
+        ))}
+      </NavbarMenu>
+    </Navbar>
   );
+
+  // return (
+  //   <>
+  //     <Navbar isBordered maxWidth="2xl">
+  //       <NavbarContent className="hidden sm:flex gap-4" justify="start">
+  //         <NavbarItem>
+  //           <p className="font-bold text-inherit text-xl pr-4">GD Cuba ΔΔΔ</p>
+  //         </NavbarItem>
+  //         <NavLink href="/">Home</NavLink>
+  //         <NavLink href="/rank/stars">Estrellas</NavLink>
+  //       </NavbarContent>
+
+  // <NavbarContent justify="end">
+  //   <NavbarItem>
+  //     <UserDropdown currentUser={currentUser} logout={logout} onOpenLogin={onOpenLogin} onOpenChangeSignUp={onOpenChangeSignUp}/>
+  //   </NavbarItem>
+  // </NavbarContent>
+  //     </Navbar>
+
+  //     {/* Modal Login */}
+  //     <Login isOpen={isOpenLogin} onOpenChange={onOpenChangeLogin} />
+
+  //     {/* Sign up Form */}
+  //     <SignUp isOpen={isOpenSignUp} onOpenChange={onOpenChangeSignUp} />
+  //   </>
+  // );
 };

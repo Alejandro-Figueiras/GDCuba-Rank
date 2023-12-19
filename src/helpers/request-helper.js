@@ -19,15 +19,7 @@ export const gdRequest = (target, params) => {
             data: makeParams({...params, ...config.params}),
             headers: {
                 'User-Agent': '',
-                "Access-Control-Allow-Origin": config.endpoint,
-            },
-            proxy: (process.env.ROBTOP_PROXY == 1) ? {
-                protocol: `${process.env.ROBTOP_PROXY_PROTOCOL}`,
-                host: process.env.ROBTOP_PROXY_HOST,
-                port: process.env.ROBTOP_PROXY_PORT
-            } : null
-            // httpAgent: new http.Agent({ keepAlive: true }),
-            // httpsAgent: new https.Agent({ keepAlive: true })
+            }
         })
         .then(response => {
             const body = response.data;

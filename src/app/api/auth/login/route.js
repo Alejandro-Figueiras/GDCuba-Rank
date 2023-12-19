@@ -15,6 +15,7 @@ export const POST = async (req, res) => {
   const body = await req.json();
 
   console.log(body)
+  console.log(global.cache)
   const user = await findUser({user: body.username})
   console.log(user)
   if (user) {

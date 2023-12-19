@@ -18,6 +18,7 @@ export default async(songID) => {
         const body = await gdRequest("getGJSongInfo", {songID});
         return new Song(responseToObj(body, "~|~"));
     } catch (err) {
+        console.log(err)
         return -1; // Si no existe la canción va a tirar un server error con -1
     }
 }

@@ -13,6 +13,8 @@ import {
   ModalFooter,
 } from "@nextui-org/modal";
 import { notify, notifyDismiss } from "@/libs/toastNotifications";
+import config from "../../../config";
+
 
 export default ({ isOpen, onOpenChange }) => {
   const [fieldsError, setFieldsError] = useState({
@@ -60,7 +62,7 @@ export default ({ isOpen, onOpenChange }) => {
       password: passwordRef.current.value,
     };
 
-    const response = await fetch("/api/register", {
+    const response = await fetch(config.apiURL+"register", {
       method: "POST",
       body: JSON.stringify(formData),
       headers: {

@@ -18,6 +18,7 @@ import { SelectSection } from "@nextui-org/react";
 import { GlobalContext } from "@/app/context/GlobalContext";
 import { toast } from "react-toastify";
 import { notify, notifyDismiss } from "@/libs/toastNotifications";
+import config from "../../../config";
 
 export default ({ isOpen, onOpenChange }) => {
   const userRef = useRef();
@@ -35,7 +36,7 @@ export default ({ isOpen, onOpenChange }) => {
       setLoading(true);
 
 
-      const response = await fetch("/api/auth/login", {
+      const response = await fetch(config.apiURL+ "auth/login", {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {

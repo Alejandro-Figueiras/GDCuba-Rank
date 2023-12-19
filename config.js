@@ -1,5 +1,5 @@
+// !!!!!!!!! SE UTILIZA EN EL CLIENTE !!!!!!!!!!!!!!!!
 export default {
-
     // Siempre se debe enviar estos datos a los servidores
     params: {
         secret: 'Wmfd2893gb7',

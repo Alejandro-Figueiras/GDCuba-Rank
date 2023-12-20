@@ -14,6 +14,7 @@ import {
 } from "@nextui-org/modal";
 import { notify, notifyDismiss } from "@/libs/toastNotifications";
 import config from "../../../config";
+import { register } from "@/actions/register/register";
 
 
 export default ({ isOpen, onOpenChange }) => {
@@ -62,17 +63,10 @@ export default ({ isOpen, onOpenChange }) => {
       password: passwordRef.current.value,
     };
 
-    const response = await fetch(config.apiURL+"register", {
-      method: "POST",
-      body: JSON.stringify(formData),
-      headers: {
-        "Content-Type": "application/json", // Tipo de contenido del cuerpo (en este caso, JSON)
-      },
-    });
-    const data = await response.json();
+    const data = JSON.parse(await register(formData))
     console.log(data);
 
-    if (response.status == 200) {
+    if (data.status == 200) {
       notify(data.message, "success");
       onClose();
     } else {

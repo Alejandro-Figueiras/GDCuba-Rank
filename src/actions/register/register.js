@@ -1,13 +1,11 @@
-import { NextResponse } from "next/server";
+'use server'
 import { hash } from "bcryptjs";
 import { getAccount } from "@/robtop/getAccount";
 import { responseText } from "@/locales/siteText";
 import { addUser, findUser } from "@/database/db.users";
 import { addGDAccount, getGDAccount } from "@/database/db.gdaccounts";
 
-export const POST = async (req) => {
-  const data = await req.json();
-
+export const register = async (data) => {
   let errorMessage = "La cuenta solicitada no existe en Geometry Dash";
 
   let fields = {
@@ -18,7 +16,6 @@ export const POST = async (req) => {
   };
 
   const accountRegistered = findUser({user: fields.user})
-  console.log("Cuenta registrada: ", accountRegistered);
   if (accountRegistered == undefined) {
     const gdAccount = await getAccount(data.username);
 
@@ -33,22 +30,22 @@ export const POST = async (req) => {
         await addGDAccount({account: gdAccount});
       }
       if (query) {
-        return NextResponse.json(
-          { message: "Usuario creado satisfactoriamente" },
-          {
-            status: 200,
+        return JSON.stringify(
+          { 
+            message: "Usuario creado satisfactoriamente",
+            status: 200
           }
         );
       } else {errorMessage = responseText.error}
     }
   } else {
-      errorMessage = `La cuenta ${fields.user} ya fue solicitada`;
+    errorMessage = `La cuenta ${fields.user} ya fue solicitada`;
   }
 
-  return NextResponse.json(
-    { error: errorMessage },
-    {
-      status: 500,
+  return JSON.stringify(
+    { 
+      error: errorMessage,
+      status: 500
     }
   );
 };

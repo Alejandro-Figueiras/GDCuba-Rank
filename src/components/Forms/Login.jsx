@@ -19,6 +19,7 @@ import { GlobalContext } from "@/app/context/GlobalContext";
 import { toast } from "react-toastify";
 import { notify, notifyDismiss } from "@/libs/toastNotifications";
 import config from "../../../config";
+import { login } from "@/actions/auth/login";
 
 export default ({ isOpen, onOpenChange }) => {
   const userRef = useRef();
@@ -35,15 +36,8 @@ export default ({ isOpen, onOpenChange }) => {
       };
       setLoading(true);
 
-
-      const response = await fetch(config.apiURL+ "auth/login", {
-        method: "POST",
-        body: JSON.stringify(formData),
-        headers: {
-          "Content-Type": "application/json", // Tipo de contenido del cuerpo (en este caso, JSON)
-        },
-      });
-      const data = await response.json();
+      const data = JSON.parse(await login(formData))
+      console.log(data)
       setLoading(false);
       if (data.status == "error") {
         notify(data.message, 'error')

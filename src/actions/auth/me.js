@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server";
+'use server'
 import { verify, decode } from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { COOKIES_INFO } from "@/models/constants";
 import { responseText } from "@/locales/siteText";
 
-export const GET = async (req) => {
+export const authMe = async () => {
   const cookie = cookies().get(COOKIES_INFO.name);
 
   if (cookie) {
@@ -18,10 +18,10 @@ export const GET = async (req) => {
         phone: payload.phone,
         role: payload.role
       };
-      return NextResponse.json(user, { status: 200 });
+      return JSON.stringify(user);
     } catch {
       console.log("Token invalid!");
     }
   }
-  return NextResponse.json({ error: responseText.badRequest }, { status: 401 });
+  return JSON.stringify({ error: responseText.badRequest, status: 401 });
 };

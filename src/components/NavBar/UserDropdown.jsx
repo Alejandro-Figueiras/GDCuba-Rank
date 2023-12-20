@@ -11,19 +11,17 @@ import { User } from "@nextui-org/user";
 import { Button } from "@nextui-org/button";
 import { useGDIcon } from "@/robtop/iconkit/useGDIcon";
 import { useContext } from "react";
-import { apiRequest } from "@/libs/serverRequest";
-import config from "../../../config";
 import { usePathname } from "next/navigation";
+import { logout as logoutAction } from "@/actions/logout/logout";
+import { notify } from "@/libs/toastNotifications";
 
 const UserDropdown = ({currentUser, onOpenLogin, onOpenChangeSignUp, logout}) => {
   const ruta = usePathname()
   const admin = ruta.startsWith('/admin')
   const { openModal } = useContext(ModalContext);
   const handleLogout = async () => {
-    const apiResult = await apiRequest(config.apiURL + "logout");
-    if (apiResult.isError()) {
-      return notify(operationText.error, "error");
-    }
+    await logoutAction();
+    notify("Sesión cerrada.", 'success');
     logout();
   };
 

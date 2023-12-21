@@ -14,11 +14,9 @@ export async function middleware(request) {
       const key = new TextEncoder().encode(process.env.JWT_SECRET);
       const { payload } = await jwtVerify(cookieData, key);
 
-      const currentUser = JSON.parse(await getUserAction({user: payload.username}));
-
       access =
-        currentUser.role === "admin" ||
-        currentUser.username === process.env.SUPER_USER;
+        payload.role === "admin" ||
+        payload.username === process.env.SUPER_USER;
 
     } else if (process.env.NODE_ENV == "development") {
       access = true;

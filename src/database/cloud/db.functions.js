@@ -48,8 +48,6 @@ export const removeUserCloud = async (id) => {
     ? `DELETE FROM users WHERE accountid = '${id}'`
     : `DELETE FROM users WHERE username = '${id}'`;
 
-  console.log(removeQuery);
-
   return await secureQuery(removeQuery);
 };
 

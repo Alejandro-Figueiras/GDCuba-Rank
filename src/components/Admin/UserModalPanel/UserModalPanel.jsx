@@ -1,5 +1,4 @@
 import { ModalContext } from "@/app/context/ModalContext";
-import { apiRequest } from "@/libs/serverRequest";
 import { notify } from "@/libs/toastNotifications";
 import {
   Modal,
@@ -20,6 +19,7 @@ import AccountIconsRow from "./AccountIconsRow";
 import AccountInfoColumn from "./AccountInfoColumn";
 import { roles, status, types } from "./selectKeys";
 import { validateUserAction } from "@/actions/admin/validateUserAction";
+import { removeUserAction } from "@/actions/admin/removeUserAction";
 
 export default function UserModalPanel({
   user,
@@ -72,11 +72,9 @@ export default function UserModalPanel({
       title: `Eliminar ${user.username}`,
       desc: `¿Seguro que quieres eliminar a ${user.username}`,
       onSubmit: async () => {
-        const apiResult = await apiRequest(
-          config.apiURL + `admin/users/remove/${user.username}`
-        );
+        const result = JSON.parse(await removeUserAction({username: user.username}))
 
-        if (!apiResult.isError()) {
+        if (result) {
           const success = notify(
             `Usuario ${user.username} eliminado`,
             "success"
@@ -84,7 +82,7 @@ export default function UserModalPanel({
           onClose();
         } else {
           const error = notify(`Error al eliminar a ${user.username}`, "error");
-          apiResult.show();
+          onClose();
         }
       },
       action: "delete",

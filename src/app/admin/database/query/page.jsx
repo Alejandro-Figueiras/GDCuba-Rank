@@ -5,7 +5,6 @@ import { Button } from "@nextui-org/button";
 import { useRef, useState } from "react";
 import config from "../../../../../config";
 import { apiRequest } from "@/libs/serverRequest";
-import { NextResponse } from "next/server";
 
 export default () => {
   const [historial, setHistorial] = useState([]);

@@ -1,17 +1,14 @@
 import UserModalPanel from "@/components/Admin/UserModalPanel/UserModalPanel";
-import { apiRequest } from "@/libs/serverRequest";
-import Account from "@/models/Account";
-import { getAccountByID } from "@/robtop/getAccount";
 import { useDisclosure } from "@nextui-org/react";
 import React, { createContext, useState } from "react";
-import config from "../../../config";
 import { notify, notifyDismiss } from "@/libs/toastNotifications";
 import { operationText, responseText } from "@/locales/siteText";
+import { getAccountAction } from "@/actions/admin/getUserAction";
 
 export const AdminContext = createContext();
 
 export default function AdminProvider({ children }) {
-  const [userInCheck, setUserInCheck] = useState(new Account());
+  const [userInCheck, setUserInCheck] = useState({});
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [loadingUser, setLoadingUser] = useState(false);
 
@@ -20,24 +17,21 @@ export default function AdminProvider({ children }) {
     onOpen();
     setLoadingUser(true);
 
-    const accountRequest = await apiRequest(
-      `${config.apiURL}/users/${user.accountid}`
-    );
-    if (!accountRequest.isError()) {
+    const account = JSON.parse(await getAccountAction({username: user.username}))
+    console.log(account)
+    if (account) {
       setUserInCheck({
-        ...accountRequest.result,
+        ...account,
         phone: user.phone,
         role: user.role,
         status: user.status,
         playerType: user.playertype
       });
-      console.log(accountRequest.result);
     } else {
       onClose();
       notify(responseText.error, "error");
     }
     setLoadingUser(false);
-    console.log(user)
   };
 
   return (

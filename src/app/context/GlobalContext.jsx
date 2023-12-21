@@ -1,6 +1,4 @@
 import React, { createContext, useEffect, useState } from "react";
-import { apiRequest } from "@/libs/serverRequest.js";
-import config from "../../../config.js";
 import { notify, notifyDismiss } from "@/libs/toastNotifications.js";
 import { authMe } from "@/actions/auth/me.js";
 

@@ -19,7 +19,7 @@ import AccountStatsRow from "./AccountStatsRow";
 import AccountIconsRow from "./AccountIconsRow";
 import AccountInfoColumn from "./AccountInfoColumn";
 import { roles, status, types } from "./selectKeys";
-import { validateUser } from "@/database/db.users";
+import { validateUserAction } from "@/actions/admin/validateUserAction";
 
 export default function UserModalPanel({
   user,
@@ -95,9 +95,9 @@ export default function UserModalPanel({
     for (const change of changes) {
       if (change == 'status') {
         if (fields[change].has('v')) {
-          await validateUser({user: user.username, toString: true})
+          await validateUserAction({user: user.username})
         } else {
-          await validateUser({user: user.username, unvalidate: true, toString: true})
+          await validateUserAction({user: user.username, unvalidate: true})
         }
       } else if (change == 'role') {
         // TODO handle change role

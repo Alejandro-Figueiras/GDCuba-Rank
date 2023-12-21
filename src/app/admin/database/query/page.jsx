@@ -3,8 +3,6 @@
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
 import { useRef, useState } from "react";
-import config from "../../../../../config";
-import { apiRequest } from "@/libs/serverRequest";
 
 export default () => {
   const [historial, setHistorial] = useState([]);
@@ -15,17 +13,19 @@ export default () => {
     const query = input.current.value;
     console.log(query);
 
-    const data = await apiRequest(config.apiURL + "dev/query", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json", // Tipo de contenido del cuerpo (en este caso, JSON)
-      },
-      body: JSON.stringify({ query }),
-    });
+    // TODO hacer que esto funcione
 
-    data.show();
-    setResultado(data.getRows())
-    console.log(data.getRows())
+    // const data = await apiRequest(config.apiURL + "dev/query", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json", // Tipo de contenido del cuerpo (en este caso, JSON)
+    //   },
+    //   body: JSON.stringify({ query }),
+    // });
+
+    // data.show();
+    // setResultado(data.getRows())
+    // console.log(data.getRows())
     setHistorial(prev => [...prev, query]);
   };
   return (

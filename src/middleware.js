@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { COOKIES_INFO } from "./models/constants";
 import { jwtVerify } from "jose";
-import generalConfig from "../config";
+import { getUserAction } from "./actions/admin/getUserAction";
 // This function can be marked `async` if using `await` inside
 
 export async function middleware(request) {
@@ -14,11 +14,7 @@ export async function middleware(request) {
       const key = new TextEncoder().encode(process.env.JWT_SECRET);
       const { payload } = await jwtVerify(cookieData, key);
 
-      const response = await fetch(
-        generalConfig.apiURL + `/database/users/${payload.username}`
-      );
-      const data = await response.json();
-      const currentUser = (data.username)?data:data.rows[0];
+      const currentUser = JSON.parse(await getUserAction({user: payload.username}));
 
       access =
         currentUser.role === "admin" ||

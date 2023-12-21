@@ -16,6 +16,7 @@ export const login = async ({username, password}) => {
   const user = await findUser({user: username})
   
   if (user) {
+    console.log(password, user)
     const passwordMatch = await compare(password, user.password);
     if (passwordMatch) {
       const token = createToken(user);

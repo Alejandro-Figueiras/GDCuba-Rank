@@ -32,11 +32,13 @@ export const createAccountTable = async () => {
         userCoins INTEGER,
         globalRank INTEGER,
         diamonds INTEGER,
+        moons INTEGER,
         creatorpoints INTEGER,
         modlevel INTEGER,
         
         playerColor INTEGER,
         playerColor2 INTEGER,
+        playercolor3 INTEGER,
         accIcon INTEGER,
         accShip INTEGER,
         accBall INTEGER,
@@ -46,6 +48,8 @@ export const createAccountTable = async () => {
         accGlow INTEGER,
         accSpider INTEGER,
         accExplosion INTEGER,
+        accswing INTEGER,
+        accjetpack INTEGER,
         
         friendsRqState INTEGER,
         messageState INTEGER,
@@ -56,7 +60,8 @@ export const createAccountTable = async () => {
         twitter VARCHAR(30),
         twitch VARCHAR(30),
 
-        timestamp BIGINT
+        timestamp BIGINT,
+        cuba SHORTINT,
     );`;
   try {
     const result = await secureQuery(createQuery);

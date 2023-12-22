@@ -75,7 +75,7 @@ export const getUsersCloud = async (id) => {
 
 // --------------- GD ACCOUNT -------------------
 
-export const addAccountCloud = async (account) => {
+export const addAccountCloud = async (account, cuba = 0) => {
   const insertQuery = `INSERT INTO gdaccounts (
       username,
       userid,
@@ -88,11 +88,13 @@ export const addAccountCloud = async (account) => {
       usercoins,
       globalrank,
       diamonds,
+      moons,
       creatorpoints,
       modlevel,
 
       playercolor,
       playercolor2,
+      playercolor3,
       accicon,
       accship,
       accball,
@@ -102,6 +104,8 @@ export const addAccountCloud = async (account) => {
       accglow,
       accspider,
       accexplosion,
+      accswing,
+      accjetpack,
 
       friendsrqstate,
       messagestate,
@@ -111,7 +115,8 @@ export const addAccountCloud = async (account) => {
       youtube,
       twitter,
       twitch,
-      timestamp
+      timestamp,
+      cuba
     ) VALUES(
       '${account.username}',
       '${account.userid}',
@@ -124,11 +129,13 @@ export const addAccountCloud = async (account) => {
       '${account.usercoins}',
       '${account.globalrank}',
       '${account.diamonds}',
+      '${account.moons}',
       '${account.creatorpoints}',
       '${account.modlevel}',
 
       '${account.playercolor}',
       '${account.playercolor2}',
+      '${account.playercolor3}',
       '${account.accicon}',
       '${account.accship}',
       '${account.accball}',
@@ -138,6 +145,8 @@ export const addAccountCloud = async (account) => {
       '${account.accglow}',
       '${account.accspider}',
       '${account.accexplosion}',
+      '${account.accswing}',
+      '${account.accjetpack}',
 
       '${account.friendsrqstate}',
       '${account.messagestate}',
@@ -147,7 +156,8 @@ export const addAccountCloud = async (account) => {
       '${account.youtube}',
       '${account.twitter}',
       '${account.twitch}',
-      '${account.timestamp}'
+      '${account.timestamp}',
+      '${cuba}'
     )`;
   return await secureQuery(insertQuery);
 };
@@ -173,10 +183,12 @@ export const updateAccountCloud = async(id) => {
     usercoins = '${account.usercoins}',
     globalrank = '${account.globalrank}',
     diamonds = '${account.diamonds}',
+    moons = '${account.moons}',
     creatorpoints = '${account.creatorpoints}',
     modlevel = '${account.modlevel}',
     playercolor = '${account.playercolor}',
     playercolor2 = '${account.playercolor2}',
+    playercolor3 = '${account.playercolor3}',
     accicon = '${account.accicon}',
     accship = '${account.accship}',
     accball = '${account.accball}',
@@ -186,6 +198,8 @@ export const updateAccountCloud = async(id) => {
     accglow = '${account.accglow}',
     accspider = '${account.accspider}',
     accexplosion = '${account.accexplosion}',
+    accswing = '${account.accswing}',
+    accjetpack = '${account.accjetpack}',
     friendsrqstate = '${account.friendsrqstate}',
     messagestate = '${account.messagestate}',
     friendstate = '${account.friendstate}',
@@ -194,9 +208,10 @@ export const updateAccountCloud = async(id) => {
     twitter = '${account.twitter}',
     twitch = '${account.twitch}',
     timestamp = '${account.timestamp}'
-  ) WHERE accountid = '${id}'`;
+   WHERE accountid = '${id}'`;
   // TODO si el usuario se cambia el nombre actualizar
-  await secureQuery(query)
+  const response = await secureQuery(query);
+  if (response.isError()) console.log(response.error)
   const accToCache = await secureQuery(`SELECT * FROM gdaccounts WHERE accountid = '${id}'`)
   const acc = accToCache.result.rows[0]
   global.cache.gdaccounts[acc.username] = acc;

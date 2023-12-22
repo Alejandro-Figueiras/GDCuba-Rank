@@ -33,7 +33,6 @@ export const getUser = ({user}) => {
  */
 export const findUser = ({user = ""}) => {
   const username = global.cache.usersLowercase[user.toLowerCase()]
-  console.log(username)
   if (username) {
     return global.cache.users[username]
   }
@@ -67,7 +66,6 @@ export const eliminarUser = async({username}) => {
   if (auth) {
     if (!username) return undefined;
     const queryResult = await removeUserCloud(username);
-    console.log(queryResult)
     if (!queryResult.isError()) {
       let response = 1;
       global.cache.users[username] = undefined;

@@ -15,10 +15,10 @@ export const register = async (data) => {
     accountid: null
   };
 
+  
   const accountRegistered = findUser({user: fields.user})
   if (accountRegistered == undefined) {
     const gdAccount = await getAccount(data.username);
-
     if (gdAccount !== -1) {
       const passwordEncrypt = await hash(fields.password, 5);
       fields.password = passwordEncrypt;
@@ -26,7 +26,8 @@ export const register = async (data) => {
       fields.accountid = gdAccount.accountid;
 
       const query = await addUser(fields);
-      if (await getGDAccount(gdAccount)) {
+      const accountLocal = await getGDAccount(gdAccount)
+      if (accountLocal == undefined) {
         await addGDAccount({account: gdAccount});
       }
       if (query) {
@@ -37,6 +38,8 @@ export const register = async (data) => {
           }
         );
       } else {errorMessage = responseText.error}
+    } else {
+      errorMessage = `La cuenta de GD ${fields.user} no fue encontrada`;
     }
   } else {
     errorMessage = `La cuenta ${fields.user} ya fue solicitada`;

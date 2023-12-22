@@ -11,6 +11,7 @@ const types = {
   ship: 'ship',
   ball: 'player_ball',
   swing: 'swing',
+  jetpack: 'jetpack'
 }
 
 export const getIconSprites = async({type, iconNumber, hostURL}) => {

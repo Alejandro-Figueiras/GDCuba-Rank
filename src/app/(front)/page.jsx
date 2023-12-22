@@ -6,7 +6,7 @@ import { songTest } from "./songTest";
 import { useGDIconRef } from "@/robtop/iconkit/useGDIcon";
 
 export default function Home() {
-  const {icon } = useGDIconRef({type: 'cube', iconNumber: 1, glow: 1})
+  const {icon: icon} = useGDIconRef({type: 'jetpack', iconNumber: 3, glow: 1})
 
   return (
     <>

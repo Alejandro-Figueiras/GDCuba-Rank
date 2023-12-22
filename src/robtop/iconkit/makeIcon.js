@@ -7,15 +7,17 @@ import robotInfo from './robotInfo.json'
 import spiderInfo from './spiderInfo.json'
 import { getLayer } from './getLayer';
 
-const icon21 = {
-  cube: 142,
-  ship: 51,
-  ball: 43,
-  ufo: 35,
-  wave: 35,
-  robot: 26,
-  spider: 17,
-  colors: 41,
+const icon22 = {
+  cube: 484,
+  ship: 169,
+  ball: 118,
+  ufo: 149,
+  wave: 96,
+  robot: 68,
+  spider: 69,
+  swing: 43,
+  jetpack: 5,
+  colors: 106,
 }
 
 const layerPriority = {
@@ -50,10 +52,11 @@ const printSprites = async(spritesToPrint) => {
  * @param {*} Consultar documentación
  * @returns Image Base64Url
  */
-export const makeIcon = async({type, iconNumber, c1, c2, glow, hostURL}) => {
-  if (iconNumber>icon21[type]) {iconNumber=1};
-  if (c1>icon21.colors) {c1=0};
-  if (c2>icon21.colors) {c2=5};
+export const makeIcon = async({type, iconNumber, c1, c2, c3, glow, hostURL}) => {
+  if (iconNumber>icon22[type]) {iconNumber=1};
+  if (c1>icon22.colors) {c1=0};
+  if (c2>icon22.colors) {c2=5};
+  if (c3>icon22.colors) {c3=15};
   const {sprites, spritesInfo, spriteSheet} = await getIconSprites({type, iconNumber, hostURL})
   const spritesToPrint = []
   
@@ -69,7 +72,7 @@ export const makeIcon = async({type, iconNumber, c1, c2, glow, hostURL}) => {
       color = colors[c2];
     } else if (spriteLayer == 'glow') {
       if (!glow) return;
-      color = colors[c2];
+      color = colors[c3];
     }
 
     const path = sprite.join('_');

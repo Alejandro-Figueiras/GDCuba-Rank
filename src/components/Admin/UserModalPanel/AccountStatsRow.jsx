@@ -19,7 +19,8 @@ const AccountStat = ({ value, icon = null }) => {
 const AccountStatsRow = ({user}) => {
   return (<div className="h-8">
     <div className="flex justify-between">
-      <AccountStat value={user.stars} icon="/img/star.png"/>
+      <AccountStat value={user.stars} icon="/img/starsIcon.png"/>
+      <AccountStat value={user.moons} icon="/img/moonsIcon.png"/>
       <AccountStat value={user.diamonds} icon='/img/diamond.png'/>
       <AccountStat value={user.secretcoins} icon='/img/secretcoin.png'/>
       <AccountStat value={user.usercoins} icon='/img/coin.png'/>

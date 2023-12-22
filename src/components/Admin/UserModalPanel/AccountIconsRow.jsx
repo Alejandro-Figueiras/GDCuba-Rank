@@ -29,6 +29,8 @@ const AccountIconsRow = ({user}) => {
       <AccountIcon type={"wave"} iconNumber={user.accwave} c1={user.playercolor} c2={user.playercolor2} c3={user.playercolor3} glow={user.accglow} />
       <AccountIcon type={"robot"} iconNumber={user.accrobot} c1={user.playercolor} c2={user.playercolor2} c3={user.playercolor3} glow={user.accglow} />
       <AccountIcon type={"spider"} iconNumber={user.accspider} c1={user.playercolor} c2={user.playercolor2} c3={user.playercolor3} glow={user.accglow} />
+      <AccountIcon type={"swing"} iconNumber={user.accswing} c1={user.playercolor} c2={user.playercolor2} c3={user.playercolor3} glow={user.accglow} />
+      <AccountIcon type={"jetpack"} iconNumber={user.accjetpack} c1={user.playercolor} c2={user.playercolor2} c3={user.playercolor3} glow={user.accglow} />
     </CardBody>
   </Card>)
 }

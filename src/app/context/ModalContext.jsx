@@ -1,5 +1,7 @@
+import { getAccountAction } from "@/actions/admin/getAccountAction";
 import ModalAccept from "@/components/Admin/ModalAccept";
 import Modal from "@/components/Modal";
+import UserModalView from "@/components/UserModalView";
 import { useDisclosure } from "@nextui-org/react";
 import React, { createContext, useState } from "react";
 
@@ -10,9 +12,15 @@ export default function ModalProvider({ children }) {
     title: undefined,
     desc: undefined,
     type: "normal",
-    onSubmit: () => {}
+    onSubmit: () => {},
   });
+  const [currentUserInView, setCurrentUetuserInView] = useState(undefined);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const {
+    isOpen: isOpenUserView,
+    onOpen: onOpenUserView,
+    onOpenChange: onOpenChangeUserView,
+  } = useDisclosure();
 
   const openModal = ({ title, desc, onSubmit, action = "none" }) => {
     if (!isOpen) {
@@ -22,8 +30,26 @@ export default function ModalProvider({ children }) {
     }
   };
 
+  const openUserView = async (user) => {
+    const shouldLoad = user.stars == null;
+    setCurrentUetuserInView({ ...user, isLoading: shouldLoad });
+    onOpenUserView();
+
+    if (shouldLoad) {
+      const account = JSON.parse(
+        await getAccountAction({ username: user.username })
+      );
+      setCurrentUetuserInView(account);
+    }
+  };
+
   return (
-    <ModalContext.Provider value={{ openModal }}>
+    <ModalContext.Provider value={{ openModal, openUserView }}>
+      <UserModalView
+        user={currentUserInView}
+        onOpenChange={onOpenChangeUserView}
+        isOpen={isOpenUserView}
+      />
       <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}

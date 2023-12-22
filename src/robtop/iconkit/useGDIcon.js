@@ -63,22 +63,25 @@ export const useGDIconRef = ({
   username = null
 }) => {
   const finalImage = useRef()
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const currentUrl = window.location.href;
     const hostURL = currentUrl.split("/").slice(0,3).join("/")
     const logic = async() => {
+      setLoading(true);
       const img = await getIcon({
         type, iconNumber, c1, c2, c3, glow, hostURL, username
       })
       if (finalImage.current) {
         finalImage.current.src = img
       }
+      setLoading(false);
     }
     logic()
   }, [...effectDeps])
 
-  return { icon: finalImage }
+  return { icon: finalImage, loading }
 }
 
 export const useGDIcon = ({

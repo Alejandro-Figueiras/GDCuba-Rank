@@ -14,31 +14,51 @@ import { useContext } from "react";
 import { usePathname } from "next/navigation";
 import { logout as logoutAction } from "@/actions/logout/logout";
 import { notify } from "@/libs/toastNotifications";
+import { PlusIcon } from "../Icons/PlusIcon";
+import AccountsIcon from "../Icons/AccountsIcon";
+import { UserIconOutline } from "../Icons/UserIconOutline";
+import { useUser } from "@/hooks/useUser";
 
-const UserDropdown = ({currentUser, onOpenLogin, onOpenChangeSignUp, logout}) => {
-  const ruta = usePathname()
-  const admin = ruta.startsWith('/admin')
+const UserDropdown = ({
+  currentUser,
+  onOpenLogin,
+  onOpenChangeSignUp,
+  logout,
+}) => {
+  const ruta = usePathname();
+  const admin = ruta.startsWith("/admin");
   const { openModal } = useContext(ModalContext);
   const handleLogout = async () => {
     await logoutAction();
-    notify("Sesión cerrada.", 'success');
+    notify("Sesión cerrada.", "success");
     logout();
   };
 
   // Icon
-  const {icon: iconAvatar} = useGDIcon({
-    type: 'cube',
+  const { icon: iconAvatar } = useGDIcon({
+    type: "cube",
     username: currentUser.username,
-    effectDeps: [currentUser.username]
-  })
+    effectDeps: [currentUser.username],
+  });
 
-  const logged = currentUser.username != undefined
+  const {openUserView} = useUser();
+
+  const logged = currentUser.username != undefined;
 
   return (
-    <Dropdown placement="bottom-end">
+    <Dropdown
+      placement="bottom-end"
+      classNames={{
+        base: "before:bg-default-200", // change arrow background
+        content:
+          "py-1 px-1 border border-default-200 bg-gradient-to-br from-default-50 to-black",
+      }}
+    >
       <DropdownTrigger>
         <Button color="default" variant="flat">
-          {currentUser.username && (<img src={iconAvatar} alt={currentUser.username} className="h-7"/>)}
+          {currentUser.username && (
+            <img src={iconAvatar} alt={currentUser.username} className="h-7" />
+          )}
           {currentUser.username ?? "Sin cuenta"}
         </Button>
       </DropdownTrigger>
@@ -62,33 +82,36 @@ const UserDropdown = ({currentUser, onOpenLogin, onOpenChangeSignUp, logout}) =>
       >
         <DropdownSection aria-label="Profile & Actions">
           <DropdownItem
-            isReadOnly
             key="profile"
             className="h-14 gap-2 opacity-100"
             textValue="User"
           >
             <User
-              name={currentUser.username == undefined ? "Invitado" : currentUser.username}
-              description={currentUser.username == undefined ? "none" : currentUser.phone}
+              name={
+                currentUser.username == undefined
+                  ? "Invitado"
+                  : currentUser.username
+              }
+              description={
+                currentUser.username == undefined ? "none" : currentUser.phone
+              }
               classNames={{
                 name: "text-default-600",
                 description: "text-default-500",
               }}
               avatarProps={{
                 size: "sm",
-                radius: 'none',
+                radius: "none",
                 src: iconAvatar,
               }}
             />
           </DropdownItem>
           {/* -------- USER PATH ONLY ---------- */}
-          {
-            !logged && (
-              <DropdownItem key="login-btn" onPress={onOpenLogin}>
-                Iniciar Sesión
-              </DropdownItem>
-            ) 
-          }
+          {!logged && (
+            <DropdownItem key="login-btn" onPress={onOpenLogin}>
+              Iniciar Sesión
+            </DropdownItem>
+          )}
           {
             // Esta doble porque da un error con nextui
             !logged && (
@@ -97,28 +120,34 @@ const UserDropdown = ({currentUser, onOpenLogin, onOpenChangeSignUp, logout}) =>
               </DropdownItem>
             )
           }
+          {logged && (
+            <DropdownItem key="my-account-btn" onPress={() => openUserView(currentUser)}>Mi cuenta</DropdownItem>
+          )}
           {
             // Admin Link
-            (!admin && logged && currentUser.role == 'admin') && (
-              <DropdownItem key="admin-link" href='/admin'>
+            !admin && logged && currentUser.role == "admin" && (
+              <DropdownItem key="admin-link" href="/admin">
                 Admin Dashboard
-              </DropdownItem>  
+              </DropdownItem>
             )
           }
 
           {/* -------- ADMIN PATH OYLY --------- */}
           {
             // Admin Link
-            (admin) && (
-              <DropdownItem key="admin-return-link" href='/'>
+            admin && (
+              <DropdownItem key="admin-return-link" href="/">
                 Volver al Inicio
-              </DropdownItem>  
+              </DropdownItem>
             )
           }
 
           {/* -------- END ADMIN PATH ---------- */}
-          {(logged) && (
+
+          {logged && (
             <DropdownItem
+              className="text-danger"
+              color="danger"
               key="logout-btn"
               onPress={() => {
                 openModal({
@@ -132,12 +161,10 @@ const UserDropdown = ({currentUser, onOpenLogin, onOpenChangeSignUp, logout}) =>
               Cerrar Sesión
             </DropdownItem>
           )}
-
-
         </DropdownSection>
       </DropdownMenu>
     </Dropdown>
-  )
-}
+  );
+};
 
 export default UserDropdown;

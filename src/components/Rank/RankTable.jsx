@@ -1,4 +1,5 @@
 'use client'
+import { useUser } from "@/hooks/useUser";
 import { useGDIconRef } from "@/robtop/iconkit/useGDIcon";
 import {  Table,  TableHeader,  TableBody,  TableColumn,  TableRow,  TableCell} from "@nextui-org/table";
 
@@ -36,9 +37,9 @@ const calcularTrofeo = (globalrank) => {
 }
 
 export default ({ ranking }) => {
-
+  const { openUserView } = useUser();
   return (
-    <Table aria-label="Example table with dynamic content">
+    <Table aria-label="Example table with dynamic content" selectionMode="single">
       <TableHeader>
           <TableColumn width={40}>#</TableColumn>
           {/* <TableColumn width={30}></TableColumn> */}
@@ -49,7 +50,7 @@ export default ({ ranking }) => {
       <TableBody>
         {
           ranking.map((player, i) => 
-            <TableRow key={i+1}>
+            <TableRow key={i+1} onClick={() => openUserView(player)}>
               <TableCell>{i+1}</TableCell>
               <TableCell><UsernameCell player={player} /></TableCell>
               <TableCell><span className="flex align-middle"><img src="/img/star.png" alt="Star" className="h-4 mr-1"/> {player.stars}</span></TableCell>

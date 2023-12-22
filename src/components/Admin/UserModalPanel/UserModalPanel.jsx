@@ -20,6 +20,7 @@ import AccountInfoColumn from "./AccountInfoColumn";
 import { roles, status, types } from "./selectKeys";
 import { validateUserAction } from "@/actions/admin/validateUserAction";
 import { removeUserAction } from "@/actions/admin/removeUserAction";
+import GDSpinner from "@/components/GDIcons/GDSpinner";
 
 export default function UserModalPanel({
   user,
@@ -118,7 +119,7 @@ export default function UserModalPanel({
             </ModalHeader>
             {isLoading || loadingExtra ? (
               <div className="p-2 w-full flex justify-center items-center my-6">
-                <Spinner />
+                <GDSpinner className={'w-10 h-10'} />
               </div>
             ) : (
               <>

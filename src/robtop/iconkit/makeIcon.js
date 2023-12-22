@@ -2,7 +2,6 @@
 
 import Jimp from 'jimp';
 import { getIconSprites } from './getIconSprites';
-import gameSheet from './gameSheet.json'
 import colors from './colors.json'
 import robotInfo from './robotInfo.json'
 import spiderInfo from './spiderInfo.json'
@@ -30,10 +29,10 @@ const layerPriority = {
 const printSprites = async(spritesToPrint) => {
   let WS = 0, WI = 0, HS = 0, HI = 0;
   for (const sprite of spritesToPrint) {
-    WS = Math.max(Math.abs(sprite.w/2-gameSheet[sprite.path].spriteOffset[0]+sprite.offsetX), WS)
-    WI = Math.max(Math.abs(sprite.w/2+gameSheet[sprite.path].spriteOffset[0]+sprite.offsetX), WI)
-    HS = Math.max(Math.abs(sprite.h/2+gameSheet[sprite.path].spriteOffset[1]+sprite.offsetY), HS)
-    HI = Math.max(Math.abs(sprite.h/2-gameSheet[sprite.path].spriteOffset[1]+sprite.offsetY), HI)  
+    WS = Math.max(Math.abs(sprite.w/2-sprite.spriteOffset[0]+sprite.offsetX), WS)
+    WI = Math.max(Math.abs(sprite.w/2+sprite.spriteOffset[0]+sprite.offsetX), WI)
+    HS = Math.max(Math.abs(sprite.h/2+sprite.spriteOffset[1]+sprite.offsetY), HS)
+    HI = Math.max(Math.abs(sprite.h/2-sprite.spriteOffset[1]+sprite.offsetY), HI)  
   }
   const fullImage = new Jimp(WS+WI, HS+HI);
   for (const sprite of spritesToPrint) {
@@ -55,7 +54,7 @@ export const makeIcon = async({type, iconNumber, c1, c2, glow, hostURL}) => {
   if (iconNumber>icon21[type]) {iconNumber=1};
   if (c1>icon21.colors) {c1=0};
   if (c2>icon21.colors) {c2=5};
-  const {sprites} = getIconSprites({type, iconNumber})
+  const {sprites, spritesInfo, spriteSheet} = await getIconSprites({type, iconNumber, hostURL})
   const spritesToPrint = []
   
   const makeSprites = async({sprite, rotate = null, offsetX = 0, offsetY = 0, scale = null}) => {
@@ -74,10 +73,8 @@ export const makeIcon = async({type, iconNumber, c1, c2, glow, hostURL}) => {
     }
 
     const path = sprite.join('_');
-    const url = `${hostURL}/assets/iconkit/${path}`
-    
-    const spriteOffset = gameSheet[path].spriteOffset
-    const layer = await getLayer({url, path, color, rotate, scale})
+    const spriteOffset = spritesInfo[path].spriteOffset
+    const layer = await getLayer({spriteSheet, info: spritesInfo[path], color, rotate, scale})
     spritesToPrint.push({
       path,
       layer, 
@@ -86,7 +83,8 @@ export const makeIcon = async({type, iconNumber, c1, c2, glow, hostURL}) => {
       w: layer.getWidth(),
       h: layer.getHeight(),
       offsetX,
-      offsetY
+      offsetY,
+      spriteOffset: spritesInfo[path].spriteOffset
     })
   }
 

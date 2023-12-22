@@ -46,7 +46,8 @@ const getIcon = async({
   if (iconNumber>icon21[type]) {iconNumber=1};
   if (c1>icon21.colors) {c1=0};
   if (c2>icon21.colors) {c2=5};
-  let img = localStorage.getItem(`${type}_${iconNumber}_${c1}_${c2}_${glow?1:0}`)
+  // let img = localStorage.getItem(`${type}_${iconNumber}_${c1}_${c2}_${glow?1:0}`)
+  let img = null
   if (!img) {
     img = await makeIcon({type, iconNumber, c1, c2, glow, hostURL})
     localStorage.setItem(`${type}_${iconNumber}_${c1}_${c2}_${glow?1:0}`, img)

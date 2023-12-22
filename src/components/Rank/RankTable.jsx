@@ -8,6 +8,7 @@ const UsernameCell = ({ player }) => {
     iconNumber: player.accicon,
     c1: player.playercolor,
     c2: player.playercolor2,
+    c3: player.playercolor3,
     glow: player.accglow
   })
   return (<span className="flex gap-4"><img ref={icon} className="h-6"/>{player.username}</span>)

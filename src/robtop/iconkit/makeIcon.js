@@ -56,7 +56,7 @@ export const makeIcon = async({type, iconNumber, c1, c2, c3, glow, hostURL}) => 
   if (iconNumber>icon22[type]) {iconNumber=1};
   if (c1>icon22.colors) {c1=0};
   if (c2>icon22.colors) {c2=5};
-  if (c3>icon22.colors) {c3=15};
+  if (c3>icon22.colors) {c3=12};
   const {sprites, spritesInfo, spriteSheet} = await getIconSprites({type, iconNumber, hostURL})
   const spritesToPrint = []
   

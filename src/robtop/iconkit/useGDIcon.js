@@ -17,7 +17,7 @@ const icon22 = {
 }
 
 const getIcon = async({
-  type = 'cube', iconNumber = 1, c1 = 0, c2=5, c3=15, glow = false,
+  type = 'cube', iconNumber = 1, c1 = 0, c2=5, c3=12, glow = false,
   username = null, hostURL
 }) => {
 
@@ -49,18 +49,17 @@ const getIcon = async({
   if (iconNumber>icon22[type]) {iconNumber=1};
   if (c1>icon22.colors) {c1=0};
   if (c2>icon22.colors) {c2=5};
-  if (c3>icon22.colors) {c3=5};
+  if (c3>icon22.colors) {c3=12};
   let img = localStorage.getItem(`${type}_${iconNumber}_${c1}_${c2}_${glow?`1_${c3}`:0}`)
-  // let img = null
   if (!img) {
-    img = await makeIcon({type, iconNumber, c1, c2, glow, hostURL})
+    img = await makeIcon({type, iconNumber, c1, c2, c3, glow, hostURL})
     localStorage.setItem(`${type}_${iconNumber}_${c1}_${c2}_${glow?`1_${c3}`:0}`, img)
   }
   return img;
 }
 
 export const useGDIconRef = ({
-  type = 'cube', iconNumber = 1, c1 = 0, c2=5, c3=15, glow = false, effectDeps = [],
+  type = 'cube', iconNumber = 1, c1 = 0, c2=5, c3=12, glow = false, effectDeps = [],
   username = null
 }) => {
   const finalImage = useRef()
@@ -83,7 +82,7 @@ export const useGDIconRef = ({
 }
 
 export const useGDIcon = ({
-  type = 'cube', iconNumber = 1, c1 = 0, c2=5, c3=5, glow = false, effectDeps = [],
+  type = 'cube', iconNumber = 1, c1 = 0, c2=5, c3=12, glow = false, effectDeps = [],
   username = null
 }) => {
   const [iconSrc, setIcon] = useState(DEFAULT_CUBE)

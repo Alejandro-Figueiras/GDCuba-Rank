@@ -26,7 +26,7 @@ export const register = async (data) => {
       fields.accountid = gdAccount.accountid;
 
       const query = await addUser(fields);
-      const accountLocal = await getGDAccount(gdAccount)
+      const accountLocal = await getGDAccount(gdAccount.username)
       if (accountLocal == undefined) {
         await addGDAccount({account: gdAccount});
       }

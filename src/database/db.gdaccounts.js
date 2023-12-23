@@ -2,8 +2,8 @@
 
 import { addAccountCloud, getOlderAccountsInfo, updateAccountCloud } from "./cloud/db.functions";
 
-export const addGDAccount = async({account}) => {
-  const response = await addAccountCloud(account);
+export const addGDAccount = async({account, cuba = 0}) => {
+  const response = await addAccountCloud(account, cuba);
   if (response.isError()) {
     throw response.error
   } else {

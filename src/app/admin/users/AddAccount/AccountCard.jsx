@@ -4,7 +4,7 @@ import { useGDIcon } from '@/robtop/iconkit/useGDIcon'
 import { Card, CardHeader, CardBody, CardFooter, Divider, Checkbox, Button } from '@nextui-org/react'
 import { useRef } from 'react'
 
-const AccountCard = ({account}) => {
+const AccountCard = ({account, submitAccount}) => {
   const cubanCheck = useRef(true)
 
   const {icon} = useGDIcon({
@@ -18,7 +18,10 @@ const AccountCard = ({account}) => {
   })
 
   const handleSubmit = (e) => {
-    console.log(cubanCheck.current)
+    submitAccount({
+      account,
+      cuba: cubanCheck.current
+    })
   }
 
   return (

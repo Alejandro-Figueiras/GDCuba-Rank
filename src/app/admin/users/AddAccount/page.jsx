@@ -1,10 +1,10 @@
 'use client'
-import { getAccountFromRobTopAction } from '@/actions/admin/getAccountAction';
-import AccountIconsRow from '@/components/Admin/UserModalPanel/AccountIconsRow';
-import AccountStatsRow from '@/components/Admin/UserModalPanel/AccountStatsRow';
-import {Input, Button, Card, CardHeader, CardBody, CardFooter, Divider, Image } from '@nextui-org/react'
+import { getAccountAction, getAccountFromRobTopAction } from '@/actions/admin/getAccountAction';
+import {Input, Button } from '@nextui-org/react'
 import { useRef, useState } from 'react'
 import AccountCard from './AccountCard';
+import { notify, notifyDismiss } from "@/libs/toastNotifications";
+import { addNewAccountAction } from '@/actions/admin/addNewAccountAction';
 
 const AddAccount = () => {
   const inputRef = useRef();
@@ -16,6 +16,23 @@ const AddAccount = () => {
     setAccount(newAccount)
   }
 
+  const submitAccount = async({account, cuba = false}) => {
+    let local = await getAccountAction({username: account.username});
+    if (local) {
+      local = JSON.parse(local);
+      if (local.cuba == 0 && cuba) {
+        // TODO Convertir a Cubano
+      } else {
+        notify('La cuenta ya está en la base de datos', 'info')
+      }
+    } else {
+      await addNewAccountAction({account, cuba: cuba?1:0})
+      notify('La cuenta fue agregada exitosamente', 'success')
+    }
+    setAccount({});
+    inputRef.current.value = '';
+  }
+
   return (<>
     <div className="w-100 m-4">
       <div className="flex flex-row align-middle justify-center gap-4">
@@ -24,7 +41,7 @@ const AddAccount = () => {
       </div>
       <div className="mt-6 w-100">
         {(account.username) ? (
-          <AccountCard account={account} />
+          <AccountCard account={account} submitAccount={submitAccount}/>
         ):<p className='text-center'>{account == -1 ? "No existe esta cuenta" : 'Vacío.'}</p>}
       </div>
     </div>

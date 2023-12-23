@@ -10,6 +10,7 @@ import { SettingsIcon } from "@/components/Icons/SettingsIcon";
 import ChangelogIcon from "@/components/Icons/ChangelogIcon";
 import { usePathname } from "next/navigation";
 import DatabaseIcon from "@/components/Icons/DatabaseIcon";
+import NewIcon from "@/components/Icons/NewIcon";
 
 export default () => {
   const { collapsed, setCollapsed } = useSidebarContext();
@@ -53,6 +54,12 @@ export default () => {
                   title="Usuarios"
                   icon={<AccountsIcon />}
                   href="/admin/users"
+                />
+                <SidebarItem
+                  isActive={ruta === "/admin/users/AddAccount"}
+                  title="Agregar Cuenta"
+                  icon={<NewIcon />}
+                  href="/admin/users/AddAccount"
                 />
                 {/* <SidebarItem
                   isActive={ruta === "/reports"}

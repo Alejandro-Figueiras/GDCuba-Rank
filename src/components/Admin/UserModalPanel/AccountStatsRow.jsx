@@ -1,6 +1,6 @@
 const AccountStat = ({ value, icon = null }) => {
   return (
-    <div className="flex gap-3 items-center justify-center relative">
+    <div className="flex gap-1 items-center justify-center relative">
       <span className="w-7 h-7 flex items-center justify-center">
         {icon ? (
           <img
@@ -17,8 +17,8 @@ const AccountStat = ({ value, icon = null }) => {
 }
 
 const AccountStatsRow = ({user}) => {
-  return (<div className="h-8">
-    <div className="flex justify-between">
+  return (<div className="min-h-8">
+    <div className="flex justify-evenly gap-4 flex-wrap">
       <AccountStat value={user.stars} icon="/img/starsIcon.png"/>
       <AccountStat value={user.moons} icon="/img/moonsIcon.png"/>
       <AccountStat value={user.diamonds} icon='/img/diamond.png'/>

@@ -19,13 +19,13 @@ const AccountStat = ({ value, icon = null }) => {
 const AccountStatsRow = ({user}) => {
   return (<div className="min-h-8">
     <div className="flex justify-evenly gap-4 flex-wrap">
-      <AccountStat value={user.stars} icon="/img/starsIcon.png"/>
-      <AccountStat value={user.moons} icon="/img/moonsIcon.png"/>
-      <AccountStat value={user.diamonds} icon='/img/diamond.png'/>
-      <AccountStat value={user.secretcoins} icon='/img/secretcoin.png'/>
-      <AccountStat value={user.usercoins} icon='/img/coin.png'/>
-      <AccountStat value={user.demons} icon='/img/demon.png'/>
-      <AccountStat value={user.creatorpoints} icon="/img/cp.png"/>
+      <AccountStat value={user.stars} icon="/assets/stats/starsIcon.png"/>
+      <AccountStat value={user.moons} icon="/assets/stats/moonsIcon.png"/>
+      <AccountStat value={user.diamonds} icon='/assets/stats/diamond.png'/>
+      <AccountStat value={user.secretcoins} icon='/assets/stats/secretcoin.png'/>
+      <AccountStat value={user.usercoins} icon='/assets/stats/usercoin.png'/>
+      <AccountStat value={user.demons} icon='/assets/dificultades/harddemon_icon.png'/>
+      <AccountStat value={user.creatorpoints} icon="/assets/stats/creatorpoints.png"/>
     </div>
   </div>)
 }

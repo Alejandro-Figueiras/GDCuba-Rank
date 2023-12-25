@@ -20,6 +20,7 @@ import { useSesion } from "@/hooks/useSesion";
 import { usePathname } from "next/navigation";
 import UserDropdown from "./UserDropdown";
 import { useState } from "react";
+import RankDropdown from "./RankDropdown";
 
 const NavLink = ({ href, children }) => {
   const rutaActual = usePathname();
@@ -86,9 +87,10 @@ export default () => {
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           {menuItems.map((m) => (
             <NavLink key={m.label} href={m.href}>
-              {m.label}
+              <span className='text-lg'>{m.label}</span>
             </NavLink>
           ))}
+          <RankDropdown/>
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>

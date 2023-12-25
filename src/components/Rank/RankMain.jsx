@@ -12,6 +12,8 @@ export default ({tipo = 'stars'}) => {
       players.sort((a,b) => {
         if (tipo=='stars') {
           return b.stars-a.stars;
+        } else if (tipo == 'demons') {
+          return b.demons-a.demons;
         }
 
         return b.stars-a.stars;

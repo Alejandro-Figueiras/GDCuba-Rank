@@ -14,6 +14,10 @@ export default ({tipo = 'stars'}) => {
           return b.stars-a.stars;
         } else if (tipo == 'demons') {
           return b.demons-a.demons;
+        } else if (tipo == 'moons') {
+          return b.moons-a.moons;
+        } else if (tipo == 'usercoins') {
+          return b.usercoins-a.usercoins;
         }
 
         return b.stars-a.stars;

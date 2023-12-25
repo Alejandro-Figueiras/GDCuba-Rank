@@ -8,15 +8,17 @@ import {
   Link
 } from '@nextui-org/react'
 import { ChevronDownIcon } from '../Icons/ChevonDrownIcon';
+import { usePathname } from 'next/navigation';
 
-const RankDropdown = ({}) => {
+const RankDropdown = () => {
+  const rutaActual = usePathname();
   return (
   <Dropdown>
     <NavbarItem>
       <DropdownTrigger>
         <Button
           disableRipple
-          className="p-0 text-lg bg-transparent data-[hover=true]:bg-transparent"
+          className={"p-0 text-lg bg-transparent data-[hover=true]:bg-transparent"+(rutaActual.startsWith('/rank')?' text-primary':'')}
           endContent={<ChevronDownIcon />}
           radius="sm"
           variant="light"

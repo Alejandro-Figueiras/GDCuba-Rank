@@ -66,8 +66,7 @@ export default () => {
   } = useDisclosure();
 
   const menuItems = [
-    { href: "/", label: "Home" },
-    { href: "/rank/stars", label: "Estrellas" },
+    { href: "/", label: "Home" }
   ];
 
   return (

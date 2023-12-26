@@ -78,7 +78,7 @@ export default () => {
             className="sm:hidden"
           />
           <NavbarBrand>
-            {/* <GDQBA LOGO /> */}
+            <img src="/assets/logo.png" width="36" className="mr-4"/>
             <p className="font-bold text-inherit">GD Cuba ΔΔΔ</p>
           </NavbarBrand>
         </NavbarContent>

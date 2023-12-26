@@ -28,7 +28,7 @@ export default () => {
           <div className={Sidebar.Header()}>
             
             <div className="flex items-center gap-2">
-              {/* {company.logo} Poner aqui futuro logo de GD Cuba */}
+              <img src="/assets/logo.png" alt="Logo" width="40" />
               <div className="flex flex-col gap-4">
                 <h3 className="text-xl font-medium m-0 text-default-900 -mb-4 whitespace-nowrap">
                   GD Cuba ΔΔΔ

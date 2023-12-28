@@ -12,13 +12,13 @@ export const authMe = async () => {
       verify(cookie.value, process.env.JWT_SECRET);
       const payload = decode(cookie.value);
 
-      const user = {
-        username: payload.username,
-        accountID: payload.accountid,
-        phone: payload.phone,
-        role: payload.role
-      };
-      return JSON.stringify(user);
+      // const user = {
+      //   username: payload.username,
+      //   accountID: payload.accountid,
+      //   phone: payload.phone,
+      //   role: payload.role
+      // };
+      return JSON.stringify(payload);
     } catch {
       console.log("Token invalid!");
     }

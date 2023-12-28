@@ -37,7 +37,6 @@ export default ({ isOpen, onOpenChange }) => {
       setLoading(true);
 
       const data = JSON.parse(await login(formData))
-      console.log(data)
       setLoading(false);
       if (data.status == "error") {
         notify(data.message, 'error')
@@ -47,10 +46,7 @@ export default ({ isOpen, onOpenChange }) => {
       notify(data.message, 'success')
       setCurrentUser(prev => ({
         ...prev, 
-        username: data.username,
-        accountid: data.accountid,
-        phone: data.phone,
-        role: data.role
+        ...data
       }));
       onClose();
     }

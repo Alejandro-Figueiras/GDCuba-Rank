@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -13,6 +13,13 @@ import {
   Accordion,
   AccordionItem,
   Button,
+  Modal,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalContent,
+  useDisclosure,
+  Input,
 } from "@nextui-org/react";
 import { useSesion } from "@/hooks/useSesion";
 import { useGDIcon } from "@/robtop/iconkit/useGDIcon";
@@ -24,6 +31,13 @@ import GDSpinner from "../GDIcons/GDSpinner";
 import AccountIconsRow from "../Admin/UserModalPanel/AccountIconsRow";
 import { EditIcon } from "../Icons/EditIcon";
 import { routes } from "../../../staticFiles";
+import { PlusIcon } from "../Icons/PlusIcon";
+import DeleteIcon from "../Icons/DeleteIcon";
+import { ModalContext } from "@/app/context/ModalContext";
+import { SearchIcon } from "../Icons/SearchIcon";
+import { AccountGDStuff } from "./AccountGDStuff";
+import ChangeModal from "./ChangeModal";
+import AccountSearchLevel from "./AccountSearchLevel";
 export default function AccountManage() {
   const { currentUser } = useSesion();
   const { icon: iconAvatar } = useGDIcon({
@@ -33,6 +47,19 @@ export default function AccountManage() {
   });
 
   const [fullUser, setFullUser] = useState(undefined);
+  const [changes, setChanges] = useState(new Map());
+
+  const [defaultModalData, setDefaultModalData] = useState({
+    key: undefined,
+    value: "",
+  });
+
+  const { isOpen, onOpenChange, onOpen } = useDisclosure();
+  const {
+    isOpen: isOpenSearch,
+    onOpenChange: onOpenChangeSearch,
+    onOpen: onOpenSearch,
+  } = useDisclosure();
 
   useEffect(() => {
     if (currentUser.username == undefined) return;
@@ -42,102 +69,108 @@ export default function AccountManage() {
       );
       setFullUser(account);
     };
-
     loadFullUser();
-    // Promise.resolve(getUser({ username: currentUser.username }))
-    // .then(data => console.log(data));
   }, [currentUser]);
 
-  useEffect(() => {
-    console.log(fullUser);
-  }, [fullUser]);
+  const openModal = (key, defaultValue) => {
+    setDefaultModalData({ value: defaultValue, key });
+    onOpen();
+  };
+
+  const openSearchModal = (key, defaultValue) => {
+    setDefaultModalData({ value: defaultValue, key });
+    onOpenSearch();
+  };
+
+  const updateChanges = (key, value) => {
+    if (changes.has(key) && value == currentUser[key]) {
+      changes.delete(key);
+    } else if (value != currentUser[key]) {
+      changes.set(key, value);
+    }
+  };
 
   return currentUser.username != null ? (
-    <Card className="max-w-[1000px] w-[800px]">
-      <CardHeader className="flex gap-3">
-        <Image
-          alt="nextui logo"
-          height={40}
-          radius="sm"
-          src={iconAvatar}
-          width={40}
-        />
-        <div className="flex flex-col">
-          <p className="text-md">{currentUser.username}</p>
-          <Tooltip content="Frase que verán todos los usuarios al ver tu cuenta">
-            <p className="text-small text-default-500 flex gap-2 justify-center items-center cursor-pointer">
-              ¡Hola, estoy usando GDC!
-              <span>
-                <EditIcon />
-              </span>
-            </p>
-          </Tooltip>
-        </div>
-      </CardHeader>
-      <Divider />
-      <CardBody className="flex flex-col justify-center items-center gap-3">
-        {fullUser != undefined ? (
-          <>
-            <AccountStatsRow user={fullUser} />
-            <AccountIconsRow user={fullUser} />
-            <AccountGDStuff />
-            <AccountComments/>
-          </>
-        ) : (
-          <GDSpinner />
-        )}
-      </CardBody>
-      <Divider />
-      <CardFooter className="justify-evenly item-center flex gap-4">
-        <Button
-          color="primary"
-          variant="flat"
-          onPress={() => console.log("aplicar cambios")}
-          className="w-[45%] max-w-200px"
-        >
-          Aplicar
-        </Button>
-        <Button
-          color="default"
-          variant="flat"
-          onPress={() => console.log("Revertir cambios")}
-          className="w-[40%] max-w-200px"
-        >
-          Cancelar
-        </Button>
-      </CardFooter>
-    </Card>
+    <>
+      <Card className="max-w-[1000px] w-[800px]">
+        <CardHeader className="flex gap-3">
+          <Image
+            alt="nextui logo"
+            height={40}
+            radius="sm"
+            src={iconAvatar}
+            width={40}
+          />
+          <div className="flex flex-col">
+            <p className="text-md">{currentUser.username}</p>
+            <Tooltip content="Frase que verán todos los usuarios al ver tu cuenta">
+              <p
+                className="text-small text-default-500 flex gap-2 justify-center items-center cursor-pointer"
+                onClick={() =>
+                  openModal(
+                    "greeting",
+                    changes.get("greeting") || currentUser.greeting
+                  )
+                }
+              >
+                {currentUser.greeting != null && currentUser.greeting !== ""
+                  ? changes.get("greeting") || currentUser.greeting
+                  : "No tienes ningun saludo definido"}
+                <span>
+                  <EditIcon />
+                </span>
+              </p>
+            </Tooltip>
+          </div>
+        </CardHeader>
+        <Divider />
+        <CardBody className="flex flex-col justify-center items-center gap-3">
+          {fullUser != undefined ? (
+            <>
+              <AccountStatsRow user={fullUser} />
+              <AccountIconsRow user={fullUser} />
+              <AccountGDStuff dbuser={currentUser} openModal={openSearchModal} />
+              {/* <AccountComments /> */}
+            </>
+          ) : (
+            <GDSpinner />
+          )}
+        </CardBody>
+        <Divider />
+        <CardFooter className="justify-evenly item-center flex gap-4">
+          <Button
+            color="primary"
+            variant="solid"
+            onPress={() => console.log("aplicar cambios")}
+            className="w-[45%] max-w-200px"
+            isDisabled={changes.size == 0}
+          >
+            Aplicar
+          </Button>
+          <Button
+            color="default"
+            variant="flat"
+            onPress={() => console.log("Revertir cambios")}
+            className="w-[40%] max-w-200px"
+          >
+            Revertir
+          </Button>
+        </CardFooter>
+      </Card>
+      <ChangeModal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        updateChanges={updateChanges}
+        defaultModalData={defaultModalData}
+      />
+      <AccountSearchLevel
+        isOpen={isOpenSearch}
+        onOpenChange={onOpenChangeSearch}
+        updateChanges={updateChanges}
+        defaultModalData={defaultModalData}
+      />
+    </>
   ) : (
     <NoAccount />
-  );
-}
-
-function AccountComments() {
-    return <p>Pan con jamon</p>
-}
-
-function AccountGDStuff() {
-  const defaultContent =
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
-
-  return (
-    <Accordion variant="shadow">
-      <AccordionItem
-        key="1"
-        aria-label="Accordion 1"
-        title="Demon mas dificil"
-        startContent={<img src={routes.demon.defaultFace} width={30} />}
-      >
-        Demon mas dificil
-      </AccordionItem>
-      <AccordionItem
-        key="2"
-        aria-label="Accordion 2"
-        title="Mejor nivel"
-        startContent={<img src={routes.cp} width={30} />}
-      >
-        Mejor nivel
-      </AccordionItem>
-    </Accordion>
   );
 }

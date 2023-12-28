@@ -1,3 +1,5 @@
+'use client'
+
 import React, { createContext, useEffect, useState } from "react";
 import { notify, notifyDismiss } from "@/libs/toastNotifications.js";
 import { authMe } from "@/actions/auth/me.js";
@@ -18,15 +20,10 @@ export default function GlobalContextProvider({ children }) {
     async function auth() {
       if (firstAssembly) return;
       const data = JSON.parse(await authMe());
-
+        console.log(data);
       if (!data.error) {
         if (data)
-          setCurrentUser({
-            username: data.username,
-            accountID: data.accountID,
-            phone: data.phone,
-            role: data.role
-          });
+          setCurrentUser(data);
       }
     }
 

@@ -41,7 +41,7 @@ const UserDropdown = ({
     effectDeps: [currentUser.username],
   });
 
-  const {openUserView} = useUser();
+  const { openUserView } = useUser();
 
   const logged = currentUser.username != undefined;
 
@@ -121,7 +121,12 @@ const UserDropdown = ({
             )
           }
           {logged && (
-            <DropdownItem key="my-account-btn" onPress={() => openUserView(currentUser)}>Mi cuenta</DropdownItem>
+            <DropdownItem
+              key="my-account-btn"
+              href="/account/manage"
+            >
+              Mi cuenta
+            </DropdownItem>
           )}
           {
             // Admin Link
@@ -143,7 +148,6 @@ const UserDropdown = ({
           }
 
           {/* -------- END ADMIN PATH ---------- */}
-
           {logged && (
             <DropdownItem
               className="text-danger"

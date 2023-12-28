@@ -42,7 +42,7 @@ const AccountIcon = ({
 
 const AccountIconsRow = ({ user }) => {
   return (
-    <Card className="bg-default-200">
+    <Card className="bg-default-200 max-w-full w-full">
       <CardBody className="flex justify-evenly flex-row p-4 flex-wrap">
         <AccountIcon
           type={"cube"}

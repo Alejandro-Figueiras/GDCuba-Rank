@@ -17,7 +17,7 @@ const AccountStat = ({ value, icon = null }) => {
 }
 
 const AccountStatsRow = ({user}) => {
-  return (<div className="min-h-8">
+  return (<div className="min-h-8 w-full">
     <div className="flex justify-evenly gap-4 flex-wrap">
       <AccountStat value={user.stars} icon="/assets/stats/starsIcon.png"/>
       <AccountStat value={user.moons} icon="/assets/stats/moonsIcon.png"/>

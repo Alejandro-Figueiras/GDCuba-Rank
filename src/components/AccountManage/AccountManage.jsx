@@ -9,11 +9,21 @@ import {
   Divider,
   Link,
   Image,
+  Tooltip,
+  Accordion,
+  AccordionItem,
+  Button,
 } from "@nextui-org/react";
 import { useSesion } from "@/hooks/useSesion";
 import { useGDIcon } from "@/robtop/iconkit/useGDIcon";
 import { useUser } from "@/hooks/useUser";
 import { getAccountAction } from "@/actions/admin/getAccountAction";
+import { NoAccount } from "../NoAccount";
+import AccountStatsRow from "../Admin/UserModalPanel/AccountStatsRow";
+import GDSpinner from "../GDIcons/GDSpinner";
+import AccountIconsRow from "../Admin/UserModalPanel/AccountIconsRow";
+import { EditIcon } from "../Icons/EditIcon";
+import { routes } from "../../../staticFiles";
 export default function AccountManage() {
   const { currentUser } = useSesion();
   const { icon: iconAvatar } = useGDIcon({
@@ -54,22 +64,47 @@ export default function AccountManage() {
         />
         <div className="flex flex-col">
           <p className="text-md">{currentUser.username}</p>
-          <p className="text-small text-default-500">nextui.org</p>
+          <Tooltip content="Frase que verán todos los usuarios al ver tu cuenta">
+            <p className="text-small text-default-500 flex gap-2 justify-center items-center cursor-pointer">
+              ¡Hola, estoy usando GDC!
+              <span>
+                <EditIcon />
+              </span>
+            </p>
+          </Tooltip>
         </div>
       </CardHeader>
       <Divider />
-      <CardBody>
-        <p>Make beautiful websites regardless of your design experience.</p>
+      <CardBody className="flex flex-col justify-center items-center gap-3">
+        {fullUser != undefined ? (
+          <>
+            <AccountStatsRow user={fullUser} />
+            <AccountIconsRow user={fullUser} />
+            <AccountGDStuff />
+            <AccountComments/>
+          </>
+        ) : (
+          <GDSpinner />
+        )}
       </CardBody>
       <Divider />
-      <CardFooter>
-        <Link
-          isExternal
-          showAnchorIcon
-          href="https://github.com/nextui-org/nextui"
+      <CardFooter className="justify-evenly item-center flex gap-4">
+        <Button
+          color="primary"
+          variant="flat"
+          onPress={() => console.log("aplicar cambios")}
+          className="w-[45%] max-w-200px"
         >
-          Visit source code on GitHub.
-        </Link>
+          Aplicar
+        </Button>
+        <Button
+          color="default"
+          variant="flat"
+          onPress={() => console.log("Revertir cambios")}
+          className="w-[40%] max-w-200px"
+        >
+          Cancelar
+        </Button>
       </CardFooter>
     </Card>
   ) : (
@@ -77,15 +112,32 @@ export default function AccountManage() {
   );
 }
 
-const NoAccount = ({message}) => {
-    const defaultMessage = "Necesitas una cuenta para esta sección xd";
+function AccountComments() {
+    return <p>Pan con jamon</p>
+}
+
+function AccountGDStuff() {
+  const defaultContent =
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+
   return (
-    <div className="flex justify-center items-center h-[400px] flex-col">
-      <h2 className="text-xl">{message || defaultMessage}</h2>
-      <p>
-        <span className="text-cyan-600 font-semibold cursor-pointer">Inicia sesion</span> o{" "}
-        <span className="text-cyan-600 font-semibold cursor-pointer">Registrate</span>
-      </p>
-    </div>
+    <Accordion variant="shadow">
+      <AccordionItem
+        key="1"
+        aria-label="Accordion 1"
+        title="Demon mas dificil"
+        startContent={<img src={routes.demon.defaultFace} width={30} />}
+      >
+        Demon mas dificil
+      </AccordionItem>
+      <AccordionItem
+        key="2"
+        aria-label="Accordion 2"
+        title="Mejor nivel"
+        startContent={<img src={routes.cp} width={30} />}
+      >
+        Mejor nivel
+      </AccordionItem>
+    </Accordion>
   );
-};
+}

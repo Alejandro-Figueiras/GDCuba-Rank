@@ -3,7 +3,7 @@ import React from "react";
 
 export default () => {
   return (
-    <div className="h-[400px] flex justify-center items-center p-4">
+    <div className="bg-red-400 flex justify-center p-4">
       <AccountManage />
     </div>
   );

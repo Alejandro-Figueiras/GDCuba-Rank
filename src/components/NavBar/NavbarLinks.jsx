@@ -14,12 +14,12 @@ export const NavLink = ({ href, children }) => {
   );
 };
 
-export const NavMenuLink = ({ href, children, fontSize }) => {
+export const NavMenuLink = ({ href, children, fontSize, onClick}) => {
   const rutaActual = usePathname();
 
 
   return (
-    <NavbarMenuItem isActive={rutaActual == href}>
+    <NavbarMenuItem isActive={rutaActual == href} onClick={onClick}>
       <Link
         href={href}
         color="primary"

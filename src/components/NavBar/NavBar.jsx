@@ -77,7 +77,7 @@ export default () => {
         </NavbarContent>
         <NavbarMenu>
           {menuItems.map((m) => (
-            <NavMenuLink key={m.label} href={m.href}>
+            <NavMenuLink key={m.label} href={m.href} onClick={() => setIsMenuOpen(false)}>
               {m.label}
             </NavMenuLink>
           ))}

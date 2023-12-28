@@ -21,34 +21,10 @@ import { usePathname } from "next/navigation";
 import UserDropdown from "./UserDropdown";
 import { useState } from "react";
 import RankDropdown from "./RankDropdown";
-
-const NavLink = ({ href, children }) => {
-  const rutaActual = usePathname();
-
-  return (
-    <NavbarItem isActive={rutaActual == href}>
-      <Link href={href} color={rutaActual == href ? "primary" : "foreground"}>
-        {children}
-      </Link>
-    </NavbarItem>
-  );
-};
-
-const NavMenuLink = ({ href, children }) => {
-  const rutaActual = usePathname();
-
-  return (
-    <NavbarMenuItem isActive={rutaActual == href}>
-      <Link
-        href={href}
-        color={rutaActual == href ? "primary" : "foreground"}
-        className="w-full"
-      >
-        {children}
-      </Link>
-    </NavbarMenuItem>
-  );
-};
+import { Accordion, AccordionItem } from "@nextui-org/react";
+import { routes } from "../../../staticFiles";
+import { NavLink, NavMenuLink } from "./NavbarLinks";
+import { ResponsiveRankNav } from "./ResponsiveRankNav";
 
 export default () => {
   const { currentUser, logout } = useSesion();
@@ -65,20 +41,18 @@ export default () => {
     onOpenChange: onOpenChangeSignUp,
   } = useDisclosure();
 
-  const menuItems = [
-    { href: "/", label: "Home" }
-  ];
+  const menuItems = [{ href: "/", label: "Home" }];
 
   return (
     <>
-      <Navbar onMenuOpenChange={setIsMenuOpen} isBordered>
+      <Navbar onMenuOpenChange={setIsMenuOpen} isBordered isMenuOpen={isMenuOpen}>
         <NavbarContent>
           <NavbarMenuToggle
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             className="sm:hidden"
           />
           <NavbarBrand>
-            <img src="/assets/logo.png" width="36" className="mr-4"/>
+            <img src="/assets/logo.png" width="36" className="mr-4" />
             <p className="font-bold text-inherit">GD Cuba ΔΔΔ</p>
           </NavbarBrand>
         </NavbarContent>
@@ -86,10 +60,10 @@ export default () => {
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           {menuItems.map((m) => (
             <NavLink key={m.label} href={m.href}>
-              <span className='text-lg'>{m.label}</span>
+              <span className="text-lg">{m.label}</span>
             </NavLink>
           ))}
-          <RankDropdown/>
+          <RankDropdown />
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>
@@ -107,6 +81,7 @@ export default () => {
               {m.label}
             </NavMenuLink>
           ))}
+          <ResponsiveRankNav onLinkSelected={() => setIsMenuOpen(false)}/>
         </NavbarMenu>
       </Navbar>
       {/* Modal Login */}

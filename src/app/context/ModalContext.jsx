@@ -1,5 +1,7 @@
 import { getAccountAction } from "@/actions/admin/getAccountAction";
 import ModalAccept from "@/components/Admin/ModalAccept";
+import Login from "@/components/Forms/Login";
+import SignUp from "@/components/Forms/SignUp";
 import Modal from "@/components/Modal";
 import UserModalView from "@/components/UserModalView";
 import { useDisclosure } from "@nextui-org/react";
@@ -20,6 +22,16 @@ export default function ModalProvider({ children }) {
     isOpen: isOpenUserView,
     onOpen: onOpenUserView,
     onOpenChange: onOpenChangeUserView,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenLogin,
+    onOpen: onOpenLogin,
+    onOpenChange: onOpenChangeLogin,
+  } = useDisclosure();
+  const {
+    isOpen: isOpenSignUp,
+    onOpen: onOpenSignUp,
+    onOpenChange: onOpenChangeSignUp,
   } = useDisclosure();
 
   const openModal = ({ title, desc, onSubmit, action = "none" }) => {
@@ -44,7 +56,7 @@ export default function ModalProvider({ children }) {
   };
 
   return (
-    <ModalContext.Provider value={{ openModal, openUserView }}>
+    <ModalContext.Provider value={{ openModal, openUserView, onOpenLogin, onOpenSignUp }}>
       <UserModalView
         user={currentUserInView}
         onOpenChange={onOpenChangeUserView}
@@ -58,6 +70,10 @@ export default function ModalProvider({ children }) {
         action={current.action}
         submit={current.onSubmit}
       />
+      <Login isOpen={isOpenLogin} onOpenChange={onOpenChangeLogin} />
+
+      {/* Sign up Form */}
+      <SignUp isOpen={isOpenSignUp} onOpenChange={onOpenChangeSignUp} />
       {children}
     </ModalContext.Provider>
   );

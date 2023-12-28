@@ -27,25 +27,18 @@ import { NavLink, NavMenuLink } from "./NavbarLinks";
 import { ResponsiveRankNav } from "./ResponsiveRankNav";
 
 export default () => {
-  const { currentUser, logout } = useSesion();
+  const { currentUser, logout, signUp, login } = useSesion();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const {
-    isOpen: isOpenLogin,
-    onOpen: onOpenLogin,
-    onOpenChange: onOpenChangeLogin,
-  } = useDisclosure();
-  const {
-    isOpen: isOpenSignUp,
-    onOpen: onOpenSignUp,
-    onOpenChange: onOpenChangeSignUp,
-  } = useDisclosure();
 
   const menuItems = [{ href: "/", label: "Home" }];
 
   return (
     <>
-      <Navbar onMenuOpenChange={setIsMenuOpen} isBordered isMenuOpen={isMenuOpen}>
+      <Navbar
+        onMenuOpenChange={setIsMenuOpen}
+        isBordered
+        isMenuOpen={isMenuOpen}
+      >
         <NavbarContent>
           <NavbarMenuToggle
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -70,25 +63,25 @@ export default () => {
             <UserDropdown
               currentUser={currentUser}
               logout={logout}
-              onOpenLogin={onOpenLogin}
-              onOpenChangeSignUp={onOpenChangeSignUp}
+              onOpenLogin={login}
+              onOpenChangeSignUp={signUp}
             />
           </NavbarItem>
         </NavbarContent>
         <NavbarMenu>
           {menuItems.map((m) => (
-            <NavMenuLink key={m.label} href={m.href} onClick={() => setIsMenuOpen(false)}>
+            <NavMenuLink
+              key={m.label}
+              href={m.href}
+              onClick={() => setIsMenuOpen(false)}
+            >
               {m.label}
             </NavMenuLink>
           ))}
-          <ResponsiveRankNav onLinkSelected={() => setIsMenuOpen(false)}/>
+          <ResponsiveRankNav onLinkSelected={() => setIsMenuOpen(false)} />
         </NavbarMenu>
       </Navbar>
       {/* Modal Login */}
-      <Login isOpen={isOpenLogin} onOpenChange={onOpenChangeLogin} />
-
-      {/* Sign up Form */}
-      <SignUp isOpen={isOpenSignUp} onOpenChange={onOpenChangeSignUp} />
     </>
   );
 };

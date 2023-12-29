@@ -16,7 +16,7 @@ export const register = async (data) => {
   };
 
   
-  const accountRegistered = findUser({user: fields.user})
+  const accountRegistered = await findUser({user: fields.user})
   if (accountRegistered == undefined) {
     const gdAccount = await getAccount(data.username);
     if (gdAccount !== -1) {

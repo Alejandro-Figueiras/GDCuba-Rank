@@ -13,7 +13,7 @@ export const addUser = async({ user, password, phone, accountid }) => {
   if (!response) {
     throw response
   } else {
-    const account = (await getUsersCloud(accountid)).rows[0]
+    const account = await getUsersCloud(accountid)
     return account
   }
 }

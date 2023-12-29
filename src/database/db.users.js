@@ -1,8 +1,6 @@
 'use server'
 import { authorize } from "@/libs/secure";
-import { addUserCloud, getUsersCloud, removeUserCloud, validateUserCloud } from "./cloud/db.functions"
-
-const LOCAL = process.env.CACHE_LOCAL == 1;
+import { addUserCloud, getUsersCloud, removeUserCloud, searchUsersCloud, validateUserCloud } from "./cloud/db.functions"
 
 /**
  * Esta función agrega un usuario a la base de datos y posteriormente lo descarga a la cache local.
@@ -16,7 +14,6 @@ export const addUser = async({ user, password, phone, accountid }) => {
     throw response
   } else {
     const account = (await getUsersCloud(accountid)).rows[0]
-    if (LOCAL) global.cache.users[user] = account
     return account
   }
 }
@@ -28,11 +25,7 @@ export const addUser = async({ user, password, phone, accountid }) => {
  * @returns {Object}
  */
 export const getUser = async({user}) => {
-  if (LOCAL) {
-    return global.cache.users[user]
-  } else {
-    return await getUsersCloud(user)
-  }
+  return await getUsersCloud(user)
 }
 
 /**
@@ -42,11 +35,8 @@ export const getUser = async({user}) => {
  * @returns 
  */
 export const findUser = async({user = ""}) => {
-  const username = global.cache.usersLowercase[user.toLowerCase()]
-  if (username) {
-    return global.cache.users[username]
-  }
-
+  const result = await searchUsersCloud(user);
+  if (result.rowCount) return result.rows[0]
   return undefined;
 }
 
@@ -56,11 +46,7 @@ export const findUser = async({user = ""}) => {
  * @returns {Array}
  */
 export const getAllUsers = async() => {
-  if (LOCAL) {
-    return global.cache.users
-  } else {
-    return await getUsersCloud('all')
-  }
+  return await getUsersCloud('all')
 }
 
 /**
@@ -73,9 +59,6 @@ export const validateUser = async({user, unvalidate = false}) => {
   if (!(await authorize())) return undefined;
   const result = await validateUserCloud(user, unvalidate);
   if (!result) throw new Error('Error al validar' + result)
-  if (LOCAL) {
-    global.cache.users[user].status = (!unvalidate) ? 'v' : 'u'
-  }
   return 1;
 }
 
@@ -86,9 +69,6 @@ export const eliminarUser = async({username}) => {
     const result = await removeUserCloud(username);
     if (result) {
       let response = 1;
-      if (LOCAL) {
-        global.cache.users[username] = undefined;
-      }
       if (result.rowCount != 0)
         response = 0;
       

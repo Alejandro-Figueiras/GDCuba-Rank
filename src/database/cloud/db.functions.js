@@ -36,6 +36,10 @@ export const getUsersCloud = async (id) => {
   }
 };
 
+export const searchUsersCloud = async (search) => {
+  return await sql`SELECT * from users WHERE username ILIKE ${search}`
+};
+
 // --------------- GD ACCOUNT -------------------
 
 export const addAccountCloud = async (account, cuba = 0) => {
@@ -181,12 +185,6 @@ export const updateAccountCloud = async(id) => {
     timestamp = ${account.timestamp}
    WHERE accountid = ${id}`;
   // TODO si el usuario se cambia el nombre actualizar
-
-  if (process.env.CACHE_LOCAL == 1) {
-    const accToCache = await sql(`SELECT * FROM gdaccounts WHERE accountid = ${id}`)
-    const acc = accToCache.rows[0]
-    global.cache.gdaccounts[acc.username] = acc;
-  }
   return 1;
 }
 

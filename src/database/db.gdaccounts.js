@@ -3,36 +3,21 @@
 import { addAccountCloud, getAllCubansAccounts, getGDAccountCloud, getOlderAccountsInfo, updateAccountCloud } from "./cloud/db.functions";
 import { kv } from '@vercel/kv'
 
-const LOCAL = process.env.CACHE_LOCAL == 1;
-
 export const addGDAccount = async({account, cuba = 0}) => {
   const response = await addAccountCloud(account, cuba);
   if (!response) {
     throw response
-  } else {
-    if (LOCAL) {
-      global.cache.gdaccounts[account.username] = account
-    }
-    return account
-  }
+  } else return account
 }
 
 export const getGDAccount = async(username) => {
-  if (LOCAL) {
-    return global.cache.gdaccounts[username]
-  } else {
-    return await getGDAccountCloud(username)
-  }
+  return await getGDAccountCloud(username)
 }
 
 export const getAllCubans = async({toString = false}) => {
   // TODO to server action
   let values = [];
-  if (LOCAL) {
-    values = Object.values(global.cache.gdaccounts);
-  } else {
-    values = await getAllCubansAccounts();
-  }
+  values = await getAllCubansAccounts();
   return toString ? JSON.stringify(values) : values
 }
 

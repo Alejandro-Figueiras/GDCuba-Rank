@@ -2,7 +2,7 @@
 
 import { getAllUsers, getUser } from "@/database/db.users";
 
-// import { authorize } from "@/libs/secure";
+import { authorize } from "@/libs/secure";
 
 export const getUserAction = async({user}) => {
   if (user) {
@@ -14,7 +14,7 @@ export const getUserAction = async({user}) => {
 }
 
 export const getAllUsersAction = async() => {
-  // if (await authorize()) {
+  if (await authorize()) {
     return JSON.stringify(await getAllUsers())
-  // }
+  }
 }

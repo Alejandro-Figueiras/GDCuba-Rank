@@ -24,10 +24,15 @@ export const validateUserCloud = async (username, unvalidate = false) => {
 };
 
 export const getUsersCloud = async (id) => {
-  switch (id) {
-    case "all": return await sql`SELECT * from users`;
-    case "u":   return await sql`SELECT * from users WHERE status = 'u'`;
-    default:    return await sql`SELECT * from users WHERE accountid = ${id}`
+  // TODO separar esta funcion
+  if (id == 'all') {
+    return (await sql`SELECT * from users`).rows
+  } else if (id == 'u') {
+    return (await sql`SELECT * from users WHERE status = 'u'`).rows;
+  } else if (isNumeric(id)) {
+    return (await sql`SELECT * from users WHERE accountid = ${id}`).rows[0];
+  } else {
+    return (await sql`SELECT * from users WHERE username = ${id}`).rows[0];
   }
 };
 
@@ -120,8 +125,17 @@ export const addAccountCloud = async (account, cuba = 0) => {
   return result;
 };
 
+export const getGDAccountCloud = async(username) => {
+  return (await sql`SELECT * FROM gdaccounts WHERE username = ${username}`).rows[0]
+}
+
 export const getAllAccounts = async() => {
-  return await sql`SELECT * FROM gdaccounts`;
+  return (await sql`SELECT * FROM gdaccounts`).rows;
+}
+
+export const getAllCubansAccounts = async() => {
+  const result = await sql`SELECT * FROM gdaccounts WHERE cuba=1`
+  return result.rows
 }
 
 export const updateAccountCloud = async(id) => {
@@ -167,13 +181,15 @@ export const updateAccountCloud = async(id) => {
     timestamp = ${account.timestamp}
    WHERE accountid = ${id}`;
   // TODO si el usuario se cambia el nombre actualizar
-  const accToCache = await sql(`SELECT * FROM gdaccounts WHERE accountid = ${id}`)
-  const acc = accToCache.rows[0]
-  console.log(acc)
-  global.cache.gdaccounts[acc.username] = acc;
+
+  if (process.env.CACHE_LOCAL == 1) {
+    const accToCache = await sql(`SELECT * FROM gdaccounts WHERE accountid = ${id}`)
+    const acc = accToCache.rows[0]
+    global.cache.gdaccounts[acc.username] = acc;
+  }
   return 1;
 }
 
 export const getOlderAccountsInfo = async({limit}) => {
-  return await sql`SELECT accountid FROM gdaccounts ORDER BY timestamp ASC LIMIT ${limit}`
+  return (await sql`SELECT accountid FROM gdaccounts ORDER BY timestamp ASC LIMIT ${limit}`).rows | []
 }

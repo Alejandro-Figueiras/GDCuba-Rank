@@ -1,9 +1,12 @@
 'use server'
+
+import { getAllUsers, getUser } from "@/database/db.users";
+
 // import { authorize } from "@/libs/secure";
 
 export const getUserAction = async({user}) => {
   if (user) {
-    const info = {...global.cache.users[user]};
+    const info = {...(await getUser({user}))};
     if (info) info.password = null;
     return JSON.stringify(info);
   }
@@ -12,6 +15,6 @@ export const getUserAction = async({user}) => {
 
 export const getAllUsersAction = async() => {
   // if (await authorize()) {
-    return JSON.stringify(Object.values({...global.cache.users}))
+    return JSON.stringify(await getAllUsers())
   // }
 }

@@ -1,6 +1,7 @@
 'use server'
 
 import { addAccountCloud, getAllCubansAccounts, getGDAccountCloud, getOlderAccountsInfo, updateAccountCloud } from "./cloud/db.functions";
+import { kv } from '@vercel/kv'
 
 const LOCAL = process.env.CACHE_LOCAL == 1;
 
@@ -37,19 +38,16 @@ export const getAllCubans = async({toString = false}) => {
 
 export const updateAccounts = async({limit= 3, timeLimit = 60000}) => {
   // Comprueba el timestamp
-  const timestamp = new Date().getTime()
-  if (global.cache) {
-    if (timeLimit && timestamp-global.cache.accUpdateLimit<timeLimit) return
-    global.cache.accUpdateLimit = timestamp;
-  } else {
-    // Bug de vercel
-    global.cache = {accUpdateLimit: timestamp}
-  }
+  const timestamp = new Date().getTime()  
+  const oldTS = await kv.get('accUpdateLimit');
+  if (timeLimit && timestamp-oldTS<timeLimit) return
+  await kv.set('accUpdateLimit', timestamp);
   
   console.log("DATABASE: actualizando accounts")
   // Pregunta las cuentas con la información más antigua
   const result = await getOlderAccountsInfo({limit})
-  if (!result) {
+
+  if (result) {
     // Request a los servidores de Rob
     for (const acc of result) {
       await updateAccountCloud(acc.accountid)
@@ -57,12 +55,7 @@ export const updateAccounts = async({limit= 3, timeLimit = 60000}) => {
 
     // Actualizando Timestamp
     const timestamp = new Date().getTime()
-    if (global.cache)
-      global.cache.accUpdateLimit = timestamp;
-    else {
-      // Bug de Vercel X2
-      global.cache = {accUpdateLimit: timestamp}
-    }
+    await kv.set('accUpdateLimit', timestamp);
 
     console.log("DATABASE: actualizando accounts completado")
 

@@ -191,5 +191,5 @@ export const updateAccountCloud = async(id) => {
 }
 
 export const getOlderAccountsInfo = async({limit}) => {
-  return (await sql`SELECT accountid FROM gdaccounts ORDER BY timestamp ASC LIMIT ${limit}`).rows | []
+  return (await sql`SELECT accountid FROM gdaccounts ORDER BY timestamp ASC LIMIT ${limit}`).rows
 }

@@ -28,6 +28,7 @@
   "homepage": "https://github.com/Alejandro-Figueiras/gdcubarank#readme",
   "dependencies": {
     "@nextui-org/react": "^2.2.9",
+    "@vercel/kv": "^1.0.1",
     "@vercel/postgres": "^0.5.1",
     "autoprefixer": "^10.4.16",
     "axios": "^1.5.1",

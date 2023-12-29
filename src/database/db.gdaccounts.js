@@ -4,8 +4,8 @@ import { addAccountCloud, getOlderAccountsInfo, updateAccountCloud } from "./clo
 
 export const addGDAccount = async({account, cuba = 0}) => {
   const response = await addAccountCloud(account, cuba);
-  if (response.isError()) {
-    throw response.error
+  if (!response) {
+    throw response
   } else {
     return global.cache.gdaccounts[account.username] = account
   }
@@ -28,10 +28,10 @@ export const updateAccounts = async({limit= 3, timeLimit = 60000}) => {
   
   console.log("DATABASE: actualizando accounts")
   // Pregunta las cuentas con la información más antigua
-  const queryResult = await getOlderAccountsInfo({limit})
-  if (!queryResult.error) {
+  const result = await getOlderAccountsInfo({limit})
+  if (!result) {
     // Request a los servidores de Rob
-    for (const acc of queryResult.result.rows) {
+    for (const acc of result.rows) {
       await updateAccountCloud(acc.accountid)
     }
 
@@ -42,7 +42,7 @@ export const updateAccounts = async({limit= 3, timeLimit = 60000}) => {
     console.log("DATABASE: actualizando accounts completado")
 
   } else {
-    console.error("Error at getStarsRank: ", queryResult.error);
+    console.error("Error at getStarsRank: ", result.error);
     return -1;
   }
 }

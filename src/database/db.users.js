@@ -10,8 +10,8 @@ import { addUserCloud, getUsersCloud, removeUserCloud, validateUserCloud } from 
  */
 export const addUser = async({ user, password, phone, accountid }) => {
   const response = await addUserCloud({ user, password, phone, accountid });
-  if (response.isError()) {
-    throw response.error
+  if (!response) {
+    throw response
   } else {
     return global.cache.users[user] = (await getUsersCloud(accountid)).rows[0]
   }
@@ -56,7 +56,7 @@ export const getAllUsers = () => {
 export const validateUser = async({user, unvalidate = false}) => {
   if (!(await authorize())) return undefined;
   const result = await validateUserCloud(user, unvalidate);
-  if (result.isError()) throw new Error('Error al validar' + result.error)
+  if (!result) throw new Error('Error al validar' + result)
   global.cache.users[user].status = (!unvalidate) ? 'v' : 'u'
   return global.cache.users[user];
 }
@@ -65,11 +65,11 @@ export const eliminarUser = async({username}) => {
   const auth = await authorize();
   if (auth) {
     if (!username) return undefined;
-    const queryResult = await removeUserCloud(username);
-    if (!queryResult.isError()) {
+    const result = await removeUserCloud(username);
+    if (result) {
       let response = 1;
       global.cache.users[username] = undefined;
-      if (queryResult.result.rowCount != 0)
+      if (result.rowCount != 0)
         response = 0;
       
       console.log(`User ${username} removed`);

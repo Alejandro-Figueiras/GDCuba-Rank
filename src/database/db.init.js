@@ -19,7 +19,7 @@ export const dbInit = async() => {
     
     // ------- ACCOUNTS -----------
     const accounts = await getAllAccounts();
-    for(const acc of accounts.result.rows) {
+    for(const acc of accounts.rows) {
       global.cache.gdaccounts[acc.username] = acc;
     }
     console.log(global.cache)

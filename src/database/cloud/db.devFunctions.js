@@ -1,4 +1,4 @@
-import { secureQuery } from "./db.functions.js";
+const secureQueryDep = (query) => console.log("secureQuery deprecated")
 
 export const createUserTable = async () => {
   const createQuery = `CREATE TABLE users (
@@ -11,7 +11,7 @@ export const createUserTable = async () => {
         status VARCHAR(10) NOT NULL DEFAULT 'u'
     );`;
   try {
-    const result = await secureQuery(createQuery);
+    const result = await secureQueryDep(createQuery);
     console.log("Table create successfuly");
   } catch (err) {
     console.error("Error at create table: ", err);
@@ -64,7 +64,7 @@ export const createAccountTable = async () => {
         cuba SHORTINT,
     );`;
   try {
-    const result = await secureQuery(createQuery);
+    const result = await secureQueryDep(createQuery);
     console.log(result)
     console.log("Table create successfuly");
   } catch (err) {
@@ -73,5 +73,5 @@ export const createAccountTable = async () => {
 };
 
 export const consult = async(table) => {
-  return await secureQuery(`SELECT * FROM ${table}`);
+  return await secureQueryDep(`SELECT * FROM ${table}`);
 }

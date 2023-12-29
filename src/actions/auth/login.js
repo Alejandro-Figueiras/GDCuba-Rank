@@ -6,8 +6,6 @@ import { compare } from "bcryptjs";
 import { responseText } from "@/locales/siteText";
 import { findUser } from "@/database/db.users";
 import { cookies } from "next/headers";
-import { secureQuery } from "@/database/cloud/db.functions";
-import { getGDAccount } from "@/database/db.gdaccounts";
 
 const ERROR_RESPONSE = {
   status: "error",
@@ -17,11 +15,6 @@ const ERROR_RESPONSE = {
 export const login = async ({ username, password }) => {
   const user = await findUser({ user: username });
 
-  // const { result, error } = await secureQuery(
-  //   `SELECT * FROM users WHERE username = '${username}'`
-  // ); 
-  // const user = result ? result.rows[0] : null;
-  // // console.log(username, result);
   if (user) {
     const passwordMatch = await compare(password, user.password);
     if (passwordMatch) {

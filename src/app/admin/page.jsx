@@ -1,12 +1,13 @@
-import getSong from "@/robtop/getSong"
+import { getLevelByID, getLevels } from "@/robtop/getLevel"
 
 export default async() => {
 
     return (
         <>
             <h1>Comming Soon...</h1>
-            {/* {JSON.stringify(song)} */}
-            <p>{JSON.stringify(await getSong(810139))}</p>
+            <p>{JSON.stringify(await getLevelByID(69010770))}</p>
+            <br />
+            <p>{JSON.stringify(await getLevels("yatagarasu"))}</p>
         </>
     )
 }

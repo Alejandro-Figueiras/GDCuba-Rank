@@ -2,7 +2,7 @@ import { decryptBase64 } from "@/helpers/base64"
 
 export default class Level {
     
-    constructor(body = {}) {
+    constructor(body = {}, {author = {}, song = {}, authors = [], songs = []}) {
         this.gameVersion = parseInt(body[13])
         
         // General Info
@@ -10,7 +10,15 @@ export default class Level {
         this.levelname = body[2]
         this.description = decryptBase64(body[3])
         this.version = parseInt(body[5])
+
+        // Author
         this.playerid = parseInt(body[6])
+        if (!author || Object.keys(author) == 0) {
+            author = authors.find(v => v.playerid == this.playerid);
+            if (!author) author = {}
+        }
+        this.accountid = author.accountid;
+        this.author = author.playername
         
         // Stats
         this.length = parseInt(body[15]) // 0-4, where 0 is tiny and 4 is XL
@@ -32,7 +40,18 @@ export default class Level {
         
         // Song
         this.officialsong = parseInt(body[12])
-        this.customsongid = parseInt(body[35])
+        this.songid = parseInt(body[35])
+        if (this.songid || !song || Object.keys(songs) == 0) {
+            song = songs.find(v => v.id == this.songid);
+            if (!songs) song = {}
+        }
+        this.songname = song.name;
+        this.songartistid = song.artistid;
+        this.songartistname = song.artistname;
+        this.songsize = song.size; // Peso en MB, redondeado a 2 lugares decimales
+        this.songvideo = song.video;
+        this.songartistyt = song.artistyt;
+        this.songdownloadlink = song.downloadlink;
 
         // General
         this.twoplayer = parseInt(body[31])

@@ -2,8 +2,8 @@ import { decryptBase64 } from "@/helpers/base64"
 
 export default class Level {
     
-    constructor(body = {}, {author = {}, song = {}, authors = [], songs = []}) {
-        this.gameVersion = parseInt(body[13])
+    constructor(body = {}, {author = {}, song = {}, authors = [], songs = [], timestamp = 0}) {
+        this.gameversion = parseInt(body[13])
         
         // General Info
         this.id = parseInt(body[1])
@@ -58,7 +58,7 @@ export default class Level {
         this.dailynumber = parseInt(body[41]) | -1 // Daily/weekly levels only. Returns which daily/weekly the level was (e.g. the 500th daily level). Subtract 100,000 if the level is weekly
         this.copiedid = parseInt(body[30])
         this.objects = parseInt(body[45]) // 16-bit integer limit so any level with more objects won't be accurate
-
+        this.timestamp = timestamp;
     }
 
 }

@@ -16,7 +16,7 @@ const parseResponse = (body) => {
   const songs = data[2].split("~:~").map(data => new Song(responseToObj(data, "~|~")))
 
   const levels = data[0].split("|").map(level => {
-    return new Level(responseToObj(level), {authors, songs})
+    return new Level(responseToObj(level), {authors, songs, timestamp: (new Date()).getTime()})
   });
 
   return levels;

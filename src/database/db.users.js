@@ -3,7 +3,7 @@ import { authorize } from "@/libs/secure";
 import { sql } from '@vercel/postgres'
 
 /**
- * Esta función agrega un usuario a la base de datos y posteriormente lo descarga a la cache local.
+ * Esta función agrega un usuario a la base de datos. Los parametros faltantes se ponen por default en la base de datos.
  * @async
  * @param {Object} { user, password, phone, accountID }
  * @returns {Object} 
@@ -18,7 +18,7 @@ export const addUser = async({ user, password, phone, accountid }) => {
 }
 
 /**
- * Esta función retorna un usuario directamente de la cache local, nunca toca la base de datos online
+ * Esta función retorna un usuario directamente de la base de datos online
  * @async
  * @param {Object} { user }
  * @returns {Object}
@@ -28,7 +28,7 @@ export const getUser = async({user}) => {
 }
 
 /**
- * Esta función es igual a la función getUser pero no tiene en cuenta las mayusculas y minusculas, retorna datos del usuario directamente de la cache local, nunca toca la base de datos online
+ * Esta función es igual a la función getUser pero no tiene en cuenta las mayusculas y minusculas, retorna datos del usuario directamente de la base de datos online.
  * @async
  * @param {Object} { user }
  * @returns 
@@ -40,7 +40,7 @@ export const findUser = async({user = ""}) => {
 }
 
 /**
- * Esta función retorna todos los usuarios directamente de la cache local, nunca toca la base de datos online
+ * Esta función retorna todos los usuarios directamente de la base de datos online. Puede ser muy lenta asi que evitar su uso repetitivo
  * @async
  * @returns {Array}
  */
@@ -49,9 +49,9 @@ export const getAllUsers = async() => {
 }
 
 /**
- * Esta función verifica el usuario dentro del sitio. Lo actualiza primero en la nube y luego en la cache local
+ * Esta función verifica el usuario dentro del sitio. Cambia el status de 'u' a 'v'. También puede actuar de invalidador cuando se le pasa el parametro `unvalidate: true`
  * @async
- * @param {Object} { user }
+ * @param {Object} { user, unvalidate? }
  * @returns {Object} user object, si falla se debe manejar el catch de la promesa
  */
 export const validateUser = async({user, unvalidate = false}) => {

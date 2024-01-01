@@ -1,8 +1,8 @@
 # db.users
 
-## addUser
+## addUser (async)
 
-Esta función agrega un usuario a la base de datos y posteriormente lo descarga a la cache local.
+Esta función agrega un usuario a la base de datos. Los parametros faltantes se ponen por default en la base de datos.
 
 ### Propiedades
 ```json
@@ -27,9 +27,9 @@ Esta función agrega un usuario a la base de datos y posteriormente lo descarga 
 }
 ```
 
-## getUser
+## getUser (async)
 
-Esta función retorna un usuario directamente de la cache local, nunca toca la base de datos online
+Esta función retorna un usuario directamente de la base de datos online
 
 ### Propiedades
 ```json
@@ -51,13 +51,13 @@ Esta función retorna un usuario directamente de la cache local, nunca toca la b
 }
 ```
 
-## findUser
+## findUser (async)
 
-Esta función es igual a la función getUser pero no tiene en cuenta las mayúsculas y minúsculas, retorna datos del usuario directamente de la cache local, nunca toca la base de datos online. Utiliza las mismas propiedades y devoluciones.
+Esta función es igual a la función getUser pero no tiene en cuenta las mayusculas y minusculas, retorna datos del usuario directamente de la base de datos online. Utiliza las mismas propiedades y devoluciones.
 
-## getAllUsers
+## getAllUsers (async)
 
-Esta función retorna todos los usuarios directamente de la cache local, nunca toca la base de datos online
+Esta función retorna todos los usuarios directamente de la base de datos online. Puede ser muy lenta asi que evitar su uso repetitivo
 
 ### Propiedades
 
@@ -79,15 +79,16 @@ Ninguna por el momento
 ]
 ```
 
-## validateUser
+## validateUser (async)
 
-Esta función verifica el usuario dentro del sitio. Lo actualiza primero en la nube y luego en la cache local
+Esta función verifica el usuario dentro del sitio. Cambia el status de 'u' a 'v'. También puede actuar de invalidador cuando se le pasa el parametro `unvalidate: true`
 
 ### Propiedades
 
 ```json
 { 
-  user // String
+  user, // String
+  unvalidate? // Boolean
 }
 ```
 
@@ -108,3 +109,18 @@ Esta función verifica el usuario dentro del sitio. Lo actualiza primero en la n
 ```
 
 O lanza un error si no fue posible actualizar el estado del usuario
+
+## eliminarUser (async)
+
+Elimina el usuario de la base de datos sin dejar rastro de él.
+
+```json
+{ 
+  username // String
+}
+```
+
+### Devuelve
+`1` si se eliminó exitosamente  
+`0` si no encontró resultados  
+`undefined` si no tiene permisos

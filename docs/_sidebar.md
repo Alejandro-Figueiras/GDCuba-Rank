@@ -7,7 +7,6 @@
 - [Song](/models/Song)
 
 ## **Database**
-- [Como Funciona?](/database/ComoFunciona)
 - [db.users](/database/db.users)
 
 ## **Icon Kit**

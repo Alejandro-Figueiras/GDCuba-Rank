@@ -61,6 +61,12 @@ export const validateUser = async({user, unvalidate = false}) => {
   return 1;
 }
 
+/**
+ * Elimina el usuario de la base de datos sin dejar rastro de él.
+ * @async
+ * @param {Object} { username }
+ * @returns {Number} 1 si se eliminó exitosamente, 0 si no encontró resultados, undefined si no tiene permisos
+ */
 export const eliminarUser = async({username}) => {
   const auth = await authorize();
   if (auth) {

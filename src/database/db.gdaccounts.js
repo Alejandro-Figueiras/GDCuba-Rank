@@ -1,6 +1,6 @@
 'use server'
 
-import { addAccountCloud, getAllCubansAccounts, getGDAccountCloud, getOlderAccountsInfo, updateAccountCloud } from "./cloud/db.functions";
+import { addAccountCloud, updateAccountCloud } from "./db.gdaccounts.functions";
 import { kv } from '@vercel/kv'
 
 export const addGDAccount = async({account, cuba = 0}) => {
@@ -10,14 +10,19 @@ export const addGDAccount = async({account, cuba = 0}) => {
   } else return account
 }
 
+export const getAllGDAccounts = async() => {
+  return (await sql`SELECT * FROM gdaccounts`).rows;
+}
+
 export const getGDAccount = async(username) => {
-  return await getGDAccountCloud(username)
+  return (await sql`SELECT * FROM gdaccounts WHERE username = ${username}`).rows[0]
 }
 
 export const getAllCubans = async({toString = false}) => {
   // TODO to server action
   let values = [];
-  values = await getAllCubansAccounts();
+  const result = await sql`SELECT * FROM gdaccounts WHERE cuba=1`
+  values = result.rows
   return toString ? JSON.stringify(values) : values
 }
 
@@ -30,7 +35,7 @@ export const updateAccounts = async({limit= 3, timeLimit = 60000}) => {
   
   console.log("DATABASE: actualizando accounts")
   // Pregunta las cuentas con la información más antigua
-  const result = await getOlderAccountsInfo({limit})
+  const result = (await sql`SELECT accountid FROM gdaccounts ORDER BY timestamp ASC LIMIT ${limit}`).rows
 
   if (result) {
     // Request a los servidores de Rob

@@ -2,7 +2,8 @@
 import { sql } from '@vercel/postgres'
 import { getAccountByID } from "@/robtop/getAccount.js";
 
-// --------------- GD ACCOUNT -------------------
+// Aqui se encuentran las funciones extensas 
+// para no tener un archivo de accounts tan largo
 
 export const addAccountCloud = async (account, cuba = 0) => {
   const result = await sql`INSERT INTO gdaccounts (
@@ -91,19 +92,6 @@ export const addAccountCloud = async (account, cuba = 0) => {
   return result;
 };
 
-export const getGDAccountCloud = async(username) => {
-  return (await sql`SELECT * FROM gdaccounts WHERE username = ${username}`).rows[0]
-}
-
-export const getAllAccounts = async() => {
-  return (await sql`SELECT * FROM gdaccounts`).rows;
-}
-
-export const getAllCubansAccounts = async() => {
-  const result = await sql`SELECT * FROM gdaccounts WHERE cuba=1`
-  return result.rows
-}
-
 export const updateAccountCloud = async(id) => {
   const account = await getAccountByID(id);
   if (account == -1) {
@@ -148,8 +136,4 @@ export const updateAccountCloud = async(id) => {
    WHERE accountid = ${id}`;
   // TODO si el usuario se cambia el nombre actualizar
   return 1;
-}
-
-export const getOlderAccountsInfo = async({limit}) => {
-  return (await sql`SELECT accountid FROM gdaccounts ORDER BY timestamp ASC LIMIT ${limit}`).rows
 }

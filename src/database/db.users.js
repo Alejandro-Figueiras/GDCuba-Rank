@@ -1,6 +1,6 @@
 'use server'
 import { authorize } from "@/libs/secure";
-import { addUserCloud, getUsersCloud, removeUserCloud, searchUsersCloud, validateUserCloud } from "./cloud/db.functions"
+import { sql } from '@vercel/postgres'
 
 /**
  * Esta función agrega un usuario a la base de datos y posteriormente lo descarga a la cache local.
@@ -9,12 +9,11 @@ import { addUserCloud, getUsersCloud, removeUserCloud, searchUsersCloud, validat
  * @returns {Object} 
  */
 export const addUser = async({ user, password, phone, accountid }) => {
-  const response = await addUserCloud({ user, password, phone, accountid });
-  if (!response) {
-    throw response
+  const result = await sql`INSERT INTO users(username, password, phone, accountid) VALUES(${user}, ${password}, ${phone}, ${accountid})`;
+  if (!result) {
+    throw result
   } else {
-    const account = await getUsersCloud(accountid)
-    return account
+    return (await sql`SELECT * from users WHERE accountid = ${accountid}`).rows[0];
   }
 }
 
@@ -25,7 +24,7 @@ export const addUser = async({ user, password, phone, accountid }) => {
  * @returns {Object}
  */
 export const getUser = async({user}) => {
-  return await getUsersCloud(user)
+  return (await sql`SELECT * from users WHERE username = ${user}`).rows[0];
 }
 
 /**
@@ -35,7 +34,7 @@ export const getUser = async({user}) => {
  * @returns 
  */
 export const findUser = async({user = ""}) => {
-  const result = await searchUsersCloud(user);
+  const result = await sql`SELECT * from users WHERE username ILIKE ${user}`
   if (result.rowCount) return result.rows[0]
   return undefined;
 }
@@ -46,7 +45,7 @@ export const findUser = async({user = ""}) => {
  * @returns {Array}
  */
 export const getAllUsers = async() => {
-  return await getUsersCloud('all')
+  return (await sql`SELECT * from users`).rows
 }
 
 /**
@@ -57,7 +56,7 @@ export const getAllUsers = async() => {
  */
 export const validateUser = async({user, unvalidate = false}) => {
   if (!(await authorize())) return undefined;
-  const result = await validateUserCloud(user, unvalidate);
+  const result = await sql`UPDATE users SET status = '${unvalidate? 'u' : 'v'}' WHERE username = ${user}`;
   if (!result) throw new Error('Error al validar' + result)
   return 1;
 }
@@ -66,7 +65,7 @@ export const eliminarUser = async({username}) => {
   const auth = await authorize();
   if (auth) {
     if (!username) return undefined;
-    const result = await removeUserCloud(username);
+    const result = await sql`DELETE FROM users WHERE username = ${username}`;
     if (result) {
       let response = 1;
       if (result.rowCount != 0)

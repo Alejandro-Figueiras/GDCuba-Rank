@@ -1,44 +1,6 @@
 'use server'
 import { sql } from '@vercel/postgres'
-import { isNumeric } from "@/libs/utils.js";
 import { getAccountByID } from "@/robtop/getAccount.js";
-
-export const cleanTable = async (table) => {
-  return await sql`DELETE FROM ${table}`;
-};
-
-// --------------- USER -------------------
-
-export const addUserCloud = async ({ user, password, phone, accountid }) => {
-  return await sql`INSERT INTO users(username, password, phone, accountid) VALUES(${user}, ${password}, ${phone}, ${accountid})`;
-};
-
-export const removeUserCloud = async (id) => {
-  return isNumeric(id)
-  ? await sql`DELETE FROM users WHERE accountid = ${id}`
-  : await sql`DELETE FROM users WHERE username = ${id}`;
-};
-
-export const validateUserCloud = async (username, unvalidate = false) => {
-  return await sql`UPDATE users SET status = '${unvalidate? 'u' : 'v'}' WHERE username = ${username}`;
-};
-
-export const getUsersCloud = async (id) => {
-  // TODO separar esta funcion
-  if (id == 'all') {
-    return (await sql`SELECT * from users`).rows
-  } else if (id == 'u') {
-    return (await sql`SELECT * from users WHERE status = 'u'`).rows;
-  } else if (isNumeric(id)) {
-    return (await sql`SELECT * from users WHERE accountid = ${id}`).rows[0];
-  } else {
-    return (await sql`SELECT * from users WHERE username = ${id}`).rows[0];
-  }
-};
-
-export const searchUsersCloud = async (search) => {
-  return await sql`SELECT * from users WHERE username ILIKE ${search}`
-};
 
 // --------------- GD ACCOUNT -------------------
 

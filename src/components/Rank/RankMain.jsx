@@ -1,13 +1,13 @@
 "use client"
+import { getAllCubansAction } from "@/actions/accounts/getAllCubansAction"
 import RankTable from "@/components/Rank/RankTable"
-import { getAllCubans } from "@/database/db.gdaccounts"
 import {useState, useEffect} from 'react'
 
 export default ({tipo = 'stars'}) => {
   const [rank, setRank] = useState([])
 
   useEffect(() => {
-    getAllCubans({toString: true}).then(players => {
+    getAllCubansAction().then(players => {
       players = JSON.parse(players)
       players.sort((a,b) => {
         if (tipo=='stars') {

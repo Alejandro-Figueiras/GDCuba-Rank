@@ -2,6 +2,11 @@
 import { getLevelByID } from '@/robtop/getLevel'
 import {kv} from '@vercel/kv'
 
+/**
+ * Consulta si el nivel está en KV, sino lo busca en el servidor de robtop y luego de encontrado lo devuelve.
+ * @param {{levelID: Number}} Object
+ * @returns Level
+ */
 export const getLevel = async({levelID = 0}) => {
   const level = await kv.get(`level:${levelID}`)
   if (!level) {
@@ -15,17 +20,32 @@ export const getLevel = async({levelID = 0}) => {
   return level
 }
 
+/**
+ * Agrega o actualiza un nivel en KV
+ * @param {{level: Level}} Object
+ * @returns level
+ */
 export const setLevel = async({level}) => {
   await kv.set(`level:${level.id}`, level)
   return level;
 }
 
+/**
+ * Comprueba si existe el nivel en el KV, posteriormente lo elimina.
+ * @async
+ * @param {{levelid}} LevelID
+ */
 export const removeLevel = async({levelid = 0}) => {
-  if (kv.exists(`level:${levelid}`)) 
+  if (await kv.exists(`level:${levelid}`)) 
     await kv.del(`level:${levelid}`)
 }
 
+/**
+ * Retorna todas las Keys de niveles guardados en el KV
+ * @async
+ * @returns Array of Keys
+ */
 export const getAllLevelKeys = async() => {
   const all = await kv.keys(`level:*`);
-  console.log("All :", all)
+  return all;
 }

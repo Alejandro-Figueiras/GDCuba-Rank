@@ -16,25 +16,26 @@ yarn install
 
 ### Variables de Entorno
 
+> Las variables de PostgreSQL y KV (Redis) están hechas principalmente para su uso en Vercel
+
 ```env
 PORT = ***
 JWT_SECRET = ***
 
-# Database Info
-DATABASE_NAME = ***
-DATABASE_HOST = ***
-DATABASE_PORT = ***
-DATABASE_USER = ***
-DATABASE_PASSWORD = ***
-```
+### Database Info
+POSTGRES_URL=***
+POSTGRES_PRISMA_URL=***
+POSTGRES_URL_NON_POOLING=***
+POSTGRES_HOST=***
+POSTGRES_USER=***
+POSTGRES_PASSWORD=***
+POSTGRES_DATABASE=***
 
-Si el servidor de RobTop bloquea las peticiones desde el backend, usar un proxy a través de:
-
-```
-ROBTOP_PROXY = 1
-ROBTOP_PROXY_PROTOCOL = ***
-ROBTOP_PROXY_HOST = ***
-ROBTOP_PROXY_PORT = ***
+### Vercel KV
+KV_URL=***
+KV_REST_API_URL=***
+KV_REST_API_TOKEN=***
+KV_REST_API_READ_ONLY_TOKEN=***
 ```
 
 ### Compilar proyecto de NextJS
@@ -48,3 +49,7 @@ yarn run build
 ```bash
 yarn start
 ```
+
+---
+
+> Para ese proyecto se usó documentación de [gd.docs](https://github.com/gd-programming/gd.docs)

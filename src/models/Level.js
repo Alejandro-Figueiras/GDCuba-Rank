@@ -21,7 +21,8 @@ export default class Level {
         this.author = author.playername
         
         // Stats
-        this.length = parseInt(body[15]) // 0-4, where 0 is tiny and 4 is XL
+        this.length = parseInt(body[15]) // 0-4, where 0 is tiny and 4 is XL, 5 is platformer
+        this.platformer = (this.length == 5)
         this.downloads = parseInt(body[10])
         this.likes = parseInt(body[14])
         this.coins = parseInt(body[37])

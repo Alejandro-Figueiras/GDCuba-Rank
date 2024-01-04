@@ -7,7 +7,8 @@ Proyecto de ranking para la comunidad cubana de Geometry Dash
 - React 18.2
 - Next.js 14
 - TailwindCSS
-- PostgreSQL (pg)
+- PostgreSQL
+- Vercel KV (Redis)
 
 ## Documentación Extra
 

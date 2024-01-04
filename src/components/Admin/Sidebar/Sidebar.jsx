@@ -11,6 +11,7 @@ import ChangelogIcon from "@/components/Icons/ChangelogIcon";
 import { usePathname } from "next/navigation";
 import DatabaseIcon from "@/components/Icons/DatabaseIcon";
 import NewIcon from "@/components/Icons/NewIcon";
+import TestTubeIcon from "@/components/Icons/TestTubeIcon";
 
 export default () => {
   const { collapsed, setCollapsed } = useSidebarContext();
@@ -74,6 +75,14 @@ export default () => {
                   title="Send Query"
                   icon={<DatabaseIcon/>}
                   href="/admin/database/query"
+                />
+              </SidebarMenu>
+              <SidebarMenu title="Testing">
+                <SidebarItem
+                  isActive={ruta === "/admin/testing/searchLevel"}
+                  title="Buscar Nivel"
+                  icon={<TestTubeIcon/>}
+                  href="/admin/testing/searchLevel"
                 />
               </SidebarMenu>
 

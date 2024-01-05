@@ -34,7 +34,7 @@ export default () => {
           <div>
             <p>{nivel.levelname} by {nivel.author}</p>
             <p className="flex"><img src={`/assets/stats/${(nivel.platformer?'moons':'stars')}Icon.png`} alt="Stars" style={{height: '24px'}}/> {nivel.stars}</p>
-            <p className="flex">Dificultad: {JSON.stringify(dificultad)} <img src={`/assets/dificultades/${'easy'}_icon.png`}/></p>
+            <p className="flex">Dificultad: {dificultad.difficultyName} <img src={dificultad.path}/></p>
           </div>
         ):<p className='text-center'>{nivel == -1 ? "No existe este nivel" : 'Vacío.'}</p>}
       </div>

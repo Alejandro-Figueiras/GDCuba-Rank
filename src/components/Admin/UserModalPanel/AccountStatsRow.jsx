@@ -24,7 +24,7 @@ const AccountStatsRow = ({user}) => {
       <AccountStat value={user.diamonds} icon='/assets/stats/diamond.png'/>
       <AccountStat value={user.secretcoins} icon='/assets/stats/secretcoin.png'/>
       <AccountStat value={user.usercoins} icon='/assets/stats/usercoin.png'/>
-      <AccountStat value={user.demons} icon='/assets/dificultades/harddemon_icon.png'/>
+      <AccountStat value={user.demons} icon='/assets/dificultades/none/hard_demon.png'/>
       <AccountStat value={user.creatorpoints} icon="/assets/stats/creatorpoints.png"/>
     </div>
   </div>)

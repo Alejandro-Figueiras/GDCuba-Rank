@@ -18,7 +18,7 @@ export const parseDifficulty = (level) => {
       (level.demondifficulty == 6) ? "Extreme Demon" :
       'Hard Demon'
     ):(
-      (difficulty == 0) ? "Unrated" :
+      (difficulty == 0) ? "N/A" :
       (difficulty == 1) ? "Easy" :
       (difficulty == 2) ? "Normal" :
       (difficulty == 3) ? "Hard" :
@@ -32,10 +32,12 @@ export const parseDifficulty = (level) => {
     difficultyName,
     demon: level.demon,
     demondiff: level.demondifficulty,
-    featured
+    featured,
+    path: getDifficultyPath({featured, difficultyName})
   }
 }
 
-export const getDifficultyPath = ({demon = 0, demondiff, featured, difficulty}) => {
-  return "Todavía"
+export const getDifficultyPath = ({featured, difficultyName}) => {
+  if (difficultyName == 'N/A') return '/assets/dificultades/N/A.png'
+  return `/assets/dificultades/${featured.toLowerCase()}/${difficultyName.replace(' ', '_').toLowerCase()}.png`
 }

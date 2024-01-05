@@ -12,7 +12,7 @@ const LevelCard = ({level}) => {
   return (
     <Card
       isBlurred
-      className="bg-background/60 border-solid border-1 border-gray-50 dark:bg-default-100/50 max-w-[400px]"
+      className="bg-background/60 border-solid border-3 border-divider dark:bg-default-100/50 max-w-[400px]"
       shadow="sm"
     >
       <CardBody>
@@ -21,7 +21,6 @@ const LevelCard = ({level}) => {
             <Image
               alt="Difficulty"
               className="object-cover"
-              shadow="md"
               src={dificultad.path}
               width={100}
             />
@@ -54,17 +53,17 @@ const LevelCard = ({level}) => {
                     {level.platformer?'Plataforma':'Tradicional'}
                   </span>
                   {level.platformer ? '' :
-                    <span>
+                    <span className="flex">
+                      <img src="/assets/levelIcons/length.png" style={{height: '18px', marginRight: '4px'}}/>
                       {getLengthName({length: level.length, noPlatformer: true})}
                     </span>
                   }
                 </p>
                 <p className="text-small text-foreground/80 flex gap-2">
-                  <span>{level.downloads}</span>
-                  <span>{level.likes}</span>
+                  <span className="flex"><img src="/assets/levelIcons/downloads.png" style={{height: '18px'}} alt="D"/>{level.downloads}</span>
+                  <span className="flex"><img src="/assets/levelIcons/likes.png" style={{height: '18px'}} alt="L"/>{level.likes}</span>
                   <span>#{level.id}</span></p>
               </div>
-              
             </div>
           </div>
         </div>

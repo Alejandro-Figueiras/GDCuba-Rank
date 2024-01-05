@@ -18,12 +18,12 @@ export const parseDifficulty = (level) => {
       (level.demondifficulty == 6) ? "Extreme Demon" :
       'Hard Demon'
     ):(
-      (level.difficulty == 0) ? "Unrated" :
-      (level.difficulty == 1) ? "Easy" :
-      (level.difficulty == 2) ? "Normal" :
-      (level.difficulty == 3) ? "Hard" :
-      (level.difficulty == 4) ? "Harder" :
-      (level.difficulty == 5) ? "Insane" :
+      (difficulty == 0) ? "Unrated" :
+      (difficulty == 1) ? "Easy" :
+      (difficulty == 2) ? "Normal" :
+      (difficulty == 3) ? "Hard" :
+      (difficulty == 4) ? "Harder" :
+      (difficulty == 5) ? "Insane" :
       'N/A'
     )
 
@@ -36,6 +36,6 @@ export const parseDifficulty = (level) => {
   }
 }
 
-export const getDifficultyPath = () => {
+export const getDifficultyPath = ({demon = 0, demondiff, featured, difficulty}) => {
   return "Todavía"
 }

@@ -3,11 +3,12 @@ import { useEffect, useState, useRef } from "react"
 import { Button, Input } from '@nextui-org/react'
 import { getLevelByIDAction } from "@/actions/admin/getLevelAction"
 import { parseDifficulty } from "@/helpers/levelParser"
+import LevelCard from "./LevelCard"
 
 export default () => {
   const inputRef = useRef()
   const [nivel, setNivel] = useState({})
-  const [dificultad, setDificultad] = useState({})
+  
 
   const handleSearch = async(e) => {
     const ID = parseInt(inputRef.current.value)
@@ -16,8 +17,6 @@ export default () => {
       console.log(ID)
       const newLevel = JSON.parse(await getLevelByIDAction({id:ID}));
       setNivel(newLevel);
-      setDificultad(parseDifficulty(newLevel))
-      console.log(newLevel)
     }
   }
 
@@ -31,11 +30,7 @@ export default () => {
       </div>
       <div className="mt-6 w-100">
         {(nivel.levelname) ? (
-          <div>
-            <p>{nivel.levelname} by {nivel.author}</p>
-            <p className="flex"><img src={`/assets/stats/${(nivel.platformer?'moons':'stars')}Icon.png`} alt="Stars" style={{height: '24px'}}/> {nivel.stars}</p>
-            <p className="flex">Dificultad: {dificultad.difficultyName} <img src={dificultad.path}/></p>
-          </div>
+          <LevelCard level={nivel}/>
         ):<p className='text-center'>{nivel == -1 ? "No existe este nivel" : 'Vacío.'}</p>}
       </div>
     </div>

@@ -41,3 +41,12 @@ export const getDifficultyPath = ({featured, difficultyName}) => {
   if (difficultyName == 'N/A') return '/assets/dificultades/N/A.png'
   return `/assets/dificultades/${featured.toLowerCase()}/${difficultyName.replace(' ', '_').toLowerCase()}.png`
 }
+
+export const getLengthName = ({length, noPlatformer = false}) => {
+  return (length==0) ? 'Tiny' :
+    (length==1) ? 'Short' :
+    (length==2) ? 'Medium' :
+    (length==3) ? 'Long' :
+    (length==4) ? 'XL' :
+    (noPlatformer) ? '' : 'Platformer'
+}

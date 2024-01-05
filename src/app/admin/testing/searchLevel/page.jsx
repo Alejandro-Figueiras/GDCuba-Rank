@@ -1,20 +1,17 @@
 'use client'
-import { useEffect, useState, useRef } from "react"
+import { useState, useRef } from "react"
 import { Button, Input } from '@nextui-org/react'
 import { getLevelByIDAction } from "@/actions/admin/getLevelAction"
-import { parseDifficulty } from "@/helpers/levelParser"
-import LevelCard from "./LevelCard"
+
+import LevelCard from "../../../../components/Levels/LevelCard"
 
 export default () => {
   const inputRef = useRef()
   const [nivel, setNivel] = useState({})
   
-
   const handleSearch = async(e) => {
     const ID = parseInt(inputRef.current.value)
     if (ID) {
-      console.log("Paso", ID)
-      console.log(ID)
       const newLevel = JSON.parse(await getLevelByIDAction({id:ID}));
       setNivel(newLevel);
     }

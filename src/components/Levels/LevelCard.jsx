@@ -7,7 +7,6 @@ import {
 } from '@nextui-org/react'
 
 const LevelCard = ({level}) => {
-  // TODO unverified levels
   const dificultad = parseDifficulty(level)
   return (
     <Card
@@ -36,14 +35,14 @@ const LevelCard = ({level}) => {
                 <p className="text-small text-foreground/80 flex gap-2">
                   <span className="flex">
                     <img 
-                      src={`/assets/stats/${(level.platformer?'moons':'stars')}Icon.png`} 
+                      src={`/assets/stats/${(level.platformer?'moons':'stars')}Icon${level.stars?'':'BN'}.png`} 
                       alt="Stars" style={{height: '18px'}}
                     />
-                    {level.stars}
+                    {level.stars == 0 ? 'Unrated' : level.stars}
                   </span>
                   <span className="flex">
                     <img 
-                      src={`/assets/stats/usercoin.png`} 
+                      src={`/assets/stats/${(level.verifiedcoins)?'user':'bronze'}coin.png`} 
                       alt="Coins" style={{height: '18px'}}
                       className="mr-1"
                     />

@@ -26,7 +26,7 @@ export default class Level {
         this.downloads = parseInt(body[10])
         this.likes = parseInt(body[14])
         this.coins = parseInt(body[37])
-        this.verifiedcoins = (body[38])?true:false // boolean
+        this.verifiedcoins = (body[38] != '0')?true:false // boolean
         
         // Dificultad
         this.stars = parseInt(body[18])

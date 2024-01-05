@@ -1,6 +1,5 @@
 
 export const parseDifficulty = (level) => {
-  console.log(level.difficultydenominator)
   const difficulty = (level.difficultydenominator)?level.difficultynumerator/level.difficultydenominator:"N/A"
   const featured = 
     (level.epic == 3) ? 'Mythic' :

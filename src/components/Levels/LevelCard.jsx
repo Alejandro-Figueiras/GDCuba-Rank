@@ -9,19 +9,20 @@ import {
 const LevelCard = ({level}) => {
   const dificultad = parseDifficulty(level)
   return (
+    <div className="flex justify-center">
     <Card
       isBlurred
-      className="bg-background/60 border-solid border-3 border-divider dark:bg-default-100/50 max-w-[400px]"
+      className="bg-background/60 border-solid border-3 border-divider dark:bg-default-100/50 w-[400px] overflow-hidden"
       shadow="sm"
     >
       <CardBody>
         <div className="grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center justify-center">
-          <div className="relative col-span-6 md:col-span-4">
+          <div className="relative col-span-6 md:col-span-4 flex justify-center">
             <Image
               alt="Difficulty"
               className="object-cover"
               src={dificultad.path}
-              width={100}
+              width={(dificultad.featured=='none')?80:100}
             />
           </div>
 
@@ -68,6 +69,7 @@ const LevelCard = ({level}) => {
         </div>
       </CardBody>
     </Card>
+    </div>
   )
 }
 

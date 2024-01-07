@@ -128,6 +128,14 @@ const UserDropdown = ({
               Mi cuenta
             </DropdownItem>
           )}
+          {logged && (
+            <DropdownItem
+              key="new-record-btn"
+              href="/record/new"
+            >
+              Dev: Nuevo Record
+            </DropdownItem>
+          )}
           {
             // Admin Link
             !admin && logged && currentUser.role == "admin" && (

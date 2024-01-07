@@ -10,7 +10,6 @@ const makeParams = (params = {}) => {
     return res;
 }
 
-// PARA HACER LAS REQUEST DESDE EL PROPIO BACKEND
 export const gdRequest = (target, params) => {
     return new Promise((resolve, reject) => {
         axios({
@@ -43,28 +42,3 @@ export const gdRequest = (target, params) => {
         })
     })
 }
-
-// PARA HACER LAS REQUEST DESDE OTRO BACKEND
-// export const gdRequest = async(target, params) => {
-//     try {
-//         const resp =  await axios({
-//             url: process.env.RH_ENDPOINT,
-//             method: 'post',
-//             data: {
-//                 target: config.endpoint + target + '.php',
-//                 secret: process.env.RH_SECRET,
-//                 params: makeParams({...params, ...config.params}),
-    
-//             },
-//             headers: {
-//                 'User-Agent': '',
-//             },
-//             // httpAgent: new http.Agent({ keepAlive: true }),
-//             // httpsAgent: new https.Agent({ keepAlive: true })
-//         })
-//         return resp.data
-//     } catch(err) {
-//         console.log(err);
-//         return 404
-//     }
-// }

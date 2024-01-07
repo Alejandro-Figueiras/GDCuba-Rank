@@ -2,7 +2,6 @@ import { useSidebarContext } from "@/app/admin/layout-context";
 import { Sidebar } from "./sidebar.styles"
 import { SidebarMenu } from "./SidebarMenu";
 import { SidebarItem } from "./SidebarItem";
-import { CollapseItems } from "./CollapseItems";
 import { HomeIcon } from "@/components/Icons/HomeIcon";
 import AccountsIcon from "@/components/Icons/AccountsIcon";
 import ReportsIcon from "@/components/Icons/ReportsIcon";
@@ -61,20 +60,6 @@ export default () => {
                   title="Agregar Cuenta"
                   icon={<NewIcon />}
                   href="/admin/users/AddAccount"
-                />
-                {/* <SidebarItem
-                  isActive={ruta === "/reports"}
-                  title="Reports"
-                  icon={<ReportsIcon />}
-                  href="#"
-                /> */}
-              </SidebarMenu>
-              <SidebarMenu title="Base de Datos">
-                <SidebarItem
-                  isActive={ruta === "/admin/database/query"}
-                  title="Send Query"
-                  icon={<DatabaseIcon/>}
-                  href="/admin/database/query"
                 />
               </SidebarMenu>
               <SidebarMenu title="Testing">

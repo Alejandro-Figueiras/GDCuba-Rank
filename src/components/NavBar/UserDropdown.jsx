@@ -14,9 +14,6 @@ import { useContext } from "react";
 import { usePathname } from "next/navigation";
 import { logout as logoutAction } from "@/actions/logout/logout";
 import { notify } from "@/libs/toastNotifications";
-import { PlusIcon } from "../Icons/PlusIcon";
-import AccountsIcon from "../Icons/AccountsIcon";
-import { UserIconOutline } from "../Icons/UserIconOutline";
 import { useUser } from "@/hooks/useUser";
 
 const UserDropdown = ({

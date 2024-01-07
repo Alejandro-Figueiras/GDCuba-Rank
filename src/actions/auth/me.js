@@ -12,6 +12,7 @@ export const authMe = async () => {
       verify(cookie.value, process.env.JWT_SECRET);
       const payload = decode(cookie.value);
 
+      // TODO fix this
       // const user = {
       //   username: payload.username,
       //   accountID: payload.accountid,

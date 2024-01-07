@@ -1,5 +1,3 @@
-import { ModalContext } from "@/app/context/ModalContext";
-import { notify } from "@/libs/toastNotifications";
 import {
   Modal,
   ModalContent,
@@ -7,24 +5,15 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  Spinner,
 } from "@nextui-org/react";
 import React, {
-  useContext,
   useEffect,
-  useId,
-  useMemo,
-  useRef,
   useState,
 } from "react";
 
 import AccountStatsRow from "./Admin/UserModalPanel/AccountStatsRow";
 import AccountIconsRow from "./Admin/UserModalPanel/AccountIconsRow";
-// import AccountInfoColumn from "./AccountInfoColumn";
-// import { validateUserAction } from "@/actions/admin/validateUserAction";
-// import { removeUserAction } from "@/actions/admin/removeUserAction";
 import GDSpinner from "@/components/GDIcons/GDSpinner";
-import { getAccountAction } from "@/actions/admin/getAccountAction";
 
 export default function UserModalView({ user, isOpen, onOpenChange }) {
   const [isLoading, setIsLoading] = useState(false);

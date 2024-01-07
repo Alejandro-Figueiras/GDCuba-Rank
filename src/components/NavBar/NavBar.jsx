@@ -10,19 +10,10 @@ import {
 } from "@nextui-org/navbar";
 
 // Modals
-import { useDisclosure } from "@nextui-org/modal";
-
-import { Link } from "@nextui-org/link";
-import Login from "../Forms/Login";
-import SignUp from "../Forms/SignUp";
-
 import { useSesion } from "@/hooks/useSesion";
-import { usePathname } from "next/navigation";
 import UserDropdown from "./UserDropdown";
 import { useState } from "react";
 import RankDropdown from "./RankDropdown";
-import { Accordion, AccordionItem } from "@nextui-org/react";
-import { routes } from "../../../staticFiles";
 import { NavLink, NavMenuLink } from "./NavbarLinks";
 import { ResponsiveRankNav } from "./ResponsiveRankNav";
 
@@ -81,7 +72,6 @@ export default () => {
           <ResponsiveRankNav onLinkSelected={() => setIsMenuOpen(false)} />
         </NavbarMenu>
       </Navbar>
-      {/* Modal Login */}
     </>
   );
 };

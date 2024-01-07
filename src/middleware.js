@@ -2,7 +2,6 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { COOKIES_INFO } from "./models/constants";
 import { jwtVerify } from "jose";
-import { getUserAction } from "./actions/admin/getUserAction";
 // This function can be marked `async` if using `await` inside
 
 export async function middleware(request) {

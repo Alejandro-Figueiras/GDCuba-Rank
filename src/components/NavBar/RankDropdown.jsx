@@ -5,7 +5,6 @@ import {
   DropdownTrigger,
   Button,
   NavbarItem,
-  Link
 } from '@nextui-org/react'
 import { ChevronDownIcon } from '../Icons/ChevonDrownIcon';
 import { usePathname } from 'next/navigation';

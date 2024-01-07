@@ -1,40 +1,25 @@
 "use client";
 
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
   CardBody,
   CardFooter,
   Divider,
-  Link,
   Image,
   Tooltip,
-  Accordion,
-  AccordionItem,
   Button,
-  Modal,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalContent,
   useDisclosure,
-  Input,
 } from "@nextui-org/react";
 import { useSesion } from "@/hooks/useSesion";
 import { useGDIcon } from "@/robtop/iconkit/useGDIcon";
-import { useUser } from "@/hooks/useUser";
 import { getAccountAction } from "@/actions/admin/getAccountAction";
 import { NoAccount } from "../NoAccount";
 import AccountStatsRow from "../Admin/UserModalPanel/AccountStatsRow";
 import GDSpinner from "../GDIcons/GDSpinner";
 import AccountIconsRow from "../Admin/UserModalPanel/AccountIconsRow";
 import { EditIcon } from "../Icons/EditIcon";
-import { routes } from "../../../staticFiles";
-import { PlusIcon } from "../Icons/PlusIcon";
-import DeleteIcon from "../Icons/DeleteIcon";
-import { ModalContext } from "@/app/context/ModalContext";
-import { SearchIcon } from "../Icons/SearchIcon";
 import { AccountGDStuff } from "./AccountGDStuff";
 import ChangeModal from "./ChangeModal";
 import AccountSearchLevel from "./AccountSearchLevel";
@@ -95,9 +80,9 @@ export default function AccountManage() {
       <Card className="max-w-[1000px] w-[800px]">
         <CardHeader className="flex gap-3">
           <Image
-            alt="nextui logo"
+            alt="Cube"
             height={40}
-            radius="sm"
+            radius='none'
             src={iconAvatar}
             width={40}
           />

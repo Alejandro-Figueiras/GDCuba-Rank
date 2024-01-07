@@ -22,8 +22,8 @@ export default ({ ranking, tipo = 'stars' }) => {
     cols.push(<TableColumn width={120} key={'col_globalrank'}><span className="flex align-middle"><img src='/assets/trofeos/rankIcon_1_001.png' alt="Trofeo" className="h-4 mr-1"/> Global Rank</span></TableColumn>)
     cells.push((player, i) => <TableCell key={`cell${i}_${player.username}_globalrank`}><span className="flex align-middle"><img src={calcularTrofeo(player.globalrank)} alt="Trofeo" className="h-4 mr-1"/> {player.globalrank}</span></TableCell>)
   } else if (tipo=='demons') {
-    cols.push(<TableColumn width={120} key={'col_demons'}><span className="flex"><img src="/assets/dificultades/harddemon_icon.png" alt="Demon" className="h-4 mr-1"/> Demons</span></TableColumn>)
-    cells.push((player, i) => <TableCell key={`cell${i}_${player.username}_demons`}><span className="flex align-middle"><img src="/assets/dificultades/harddemon_icon.png" alt="Demon" className="h-4 mr-1"/> {player.demons}</span></TableCell>)
+    cols.push(<TableColumn width={120} key={'col_demons'}><span className="flex"><img src="/assets/dificultades/none/hard_demon.png" alt="Demon" className="h-4 mr-1"/> Demons</span></TableColumn>)
+    cells.push((player, i) => <TableCell key={`cell${i}_${player.username}_demons`}><span className="flex align-middle"><img src="/assets/dificultades/none/hard_demon.png" alt="Demon" className="h-4 mr-1"/> {player.demons}</span></TableCell>)
   } else if (tipo == 'moons') {
     cols.push(<TableColumn width={120} key={'col_moons'}><span className="flex"><img src="/assets/stats/moonsIcon.png" alt="Luna" className="h-4 mr-1"/> Lunas</span></TableColumn>)
     cells.push((player, i) => <TableCell key={`cell${i}_${player.username}_moons`}><span className="flex align-middle"><img src="/assets/stats/moonsIcon.png" alt="Luna" className="h-4 mr-1"/> {player.moons}</span></TableCell>)

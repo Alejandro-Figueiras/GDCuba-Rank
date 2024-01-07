@@ -42,7 +42,7 @@ const RankDropdown = () => {
       </DropdownItem>
       <DropdownItem
         key="demons"
-        startContent={<img src='/assets/dificultades/harddemon_icon.png' width="24"/>}
+        startContent={<img src='/assets/dificultades/none/hard_demon.png' width="24"/>}
         href="/rank/demons"
       >
         Demons

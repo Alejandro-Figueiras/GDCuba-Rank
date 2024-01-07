@@ -1,6 +1,6 @@
 export const routes = {
     demon: {
-        defaultFace: '/assets/dificultades/harddemon_icon.png'
+        defaultFace: '/assets/dificultades/none/hard_demon.png'
     },
     stars: '/assets/stats/starsIcon.png',
     moons: '/assets/stats/moonsIcon.png',

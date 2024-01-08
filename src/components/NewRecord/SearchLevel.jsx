@@ -34,10 +34,10 @@ const SearchLevel = ({ setNewLevel = ()=>{}}) => {
         <Input type="text" label="Search" className="w-96" size='sm' ref={inputRef}/>
         <Button onClick={handleSearch} size="lg" radius="sm">Buscar</Button>
       </div>
-      <div className="mt-6 w-100 flex flex-col gap-4 mx-auto">
+      <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4 mx-auto justify-items-center">
         {niveles.map((level, i) => 
-          <button onClick={handleSelect(level)} key={i}>
-            <LevelCard level={level}/>
+          <button onClick={handleSelect(level)} key={i} className={`w-fit`}>
+            <LevelCard level={level} hover={true}/>
           </button>
         )}
       </div>

@@ -6,18 +6,21 @@ import {
   Button,
 } from '@nextui-org/react'
 
-const LevelCard = ({level}) => {
+const LevelCard = ({level, hover=false}) => {
   const dificultad = parseDifficulty(level)
   return (
     <div className="flex justify-center">
     <Card
       isBlurred
-      className="bg-background/60 border-solid border-3 border-divider dark:bg-default-100/50 w-[400px] overflow-hidden"
+      className={`
+      bg-background/60 border-solid border-3 border-divider dark:bg-default-100/50 
+      w-[400px] overflow-hidden
+      ${hover?'hover:bg-primary-50':''}`}
       shadow="sm"
     >
       <CardBody>
-        <div className="grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center justify-center">
-          <div className="relative col-span-6 md:col-span-4 flex justify-center">
+        <div className="grid grid-cols-12 gap-4 items-center justify-center">
+          <div className="relative col-span-4 flex justify-center">
             <Image
               alt="Difficulty"
               className="object-cover"
@@ -26,7 +29,7 @@ const LevelCard = ({level}) => {
             />
           </div>
 
-          <div className="flex flex-col col-span-6 md:col-span-8">
+          <div className="flex flex-col col-span-8">
             <div className="flex justify-between items-start">
               <div className="flex flex-col gap-0">
                 <h1 className="text-xl font-medium mt-2">{level.levelname}</h1>

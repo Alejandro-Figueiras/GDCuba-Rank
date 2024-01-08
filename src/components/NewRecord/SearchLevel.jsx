@@ -1,39 +1,22 @@
 'use client'
-import { useState, useRef } from "react"
-import { Button, Input } from '@nextui-org/react'
-import { getLevelByIDAction, getLevelsAction } from "@/actions/admin/getLevelAction"
 
-import { isNumeric } from "@/libs/utils"
 import LevelCard from "../Levels/LevelCard"
+import SearchLevelPrompt from "./SearchLevelPrompt"
+import { useState } from 'react'
 
 const SearchLevel = ({ setNewLevel = ()=>{}}) => {
-  const inputRef = useRef()
   const [niveles, setNiveles] = useState([])
-  
-  const handleSearch = async(e) => {
-    const query = inputRef.current.value
-    
-    if (isNumeric(query)) {
-      const newLevel = JSON.parse(await getLevelByIDAction({id: parseInt(query)}));
-      setNiveles([newLevel]);
-    } else {
-      const levels = JSON.parse(await getLevelsAction({query}));
-      setNiveles(levels)
-    }
-  }
-  
+
   const handleSelect = (level) => {
     return (event) => {
       setNewLevel(level)
+      setNiveles([])
     }
   }
 
   return (
     <div className="w-100 m-4">
-      <div className="flex flex-row align-middle justify-center gap-4">
-        <Input type="text" label="Search" className="w-96" size='sm' ref={inputRef}/>
-        <Button onClick={handleSearch} size="lg" radius="sm">Buscar</Button>
-      </div>
+      <SearchLevelPrompt setNiveles={setNiveles} setNewLevel={setNewLevel}/>
       <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-4 mx-auto justify-items-center">
         {niveles.map((level, i) => 
           <button onClick={handleSelect(level)} key={i} className={`w-fit`}>

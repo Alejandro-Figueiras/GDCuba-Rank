@@ -4,7 +4,8 @@ import {
   DropdownMenu,
   DropdownSection,
   DropdownItem,
-} from "@nextui-org/dropdown";
+  useDisclosure,
+} from "@nextui-org/react";
 import { ModalContext } from "@/app/context/ModalContext";
 
 import { User } from "@nextui-org/user";
@@ -15,6 +16,7 @@ import { usePathname } from "next/navigation";
 import { logout as logoutAction } from "@/actions/logout/logout";
 import { notify } from "@/libs/toastNotifications";
 import { useUser } from "@/hooks/useUser";
+import SubmitRecordModal from "../NewRecord/SubmitRecordModal";
 
 const UserDropdown = ({
   currentUser,
@@ -25,6 +27,8 @@ const UserDropdown = ({
   const ruta = usePathname();
   const admin = ruta.startsWith("/admin");
   const { openModal } = useContext(ModalContext);
+
+  const logged = currentUser.username != undefined;
   const handleLogout = async () => {
     await logoutAction();
     notify("Sesión cerrada.", "success");
@@ -38,12 +42,19 @@ const UserDropdown = ({
     effectDeps: [currentUser.username],
   });
 
-  const { openUserView } = useUser();
+  // Submit Record
+  const {
+    isOpen: isOpenSubmitRecord,
+    onOpenChange: onOpenChangeSubmitRecord,
+    onOpen: onOpenSubmitRecord,
+  } = useDisclosure();
 
-  const logged = currentUser.username != undefined;
+  // TODO eliminar
+  const { openUserView } = useUser();
+  
 
   return (
-    <Dropdown
+    <><Dropdown
       placement="bottom-end"
       classNames={{
         base: "before:bg-default-200", // change arrow background
@@ -128,7 +139,7 @@ const UserDropdown = ({
           {logged && (
             <DropdownItem
               key="new-record-btn"
-              href="/record/submit"
+              onClick={()=> {onOpenChangeSubmitRecord()}}
             >
               Nuevo Record
             </DropdownItem>
@@ -173,6 +184,11 @@ const UserDropdown = ({
         </DropdownSection>
       </DropdownMenu>
     </Dropdown>
+    <SubmitRecordModal
+      isOpen={isOpenSubmitRecord}
+      onOpenChange={onOpenChangeSubmitRecord}
+    />
+    </>
   );
 };
 

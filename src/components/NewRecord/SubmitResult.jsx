@@ -4,8 +4,8 @@ const SubmitResult = ({submitResult = 0}) => {
     : '/assets/ui/delete.png'
 
   const message = 
-  (submitResult==1) ? 'Record Enviado. Para finalizar el proceso de publicación un moderador debe verificar la veracidad del record.' :
-  (submitResult==2) ? 'Se encontró un record anterior en el mismo nivel. El record se actualizó pero deberá ser reverificado por un moderador' :
+  (submitResult==1) ? 'Record Enviado. Para finalizar el proceso de publicación un moderador debe verificar su veracidad.' :
+  (submitResult==2) ? 'Se encontró un record anterior en el mismo nivel. El record se actualizó, pero su veracidad deberá ser reverificada por un moderador' :
   (submitResult==-1) ? 'Error Interno. Inténtelo de nuevo. Si el problema persiste, repórtelo a los administradores' :
   (submitResult==-2) ? 'Se encontró un record anterior en el mismo nivel, cuyo porcentaje no supera al enviado en este momento.' :
   'Error desconocido: Repórtelo a los administradores'

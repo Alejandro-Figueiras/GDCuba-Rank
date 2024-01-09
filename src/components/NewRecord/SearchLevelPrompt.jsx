@@ -2,6 +2,7 @@ import { getLevelByIDAction, getLevelsAction } from "@/actions/admin/getLevelAct
 import { isNumeric } from "@/libs/utils"
 import { useRef } from "react"
 import { Button, Input } from '@nextui-org/react'
+import { SearchIcon } from "../Icons/SearchIcon"
 
 const SearchLevelPrompt = ({ setNiveles = ()=>{}, setNewLevel = ()=>{}}) => {
   const inputRef = useRef()
@@ -21,7 +22,7 @@ const SearchLevelPrompt = ({ setNiveles = ()=>{}, setNewLevel = ()=>{}}) => {
   
   return (
   <div className="flex flex-row align-middle justify-center gap-4">
-    <Input type="text" label="Search" className="w-96" size='sm' ref={inputRef}/>
+    <Input type="text" placeholder="Escribe el nombre del nivel" size='sm' ref={inputRef} startContent={<SearchIcon />}/>
     <Button onClick={handleSearch} size="lg" radius="sm">Buscar</Button>
   </div>)
 }

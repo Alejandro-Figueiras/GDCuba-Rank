@@ -8,8 +8,8 @@ export const addRecord = async(record = {}) => {
 
   /*
   Se pueden dar los siguientes casos
-  Que el usuario no tenga ningun record en el nivel y este sea el primero
-  Que el usuario tenga algun record en el nivel, en ese caso se actualizará si es mayor, sino se le notificará
+  1. Que el usuario no tenga ningun record en el nivel y este sea el primero
+  2. Que el usuario tenga algun record en el nivel, en ese caso se actualizará si es mayor, sino se le notificará
   */
   const queryResult = await sql`SELECT id,percent FROM records WHERE levelid=${record.levelid} AND accountid=${record.accountid}`
   if (queryResult.rowCount) {

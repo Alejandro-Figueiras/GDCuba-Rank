@@ -128,9 +128,9 @@ const UserDropdown = ({
           {logged && (
             <DropdownItem
               key="new-record-btn"
-              href="/record/new"
+              href="/record/submit"
             >
-              Dev: Nuevo Record
+              Nuevo Record
             </DropdownItem>
           )}
           {

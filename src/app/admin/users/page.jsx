@@ -10,7 +10,7 @@ export default () => {
       setUsuarios(nuevosUsuarios)
     })
 
-  })
+  }, [])
   return (
     <div className="component px-8 py-4">
       <h2 className="pt-4 pb-2 text-2xl">Usuarios</h2>

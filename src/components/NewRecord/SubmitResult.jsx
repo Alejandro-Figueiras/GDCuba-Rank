@@ -10,13 +10,13 @@ const SubmitResult = ({submitResult = 0}) => {
   (submitResult==-2) ? 'Se encontró un record anterior en el mismo nivel, cuyo porcentaje no supera al enviado en este momento.' :
   'Error desconocido: Repórtelo a los administradores'
 
-  return <div style={{height: 'calc(100vh - 4rem - 2px)'}} className="flex justify-center">
-    <div className="flex flex-col justify-center pb-[4rem]">
-      <div className="w-96 border-divider border-solid border-4 rounded flex flex-col p-4">
+  return <div className="flex justify-center">
+    <div className="flex flex-col justify-center">
+      <div className="rounded flex flex-col p-4">
         <div className="flex justify-center">
           <img src={img} alt="Info Image" />
         </div>
-        <p className=" text-lg text-center text-wrap">{message}</p>
+        <p className=" text-md text-center text-wrap mt-4">{message}</p>
       </div>
     </div>
   </div>

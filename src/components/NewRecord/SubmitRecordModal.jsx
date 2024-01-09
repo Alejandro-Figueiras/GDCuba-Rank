@@ -6,15 +6,13 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
+  Slider
 } from "@nextui-org/react";
 import React, { useEffect, useState, useRef } from "react";
-import { SearchIcon } from "../Icons/SearchIcon";
 import SearchLevel from '@/components/NewRecord/SearchLevel'
 import LevelCard from '@/components/Levels/LevelCard'
 import { submitRecord } from '@/actions/record/submitRecord'
 import SubmitResult from './SubmitResult'
-
-import { getLevelsFromGD } from "@/actions/levels/levels";
 
 export default function SubmitRecordModal({
   onOpenChange,
@@ -25,6 +23,7 @@ export default function SubmitRecordModal({
   const sliderValue = useRef(100);
   const videoRef = useRef(null)
 
+  // Submit
   const handleSubmit = async() => {
     const percent = sliderValue.current
     const video = videoRef.current.value
@@ -39,7 +38,8 @@ export default function SubmitRecordModal({
   // ----- RESET -----
   useEffect(() => {
     if (isOpen) {
-      // TODO reset
+      setLevel(null)
+      setSubmitResult(0)
     }
   }, [isOpen]);
 
@@ -47,7 +47,7 @@ export default function SubmitRecordModal({
     <Modal 
       onOpenChange={onOpenChange}
       isOpen={isOpen}
-      size="3xl"
+      size={submitResult==0?"xl":'sm'}
       scrollBehavior="inside"
     >
       <ModalContent>
@@ -55,12 +55,11 @@ export default function SubmitRecordModal({
           <>
             <ModalHeader>Nuevo Record</ModalHeader>
             <ModalBody>
+              {(submitResult==0)?<div className="">
               <SearchLevel setNewLevel={setLevel} level={level}/>
-
-              {(submitResult==0)?<div className="max-w-[900px] mx-auto mt-8">
               {level && <>
                 <LevelCard level={level} />
-                <div className='my-2'>
+                <div className='mt-2 flex flex-col gap-4'>
                   <Slider
                     color='success'
                     step={1}
@@ -71,30 +70,25 @@ export default function SubmitRecordModal({
                     minValue={0}
                     defaultValue={100}
                     label="Porciento Completado"
-                    className="max-w-md"
+                    className="max-w-md mx-auto"
                   />
                   {/* TODO verificar el video de YT */}
-                  <Input type="text" ref={videoRef} placeholder="YouTube Video URL (Opcional)" size='sm'/>
-                  <Button color="primary" onClick={handleSubmit}>Agregar Record</Button>
-                  <Button>Eliminar</Button>
+                  <Input type="text" className="max-w-md mx-auto" ref={videoRef} placeholder="YouTube Video URL (Opcional)" size='sm'/>
                 </div>
               </>}
             </div>:<SubmitResult submitResult={submitResult} />}
             </ModalBody>
             <ModalFooter>
-              <Button
-                color="primary"
+              {submitResult==0 && <Button
+                color="success"
                 variant="flat"
-                onPress={async() => {
-                  console.log("Buscando", modalData.value);
-                  const data = JSON.parse(await getLevelsFromGD({data: "Yatagarasu"}));
-                  console.log(data);
-                }}
+                onPress={handleSubmit}
+                isDisabled={!level}
               >
-                Aceptar
-              </Button>
+                Enviar Record
+              </Button>}
               <Button color="default" variant="flat" onPress={onClose}>
-                Cancelar
+                {submitResult==0 ? 'Cerrar' : 'Aceptar'}
               </Button>
             </ModalFooter>
           </>

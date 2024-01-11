@@ -1,6 +1,6 @@
 'use client'
 import { getAllRecordsAction } from "@/actions/admin/getRecordAction";
-import TablaRecords from "@/components/Admin/TablaRecords";
+import TablaRecords from "@/components/Admin/Records/TablaRecords";
 import { useEffect, useState } from 'react'
 export default () => {
   const [records, setRecords] = useState([]);

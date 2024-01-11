@@ -1,5 +1,4 @@
 "use client"
-import { AdminContext } from "@/app/context/AdminContext";
 import { getDifficultyNameByNumber, getDifficultyPath } from "@/helpers/levelParser";
 import { 
   Table, 
@@ -7,48 +6,12 @@ import {
   TableBody,
   TableColumn,
   TableRow,
-  TableCell,
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  Button,
+  TableCell
 } from "@nextui-org/react";
-import { useState, useEffect } from "react";
+import RecordAvalDropdown from "./RecordAvalDropdown";
 
 export default ({records}) => {
 
-  const AvalDropdown = ({record}) => {
-    const [aval, setAval] = useState(record.aval)
-    useEffect(()=> {
-      console.log(aval)
-    }, [aval])
-    return (<Dropdown>
-      <DropdownTrigger>
-        <Button 
-          variant="flat" 
-          size="sm"
-        >
-          {aval}
-        </Button>
-      </DropdownTrigger>
-      <DropdownMenu 
-        aria-label="Aval Dropdown"
-        variant="flat"
-        disallowEmptySelection
-        selectionMode="single"
-        selectedKeys={aval}
-        onSelectionChange={setAval}
-      >
-        <DropdownItem key="0">Sin verificar</DropdownItem>
-        <DropdownItem key="1">Verificado</DropdownItem>
-        <DropdownItem key="-1">Denegado</DropdownItem>
-        <DropdownItem key="-2">Sin reverificar</DropdownItem>
-      </DropdownMenu>
-    </Dropdown>)
-  }
-
-  // const {openUserGestorFor} = useContext(AdminContext);
   return (
     <>
       <Table aria-label="Todos los records">
@@ -78,7 +41,7 @@ export default ({records}) => {
               <TableCell>{record.percent}%</TableCell>
               <TableCell>
                 {/* {record.aval} */}
-                <AvalDropdown record={record} />
+                <RecordAvalDropdown record={record} />
               </TableCell>
             </TableRow>
           ))}

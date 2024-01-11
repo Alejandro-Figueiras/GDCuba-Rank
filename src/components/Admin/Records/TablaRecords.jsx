@@ -23,20 +23,22 @@ export default ({records}) => {
           <TableColumn>Aval</TableColumn>
         </TableHeader>
         <TableBody>
-          {records && records.map((record, i) => (
+          {records && records.map((record) => (
             <TableRow key={record.id} className="cursor-pointer hover:bg-zinc-700 duration-75" onClick={() => {console.log(record.id)}}>
               <TableCell>{record.id}</TableCell>
               <TableCell>{record.username}</TableCell>
-              <TableCell className="flex gap-2 align-middle">
-                <img 
-                  src={getDifficultyPath({
-                    featured: record.featured, 
-                    difficultyName: getDifficultyNameByNumber(record.difficulty)
-                  })}
-                  style={{height:"24px"}}
-                />
-                  
-                {record.levelname}
+              <TableCell>
+                <div className="flex gap-2 align-middle">
+                  <img 
+                    src={getDifficultyPath({
+                      featured: record.featured, 
+                      difficultyName: getDifficultyNameByNumber(record.difficulty)
+                    })}
+                    style={{height:"24px"}}
+                  />
+                    
+                  {record.levelname}
+                </div>
               </TableCell>
               <TableCell>{record.percent}%</TableCell>
               <TableCell>

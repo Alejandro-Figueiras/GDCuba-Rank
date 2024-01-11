@@ -11,6 +11,7 @@ import { usePathname } from "next/navigation";
 import DatabaseIcon from "@/components/Icons/DatabaseIcon";
 import NewIcon from "@/components/Icons/NewIcon";
 import TestTubeIcon from "@/components/Icons/TestTubeIcon";
+import CheckIcon from "@/components/Icons/CheckIcon";
 
 export default () => {
   const { collapsed, setCollapsed } = useSidebarContext();
@@ -64,7 +65,7 @@ export default () => {
                 <SidebarItem
                   isActive={ruta === "/admin/records"}
                   title="Records"
-                  icon={<AccountsIcon />}
+                  icon={<CheckIcon />}
                   href="/admin/records"
                 />
               </SidebarMenu>

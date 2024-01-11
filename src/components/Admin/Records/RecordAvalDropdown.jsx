@@ -8,14 +8,19 @@ import {
 } from '@nextui-org/react'
 import { useState } from 'react'
 import { RECORDS_AVAL_VALUES } from '@/models/constants'
+import { changeAval } from '@/actions/admin/changeRecord'
 
 const RecordAvalDropdown = ({record}) => {
   const [aval, setAval] = useState(record.aval)
   
-  const handleChange = (change => {
-
-    console.log(change.currentKey)
-    setAval(change.currentKey)
+  const handleChange = (async(change) => {
+    const resultCode = await changeAval({
+      id: record.id,
+      aval: change.currentKey
+    })
+    if (resultCode==1) {
+      setAval(change.currentKey)
+    }
   })
 
   return (<Dropdown>

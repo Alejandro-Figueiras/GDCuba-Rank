@@ -56,7 +56,7 @@ export const getAllUsers = async() => {
  */
 export const validateUser = async({user, unvalidate = false}) => {
   if (!(await authorize())) return undefined;
-  const result = await sql`UPDATE users SET status = '${unvalidate? 'u' : 'v'}' WHERE username = ${user}`;
+  const result = await sql`UPDATE users SET status = ${unvalidate? 'u' : 'v'} WHERE username = ${user}`;
   if (!result) throw new Error('Error al validar' + result)
   return 1;
 }

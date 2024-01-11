@@ -12,7 +12,7 @@ export default function AdminProvider({ children }) {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
   const [loadingUser, setLoadingUser] = useState(false);
 
-  const openUserGestorFor = async (user) => {
+  const openUserGestorFor = async (user, updateData) => {
     setUserInCheck((prev) => ({ ...prev, username: user.username }));
     onOpen();
     setLoadingUser(true);
@@ -25,7 +25,8 @@ export default function AdminProvider({ children }) {
         phone: user.phone,
         role: user.role,
         status: user.status,
-        playerType: user.playertype
+        playerType: user.playertype,
+        updateData: updateData
       });
     } else {
       onClose();

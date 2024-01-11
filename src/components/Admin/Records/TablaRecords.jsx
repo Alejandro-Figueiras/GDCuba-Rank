@@ -7,7 +7,8 @@ import {
   TableColumn,
   TableRow,
   TableCell,
-  Button
+  Button,
+  Link
 } from "@nextui-org/react";
 import RecordAvalDropdown from "./RecordAvalDropdown";
 import { removeRecord } from "@/actions/admin/changeRecord";
@@ -47,12 +48,13 @@ export default ({records, updateRecords}) => {
           <TableColumn>Usuario</TableColumn>
           <TableColumn>Nivel</TableColumn>
           <TableColumn>Porcentaje</TableColumn>
+          <TableColumn>Video</TableColumn>
           <TableColumn>Aval</TableColumn>
           <TableColumn>Acciones</TableColumn>
         </TableHeader>
         <TableBody>
           {records && records.map((record) => (
-            <TableRow key={record.id} className="cursor-pointer hover:bg-zinc-700 duration-75" onClick={() => {console.log(record.id)}}>
+            <TableRow key={record.id}>
               <TableCell>{record.id}</TableCell>
               <TableCell>{record.username}</TableCell>
               <TableCell>
@@ -69,6 +71,13 @@ export default ({records, updateRecords}) => {
                 </div>
               </TableCell>
               <TableCell>{record.percent}%</TableCell>
+              <TableCell>{
+                record.video !=''
+                ?<Link isExternal className="cursor-pointer" href={record.video}>
+                  Video
+                </Link>
+                :<p>No Tiene</p>
+              }</TableCell>
               <TableCell>
                 <RecordAvalDropdown record={record} />
               </TableCell>

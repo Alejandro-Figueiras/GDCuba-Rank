@@ -37,6 +37,7 @@ export const addRecord = async(record = {}) => {
     aval,
     video,
     difficulty,
+    featured,
     difficultyscore
   ) VALUES(
     ${record.accountid},
@@ -47,6 +48,7 @@ export const addRecord = async(record = {}) => {
     ${record.aval},
     ${record.video},
     ${record.difficulty},
+    ${record.featured},
     ${difficultyscore}
   )`;
   
@@ -61,4 +63,9 @@ export const getRecordByID = async({id}) => {
 export const getDifficultyFromLevel = async({levelid}) => {
   const result = await sql`SELECT difficulty, difficultyscore FROM records WHERE levelid=${levelid}`;
   return result.rowCount?result.rows[0]:{difficulty: null, difficultyscore: 0};
+}
+
+export const getAllRecords = async() => {
+  const result = await sql`SELECT * FROM records`;
+  return result.rowCount?result.rows:[];
 }

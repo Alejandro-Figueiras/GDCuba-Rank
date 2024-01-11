@@ -61,6 +61,12 @@ export default () => {
                   icon={<NewIcon />}
                   href="/admin/users/AddAccount"
                 />
+                <SidebarItem
+                  isActive={ruta === "/admin/records"}
+                  title="Records"
+                  icon={<AccountsIcon />}
+                  href="/admin/records"
+                />
               </SidebarMenu>
               <SidebarMenu title="Testing">
                 <SidebarItem

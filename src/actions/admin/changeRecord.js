@@ -6,7 +6,16 @@ import { authorize } from '@/libs/secure'
 export const changeAval = async({id, aval}) => {
   if (authorize()) {
     const result = await sql`UPDATE records SET aval=${aval} WHERE id=${id}`;
-    console.log(result)
+    if (result.rowCount) {
+      return 1
+    }
+  }
+  return 0;
+}
+
+export const removeRecord = async({id}) => {
+  if (authorize()) {
+    const result = await sql`DELETE FROM records WHERE id=${id}`;
     if (result.rowCount) {
       return 1
     }

@@ -13,6 +13,7 @@ const AddAccount = () => {
   const handleSearch = async(e) => {
     const user = inputRef.current.value;
     const newAccount = JSON.parse(await getAccountFromRobTopAction({username: user}))
+    console.log(newAccount)
     setAccount(newAccount)
   }
 

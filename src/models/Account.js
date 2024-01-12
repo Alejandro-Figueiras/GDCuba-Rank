@@ -8,6 +8,8 @@ export default class Account {
         // Stats
         this.stars = (db) ? body.stars : parseInt(body[3])
         this.demons = (db) ? body.demons : parseInt(body[4])
+        this.demonsbreakdown = (db) ? body.demonsbreakdown : body[55]
+        if (this.demonsbreakdown == null) this.demonsbreakdown='none'
         this.secretcoins = (db) ? body.secretcoins : parseInt(body[13])
         this.usercoins = (db) ? body.usercoins : parseInt(body[17])
         this.globalrank = (db) ? body.globalrank : parseInt(body[30])

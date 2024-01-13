@@ -57,6 +57,12 @@ export default () => {
                   href="/admin/users"
                 />
                 <SidebarItem
+                  isActive={ruta === "/admin/accounts"}
+                  title="Cuentas"
+                  icon={<AccountsIcon />}
+                  href="/admin/accounts"
+                />
+                <SidebarItem
                   isActive={ruta === "/admin/users/AddAccount"}
                   title="Agregar Cuenta"
                   icon={<NewIcon />}

@@ -130,18 +130,10 @@ const UserDropdown = ({
           }
           {logged && (
             <DropdownItem
-              key="my-account-btn"
-              href="/account/manage"
-            >
-              Dev: Manage
-            </DropdownItem>
-          )}
-          {logged && (
-            <DropdownItem
               key="me-account-btn"
               href="/account/me"
             >
-              Dev: Account/Me
+              Mi cuenta
             </DropdownItem>
           )}
           {logged && (

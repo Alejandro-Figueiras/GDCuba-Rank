@@ -10,6 +10,7 @@ export default () => {
   const updateAccounts = () => {
     getAllAccountsAction().then(response => {
       const newData = JSON.parse(response)
+      newData.sort((a,b)=>b.id-a.id)
       console.log(newData)
       setAccounts(newData)
     })

@@ -56,6 +56,11 @@ export const changeCuban = async(username, cuba) => {
   return result.rowCount?1:0
 }
 
+export const removeGDAccount = async(username) => {
+  const result = await sql`DELETE FROM gdaccounts WHERE username=${username}`
+  return result.rowCount?1:0
+}
+
 /**
  * Primero consulta si se puede actualizar por el limite de tiempo. Si no es posible, retorna vacío, si lo es actualiza el numero de cuentas especificado más viejas que hallan en la base de datos.
  * @async

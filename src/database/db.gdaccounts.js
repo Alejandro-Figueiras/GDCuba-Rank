@@ -11,7 +11,6 @@ import { sql } from '@vercel/postgres'
  * @returns {account}
  */
 export const addGDAccount = async({account, cuba = 0}) => {
-  // TODO agregar en el admin dashboard para cambiar si es cubano o no.
   const response = await addAccountCloud(account, cuba);
   if (!response) {
     throw response
@@ -50,6 +49,11 @@ export const getGDAccount = async(username) => {
 export const getAllCubans = async() => {
   const result = await sql`SELECT * FROM gdaccounts WHERE cuba=1`
   return result.rows
+}
+
+export const changeCuban = async(username, cuba) => {
+  const result = await sql`UPDATE gdaccounts SET cuba=${cuba} WHERE username=${username}`
+  return result.rowCount?1:0
 }
 
 /**

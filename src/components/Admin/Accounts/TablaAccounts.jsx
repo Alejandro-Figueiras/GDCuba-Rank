@@ -51,7 +51,7 @@ export default ({gdaccounts, updateAccounts}) => {
             <TableRow key={acc.id}>
               <TableCell>{acc.id}</TableCell>
               <TableCell><UsernameCell player={acc} /></TableCell>
-              <TableCell><CubanCheckbox acc={acc} updateData={updateAccounts}/></TableCell>
+              <TableCell><CubanCheckbox acc={acc} updateData={updateAccounts} openModal={openModal}/></TableCell>
             </TableRow>
           ))}
         </TableBody>

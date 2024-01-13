@@ -19,6 +19,7 @@ import { NoAccount } from "../NoAccount";
 import AccountStatsRow from "../Admin/UserModalPanel/AccountStatsRow";
 import GDSpinner from "../GDIcons/GDSpinner";
 import AccountIconsRow from "../Admin/UserModalPanel/AccountIconsRow";
+import AccountStuffMe from "./AccountStuffMe";
 export default function AccountManage() {
   const { currentUser } = useSesion();
   const { icon: iconAvatar } = useGDIcon({
@@ -27,17 +28,17 @@ export default function AccountManage() {
     effectDeps: [currentUser.username],
   });
 
-  const [fullUser, setFullUser] = useState(undefined);
+  const [account, setAccount] = useState(undefined);
 
   useEffect(() => {
     if (currentUser.username == undefined) return;
-    const loadFullUser = async () => {
+    const loadAccount = async () => {
       const account = JSON.parse(
         await getAccountAction({ username: currentUser.username })
       );
-      setFullUser(account);
+      setAccount(account);
     };
-    loadFullUser();
+    loadAccount();
   }, [currentUser]);
 
   return currentUser.username != null ? (
@@ -56,11 +57,11 @@ export default function AccountManage() {
         </CardHeader>
         <Divider />
         <CardBody className="flex flex-col justify-center items-center gap-3">
-          {fullUser != undefined ? (
+          {account != undefined ? (
             <>
-              <AccountStatsRow user={fullUser} />
-              <AccountIconsRow user={fullUser} />
-              
+              <AccountStatsRow user={account} />
+              <AccountIconsRow user={account} />
+              <AccountStuffMe account={account} />
               
             </>
           ) : (

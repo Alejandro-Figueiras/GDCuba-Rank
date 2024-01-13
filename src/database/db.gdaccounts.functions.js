@@ -14,6 +14,7 @@ export const addAccountCloud = async (account, cuba = 0) => {
 
       stars,
       demons,
+      demonsbreakdown,
       secretcoins,
       usercoins,
       globalrank,
@@ -55,6 +56,7 @@ export const addAccountCloud = async (account, cuba = 0) => {
 
       ${account.stars},
       ${account.demons},
+      ${account.demonsbreakdown},
       ${account.secretcoins},
       ${account.usercoins},
       ${account.globalrank},
@@ -104,6 +106,7 @@ export const updateAccountCloud = async(id) => {
 
     stars = ${account.stars},
     demons = ${account.demons},
+    demonsbreakdown = ${account.demonsbreakdown},
     secretcoins = ${account.secretcoins},
     usercoins = ${account.usercoins},
     globalrank = ${account.globalrank},

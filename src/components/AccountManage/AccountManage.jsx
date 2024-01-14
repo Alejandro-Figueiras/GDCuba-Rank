@@ -20,6 +20,7 @@ import AccountStatsRow from "../Admin/UserModalPanel/AccountStatsRow";
 import GDSpinner from "../GDIcons/GDSpinner";
 import AccountIconsRow from "../Admin/UserModalPanel/AccountIconsRow";
 import AccountStuffMe from "./AccountStuffMe";
+import { getStuffItemsAction } from "@/actions/admin/stuffActions";
 export default function AccountManage() {
   const { currentUser } = useSesion();
   const { icon: iconAvatar } = useGDIcon({
@@ -29,6 +30,7 @@ export default function AccountManage() {
   });
 
   const [account, setAccount] = useState(undefined);
+  const [accountStuff, setAccountStuff] = useState(undefined);
 
   useEffect(() => {
     if (currentUser.username == undefined) return;
@@ -36,7 +38,11 @@ export default function AccountManage() {
       const account = JSON.parse(
         await getAccountAction({ username: currentUser.username })
       );
+      const stuff = JSON.parse(
+        await getStuffItemsAction({accountid: currentUser.accountid})
+      );
       setAccount(account);
+      setAccountStuff(stuff)
     };
     loadAccount();
   }, [currentUser]);
@@ -61,7 +67,7 @@ export default function AccountManage() {
             <>
               <AccountStatsRow user={account} />
               <AccountIconsRow user={account} />
-              <AccountStuffMe account={account} />
+              <AccountStuffMe account={account} stuffItems={accountStuff}/>
               
             </>
           ) : (

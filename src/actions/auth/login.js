@@ -46,9 +46,6 @@ const createToken = (account) => {
       accountid: account.accountid,
       phone: account.phone,
       role: account.role,
-      greeting: account.greeting,
-      bestcreatedlevelid: account.bestcreatedlevelid,
-      harderdemonid: account.harderdemonid,
     },
     process.env.JWT_SECRET
   );

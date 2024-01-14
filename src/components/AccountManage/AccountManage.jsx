@@ -67,14 +67,13 @@ export default function AccountManage() {
             <>
               <AccountStatsRow user={account} />
               <AccountIconsRow user={account} />
+              <Divider />
               <AccountStuffMe account={account} stuffItems={accountStuff}/>
-              
             </>
           ) : (
             <GDSpinner />
           )}
         </CardBody>
-        <Divider />
       </Card>
     </>
   ) : (

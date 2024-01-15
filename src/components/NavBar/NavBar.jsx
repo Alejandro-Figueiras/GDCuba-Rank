@@ -36,7 +36,7 @@ export default () => {
             className="sm:hidden"
           />
           <NavbarBrand>
-            <img src="/assets/logo.png" width="36" className="mr-4" />
+            <img src="/assets/logo.png" width="42" className="mr-3" />
             <p className="font-bold text-inherit">GD Cuba ΔΔΔ</p>
           </NavbarBrand>
         </NavbarContent>

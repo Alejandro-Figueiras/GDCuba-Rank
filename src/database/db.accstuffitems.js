@@ -8,7 +8,6 @@ export const getAllStuffItems = async({username, accountid}) => {
   } else {
     result = await sql`SELECT * FROM accstuffitems WHERE username = ${username}`
   }
-  console.log(result)
   return (result.rowCount)?result.rows:[]
 }
 

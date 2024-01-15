@@ -1,5 +1,5 @@
 'use client'
-import { getAllAccountsAction } from "@/actions/admin/getAccountAction";
+import { getAllAccountsAction } from "@/actions/admin/getAllAccountsAction";
 import TablaAccounts from "@/components/Admin/Accounts/TablaAccounts";
 import { useEffect, useState } from 'react'
 import { Button } from '@nextui-org/react'

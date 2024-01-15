@@ -14,13 +14,13 @@ import {
 } from "@nextui-org/react";
 import { useSesion } from "@/hooks/useSesion";
 import { useGDIcon } from "@/robtop/iconkit/useGDIcon";
-import { getAccountAction } from "@/actions/admin/getAccountAction";
+import { getAccountAction } from "@/actions/accounts/getAccountAction";
 import { NoAccount } from "../NoAccount";
 import AccountStatsRow from "../Admin/UserModalPanel/AccountStatsRow";
 import GDSpinner from "../GDIcons/GDSpinner";
 import AccountIconsRow from "../Admin/UserModalPanel/AccountIconsRow";
 import AccountStuffMe from "./AccountStuffMe";
-import { getStuffItemsAction } from "@/actions/admin/stuffActions";
+import { getStuffItemsAction } from "@/actions/accounts/stuffActions";
 export default function AccountManage() {
   const { currentUser } = useSesion();
   const { icon: iconAvatar } = useGDIcon({
@@ -35,7 +35,6 @@ export default function AccountManage() {
   useEffect(() => {
     if (currentUser.username == undefined) return;
     const loadAccount = async () => {
-      // TODO hay algun authorize() por aqui
       const account = JSON.parse(
         await getAccountAction({ username: currentUser.username })
       );

@@ -14,6 +14,7 @@ const ERROR_RESPONSE = {
 
 export const login = async ({ username, password }) => {
   const user = await findUser({ user: username });
+  console.log(user)
 
   if (user) {
     const passwordMatch = await compare(password, user.password);

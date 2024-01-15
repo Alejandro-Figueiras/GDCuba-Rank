@@ -3,7 +3,7 @@ import { useDisclosure } from "@nextui-org/react";
 import React, { createContext, useState } from "react";
 import { notify, notifyDismiss } from "@/libs/toastNotifications";
 import { operationText, responseText } from "@/locales/siteText";
-import { getAccountAction } from "@/actions/admin/getAccountAction";
+import { getAccountAction } from "@/actions/accounts/getAccountAction";
 
 export const AdminContext = createContext();
 

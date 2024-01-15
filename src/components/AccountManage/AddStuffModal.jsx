@@ -15,7 +15,7 @@ import {
   Button
 } from '@nextui-org/react'
 import StuffBioForm from './Stuff/StuffBioForm'
-import { submitStuffItemAction, updateAccountStuffAction } from '@/actions/admin/stuffActions'
+import { submitStuffItemAction, updateAccountStuffAction } from '@/actions/accounts/stuffActions'
 import { useSesion } from '@/hooks/useSesion'
 
 const ITEM_TYPES = {

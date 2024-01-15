@@ -1,5 +1,5 @@
 'use client'
-import { getAllUsersAction } from "@/actions/admin/getUserAction";
+import { getAllUsersAction } from "@/actions/admin/getAllUserAction";
 import TablaUsuarios from "@/components/Admin/TablaUsuarios";
 import { useEffect, useState } from 'react'
 import { Button } from '@nextui-org/react'

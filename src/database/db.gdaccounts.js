@@ -33,7 +33,7 @@ export const getAllGDAccounts = async() => {
  * @returns Account
  */
 export const getGDAccount = async(username) => {
-  const result = await sql`SELECT * FROM gdaccounts WHERE username = ${username}`
+  const result = await sql`SELECT * FROM gdaccounts WHERE username = ${username} `
   if (result.rowCount) {
     return result.rows[0]
   } else {
@@ -52,12 +52,12 @@ export const getAllCubans = async() => {
 }
 
 export const changeCuban = async(username, cuba) => {
-  const result = await sql`UPDATE gdaccounts SET cuba=${cuba} WHERE username=${username}`
+  const result = await sql`UPDATE gdaccounts SET cuba=${cuba} WHERE username=${username} `
   return result.rowCount?1:0
 }
 
 export const removeGDAccount = async(username) => {
-  const result = await sql`DELETE FROM gdaccounts WHERE username=${username}`
+  const result = await sql`DELETE FROM gdaccounts WHERE username=${username} `
   return result.rowCount?1:0
 }
 
@@ -76,7 +76,7 @@ export const updateAccounts = async({limit= 3, timeLimit = 60000}) => {
   
   console.log("DATABASE: actualizando accounts")
   // Pregunta las cuentas con la información más antigua
-  const result = (await sql`SELECT accountid FROM gdaccounts ORDER BY timestamp ASC LIMIT ${limit}`).rows
+  const result = (await sql`SELECT accountid FROM gdaccounts ORDER BY timestamp ASC LIMIT ${limit} `).rows
 
   if (result) {
     // Request a los servidores de Rob
@@ -103,6 +103,6 @@ export const updateAccounts = async({limit= 3, timeLimit = 60000}) => {
  * @returns 1 si todo anduvo bien. 0 si no se actualiza
  */
 export const updateAccountStuff = async({accountid, stuff}) => {
-  const result = await sql`UPDATE gdaccounts SET stufforder=${stuff} WHERE accountid=${accountid}`
+  const result = await sql`UPDATE gdaccounts SET stufforder=${stuff} WHERE accountid=${accountid} `
   return result.rowCount?1:0
 }

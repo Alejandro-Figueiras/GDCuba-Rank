@@ -11,7 +11,7 @@ export const addRecord = async(record = {}) => {
   1. Que el usuario no tenga ningun record en el nivel y este sea el primero
   2. Que el usuario tenga algun record en el nivel, en ese caso se actualizará si es mayor, sino se le notificará
   */
-  const queryResult = await sql`SELECT id,percent FROM records WHERE levelid=${record.levelid} AND accountid=${record.accountid}`
+  const queryResult = await sql`SELECT id,percent FROM records WHERE levelid=${record.levelid} AND accountid=${record.accountid} `
   if (queryResult.rowCount) {
     console.log("Ya existe")
     const oldPercent = queryResult.rows[0].percent;
@@ -56,12 +56,12 @@ export const addRecord = async(record = {}) => {
 }
 
 export const getRecordByID = async({id}) => {
-  const result = await sql`SELECT * FROM records WHERE id=${id} LIMIT 1`;
+  const result = await sql`SELECT * FROM records WHERE id=${id} LIMIT 1 `;
   return result.rowCount?result.rows[0]:undefined;
 }
 
 export const getDifficultyFromLevel = async({levelid}) => {
-  const result = await sql`SELECT difficulty, difficultyscore FROM records WHERE levelid=${levelid}`;
+  const result = await sql`SELECT difficulty, difficultyscore FROM records WHERE levelid=${levelid} `;
   return result.rowCount?result.rows[0]:{difficulty: null, difficultyscore: 0};
 }
 

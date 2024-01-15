@@ -24,7 +24,7 @@ export const addUser = async({ user, password, phone, accountid }) => {
  * @returns {Object}
  */
 export const getUser = async({user}) => {
-  return (await sql`SELECT * from users WHERE username = ${user}`).rows[0];
+  return (await sql`SELECT * from users WHERE username = ${user} `).rows[0];
 }
 
 /**
@@ -34,7 +34,7 @@ export const getUser = async({user}) => {
  * @returns 
  */
 export const findUser = async({user = ""}) => {
-  const result = await sql`SELECT * from users WHERE username ILIKE ${user}`
+  const result = await sql`SELECT * from users WHERE username ILIKE ${user} `
   if (result.rowCount) return result.rows[0]
   return undefined;
 }
@@ -56,7 +56,7 @@ export const getAllUsers = async() => {
  */
 export const validateUser = async({user, unvalidate = false}) => {
   if (!(await authorize())) return undefined;
-  const result = await sql`UPDATE users SET status = ${unvalidate? 'u' : 'v'} WHERE username = ${user}`;
+  const result = await sql`UPDATE users SET status = ${unvalidate? 'u' : 'v'} WHERE username = ${user} `;
   if (!result) throw new Error('Error al validar' + result)
   return 1;
 }
@@ -71,7 +71,7 @@ export const eliminarUser = async({username}) => {
   const auth = await authorize();
   if (auth) {
     if (!username) return undefined;
-    const result = await sql`DELETE FROM users WHERE username = ${username}`;
+    const result = await sql`DELETE FROM users WHERE username = ${username} `;
     if (result) {
       let response = 1;
       if (result.rowCount != 0)

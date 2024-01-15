@@ -2,7 +2,6 @@
 
 import {
   useState,
-  useRef,
   useEffect
 } from 'react'
 import {
@@ -25,19 +24,18 @@ const AddStuffModal = ({ isOpen, onOpenChange }) => {
   const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(true)
   const [itemType, setItemType] = useState('none')
-  const itemData = useRef({})
+  const [itemData, setItemData] = useState({})
 
   const clear = () => {
     setLoading(false)
     setItemType('none')
     setDisabled(true)
-    itemData.current = {}
+    setItemData({})
   }
 
   const handleSubmit = async(onClose) => {
-    const data = itemData.current
     if (itemType=='bio') {
-      if (data.text=='') return;
+      if (itemData.text=='') return;
       setLoading(true)
 
       clear()
@@ -46,18 +44,16 @@ const AddStuffModal = ({ isOpen, onOpenChange }) => {
   }
 
   useEffect(() => {
-    console.log('effect')
-    const data = itemData.current
     if (disabled) {
       if (
-        (itemType == 'bio' && data.text != '')
+        (itemType == 'bio' && itemData.text != '')
         ) setDisabled(false)
     } else {
       if (itemType == 'none' || 
-        (itemType == 'bio' && data.text == '')
+        (itemType == 'bio' && itemData.text == '')
       ) setDisabled(true)
     }
-  }, [itemType, itemData.current])
+  }, [itemType, itemData])
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
@@ -73,10 +69,11 @@ const AddStuffModal = ({ isOpen, onOpenChange }) => {
                 className="" 
                 onChange={({target}) => {
                   setItemType((target.value == '')?'none':target.value)
-                  itemData.current = {
+                  const data = {
                     type: target.value
                   }
-                  if (target.value == 'bio') itemData.current.text = ''
+                  if (target.value == 'bio') data.text = ''
+                  setItemData(data)
                 }}
               >
                 {Object.keys(ITEM_TYPES).map((key) => (
@@ -85,7 +82,7 @@ const AddStuffModal = ({ isOpen, onOpenChange }) => {
                   </SelectItem>
                 ))}
               </Select>
-              {itemType=='bio' && <StuffBioForm itemData={itemData}/>}
+              {itemType=='bio' && <StuffBioForm itemData={itemData} setItemData={setItemData}/>}
             </ModalBody>
             <ModalFooter>
               <Button

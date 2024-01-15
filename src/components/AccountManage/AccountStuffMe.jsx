@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react'
 import {
   Button,
-  Dropdown,
   useDisclosure
 } from '@nextui-org/react'
 import AddStuffModal from './AddStuffModal'

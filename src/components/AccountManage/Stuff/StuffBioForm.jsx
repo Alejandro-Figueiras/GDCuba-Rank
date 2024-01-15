@@ -3,9 +3,11 @@ import {
   Textarea
 } from '@nextui-org/react'
 
-const StuffBioForm = ({itemData}) => {
+const StuffBioForm = ({itemData, setItemData}) => {
   const handleChange = (value) => {
-    itemData.current.text=value
+    const data = {...itemData}
+    data.text = value;
+    setItemData(data)
   }
   return <>
     <Textarea

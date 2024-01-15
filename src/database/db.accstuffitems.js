@@ -4,9 +4,9 @@ export const getAllStuffItems = async({username, accountid}) => {
   let result;
   if (accountid) {
     console.log(accountid)
-    result = await sql`SELECT * FROM accstuffitems WHERE accountid=${accountid}`
+    result = await sql`SELECT * FROM accstuffitems WHERE accountid = ${accountid}`
   } else {
-    result = await sql`SELECT * FROM accstuffitems WHERE username=${username}`
+    result = await sql`SELECT * FROM accstuffitems WHERE username = ${username}`
   }
   console.log(result)
   return (result.rowCount)?result.rows:[]
@@ -23,7 +23,7 @@ export const addStuffItem = async(item = {}) => {
     ${item.data}
   )`
   if (result.rowCount) {
-    const result = await sql`SELECT id FROM accstuffitems WHERE accountid=${item.accountid} ORDER BY id DESC LIMIT 1`
+    const result = await sql`SELECT id FROM accstuffitems WHERE accountid = ${item.accountid} ORDER BY id DESC LIMIT 1`
     return result.rows[0]
   }
   return -1

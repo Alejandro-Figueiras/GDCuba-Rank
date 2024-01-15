@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS public.gdaccounts
     playercolor3 integer,
     accswing integer,
     accjetpack integer,
-    demonsbreakdown character varying(30) COLLATE pg_catalog."default" DEFAULT 'none'::character varying,
+    demonsbreakdown character varying(255) COLLATE pg_catalog."default" DEFAULT 'none'::character varying,
     stufforder character varying(255) COLLATE pg_catalog."default" DEFAULT '"[]"'::character varying,
     CONSTRAINT gdaccounts_pkey PRIMARY KEY (id)
 )

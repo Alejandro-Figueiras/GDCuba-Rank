@@ -35,6 +35,7 @@ export default function AccountManage() {
   useEffect(() => {
     if (currentUser.username == undefined) return;
     const loadAccount = async () => {
+      // TODO hay algun authorize() por aqui
       const account = JSON.parse(
         await getAccountAction({ username: currentUser.username })
       );
@@ -68,7 +69,13 @@ export default function AccountManage() {
               <AccountStatsRow user={account} />
               <AccountIconsRow user={account} />
               <Divider />
-              <AccountStuffMe account={account} stuffItems={accountStuff}/>
+              <AccountStuffMe 
+                account={account}
+                setAccount={setAccount}
+                stuffItems={accountStuff}
+                setStuffItems={setAccountStuff}
+
+              />
             </>
           ) : (
             <GDSpinner />

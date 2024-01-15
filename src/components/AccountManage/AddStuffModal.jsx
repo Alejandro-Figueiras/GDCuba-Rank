@@ -15,12 +15,15 @@ import {
   Button
 } from '@nextui-org/react'
 import StuffBioForm from './Stuff/StuffBioForm'
+import { submitStuffItemAction, updateAccountStuffAction } from '@/actions/admin/stuffActions'
+import { useSesion } from '@/hooks/useSesion'
 
 const ITEM_TYPES = {
   bio: 'Biografía'
 }
 
-const AddStuffModal = ({ isOpen, onOpenChange }) => {
+const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, setStuffItems }) => {
+  const { currentUser } = useSesion();
   const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(true)
   const [itemType, setItemType] = useState('none')
@@ -37,6 +40,28 @@ const AddStuffModal = ({ isOpen, onOpenChange }) => {
     if (itemType=='bio') {
       if (itemData.text=='') return;
       setLoading(true)
+      const item = {
+        accountid: currentUser.accountid,
+        username: currentUser.username,
+        data: itemData
+      }
+      const {id} = await submitStuffItemAction(item)
+      
+      const newOrder = JSON.parse(`{"array":${account.stufforder} }`).array
+      newOrder.push(id)
+      const updateResult = await updateAccountStuffAction({
+        accountid: currentUser.accountid,
+        username: currentUser.username,
+        stuff: JSON.stringify(newOrder)
+      })
+      
+      // Updating states
+      if (!id || !updateResult) return;
+      const newAcc = {...account}
+      newAcc.stufforder = JSON.stringify(newOrder)
+      item.id = id;
+      setStuffItems(items => [...items, item])
+      setAccount(newAcc)
 
       clear()
       onClose()

@@ -95,3 +95,14 @@ export const updateAccounts = async({limit= 3, timeLimit = 60000}) => {
     return -1;
   }
 }
+
+/**
+ * Actualiza los datos del stuff de una cuenta, tenga en cuenta que no hace una validación, dicha debe hacerse antes de llamar a esta función
+ * @async
+ * @param {{accountid, stuff}}
+ * @returns 1 si todo anduvo bien. 0 si no se actualiza
+ */
+export const updateAccountStuff = async({accountid, stuff}) => {
+  const result = await sql`UPDATE gdaccounts SET stufforder=${stuff} WHERE accountid=${accountid}`
+  return result.rowCount?1:0
+}

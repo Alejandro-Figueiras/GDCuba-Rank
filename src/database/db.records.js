@@ -1,7 +1,9 @@
 'use server'
 import { sql } from '@vercel/postgres'
+import { unstable_noStore as noStore } from 'next/cache';
 
 export const addRecord = async(record = {}) => {
+  noStore()
   let { difficulty: dbDifficulty, difficultyscore } = getDifficultyFromLevel({levelid: record.levelid})
   if (dbDifficulty != record.difficulty) difficultyscore = 0;
   if (!record.aval) record.aval=0;
@@ -56,16 +58,19 @@ export const addRecord = async(record = {}) => {
 }
 
 export const getRecordByID = async({id}) => {
+  noStore()
   const result = await sql`SELECT * FROM records WHERE id=${id} LIMIT 1 `;
   return result.rowCount?result.rows[0]:undefined;
 }
 
 export const getDifficultyFromLevel = async({levelid}) => {
+  noStore();
   const result = await sql`SELECT difficulty, difficultyscore FROM records WHERE levelid=${levelid} `;
   return result.rowCount?result.rows[0]:{difficulty: null, difficultyscore: 0};
 }
 
 export const getAllRecords = async() => {
+  noStore()
   const result = await sql`SELECT * FROM records`;
   return result.rowCount?result.rows:[];
 }

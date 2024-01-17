@@ -1,6 +1,8 @@
 import { sql } from '@vercel/postgres'
+import { unstable_noStore as noStore } from 'next/cache';
 
 export const getAllStuffItems = async({username, accountid}) => {
+  noStore();
   let result;
   if (accountid) {
     console.log(accountid)
@@ -12,6 +14,7 @@ export const getAllStuffItems = async({username, accountid}) => {
 }
 
 export const addStuffItem = async(item = {}) => {
+  noStore()
   const result = await sql`INSERT INTO accstuffitems(
     accountid,
     username,

@@ -1,11 +1,13 @@
 'use server'
 import { sql } from '@vercel/postgres'
 import { getAccountByID } from "@/robtop/getAccount.js";
+import { unstable_noStore as noStore } from 'next/cache';
 
 // Aqui se encuentran las funciones extensas 
 // para no tener un archivo de accounts tan largo
 
 export const addAccountCloud = async (account, cuba = 0) => {
+  noStore()
   const result = await sql`INSERT INTO gdaccounts (
       username,
       userid,
@@ -95,6 +97,7 @@ export const addAccountCloud = async (account, cuba = 0) => {
 };
 
 export const updateAccountCloud = async(id) => {
+  noStore()
   const account = await getAccountByID(id);
   if (account == -1) {
     console.log("ERROR en updateAccount, getAccountByID devuelve -1")

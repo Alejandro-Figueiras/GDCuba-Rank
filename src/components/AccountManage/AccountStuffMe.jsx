@@ -8,8 +8,8 @@ import AddStuffModal from './AddStuffModal'
 
 const AccountStuffMe = ({account, setAccount, stuffItems = [], setStuffItems}) => {
   // TODO autorizaciones
-  console.log(stuffItems)
-  // const stuffOrder = JSON.parse(account.stufforder).map(item=>item)
+  console.log(account.stuff)
+  // const stuffOrder = JSON.parse(account.stuff).map(item=>item)
   const [stuff, setStuff] = useState([])
 
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -18,12 +18,12 @@ const AccountStuffMe = ({account, setAccount, stuffItems = [], setStuffItems}) =
     <AddStuffModal 
       isOpen={isOpen} 
       onOpenChange={onOpenChange}
-      accountStuff={account.stufforder}
+      accountStuff={account.stuff}
       account={account}
       setAccount={setAccount}
       setStuffItems={setStuffItems}
       />
-    <p>{account.stufforder}</p>
+    <p>{account.stuff}</p>
     {stuff.map((data, i)=>{
       return <p key={i}>{JSON.stringify(data)}</p>
     })}

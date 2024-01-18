@@ -21,8 +21,8 @@ export const updateAccountStuffAction = async({accountid, username, stuff}) => {
   const auth = JSON.parse(await authMe());
   if (auth.username == username && auth.accountid == accountid) {
     return await updateAccountStuff({
-      accountid,
-      stuff: JSON.stringify(stuff)
+      username,
+      stuff: stuff
     })
   } else {
     console.log("unauthorized")

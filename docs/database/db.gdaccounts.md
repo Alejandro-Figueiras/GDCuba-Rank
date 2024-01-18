@@ -56,7 +56,7 @@ Actualiza los datos del stuff de una cuenta, tenga en cuenta que no hace una val
 
 ```js
 {
-  accountid: Number, 
+  username: String, 
   stuff: String
 }
 ```

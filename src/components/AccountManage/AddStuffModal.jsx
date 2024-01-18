@@ -47,20 +47,22 @@ const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, setStuffItem
       }
       const {id} = await submitStuffItemAction(item)
       
-      const newOrder = JSON.parse(`{"array":${account.stufforder} }`).array
-      newOrder.push(id)
+      let newOrder = account.stuff
+      newOrder+=`${newOrder==''?'':','}${id}` 
       const updateResult = await updateAccountStuffAction({
         accountid: currentUser.accountid,
         username: currentUser.username,
-        stuff: JSON.stringify(newOrder)
+        stuff: newOrder
       })
       
       // Updating states
       if (!id || !updateResult) return;
       const newAcc = {...account}
-      newAcc.stufforder = JSON.stringify(newOrder)
+      newAcc.stuff = newOrder
       item.id = id;
       setStuffItems(items => [...items, item])
+      console.log(newAcc)
+      console.log(newAcc)
       setAccount(newAcc)
 
       clear()

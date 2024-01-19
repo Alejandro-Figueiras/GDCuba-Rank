@@ -5,17 +5,32 @@ import {
   useDisclosure
 } from '@nextui-org/react'
 import AddStuffModal from './AddStuffModal'
-import StuffText from './Stuff/StuffText'
+import StuffBio from './Stuff/StuffBio'
 
 const AccountStuffMe = ({account, setAccount, stuffItems = [], setStuffItems}) => {
   // TODO autorizaciones
-  const stuffOrder = account.stuff.split(',')
+  const [itemTypes, setItemTypes] = useState([])
+  const [stuff, setStuff] = useState([])
+  
+  useEffect(() => {
+    const newItemTypes = [];
+    const stuffOrder = account.stuff.split(',')
     .map(id=>parseInt(id))
     .map(id=>stuffItems.find((value, i, obj) => {
-      if (value.id == id) return true
+      if (value.id == id) {
+        const data = JSON.parse(value.data)
+        newItemTypes.push(data.type)
+        return true
+      }
       return false
     }))
-  const [stuff, setStuff] = useState(stuffOrder)
+
+    setStuff(stuffOrder)
+    setItemTypes(newItemTypes)
+  }, [account, stuffItems])
+  
+  let itemTypesLeft = 1;
+  if (itemTypes.includes('bio')) itemTypesLeft--
 
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
@@ -30,19 +45,23 @@ const AccountStuffMe = ({account, setAccount, stuffItems = [], setStuffItems}) =
       />
     
     <div className="flex flex-col gap-2">
-      {stuff.map(({data}, i)=>{
+      {stuff.map(({data, id}, i)=>{
         data = JSON.parse(data)
         if (data.type=='bio') {
-          return <StuffText itemData={data} key={i}/>
+          return <StuffBio itemData={data} key={i} id={id} handlers={{}}/>
         }
         
         return <p key={i}>{JSON.stringify(data)}</p>
       })}
     </div>
-    <Button
-      type='priamry'
-      onClick={onOpen}
-    >Agregar Item</Button>
+    {
+      itemTypesLeft != 0 && 
+      <Button
+        type='priamry'
+        onClick={onOpen}
+      >Agregar Item</Button>
+    }
+    
   </div>)
 }
 

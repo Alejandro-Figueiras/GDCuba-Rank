@@ -106,7 +106,7 @@ CREATE TABLE IF NOT EXISTS public.accstuffitems
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( CYCLE INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     accountid integer NOT NULL,
     username character varying(40) COLLATE pg_catalog."default" NOT NULL,
-    data character varying(255) COLLATE pg_catalog."default" NOT NULL DEFAULT '[]'::character varying,
+    data text COLLATE pg_catalog."default" NOT NULL DEFAULT '[]'::character varying,
     CONSTRAINT accstuffitem_pkey PRIMARY KEY (id)
 )
 

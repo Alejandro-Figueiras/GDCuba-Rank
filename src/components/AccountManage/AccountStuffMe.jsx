@@ -5,12 +5,17 @@ import {
   useDisclosure
 } from '@nextui-org/react'
 import AddStuffModal from './AddStuffModal'
+import StuffText from './Stuff/StuffText'
 
 const AccountStuffMe = ({account, setAccount, stuffItems = [], setStuffItems}) => {
   // TODO autorizaciones
-  console.log(account.stuff)
-  // const stuffOrder = JSON.parse(account.stuff).map(item=>item)
-  const [stuff, setStuff] = useState([])
+  const stuffOrder = account.stuff.split(',')
+    .map(id=>parseInt(id))
+    .map(id=>stuffItems.find((value, i, obj) => {
+      if (value.id == id) return true
+      return false
+    }))
+  const [stuff, setStuff] = useState(stuffOrder)
 
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
@@ -23,10 +28,17 @@ const AccountStuffMe = ({account, setAccount, stuffItems = [], setStuffItems}) =
       setAccount={setAccount}
       setStuffItems={setStuffItems}
       />
-    <p>{account.stuff}</p>
-    {stuff.map((data, i)=>{
-      return <p key={i}>{JSON.stringify(data)}</p>
-    })}
+    
+    <div className="flex flex-col gap-2">
+      {stuff.map(({data}, i)=>{
+        data = JSON.parse(data)
+        if (data.type=='bio') {
+          return <StuffText itemData={data} key={i}/>
+        }
+        
+        return <p key={i}>{JSON.stringify(data)}</p>
+      })}
+    </div>
     <Button
       type='priamry'
       onClick={onOpen}

@@ -6,31 +6,14 @@ import {
 } from '@nextui-org/react'
 import AddStuffModal from './AddStuffModal'
 import StuffBio from './Stuff/StuffBio'
+import { useStuff } from './useStuff'
 
 const AccountStuffMe = ({account, setAccount, stuffItems = [], setStuffItems}) => {
   // TODO autorizaciones
-  const [itemTypes, setItemTypes] = useState([])
-  const [stuff, setStuff] = useState([])
-  
-  useEffect(() => {
-    const newItemTypes = [];
-    const stuffOrder = account.stuff.split(',')
-    .map(id=>parseInt(id))
-    .map(id=>stuffItems.find((value, i, obj) => {
-      if (value.id == id) {
-        const data = JSON.parse(value.data)
-        newItemTypes.push(data.type)
-        return true
-      }
-      return false
-    }))
-
-    setStuff(stuffOrder)
-    setItemTypes(newItemTypes)
-  }, [account, stuffItems])
-  
-  let itemTypesLeft = 1;
-  if (itemTypes.includes('bio')) itemTypesLeft--
+  const {
+    stuff,
+    itemTypesLeft
+  } = useStuff({account, stuffItems})
 
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 

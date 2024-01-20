@@ -8,11 +8,11 @@ const StuffBio = ({itemData, id, handlers}) => {
   // TODO bajar
   return <div className="flex flex-col my-2">
     <StuffItemTitle title='Biografía' id={id} handlers={handlers}/>
-    <p>
-      {itemData.text.split(`\n`).map(text=><>
-      {text}<br/>
-      </>)}
-    </p>
+    <div>
+      {itemData.text.split(`\n`).map((text, i)=><p key={`bio${i}`}>
+      {text}
+      </p>)}
+    </div>
   </div>
 }
 

@@ -1,6 +1,6 @@
 'use server'
 
-import { addStuffItem, getAllStuffItems } from "@/database/db.accstuffitems"
+import { addStuffItem, deleteStuffItem, getAllStuffItems } from "@/database/db.accstuffitems"
 import { authMe } from "../auth/me"
 import { updateAccountStuff } from "@/database/db.gdaccounts"
 
@@ -28,4 +28,15 @@ export const updateAccountStuffAction = async({accountid, username, stuff}) => {
     console.log("unauthorized")
     return -1
   }
+}
+
+export const deleteStuffItemAction = async({accountid, username, stuff, id}) => {
+  const newStuff = []
+  for (const item of stuff.split(',')) {
+    if (item!=id) newStuff.push(item)
+  }
+  // este server action ya valida la cuenta
+  const updateResult = await updateAccountStuffAction({accountid, username, stuff: newStuff.join(','), id});
+  if (updateResult == -1) return -1;
+  return await deleteStuffItem(id)
 }

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -31,18 +31,19 @@ export default function AccountManage() {
   const [account, setAccount] = useState(undefined);
   const [accountStuff, setAccountStuff] = useState(undefined);
 
+  const loadAccount = async() => {
+    const account = JSON.parse(
+      await getAccountAction({ username: currentUser.username })
+    );
+    const stuff = JSON.parse(
+      await getStuffItemsAction({accountid: currentUser.accountid})
+    );
+    setAccount(account);
+    setAccountStuff(stuff)
+  };
+
   useEffect(() => {
     if (currentUser.username == undefined) return;
-    const loadAccount = async () => {
-      const account = JSON.parse(
-        await getAccountAction({ username: currentUser.username })
-      );
-      const stuff = JSON.parse(
-        await getStuffItemsAction({accountid: currentUser.accountid})
-      );
-      setAccount(account);
-      setAccountStuff(stuff)
-    };
     loadAccount();
   }, [currentUser]);
 
@@ -72,7 +73,7 @@ export default function AccountManage() {
                 setAccount={setAccount}
                 stuffItems={accountStuff}
                 setStuffItems={setAccountStuff}
-
+                loadAccount={loadAccount}
               />
             </>
           ) : (

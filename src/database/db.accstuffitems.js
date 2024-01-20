@@ -5,7 +5,6 @@ export const getAllStuffItems = async({username, accountid}) => {
   noStore();
   let result;
   if (accountid) {
-    console.log(accountid)
     result = await sql`SELECT * FROM accstuffitems WHERE accountid = ${accountid}`
   } else {
     result = await sql`SELECT * FROM accstuffitems WHERE username = ${username}`
@@ -29,4 +28,10 @@ export const addStuffItem = async(item = {}) => {
     return result.rows[0]
   }
   return -1
+}
+
+export const deleteStuffItem = async(id) => {
+  noStore();
+  const result = await sql`DELETE FROM accstuffitems WHERE id = ${id}`
+  return (result.rowCount)?1:0
 }

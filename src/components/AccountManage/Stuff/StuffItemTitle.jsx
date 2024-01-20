@@ -14,14 +14,15 @@ const StuffItemTitle = ({title, id, handlers}) => {
       </DropdownTrigger>
       <DropdownMenu aria-label="Dynamic Actions">
         <DropdownItem>
-          Subir
+          Subir (TODO)
         </DropdownItem>
         <DropdownItem>
-          Bajar
+          Bajar (TODO)
         </DropdownItem>
         <DropdownItem
           color="danger"
           className="text-danger"
+          onPress={() => {handlers.handleDelete(id)}}
         >
           Eliminar
         </DropdownItem>

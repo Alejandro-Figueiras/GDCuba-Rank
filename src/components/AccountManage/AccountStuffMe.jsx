@@ -50,11 +50,13 @@ const AccountStuffMe = ({account, setAccount, stuffItems = [], setStuffItems, lo
       setStuffItems={setStuffItems}
       />
     
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col w-full gap-2 px-4">
       {stuff.map((value, i)=>{
         if (value == undefined) return;
         let {data, id} = value
-        data = JSON.parse(data)
+        if (!value.data.type) {
+          data = JSON.parse(data)
+        }
         if (data.type=='bio') {
           return <StuffBio itemData={data} key={i} id={id} handlers={handlers}/>
         }

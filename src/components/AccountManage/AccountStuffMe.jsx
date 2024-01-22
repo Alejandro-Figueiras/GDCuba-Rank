@@ -41,7 +41,7 @@ const AccountStuffMe = ({account, setAccount, stuffItems = [], setStuffItems, lo
     setStuffItems
   }
 
-  return (<div className="flex flex-col gap-2">
+  return (<div className="flex flex-col w-full gap-2">
     <AddStuffModal 
       isOpen={isOpen} 
       onOpenChange={onOpenChange}

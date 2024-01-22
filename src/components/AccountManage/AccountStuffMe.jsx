@@ -37,7 +37,8 @@ const AccountStuffMe = ({account, setAccount, stuffItems = [], setStuffItems, lo
   }
 
   const handlers = {
-    handleDelete
+    handleDelete,
+    setStuffItems
   }
 
   return (<div className="flex flex-col gap-2">

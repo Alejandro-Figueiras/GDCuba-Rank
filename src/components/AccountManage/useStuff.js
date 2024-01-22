@@ -10,9 +10,7 @@ export const useStuff = ({
     const stuffOrder = account.stuff.split(',')
     .map(id=>parseInt(id))
     .map(id=>stuffItems.find((value, i, obj) => {
-      console.log(value) 
       if (value.id == id) {
-        
         const data = (value.data.type)?value.data:JSON.parse(value.data)
         newItemTypes.push(data.type)
         return true

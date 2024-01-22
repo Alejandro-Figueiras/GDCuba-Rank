@@ -1,6 +1,6 @@
 'use server'
 
-import { addStuffItem, deleteStuffItem, getAllStuffItems } from "@/database/db.accstuffitems"
+import { addStuffItem, deleteStuffItem, getAllStuffItems, updateStuffItemData } from "@/database/db.accstuffitems"
 import { authMe } from "../auth/me"
 import { updateAccountStuff } from "@/database/db.gdaccounts"
 
@@ -12,6 +12,15 @@ export const submitStuffItemAction = async(props) => {
   const auth = JSON.parse(await authMe());
   if (auth.username == props.username && auth.accountid == props.accountid) {
     return await addStuffItem(props)
+  } else {
+    return -1
+  }
+}
+
+export const updateStuffItemDataAction = async(props) => {
+  const auth = JSON.parse(await authMe());
+  if (auth.username == props.username && auth.accountid == props.accountid) {
+    return await updateStuffItemData(props.id, props.data)
   } else {
     return -1
   }

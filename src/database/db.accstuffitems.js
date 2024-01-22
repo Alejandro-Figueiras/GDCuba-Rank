@@ -30,6 +30,12 @@ export const addStuffItem = async(item = {}) => {
   return -1
 }
 
+export const updateStuffItemData = async(id, data) => {
+  noStore();
+  const result = await sql`UPDATE accstuffitems SET data = ${data} WHERE id = ${id}`
+  return result.rowCount?1:0
+}
+
 export const deleteStuffItem = async(id) => {
   noStore();
   const result = await sql`DELETE FROM accstuffitems WHERE id = ${id}`

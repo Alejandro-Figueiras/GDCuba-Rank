@@ -26,7 +26,7 @@ export default ({levels: unsortedLevels}) => {
   })
 
   const handleRescore = (level) => {
-    setSelectedLevel(selectedLevel)
+    setSelectedLevel(level)
     onOpen();
   }
 

@@ -9,25 +9,38 @@ import {
   ModalHeader, 
   ModalBody, 
   ModalFooter,
-  Button
+  Button,
+  Input
 } from '@nextui-org/react'
+import RescoreTable from './ReescoreTable'
 
 const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels}) => {
   const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(true)
+  const [scoreRequested, setScoreRequested] = useState(level.difficultyscore)
 
   const clear = () => {
     setLoading(false)
     setDisabled(true)
+    setScoreRequested(level.difficultyscore)
+  }
+
+  const getMaxDifficultyScore = (levels) => {
+    return Math.max(...levels.map(level => level.difficultyscore))
   }
 
   const handleSubmit = async(onClose) => {
+    console.log(scoreRequested)
+    if (scoreRequested == 0) return; // TODO effect
     setLoading(true)
+    // Not today
     // await handleUpdate(itemData)
 
     clear()
     onClose()
   }
+
+  console.log(level)
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
@@ -38,7 +51,17 @@ const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels}) => {
               Reposicionar nivel
             </ModalHeader>
             <ModalBody>
-              Coming Soon
+              <Input 
+                type='number'
+                size='sm'
+                min={1}
+                max={getMaxDifficultyScore(levels)+1}
+                defaultValue={level.difficultyscore}
+                onValueChange={value => setScoreRequested(value)}
+                label='Score'
+                />
+              <RescoreTable levels={[level]} />
+
             </ModalBody>
             <ModalFooter>
               <Button

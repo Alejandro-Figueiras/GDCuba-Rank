@@ -74,3 +74,9 @@ export const getAllRecords = async() => {
   const result = await sql`SELECT * FROM records`;
   return result.rowCount?result.rows:[];
 }
+
+export const getAllLevelsByDifficulty = async({difficulty = 15}) => {
+  noStore();
+  const result = await sql`SELECT levelid, levelname, difficulty, difficultyscore, featured FROM records WHERE difficulty = ${difficulty}`
+  return (result.rowCount)?result.rows:[];
+}

@@ -1,33 +1,43 @@
 'use client'
-import { getAllRecordsAction } from '@/actions/admin/getRecordAction'
+import { getAllLevelsByDifficultyAction } from '@/actions/admin/recordLevelsAction'
 import { useEffect, useState } from 'react'
+import { Button } from '@nextui-org/react'
+import TableTitle from '@/components/Admin/TableTitle'
+import TablaNivelesDifficultyScore from '@/components/Admin/Records/TablaNivelesDifficultyScore'
 
 const LevelsDificulty = () => {
-  const updateRecords = () => {
-    getAllRecordsAction().then(response => {
+  const [levels, setLevels] = useState({})
+
+  const updateLevels = () => {
+    getAllLevelsByDifficultyAction({difficulty: 15}).then(response => {
+      console.log(response)
       const records = JSON.parse(response)
       console.log(records)
-      const levels = {};
+      const newLevels = {};
       for (const record of records) {
         const level = {
           levelid: record.levelid,
           levelname: record.levelname,
+          featured: record.featured,
           difficulty: record.difficulty,
           difficultyscore: record.difficultyscore
         }
-        if (levels[level.levelid] == undefined) {
-          levels[level.levelid] = level;
+        if (newLevels[level.levelid] == undefined) {
+          newLevels[level.levelid] = level;
         }
       }
 
-      console.log(levels)
-      // setRecords(nuevosRecords)
+      console.log(newLevels)
+      setLevels(newLevels)
     })
   }
 
-  useEffect(updateRecords, [])
+  useEffect(updateLevels, [])
   
-  return ('Hola buenas')
+  return (<div className="component px-8 py-4">
+    <TableTitle title="Extreme Demons" handleRefresh={updateLevels}/>
+    <TablaNivelesDifficultyScore levels={Object.values(levels)} />
+  </div>)
 }
 
 export default LevelsDificulty

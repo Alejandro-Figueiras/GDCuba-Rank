@@ -75,6 +75,12 @@ export const getAllRecords = async() => {
   return result.rowCount?result.rows:[];
 }
 
+export const getAllExtremesVerified = async() => {
+  noStore();
+  const result = await sql`SELECT * FROM records WHERE difficulty = 15 AND percent = 100 AND aval = 1`
+  return (result.rowCount)?result.rows:[];
+}
+
 export const getAllLevelsByDifficulty = async({difficulty = 15}) => {
   noStore();
   const result = await sql`SELECT levelid, levelname, difficulty, difficultyscore, featured FROM records WHERE difficulty = ${difficulty}`

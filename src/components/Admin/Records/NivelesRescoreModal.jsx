@@ -1,6 +1,8 @@
 'use client'
 
 import {
+  useEffect,
+  useRef,
   useState,
 } from 'react'
 import {
@@ -13,8 +15,10 @@ import {
   Input
 } from '@nextui-org/react'
 import RescoreTable from './ReescoreTable'
+import { reposicionarLevelAction } from '@/actions/admin/recordLevelsAction'
+import { notify } from '@/libs/toastNotifications'
 
-const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels}) => {
+const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels, handleRefresh}) => {
   const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(true)
   const [scoreRequested, setScoreRequested] = useState(level.difficultyscore)
@@ -30,15 +34,32 @@ const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels}) => {
   }
 
   const handleSubmit = async(onClose) => {
-    console.log(scoreRequested)
-    if (scoreRequested == 0) return; // TODO effect
     setLoading(true)
-    // Not today
-    // await handleUpdate(itemData)
+
+    const result = await reposicionarLevelAction({
+      levelid: level.levelid,
+      oldScore: level.difficultyscore,
+      newScore: scoreRequested
+    })
+    if (result > 0) {
+      notify(`Nivel reposicionado correctamente.`, 'success')
+    } else {
+      notify(`Error al actualizar nivel.`, 'error')
+    }
+    if (handleRefresh) handleRefresh()
 
     clear()
     onClose()
   }
+
+  useEffect(() => {
+    if (scoreRequested == 0 || scoreRequested == level.difficultyscore) {
+      setDisabled(true)
+    }
+    if (scoreRequested != 0 && scoreRequested != level.difficultyscore) {
+      setDisabled(false)
+    }
+  }, [scoreRequested])
 
   console.log(level)
 

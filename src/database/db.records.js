@@ -80,3 +80,16 @@ export const getAllLevelsByDifficulty = async({difficulty = 15}) => {
   const result = await sql`SELECT levelid, levelname, difficulty, difficultyscore, featured FROM records WHERE difficulty = ${difficulty}`
   return (result.rowCount)?result.rows:[];
 }
+
+export const reposicionarNivel = async(levelid, oldScore = 0, newScore = 1) => {
+  noStore();
+  if (oldScore == 0) {
+    const updateRowsResult = await sql`UPDATE records SET difficultyscore = difficultyscore + 1 WHERE difficultyscore >= ${newScore}`
+  } else if (oldScore < newScore) {
+    const updateRowsResult = await sql`UPDATE records SET difficultyscore = difficultyscore - 1 WHERE difficultyscore > ${oldScore} AND difficultyscore <= ${newScore}`
+  } else {
+    const updateRowsResult = await sql`UPDATE records SET difficultyscore = difficultyscore + 1 WHERE difficultyscore < ${oldScore} AND difficultyscore >= ${newScore}`
+  }
+  const updateLevel = await sql`UPDATE records SET difficultyscore = ${newScore} WHERE levelid = ${levelid}`
+  return updateLevel.rowCount
+}

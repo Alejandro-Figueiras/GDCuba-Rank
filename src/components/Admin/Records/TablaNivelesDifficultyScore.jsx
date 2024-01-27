@@ -14,7 +14,7 @@ import {
 import { useState } from 'react'
 import NivelesRescoreModal from "./NivelesRescoreModal";
 
-export default ({levels: unsortedLevels}) => {
+export default ({levels: unsortedLevels, handleRefresh}) => {
   const { isOpen, onOpen, onOpenChange} = useDisclosure()
   const [selectedLevel, setSelectedLevel] = useState({})
 
@@ -38,6 +38,7 @@ export default ({levels: unsortedLevels}) => {
         level={selectedLevel}
         setLevel={setSelectedLevel}
         levels={levels}
+        handleRefresh={handleRefresh}
         />
       <Table aria-label="Todos los records">
         <TableHeader>

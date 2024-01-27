@@ -36,7 +36,7 @@ const LevelsDificulty = () => {
   
   return (<div className="component px-8 py-4">
     <TableTitle title="Extreme Demons" handleRefresh={updateLevels}/>
-    <TablaNivelesDifficultyScore levels={Object.values(levels)} />
+    <TablaNivelesDifficultyScore levels={Object.values(levels)} handleRefresh={updateLevels}/>
   </div>)
 }
 

@@ -34,10 +34,6 @@ export default () => {
       setLevels(levels)
       setPlayers(playersObject)
       setRecords(records)
-
-      console.log(levels)
-      console.log(playersObject)
-      console.log(records)
     })
   }, [])
 

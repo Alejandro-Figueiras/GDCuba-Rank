@@ -17,7 +17,7 @@ const ListLevelVictors = ({level, records, pos, players}) => {
   return (<Table removeWrapper aria-label={level.levelname} className="mb-8">
     <TableHeader>
       <TableColumn className="text-lg">
-        <div className=" flex align-middle gap-2">
+        <div className="flex align-middle gap-2">
           {pos && <span className="text-white">{pos}.</span>}
           <img 
             src={getDifficultyPath({
@@ -25,7 +25,7 @@ const ListLevelVictors = ({level, records, pos, players}) => {
               difficultyName: getDifficultyNameByNumber(level.difficulty)
             })}
             style={{
-              height:"24px",
+              height:"28px",
               filter: `grayscale(${(level.difficulty == 15 && level.difficultyscore==0)?100:0}%)`
             }}
             />

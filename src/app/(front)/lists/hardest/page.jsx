@@ -46,7 +46,7 @@ export default () => {
       {(records.length==0)
         ? (<p className="text-center text-xl mt-8">Cargando datos...</p>)
         : (<div className="container mx-auto my-4 max-w-3xl">
-          <h1 className="text-2xl text-center my-4" key='title'>Lista de Hardest</h1>
+          <h1 className="text-2xl text-center my-4" key='title'><strong>Lista de Hardest</strong></h1>
         {
           levels.map((level, i) => 
           <ListLevelVictors

@@ -22,6 +22,48 @@ export default () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [{ href: "/", label: "Home" }];
+  const rankItems = {
+    title: "Rankings",
+    responsiveSubtitle: "Presiona para ver los ranking disponibles",
+    items: [
+      {
+        key: "estrellas",
+        img: '/assets/stats/starsIcon.png',
+        href: "/rank/stars",
+        label: "Estrellas"
+      },
+      {
+        key: "demons",
+        img: '/assets/dificultades/none/hard_demon.png',
+        href: "/rank/demons",
+        label: "Demons"
+      },
+      {
+        key: "extremes",
+        img: '/assets/dificultades/none/extreme_demon.png',
+        href: "/rank/extremes",
+        label: "Extreme Demons"
+      },
+      {
+        key: "lunas",
+        img: '/assets/stats/moonsIcon.png',
+        href: "/rank/moons",
+        label: "Lunas"
+      },
+      {
+        key: "usercoins",
+        img: '/assets/stats/usercoin.png',
+        href: "/rank/usercoins",
+        label: "User Coins"
+      },
+      {
+        key: "cps",
+        img: '/assets/stats/creatorpoints.png',
+        href: "/rank/cp",
+        label: "Creator Points"
+      }
+    ]
+  }
 
   return (
     <>
@@ -47,7 +89,7 @@ export default () => {
               <span className="text-lg">{m.label}</span>
             </NavLink>
           ))}
-          <RankDropdown />
+          <RankDropdown info={rankItems}/>
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>
@@ -69,7 +111,7 @@ export default () => {
               {m.label}
             </NavMenuLink>
           ))}
-          <ResponsiveRankNav onLinkSelected={() => setIsMenuOpen(false)} />
+          <ResponsiveRankNav onLinkSelected={() => setIsMenuOpen(false)} info={rankItems} />
         </NavbarMenu>
       </Navbar>
     </>

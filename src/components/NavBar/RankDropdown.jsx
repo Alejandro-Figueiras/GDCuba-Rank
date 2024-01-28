@@ -9,7 +9,7 @@ import {
 import { ChevronDownIcon } from '../Icons/ChevonDrownIcon';
 import { usePathname } from 'next/navigation';
 
-const RankDropdown = () => {
+const RankDropdown = ({info}) => {
   const rutaActual = usePathname();
   return (
   <Dropdown>
@@ -22,58 +22,25 @@ const RankDropdown = () => {
           radius="sm"
           variant="light"
         >
-          Rankings
+          {info.title}
         </Button>
       </DropdownTrigger>
     </NavbarItem>
     <DropdownMenu
-      aria-label="Rankings"
+      aria-label={info.title}
       itemClasses={{
         base: "gap-4",
       }}
     >
-      <DropdownItem
-        key="estrellas"
-        startContent={<img src='/assets/stats/starsIcon.png' width="24"/>}
-        href="/rank/stars"
-      >
-        Estrellas
-      </DropdownItem>
-      <DropdownItem
-        key="demons"
-        startContent={<img src='/assets/dificultades/none/hard_demon.png' width="24"/>}
-        href="/rank/demons"
-      >
-        Demons
-      </DropdownItem>
-      <DropdownItem
-        key="extremes"
-        startContent={<img src='/assets/dificultades/none/extreme_demon.png' width="24"/>}
-        href="/rank/extremes"
-      >
-        Extreme Demons
-      </DropdownItem>
-      <DropdownItem
-        key="lunas"
-        startContent={<img src='/assets/stats/moonsIcon.png' width="24"/>}
-        href="/rank/moons"
-      >
-        Lunas
-      </DropdownItem>
-      <DropdownItem
-        key="usercoins"
-        startContent={<img src='/assets/stats/usercoin.png' width="24"/>}
-        href="/rank/usercoins"
-      >
-        User Coins
-      </DropdownItem>
-      <DropdownItem
-        key="cps"
-        startContent={<img src='/assets/stats/creatorpoints.png' width="24"/>}
-        href="/rank/cp"
-      >
-        Creator Points
-      </DropdownItem>
+      {info.items.map(item => (
+        <DropdownItem
+          key={item.key}
+          startContent={<img src={item.img} width="24"/>}
+          href={item.href}
+        >
+          {item.label}
+        </DropdownItem>
+      ))}
     </DropdownMenu>
   </Dropdown>
   )

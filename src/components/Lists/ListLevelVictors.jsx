@@ -7,12 +7,14 @@ import {
   TableColumn,
   TableBody,
   TableRow,
-  TableCell
+  TableCell,
+  Link
 } from "@nextui-org/react";
 import UsernameCell from "../Rank/UsernameCell";
+import YouTubeIcon from "../Icons/YouTubeIcon";
 
 const ListLevelVictors = ({level, records, pos, players}) => {
-  return (<Table removeWrapper aria-label={level.levelname} key={level.levelid} className="mb-8">
+  return (<Table removeWrapper aria-label={level.levelname} className="mb-8">
     <TableHeader>
       <TableColumn className="text-lg">
         <div className=" flex align-middle gap-2">
@@ -34,9 +36,11 @@ const ListLevelVictors = ({level, records, pos, players}) => {
     <TableBody>
       {records.map((record, i) =>
         <TableRow key={i} className="ml-2">
-          <TableCell>
+          <TableCell className="flex gap-3">
             <UsernameCell player={players[record.accountid]} />
-            {record.video && "&#9658;"}
+            {record.video && <Link href={record.video} isExternal>
+              <YouTubeIcon/>
+            </Link>}
           </TableCell>
         </TableRow>
       )}

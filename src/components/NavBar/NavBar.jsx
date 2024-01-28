@@ -75,6 +75,12 @@ export default () => {
         img: '/assets/dificultades/none/extreme_demon.png',
         href: "/lists/hardest",
         label: "Hardest"
+      },
+      {
+        key: "insane",
+        img: '/assets/dificultades/none/insane_demon.png',
+        href: "/lists/insane",
+        label: "Insane Demons"
       }
     ]
   }

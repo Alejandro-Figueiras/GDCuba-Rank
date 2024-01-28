@@ -18,7 +18,7 @@ const ListLevelVictors = ({level, records, pos, players}) => {
     <TableHeader>
       <TableColumn className="text-lg">
         <div className=" flex align-middle gap-2">
-          <span className="text-white">{pos}.</span>
+          {pos && <span className="text-white">{pos}.</span>}
           <img 
             src={getDifficultyPath({
               featured: level.featured, 
@@ -26,7 +26,7 @@ const ListLevelVictors = ({level, records, pos, players}) => {
             })}
             style={{
               height:"24px",
-              filter: `grayscale(${(level.difficultyscore==0)?100:0}%)`
+              filter: `grayscale(${(level.difficulty == 15 && level.difficultyscore==0)?100:0}%)`
             }}
             />
           {level.levelname}

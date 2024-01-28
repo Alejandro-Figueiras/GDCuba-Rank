@@ -9,7 +9,7 @@ import {
 import { ChevronDownIcon } from '../Icons/ChevonDrownIcon';
 import { usePathname } from 'next/navigation';
 
-const RankDropdown = ({info}) => {
+const NavbarDropdown = ({info}) => {
   const rutaActual = usePathname();
   return (
   <Dropdown>
@@ -17,7 +17,7 @@ const RankDropdown = ({info}) => {
       <DropdownTrigger>
         <Button
           disableRipple
-          className={"p-0 text-lg bg-transparent data-[hover=true]:bg-transparent"+(rutaActual.startsWith('/rank')?' text-primary':'')}
+          className={"p-0 text-lg bg-transparent data-[hover=true]:bg-transparent"+(rutaActual.startsWith(info.startsWith)?' text-primary':'')}
           endContent={<ChevronDownIcon />}
           radius="sm"
           variant="light"
@@ -46,4 +46,4 @@ const RankDropdown = ({info}) => {
   )
 }
 
-export default RankDropdown;
+export default NavbarDropdown;

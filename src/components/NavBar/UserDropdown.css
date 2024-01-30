@@ -1,0 +1,9 @@
+.user-dropdown__username {
+  display: none;
+}
+
+@media (min-width: 420px) {
+  .user-dropdown__username {
+    display: inline;
+  }
+}

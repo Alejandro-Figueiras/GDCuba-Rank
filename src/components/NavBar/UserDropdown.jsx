@@ -17,6 +17,7 @@ import { logout as logoutAction } from "@/actions/logout/logout";
 import { notify } from "@/libs/toastNotifications";
 import { useUser } from "@/hooks/useUser";
 import SubmitRecordModal from "../NewRecord/SubmitRecordModal";
+import './UserDropdown.css'
 
 const UserDropdown = ({
   currentUser,
@@ -65,9 +66,12 @@ const UserDropdown = ({
       <DropdownTrigger>
         <Button color="default" variant="flat">
           {currentUser.username && (
-            <img src={iconAvatar} alt={currentUser.username} className="h-7" />
+            <>
+              <img src={iconAvatar} alt={currentUser.username} className="h-7" />
+              <span className="user-dropdown__username">{currentUser.username}</span>
+            </>
           )}
-          {currentUser.username ?? "Sin cuenta"}
+          {!currentUser.username && "Sin cuenta"}
         </Button>
       </DropdownTrigger>
       <DropdownMenu

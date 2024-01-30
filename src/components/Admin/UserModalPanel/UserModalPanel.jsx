@@ -137,6 +137,7 @@ export default function UserModalPanel({
                         label={"Nivel"}
                         selectedKeys={fields.role}
                         onChange={(e) => handleSelectionChange(e, "role")}
+                        isDisabled={true}
                       />
                       <CardSelect
                         items={status}

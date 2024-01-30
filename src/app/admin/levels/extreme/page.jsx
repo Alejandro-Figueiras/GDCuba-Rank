@@ -1,7 +1,6 @@
 'use client'
 import { getAllLevelsByDifficultyAction } from '@/actions/admin/recordLevelsAction'
 import { useEffect, useState } from 'react'
-import { Button } from '@nextui-org/react'
 import TableTitle from '@/components/Admin/TableTitle'
 import TablaNivelesDifficultyScore from '@/components/Admin/Records/TablaNivelesDifficultyScore'
 

@@ -98,7 +98,7 @@ export default () => {
             className="sm:hidden"
           />
           <NavbarBrand>
-            <img src="/assets/logo.png" width="42" className="mr-3" />
+            <img src="/assets/logo.png" width="56" className="mr-3" />
             <p className="font-bold text-xl">GD Cuba ΔΔΔ</p>
           </NavbarBrand>
         </NavbarContent>

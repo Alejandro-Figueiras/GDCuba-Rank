@@ -20,7 +20,24 @@ export default ({tipo = 'stars'}) => {
         }
         players = newPlayers
       }
-      players.sort((a,b) => {
+      players = players.filter((value => {
+        if (tipo == 'cp' && value.creatorpoints == 0) {
+          return false
+        }
+        if (tipo == 'demons' && value.demons == 0) {
+          return false
+        }
+        if (tipo == 'usercoins' && value.usercoins == 0) {
+          return false
+        }
+        if (tipo == 'moons' && value.moons == 0) {
+          return false
+        }
+        if (tipo == 'stars' && value.stars == 0) {
+          return false
+        }
+        return true;
+      })).sort((a,b) => {
         if (tipo=='stars') {
           return b.stars-a.stars;
         } else if (tipo == 'demons') {
@@ -31,6 +48,8 @@ export default ({tipo = 'stars'}) => {
           return b.usercoins-a.usercoins;
         } else if (tipo == 'extreme_demons') {
           return b.verified_extreme_demons-a.verified_extreme_demons;
+        } else if (tipo == 'cp') {
+          return b.creatorpoints-a.creatorpoints;
         }
         return b.stars-a.stars;
       })

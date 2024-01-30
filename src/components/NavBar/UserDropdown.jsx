@@ -168,7 +168,7 @@ const UserDropdown = ({
           }
 
           {/* -------- END ADMIN PATH ---------- */}
-          {logged && (
+          {(logged && !admin) && (
             <DropdownItem
               className="text-danger"
               color="danger"

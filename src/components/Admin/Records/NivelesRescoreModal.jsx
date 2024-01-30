@@ -53,10 +53,18 @@ const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels, handleRefres
   }
 
   useEffect(() => {
-    if (scoreRequested == 0 || scoreRequested == level.difficultyscore) {
+    if (
+      scoreRequested < 1 || 
+      scoreRequested == level.difficultyscore ||
+      scoreRequested > getMaxDifficultyScore(levels)+1
+    ) {
       setDisabled(true)
     }
-    if (scoreRequested != 0 && scoreRequested != level.difficultyscore) {
+    if (
+      scoreRequested >= 1 && 
+      scoreRequested != level.difficultyscore &&
+      scoreRequested <= getMaxDifficultyScore(levels)+1
+    ) {
       setDisabled(false)
     }
   }, [scoreRequested])

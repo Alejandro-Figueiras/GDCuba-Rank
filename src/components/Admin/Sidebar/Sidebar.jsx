@@ -12,6 +12,7 @@ import DatabaseIcon from "@/components/Icons/DatabaseIcon";
 import NewIcon from "@/components/Icons/NewIcon";
 import TestTubeIcon from "@/components/Icons/TestTubeIcon";
 import CheckIcon from "@/components/Icons/CheckIcon";
+import LevelSliderIcon from "@/components/Icons/LevelSliderIcon";
 
 export default () => {
   const { collapsed, setCollapsed } = useSidebarContext();
@@ -69,6 +70,12 @@ export default () => {
                   href="/admin/users/AddAccount"
                 />
                 <SidebarItem
+                  isActive={ruta === "/admin/levels/extreme"}
+                  title="Extreme Score"
+                  icon={<LevelSliderIcon/>}
+                  href="/admin/levels/extreme"
+                />
+                <SidebarItem
                   isActive={ruta === "/admin/records"}
                   title="Records"
                   icon={<CheckIcon />}
@@ -81,12 +88,6 @@ export default () => {
                   title="Buscar Nivel"
                   icon={<TestTubeIcon/>}
                   href="/admin/testing/searchLevel"
-                />
-                <SidebarItem
-                  isActive={ruta === "/admin/levels/difficulty"}
-                  title="Dificulty Score"
-                  icon={<TestTubeIcon/>}
-                  href="/admin/levels/difficulty"
                 />
               </SidebarMenu>
 

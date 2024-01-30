@@ -6,7 +6,6 @@ import {
   NavbarItem,
   NavbarMenuToggle,
   NavbarMenu,
-  NavbarMenuItem,
 } from "@nextui-org/navbar";
 
 // Modals
@@ -16,6 +15,7 @@ import { useState } from "react";
 import { NavLink, NavMenuLink } from "./NavbarLinks";
 import NavbarDropdown from "./NavbarDropdown";
 import { ResponsiveNavAccordion } from "./ResponsiveNavAccordion";
+import './NavBar.css'
 
 export default () => {
   const { currentUser, logout, signUp, login } = useSesion();
@@ -95,15 +95,15 @@ export default () => {
         <NavbarContent>
           <NavbarMenuToggle
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            className="sm:hidden"
+            className="md:hidden"
           />
           <NavbarBrand>
-            <img src="/assets/logo.png" width="56" className="mr-3" />
-            <p className="font-bold text-xl">GD Cuba ΔΔΔ</p>
+            <img src="/assets/logo.png" className="mr-2 sm:mr-3 navbar__logo" />
+            <p className="font-bold text-xl navbar__brand">GD Cuba ΔΔΔ</p>
           </NavbarBrand>
         </NavbarContent>
 
-        <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        <NavbarContent className="hidden md:flex gap-4" justify="center">
           {menuItems.map((m) => (
             <NavLink key={m.label} href={m.href}>
               <span className="text-lg">{m.label}</span>

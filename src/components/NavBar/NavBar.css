@@ -1,0 +1,33 @@
+.navbar__logo {
+  width: 56px;
+}
+
+@media (max-width: 420px) {
+  .navbar__brand {
+    font-size:large;
+  }
+
+  .navbar__logo {
+    width: 46px;
+  }
+}
+
+@media (max-width: 400px) {
+  .navbar__brand {
+    font-size:medium;
+  }
+
+  .navbar__logo {
+    width: 36px;
+  }
+}
+
+@media (max-width: 340px) {
+  .navbar__brand {
+    font-size:small;
+  }
+
+  .navbar__logo {
+    width: 32px;
+  }
+}

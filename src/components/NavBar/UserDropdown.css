@@ -7,3 +7,9 @@
     display: inline;
   }
 }
+
+@media (max-width: 360px) {
+  .user-dropdown__sin-cuenta {
+    font-size: smaller;
+  }
+}

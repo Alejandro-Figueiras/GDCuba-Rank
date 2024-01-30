@@ -71,7 +71,9 @@ const UserDropdown = ({
               <span className="user-dropdown__username">{currentUser.username}</span>
             </>
           )}
-          {!currentUser.username && "Sin cuenta"}
+          <span className="user-dropdown__sin-cuenta">
+            {!currentUser.username && "Sin cuenta"}
+          </span>
         </Button>
       </DropdownTrigger>
       <DropdownMenu

@@ -53,6 +53,21 @@ export const getDifficultyNumber = ({difficulty = 0, demondifficulty, demon}) =>
   return difficulty
 }
 
+export const getDifficultyNameByNumber = (n) => {
+  return (n == 0) ? "N/A" :
+  (n == 1) ? "Easy" :
+  (n == 2) ? "Normal" :
+  (n == 3) ? "Hard" :
+  (n == 4) ? "Harder" :
+  (n == 5) ? "Insane" :
+  (n == 11) ? "Easy Demon" :
+  (n == 12) ? "Medium Demon" :
+  (n == 13) ? 'Hard Demon' :
+  (n == 14) ? "Insane Demon" :
+  (n == 15) ? "Extreme Demon" :
+  'N/A'
+}
+
 export const getLengthName = ({length, noPlatformer = false}) => {
   return (length==0) ? 'Tiny' :
     (length==1) ? 'Short' :

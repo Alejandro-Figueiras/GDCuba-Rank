@@ -85,6 +85,8 @@ export default function UserModalPanel({
           const error = notify(`Error al eliminar a ${user.username}`, "error");
           onClose();
         }
+
+        if (user.updateData) user.updateData()
       },
       action: "delete",
     });
@@ -102,9 +104,9 @@ export default function UserModalPanel({
         // TODO handle change role
       }
     }
+    if (user.updateData) user.updateData()
   }
 
-  // const
   return (
     <Modal
       isOpen={isOpen}
@@ -135,6 +137,7 @@ export default function UserModalPanel({
                         label={"Nivel"}
                         selectedKeys={fields.role}
                         onChange={(e) => handleSelectionChange(e, "role")}
+                        isDisabled={true}
                       />
                       <CardSelect
                         items={status}

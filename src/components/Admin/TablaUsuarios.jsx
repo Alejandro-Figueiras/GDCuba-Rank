@@ -36,7 +36,7 @@ const renderRoleOrStatus = (arg) => {
   )
 }
 
-export default ({usuarios}) => {
+export default ({usuarios, updateData}) => {
   const {openUserGestorFor} = useContext(AdminContext);
   return (
     <>
@@ -51,7 +51,7 @@ export default ({usuarios}) => {
         </TableHeader>
         <TableBody>
           {usuarios && usuarios.map((user, i) => (
-            <TableRow key={user.id} className="cursor-pointer hover:bg-zinc-700 duration-75" onClick={() => openUserGestorFor(user)}>
+            <TableRow key={user.id} className="cursor-pointer hover:bg-zinc-700 duration-75" onClick={() => openUserGestorFor(user, updateData)}>
               <TableCell>{user.id}</TableCell>
               <TableCell>{user.username}</TableCell>
               <TableCell>{user.phone}</TableCell>

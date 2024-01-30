@@ -47,3 +47,16 @@ Primero consulta si se puede actualizar por el limite de tiempo. Si no es posibl
   timeLimit: 60000
 }
 ```
+
+## updateAccountStuff (async)
+
+Actualiza los datos del stuff de una cuenta, tenga en cuenta que no hace una validación, dicha debe hacerse antes de llamar a esta función
+
+### Propiedades
+
+```js
+{
+  username: String, 
+  stuff: String
+}
+```

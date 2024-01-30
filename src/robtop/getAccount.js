@@ -13,7 +13,9 @@ import Account from "@/models/Account";
 export const getAccountByID = async(targetAccountID) => {
     if (typeof targetAccountID != 'number') throw new Error("Se esperaba un id numerico");
     try {
-        const body = await gdRequest("getGJUserInfo20", {targetAccountID});
+        const body = await gdRequest("getGJUserInfo20", {
+            targetAccountID
+        });
         return new Account({timestamp: (new Date()).getTime(), ...responseToObj(body, ":")});
     } catch (err) {
         return -1;

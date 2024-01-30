@@ -1,5 +1,5 @@
 'use client'
-import { getAccountAction, getAccountFromRobTopAction } from '@/actions/admin/getAccountAction';
+import { getAccountAction, getAccountFromRobTopAction } from '@/actions/accounts/getAccountAction';
 import {Input, Button } from '@nextui-org/react'
 import { useRef, useState } from 'react'
 import AccountCard from './AccountCard';
@@ -13,6 +13,7 @@ const AddAccount = () => {
   const handleSearch = async(e) => {
     const user = inputRef.current.value;
     const newAccount = JSON.parse(await getAccountFromRobTopAction({username: user}))
+    console.log(newAccount)
     setAccount(newAccount)
   }
 

@@ -24,9 +24,6 @@ CREATE TABLE IF NOT EXISTS public.users
     phone character varying(25) COLLATE pg_catalog."default",
     status character varying(10) COLLATE pg_catalog."default" NOT NULL DEFAULT 'u'::character varying,
     role character varying(10) COLLATE pg_catalog."default" NOT NULL DEFAULT 'user'::character varying,
-    hardestrecord integer,
-    bestcreatedlevelid integer,
-    greeting character varying(30) COLLATE pg_catalog."default" DEFAULT '¡Hola!'::character varying,
     CONSTRAINT users_pkey PRIMARY KEY (id)
 )
 
@@ -74,6 +71,8 @@ CREATE TABLE IF NOT EXISTS public.gdaccounts
     playercolor3 integer,
     accswing integer,
     accjetpack integer,
+    demonsbreakdown character varying(255) COLLATE pg_catalog."default" DEFAULT 'none'::character varying,
+    stuff character varying(255) COLLATE pg_catalog."default" DEFAULT ''::character varying,
     CONSTRAINT gdaccounts_pkey PRIMARY KEY (id)
 )
 
@@ -100,4 +99,18 @@ CREATE TABLE IF NOT EXISTS public.records
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.records
+    OWNER to "default";
+
+CREATE TABLE IF NOT EXISTS public.accstuffitems
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( CYCLE INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    accountid integer NOT NULL,
+    username character varying(40) COLLATE pg_catalog."default" NOT NULL,
+    data text COLLATE pg_catalog."default" NOT NULL DEFAULT '[]'::character varying,
+    CONSTRAINT accstuffitem_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.accstuffitems
     OWNER to "default";

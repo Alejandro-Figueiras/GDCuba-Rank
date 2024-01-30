@@ -13,15 +13,77 @@ import {
 import { useSesion } from "@/hooks/useSesion";
 import UserDropdown from "./UserDropdown";
 import { useState } from "react";
-import RankDropdown from "./RankDropdown";
 import { NavLink, NavMenuLink } from "./NavbarLinks";
-import { ResponsiveRankNav } from "./ResponsiveRankNav";
+import NavbarDropdown from "./NavbarDropdown";
+import { ResponsiveNavAccordion } from "./ResponsiveNavAccordion";
 
 export default () => {
   const { currentUser, logout, signUp, login } = useSesion();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [{ href: "/", label: "Home" }];
+  const rankItems = {
+    title: "Rankings",
+    responsiveSubtitle: "Presiona para ver los ranking disponibles",
+    startsWith: '/rank',
+    items: [
+      {
+        key: "estrellas",
+        img: '/assets/stats/starsIcon.png',
+        href: "/rank/stars",
+        label: "Estrellas"
+      },
+      {
+        key: "demons",
+        img: '/assets/dificultades/none/hard_demon.png',
+        href: "/rank/demons",
+        label: "Demons"
+      },
+      {
+        key: "extremes",
+        img: '/assets/dificultades/none/extreme_demon.png',
+        href: "/rank/extremes",
+        label: "Extreme Demons"
+      },
+      {
+        key: "lunas",
+        img: '/assets/stats/moonsIcon.png',
+        href: "/rank/moons",
+        label: "Lunas"
+      },
+      {
+        key: "usercoins",
+        img: '/assets/stats/usercoin.png',
+        href: "/rank/usercoins",
+        label: "User Coins"
+      },
+      {
+        key: "cps",
+        img: '/assets/stats/creatorpoints.png',
+        href: "/rank/cp",
+        label: "Creator Points"
+      }
+    ]
+  }
+  const listsItems = {
+    title: "Listas",
+    responsiveSubtitle: "Presiona para ver las listas",
+    startsWith: '/lists',
+    items: [
+      {
+        key: "hardest",
+        img: '/assets/dificultades/none/extreme_demon.png',
+        href: "/lists/hardest",
+        label: "Hardest"
+      },
+      {
+        key: "insane",
+        img: '/assets/dificultades/none/insane_demon.png',
+        href: "/lists/insane",
+        label: "Insane Demons"
+      }
+    ]
+  }
 
   return (
     <>
@@ -36,8 +98,8 @@ export default () => {
             className="sm:hidden"
           />
           <NavbarBrand>
-            <img src="/assets/logo.png" width="36" className="mr-4" />
-            <p className="font-bold text-inherit">GD Cuba ΔΔΔ</p>
+            <img src="/assets/logo.png" width="56" className="mr-3" />
+            <p className="font-bold text-xl">GD Cuba ΔΔΔ</p>
           </NavbarBrand>
         </NavbarContent>
 
@@ -47,7 +109,8 @@ export default () => {
               <span className="text-lg">{m.label}</span>
             </NavLink>
           ))}
-          <RankDropdown />
+          <NavbarDropdown info={rankItems}/>
+          <NavbarDropdown info={listsItems}/>
         </NavbarContent>
         <NavbarContent justify="end">
           <NavbarItem>
@@ -69,7 +132,8 @@ export default () => {
               {m.label}
             </NavMenuLink>
           ))}
-          <ResponsiveRankNav onLinkSelected={() => setIsMenuOpen(false)} />
+          <ResponsiveNavAccordion onLinkSelected={() => setIsMenuOpen(false)} info={rankItems} />
+          <ResponsiveNavAccordion onLinkSelected={() => setIsMenuOpen(false)} info={listsItems} />
         </NavbarMenu>
       </Navbar>
     </>

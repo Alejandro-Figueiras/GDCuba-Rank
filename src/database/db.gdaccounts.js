@@ -3,7 +3,7 @@
 import { addAccountCloud, updateAccountCloud } from "./db.gdaccounts.functions";
 import { kv } from '@vercel/kv'
 import { sql } from '@vercel/postgres'
-
+import { unstable_noStore as noStore } from 'next/cache';
 /**
  * Agrega una cuenta de GD a la base de datos, y especifica si es cubano o no.
  * @async
@@ -11,7 +11,6 @@ import { sql } from '@vercel/postgres'
  * @returns {account}
  */
 export const addGDAccount = async({account, cuba = 0}) => {
-  // TODO agregar en el admin dashboard para cambiar si es cubano o no.
   const response = await addAccountCloud(account, cuba);
   if (!response) {
     throw response
@@ -24,6 +23,7 @@ export const addGDAccount = async({account, cuba = 0}) => {
  * @returns Array de Accounts
  */
 export const getAllGDAccounts = async() => {
+  noStore();
   return (await sql`SELECT * FROM gdaccounts`).rows;
 }
 
@@ -34,7 +34,8 @@ export const getAllGDAccounts = async() => {
  * @returns Account
  */
 export const getGDAccount = async(username) => {
-  const result = await sql`SELECT * FROM gdaccounts WHERE username = ${username}`
+  noStore();
+  const result = await sql`SELECT * FROM gdaccounts WHERE username = ${username} `
   if (result.rowCount) {
     return result.rows[0]
   } else {
@@ -48,8 +49,21 @@ export const getGDAccount = async(username) => {
  * @returns Array de Accounts
  */
 export const getAllCubans = async() => {
+  noStore();
   const result = await sql`SELECT * FROM gdaccounts WHERE cuba=1`
   return result.rows
+}
+
+export const changeCuban = async(username, cuba) => {
+  noStore();
+  const result = await sql`UPDATE gdaccounts SET cuba=${cuba} WHERE username=${username} `
+  return result.rowCount?1:0
+}
+
+export const removeGDAccount = async(username) => {
+  noStore();
+  const result = await sql`DELETE FROM gdaccounts WHERE username=${username} `
+  return result.rowCount?1:0
 }
 
 /**
@@ -59,6 +73,7 @@ export const getAllCubans = async() => {
  * @returns 
  */
 export const updateAccounts = async({limit= 3, timeLimit = 60000}) => {
+  noStore();
   // Comprueba el timestamp
   const timestamp = new Date().getTime()  
   const oldTS = await kv.get('accUpdateLimit');
@@ -67,7 +82,7 @@ export const updateAccounts = async({limit= 3, timeLimit = 60000}) => {
   
   console.log("DATABASE: actualizando accounts")
   // Pregunta las cuentas con la información más antigua
-  const result = (await sql`SELECT accountid FROM gdaccounts ORDER BY timestamp ASC LIMIT ${limit}`).rows
+  const result = (await sql`SELECT accountid FROM gdaccounts ORDER BY timestamp ASC LIMIT ${limit} `).rows
 
   if (result) {
     // Request a los servidores de Rob
@@ -85,4 +100,15 @@ export const updateAccounts = async({limit= 3, timeLimit = 60000}) => {
     console.error("Error at updateAccounts: ", result.error);
     return -1;
   }
+}
+
+/**
+ * Actualiza los datos del stuff de una cuenta, tenga en cuenta que no hace una validación, dicha debe hacerse antes de llamar a esta función
+ * @async
+ * @param {{username, stuff}}
+ * @returns 1 si todo anduvo bien. 0 si no se actualiza
+ */
+export const updateAccountStuff = async({username, stuff}) => {
+  const result = await sql`UPDATE gdaccounts SET stuff = ${stuff} WHERE username=${username} `
+  return result.rowCount?1:0
 }

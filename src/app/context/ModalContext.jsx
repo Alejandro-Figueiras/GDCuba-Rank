@@ -1,4 +1,4 @@
-import { getAccountAction } from "@/actions/admin/getAccountAction";
+import { getAccountAction } from "@/actions/accounts/getAccountAction";
 import ModalAccept from "@/components/Admin/ModalAccept";
 import Login from "@/components/Forms/Login";
 import SignUp from "@/components/Forms/SignUp";

@@ -14,6 +14,7 @@ const ERROR_RESPONSE = {
 
 export const login = async ({ username, password }) => {
   const user = await findUser({ user: username });
+  console.log(user)
 
   if (user) {
     const passwordMatch = await compare(password, user.password);
@@ -46,9 +47,6 @@ const createToken = (account) => {
       accountid: account.accountid,
       phone: account.phone,
       role: account.role,
-      greeting: account.greeting,
-      bestcreatedlevelid: account.bestcreatedlevelid,
-      harderdemonid: account.harderdemonid,
     },
     process.env.JWT_SECRET
   );

@@ -1,6 +1,7 @@
 'use server'
 import { getLevelByID } from '@/robtop/getLevel'
 import {kv} from '@vercel/kv'
+import { unstable_noStore as noStore } from 'next/cache';
 
 /**
  * Consulta si el nivel está en KV, sino lo busca en el servidor de robtop y luego de encontrado lo devuelve.
@@ -8,6 +9,7 @@ import {kv} from '@vercel/kv'
  * @returns Level
  */
 export const getLevel = async({levelID = 0}) => {
+  noStore()
   const level = await kv.get(`level:${levelID}`)
   if (!level) {
     console.log(`Buscando ${levelID} donde robtop`)
@@ -26,6 +28,7 @@ export const getLevel = async({levelID = 0}) => {
  * @returns level
  */
 export const setLevel = async({level}) => {
+  noStore()
   await kv.set(`level:${level.id}`, level)
   return level;
 }
@@ -36,6 +39,7 @@ export const setLevel = async({level}) => {
  * @param {{levelid}} LevelID
  */
 export const removeLevel = async({levelid = 0}) => {
+  noStore();
   if (await kv.exists(`level:${levelid}`)) 
     await kv.del(`level:${levelid}`)
 }
@@ -46,6 +50,7 @@ export const removeLevel = async({levelid = 0}) => {
  * @returns Array of Keys
  */
 export const getAllLevelKeys = async() => {
+  noStore()
   const all = await kv.keys(`level:*`);
   return all;
 }

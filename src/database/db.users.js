@@ -1,6 +1,7 @@
 'use server'
 import { authorize } from "@/libs/secure";
 import { sql } from '@vercel/postgres'
+import { unstable_noStore as noStore } from 'next/cache';
 
 /**
  * Esta función agrega un usuario a la base de datos. Los parametros faltantes se ponen por default en la base de datos.
@@ -9,6 +10,7 @@ import { sql } from '@vercel/postgres'
  * @returns {Object} 
  */
 export const addUser = async({ user, password, phone, accountid }) => {
+  noStore()
   const result = await sql`INSERT INTO users(username, password, phone, accountid) VALUES(${user}, ${password}, ${phone}, ${accountid})`;
   if (!result) {
     throw result
@@ -24,7 +26,8 @@ export const addUser = async({ user, password, phone, accountid }) => {
  * @returns {Object}
  */
 export const getUser = async({user}) => {
-  return (await sql`SELECT * from users WHERE username = ${user}`).rows[0];
+  noStore();
+  return (await sql`SELECT * from users WHERE username = ${user} `).rows[0];
 }
 
 /**
@@ -34,7 +37,8 @@ export const getUser = async({user}) => {
  * @returns 
  */
 export const findUser = async({user = ""}) => {
-  const result = await sql`SELECT * from users WHERE username ILIKE ${user}`
+  noStore();
+  const result = await sql`SELECT * from users WHERE username ILIKE ${user} `
   if (result.rowCount) return result.rows[0]
   return undefined;
 }
@@ -45,6 +49,7 @@ export const findUser = async({user = ""}) => {
  * @returns {Array}
  */
 export const getAllUsers = async() => {
+  noStore();
   return (await sql`SELECT * from users`).rows
 }
 
@@ -55,8 +60,9 @@ export const getAllUsers = async() => {
  * @returns {Object} user object, si falla se debe manejar el catch de la promesa
  */
 export const validateUser = async({user, unvalidate = false}) => {
+  noStore()
   if (!(await authorize())) return undefined;
-  const result = await sql`UPDATE users SET status = '${unvalidate? 'u' : 'v'}' WHERE username = ${user}`;
+  const result = await sql`UPDATE users SET status = ${unvalidate? 'u' : 'v'} WHERE username = ${user} `;
   if (!result) throw new Error('Error al validar' + result)
   return 1;
 }
@@ -68,10 +74,11 @@ export const validateUser = async({user, unvalidate = false}) => {
  * @returns {Number} 1 si se eliminó exitosamente, 0 si no encontró resultados, undefined si no tiene permisos
  */
 export const eliminarUser = async({username}) => {
+  noStore()
   const auth = await authorize();
   if (auth) {
     if (!username) return undefined;
-    const result = await sql`DELETE FROM users WHERE username = ${username}`;
+    const result = await sql`DELETE FROM users WHERE username = ${username} `;
     if (result) {
       let response = 1;
       if (result.rowCount != 0)

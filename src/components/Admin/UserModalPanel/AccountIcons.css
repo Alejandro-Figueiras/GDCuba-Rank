@@ -1,0 +1,4 @@
+.icons__ship:active {
+  transition-duration: 0.05s;
+  transform: scale(1.25);
+}

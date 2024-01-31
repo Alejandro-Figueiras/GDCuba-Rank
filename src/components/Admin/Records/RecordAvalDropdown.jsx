@@ -38,7 +38,6 @@ const RecordAvalDropdown = ({record}) => {
       variant="bordered"
       disallowEmptySelection
       selectionMode="single"
-      selectedKeys={aval}
       onSelectionChange={handleChange}
     >
       {Object.keys(RECORDS_AVAL_VALUES).map(

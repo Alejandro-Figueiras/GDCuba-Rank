@@ -3,11 +3,8 @@ export default () => {
     <svg 
     width="24" 
     height="24" 
-    viewBox="0 0 64 64" 
-    ariaHidden="true" 
-    role="img" 
-    class="iconify iconify--emojione-monotone" 
-    preserveAspectRatio="xMidYMid meet"
+    viewBox="0 0 64 64"
+    role="img"
     >
       <path d="M26.89 32.291h-7.592V4.525c0-3.366-5.215-3.366-5.215 0v27.766H6.49c-2.446 0-4.49 2.318-4.49 5.095c0 2.779 2.043 5.098 4.49 5.098h7.593v16.992c0 3.365 5.215 3.365 5.215 0V42.484h7.592c2.449 0 4.491-2.318 4.491-5.098c0-2.778-2.042-5.095-4.491-5.095" fill="#969696"></path>
       <path d="M49.739 55.861H37.372c-3.847 0-3.847 6.138 0 6.138h12.367c3.848 0 3.848-6.138 0-6.138" fill="#969696"></path>

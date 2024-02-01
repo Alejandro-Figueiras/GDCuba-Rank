@@ -1,0 +1,17 @@
+@media (max-width: 720px) {
+  .user__stats-down-hide {
+    display: none;
+  }
+
+  .user__stats-up-row {
+    justify-content: center;
+  }
+
+  .user__stats-down-row {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+  }
+}

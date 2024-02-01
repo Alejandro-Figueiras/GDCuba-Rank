@@ -1,7 +1,7 @@
 "use client"
 import { AdminContext } from "@/app/context/AdminContext";
 import { Chip } from "@nextui-org/chip";
-import {  Table,  TableHeader,  TableBody,  TableColumn,  TableRow,  TableCell} from "@nextui-org/table";
+import {  Table,  TableHeader,  TableBody,  TableColumn,  TableRow,  TableCell, Link} from "@nextui-org/react";
 import { useContext } from "react";
 
 const renderRoleOrStatus = (arg) => {
@@ -36,6 +36,10 @@ const renderRoleOrStatus = (arg) => {
   )
 }
 
+export const getWhatsAppURL = (phone) => {
+  return `http://wa.me/${phone}`
+}
+
 export default ({usuarios, updateData}) => {
   const {openUserGestorFor} = useContext(AdminContext);
   return (
@@ -54,7 +58,11 @@ export default ({usuarios, updateData}) => {
             <TableRow key={user.id} className="cursor-pointer hover:bg-zinc-700 duration-75" onClick={() => openUserGestorFor(user, updateData)}>
               <TableCell>{user.id}</TableCell>
               <TableCell>{user.username}</TableCell>
-              <TableCell>{user.phone}</TableCell>
+              <TableCell>
+                <Link href={getWhatsAppURL(user.phone)} className="text-white underline" isExternal>
+                  {user.phone}
+                </Link>
+              </TableCell>
               <TableCell>{user.accountid}</TableCell>
               <TableCell>{renderRoleOrStatus(user.role)}</TableCell>
               <TableCell>{renderRoleOrStatus(user.status)}</TableCell>

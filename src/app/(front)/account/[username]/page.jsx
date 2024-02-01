@@ -1,14 +1,14 @@
 "use client"
 
 import AccountView from "@/components/AccountManage/AccountView"
+import { useSesion } from "@/hooks/useSesion";
 
 const AccountPage = ({ params }) => {
+  const { currentUser } = useSesion();
   
   return (
-    <div className="flex flex-col justify-center global-full-height">
-      <div className="flex justify-center">
-        <AccountView manage={false} username={params.username}/>
-      </div>
+    <div className="flex justify-center p-4">
+      <AccountView manage={currentUser.username == params.username} username={params.username}/>
     </div>
   )
 }

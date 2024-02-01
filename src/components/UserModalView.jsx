@@ -5,6 +5,7 @@ import {
   ModalBody,
   ModalFooter,
   Button,
+  Divider
 } from "@nextui-org/react";
 import React, {
   useEffect,
@@ -14,12 +15,15 @@ import React, {
 import AccountStatsRow from "./Admin/UserModalPanel/AccountStatsRow";
 import AccountIconsRow from "./Admin/UserModalPanel/AccountIconsRow";
 import GDSpinner from "@/components/GDIcons/GDSpinner";
+import AccountStuff from "./AccountManage/AccountStuff";
 
 export default function UserModalView({ user, isOpen, onOpenChange }) {
+  if (!user) return null
+  const { account, stuff = [] } = user
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    setIsLoading(isOpen && user.isLoading);
+    setIsLoading(isOpen && account.isLoading);
   }, [user]);
 
   return (
@@ -32,7 +36,7 @@ export default function UserModalView({ user, isOpen, onOpenChange }) {
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1 text-center">
-              {user.username}
+              {account.username}
             </ModalHeader>
             {isLoading ? (
               <div className="p-2 w-full flex justify-center items-center my-6">
@@ -41,8 +45,14 @@ export default function UserModalView({ user, isOpen, onOpenChange }) {
             ) : (
               <>
                 <ModalBody>
-                  <AccountStatsRow user={user} />
-                  <AccountIconsRow user={user} />
+                  <AccountStatsRow user={account} />
+                  <AccountIconsRow user={account} />
+                  {stuff.length != 0 && <Divider />}
+                  <AccountStuff
+                    account={account}
+                    stuffItems={stuff}
+                    manage={false}
+                  />
                 </ModalBody>
                 <ModalFooter>
                   <Button

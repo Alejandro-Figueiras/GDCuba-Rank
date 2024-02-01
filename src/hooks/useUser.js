@@ -8,7 +8,7 @@ export const useUser = () => {
     return account;
   };
 
-  const openUserView = (user) => {
+  const openUserView = async(user) => {
     openView(user);
   };
 

@@ -137,7 +137,7 @@ const UserDropdown = ({
           {logged && (
             <DropdownItem
               key="me-account-btn"
-              href="/account/me"
+              href={`/account/${currentUser.username}`}
             >
               Mi cuenta
             </DropdownItem>

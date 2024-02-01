@@ -2,3 +2,32 @@
   transition-duration: 0.05s;
   transform: scale(1.25);
 }
+
+.icons_down-row {
+  display: none;
+}
+
+.icons__4down-show {
+  display: none;
+}
+
+@media (max-width: 710px) {
+  .icons__3down-hide {
+    display: none;
+  }
+
+  .icons_down-row {
+    display: flex;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .icons__4down-hide {
+    display: none;
+  }
+
+  .icons__4down-show {
+    display: block;
+  }
+}

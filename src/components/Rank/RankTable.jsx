@@ -28,14 +28,14 @@ export default ({ ranking, tipo = 'stars' }) => {
     cols.push(<TableColumn width={100} key={'col_moons'}><span className="flex"><img src="/assets/stats/moonsIcon.png" alt="Luna" className="h-4 mr-1"/> Lunas</span></TableColumn>)
     cells.push((player, i) => <TableCell key={`cell${i}_${player.username}_moons`}><span className="flex align-middle"><img src="/assets/stats/moonsIcon.png" alt="Luna" className="h-5 mr-1"/> {player.moons}</span></TableCell>)
   } else if (tipo == 'usercoins') {
-    cols.push(<TableColumn width={100} key={'col_usercoin'}><span className="flex"><img src="/assets/stats/usercoin.png" alt="Coin" className="h-4 mr-1"/> User Coins</span></TableColumn>)
+    cols.push(<TableColumn width={110} key={'col_usercoin'}><span className="flex"><img src="/assets/stats/usercoin.png" alt="Coin" className="h-4 mr-1"/> User Coins</span></TableColumn>)
     cells.push((player, i) => <TableCell key={`cell${i}_${player.username}_usercoins`}><span className="flex align-middle"><img src="/assets/stats/usercoin.png" alt="Coin" className="h-5 mr-1"/> {player.usercoins}</span></TableCell>)
   } else if (tipo == 'cp') {
-    cols.push(<TableColumn width={100} key={'col_cp'}><span className="flex"><img src="/assets/stats/creatorpoints.png" alt="CP" className="h-4 mr-1"/> Creator Points</span></TableColumn>)
+    cols.push(<TableColumn width={130} key={'col_cp'}><span className="flex"><img src="/assets/stats/creatorpoints.png" alt="CP" className="h-4 mr-1"/> Creator Points</span></TableColumn>)
     cells.push((player, i) => <TableCell key={`cell${i}_${player.username}_cp`}><span className="flex align-middle"><img src="/assets/stats/creatorpoints.png" alt="CP" className="h-5 mr-1"/> {player.creatorpoints}</span></TableCell>)
   } else if (tipo == 'extreme_demons') {
-    cols.push(<TableColumn width={120} key={'col_cp'}><span className="flex align-middle"><img src="/assets/dificultades/none/extreme_demon.png" alt="CP" className="h-8 mr-1"/> Extreme<br />Demons</span></TableColumn>)
-    cells.push((player, i) => <TableCell key={`cell${i}_${player.username}_cp`}><span className="flex align-middle"><img src="/assets/dificultades/none/extreme_demon.png" alt="CP" className="h-5 mr-1"/> {player.verified_extreme_demons}</span></TableCell>)
+    cols.push(<TableColumn width={130} key={'col_extreme'}><span className="flex align-middle"><img src="/assets/dificultades/none/extreme_demon.png" alt="ED" className="h-8 mr-1"/> Extreme<br />Demons</span></TableColumn>)
+    cells.push((player, i) => <TableCell key={`cell${i}_${player.username}_extreme`}><span className="flex align-middle"><img src="/assets/dificultades/none/extreme_demon.png" alt="ED" className="h-5 mr-1"/> {player.verified_extreme_demons}</span></TableCell>)
   }
 
   return (

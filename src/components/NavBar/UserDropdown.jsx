@@ -64,7 +64,7 @@ const UserDropdown = ({
       }}
     >
       <DropdownTrigger>
-        <Button color="default" variant="flat">
+        <Button color="default" variant="flat" className={(currentUser.username)?`user-dropdown__button`:""}>
           {currentUser.username && (
             <>
               <img src={iconAvatar} alt={currentUser.username} className="h-7" />

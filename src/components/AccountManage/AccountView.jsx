@@ -11,21 +11,19 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
-import { useSesion } from "@/hooks/useSesion";
 import { useGDIcon } from "@/robtop/iconkit/useGDIcon";
 import { getAccountAction } from "@/actions/accounts/getAccountAction";
-import { NoAccount } from "../NoAccount";
 import AccountStatsRow from "../Admin/UserModalPanel/AccountStatsRow";
 import GDSpinner from "../GDIcons/GDSpinner";
 import AccountIconsRow from "../Admin/UserModalPanel/AccountIconsRow";
-import AccountStuffMe from "./AccountStuffMe";
+import AccountStuff from "./AccountStuff";
 import { getStuffItemsAction } from "@/actions/accounts/stuffActions";
-export default function AccountManage() {
-  const { currentUser } = useSesion();
+export default function AccountView({manage = false, username }) {
+  
   const { icon: iconAvatar } = useGDIcon({
     type: "cube",
-    username: currentUser.username,
-    effectDeps: [currentUser.username],
+    username: username,
+    effectDeps: [username],
   });
 
   const [account, setAccount] = useState(undefined);
@@ -33,21 +31,21 @@ export default function AccountManage() {
 
   const loadAccount = async() => {
     const account = JSON.parse(
-      await getAccountAction({ username: currentUser.username })
+      await getAccountAction({ username: username })
     );
     const stuff = JSON.parse(
-      await getStuffItemsAction({accountid: currentUser.accountid})
+      await getStuffItemsAction({accountid: account.accountid})
     );
     setAccount(account);
     setAccountStuff(stuff)
   };
 
   useEffect(() => {
-    if (currentUser.username == undefined) return;
+    if (username == undefined) return;
     loadAccount();
-  }, [currentUser]);
+  }, [username]);
 
-  return currentUser.username != null ? (
+  return (
     <>
       <Card className="max-w-[1000px] w-[800px]">
         <CardHeader className="flex gap-3">
@@ -58,7 +56,7 @@ export default function AccountManage() {
             width={40}
           />
           <div className="flex flex-col">
-            <p className="text-2xl">{currentUser.username}</p>
+            <p className="text-2xl">{username}</p>
           </div>
         </CardHeader>
         <Divider />
@@ -68,12 +66,13 @@ export default function AccountManage() {
               <AccountStatsRow user={account} />
               <AccountIconsRow user={account} />
               <Divider />
-              <AccountStuffMe 
+              <AccountStuff 
                 account={account}
                 setAccount={setAccount}
                 stuffItems={accountStuff}
                 setStuffItems={setAccountStuff}
                 loadAccount={loadAccount}
+                manage={manage}
               />
             </>
           ) : (
@@ -82,7 +81,5 @@ export default function AccountManage() {
         </CardBody>
       </Card>
     </>
-  ) : (
-    <NoAccount />
-  );
+  )
 }

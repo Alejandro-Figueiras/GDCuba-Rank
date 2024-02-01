@@ -7,7 +7,7 @@ import { updateStuffItemDataAction } from '@/actions/accounts/stuffActions'
 import { useSesion } from '@/hooks/useSesion';
 import { notify } from '@/libs/toastNotifications';
 
-const StuffBio = ({itemData, id, handlers}) => {
+const StuffBio = ({itemData, id, handlers, manage = false}) => {
   // TODO subir
   // TODO bajar
   const { currentUser } = useSesion();
@@ -46,8 +46,8 @@ const StuffBio = ({itemData, id, handlers}) => {
   }
 
   return <div className="flex flex-col my-2">
-    <StuffBioEditModal isOpen={isOpen} onOpenChange={onOpenChange} itemDataOld={itemData} handleUpdate={handleUpdate}/>
-    <StuffItemTitle title='Biografía' id={id} handlers={{...handlers, handleEdit}}/>
+    {manage && <StuffBioEditModal isOpen={isOpen} onOpenChange={onOpenChange} itemDataOld={itemData} handleUpdate={handleUpdate}/>}
+    <StuffItemTitle title='Biografía' id={id} handlers={{...handlers, handleEdit}} manage={manage}/>
     <div>
       {itemData.text.split(`\n`).map((text, i)=><p key={`bio${i}`}>
         {text}

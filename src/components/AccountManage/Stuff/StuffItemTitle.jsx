@@ -6,11 +6,13 @@ import {
   DropdownItem
 } from '@nextui-org/react'
 
-const StuffItemTitle = ({title, id, handlers}) => {
-  return (<div className='flex flex-row justify-start'>
+const StuffItemTitle = ({title, id, handlers, manage = false}) => {
+  const titleSpan = <span className="text-xs font-medium text-default-500">{title}</span>;
+
+  return manage ? (<div className='flex flex-row justify-start'>
     <Dropdown>
       <DropdownTrigger>
-        <span className="text-xs font-medium text-default-500">{title}</span>
+        {titleSpan}
       </DropdownTrigger>
       <DropdownMenu aria-label="Dynamic Actions">
         <DropdownItem onPress={() => {if (handlers.handleEdit) handlers.handleEdit()}}>
@@ -31,7 +33,7 @@ const StuffItemTitle = ({title, id, handlers}) => {
         </DropdownItem>
       </DropdownMenu>
     </Dropdown>
-  </div>)
+  </div>) : titleSpan
 }
 
 export default StuffItemTitle

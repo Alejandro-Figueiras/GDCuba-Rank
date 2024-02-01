@@ -1,3 +1,4 @@
+"use client"
 import { getAccountAction } from "@/actions/accounts/getAccountAction";
 import ModalAccept from "@/components/Admin/ModalAccept";
 import Login from "@/components/Forms/Login";

@@ -31,7 +31,7 @@ const AccountRecordsPage = ({params}) => {
 
   return (
     <div className="container mx-auto">
-      <div className="max-w-[800px] text-center">
+      <div className="max-w-[800px] mx-auto text-center">
         <h2>Extreme Demons</h2>
         <div className='flex flex-row flex-wrap justify-evenly'>
           {

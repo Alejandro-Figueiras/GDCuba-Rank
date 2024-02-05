@@ -18,6 +18,7 @@ import GDSpinner from "../GDIcons/GDSpinner";
 import AccountIconsRow from "../Admin/UserModalPanel/AccountIconsRow";
 import AccountStuff from "./AccountStuff";
 import { getStuffItemsAction } from "@/actions/accounts/stuffActions";
+import RecordsLinkButton from "../Records/RecordsLinkButton";
 export default function AccountView({manage = false, username }) {
   
   const { icon: iconAvatar } = useGDIcon({
@@ -48,15 +49,20 @@ export default function AccountView({manage = false, username }) {
   return (
     <>
       <Card className="max-w-[1000px] w-[800px]">
-        <CardHeader className="flex gap-3">
-          <Image
-            alt="Cube"
-            radius='none'
-            src={iconAvatar}
-            width={40}
-          />
-          <div className="flex flex-col">
-            <p className="text-2xl">{username}</p>
+        <CardHeader className="flex justify-between">
+          <div className="flex flex-row gap-3 ">
+            <Image
+              alt="Cube"
+              radius='none'
+              src={iconAvatar}
+              width={40}
+            />
+            <div className="flex flex-col justify-center">
+              <p className="text-2xl">{username}</p>
+            </div>
+          </div>
+          <div className="flex">
+            <RecordsLinkButton username={username} mini={true}/>
           </div>
         </CardHeader>
         <Divider />

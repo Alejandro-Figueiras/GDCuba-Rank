@@ -66,6 +66,7 @@ const AccountStuff = ({account, setAccount, stuffItems = [], setStuffItems, load
       accountStuff={account.stuff}
       account={account}
       setAccount={setAccount}
+      stuffItems={stuffItems}
       setStuffItems={setStuffItems}
       />
     

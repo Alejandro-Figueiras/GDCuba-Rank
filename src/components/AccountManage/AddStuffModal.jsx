@@ -23,7 +23,7 @@ const ITEM_TYPES = {
   hardest: 'Hardest Levels'
 }
 
-const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, setStuffItems }) => {
+const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, stuffItems = [], setStuffItems }) => {
   const { currentUser } = useSesion();
   const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(true)
@@ -105,7 +105,15 @@ const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, setStuffItem
                   setItemData(data)
                 }}
               >
-                {Object.keys(ITEM_TYPES).map((key) => (
+                {Object.keys(ITEM_TYPES).filter(val => {
+                  if (['bio', 'hardest'].includes(val)) {
+                    for (const item of stuffItems) {
+                      console.log(item, val)
+                      if (item.type == val) return false;
+                    }
+                  }
+                  return true
+                }).map((key) => (
                   <SelectItem key={key} value={key}>
                     {ITEM_TYPES[key]}
                   </SelectItem>

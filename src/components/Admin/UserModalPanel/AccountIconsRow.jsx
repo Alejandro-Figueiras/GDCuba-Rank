@@ -35,7 +35,7 @@ const AccountIcon = ({
     (type == 'robot')? 'h-12' : 
     (type == 'wave')? 'h-7' : 
     (type == 'ufo')? 'h-9' : 
-    (type == 'ship')? 'h-6' : 
+    (type == 'ship')? 'max-h-8 min-w-12' : 
     'h-10'
 
   return (
@@ -80,7 +80,7 @@ const AccountIconsRow = ({ user }) => {
                 c3={user.playercolor3}
                 glow={user.accglow}
                 effectDeps={[user]}
-                className={(jetpack)?'hidden':''}
+                className={(!jetpack)?'hidden':''}
               />
               <AccountIcon
                 type={"ship"}
@@ -90,7 +90,7 @@ const AccountIconsRow = ({ user }) => {
                 c3={user.playercolor3}
                 glow={user.accglow}
                 effectDeps={[user]}
-                className={(!jetpack)?'hidden':''}
+                className={(jetpack)?'hidden':''}
               />
           </a>
           <AccountIcon

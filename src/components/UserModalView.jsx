@@ -16,6 +16,7 @@ import AccountStatsRow from "./Admin/UserModalPanel/AccountStatsRow";
 import AccountIconsRow from "./Admin/UserModalPanel/AccountIconsRow";
 import GDSpinner from "@/components/GDIcons/GDSpinner";
 import AccountStuff from "./AccountManage/AccountStuff";
+import RecordsLinkButton from "./Records/RecordsLinkButton";
 
 export default function UserModalView({ user, isOpen, onOpenChange }) {
   if (!user) return null
@@ -55,6 +56,7 @@ export default function UserModalView({ user, isOpen, onOpenChange }) {
                   />
                 </ModalBody>
                 <ModalFooter>
+                  <RecordsLinkButton username={account.username} />
                   <Button
                     color="primary"
                     onPress={async (e) => {

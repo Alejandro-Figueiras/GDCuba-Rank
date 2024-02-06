@@ -7,7 +7,6 @@ export const getAllRecordsUserViewAction = async(username) => {
   let records = await getAllRecordsUser(username);
   const auth = JSON.parse(await authMe());
   if (auth.username != username) {
-    console.log(auth.username, username)
     records = records.filter((val) => {
       if (val.aval == 1) return true;
 

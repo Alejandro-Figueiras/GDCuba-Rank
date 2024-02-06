@@ -2,18 +2,17 @@
 import {
   Button
 } from '@nextui-org/react'
-const RecordsLinkButton = ({username, mini = false}) => {
-  const full = <Button className="hidden sm:flex" href={`/account/${username}/records`}>
-    <img src="/assets/ui/success.png" alt="" width={24}/>
-    Records
-  </Button>
 
-  return mini?(<a href={`/account/${username}/records`}>
-    <Button isIconOnly={true} className="sm:hidden">
+const RecordsLinkButton = ({username, mini = false}) => {
+  return (<a href={`/account/${username}/records`}>
+    <Button isIconOnly={true} className={mini?"sm:hidden":'hidden'}>
       <img src="/assets/ui/success.png" alt="" width={30}/>
     </Button>
-    {full}
-  </a>):full
+    <Button className={mini?"hidden sm:flex":''} href={`/account/${username}/records`}>
+      <img src="/assets/ui/success.png" alt="" width={24}/>
+      Records
+    </Button>
+  </a>)
 }
 
 export default RecordsLinkButton;

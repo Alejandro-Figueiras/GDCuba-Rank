@@ -18,8 +18,7 @@ import GDSpinner from "@/components/GDIcons/GDSpinner";
 import AccountStuff from "./AccountManage/AccountStuff";
 import RecordsLinkButton from "./Records/RecordsLinkButton";
 
-export default function UserModalView({ user, isOpen, onOpenChange }) {
-  if (!user) return null
+export default function UserModalView({ user = {account: {}, stuff: []}, isOpen, onOpenChange }) {
   const { account, stuff = [] } = user
   const [isLoading, setIsLoading] = useState(false);
 

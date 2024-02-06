@@ -42,7 +42,7 @@ export default ({ ranking, tipo = 'stars' }) => {
     <div className="m-2 sm:m-4">
       <Table selectionMode="single" classNames={{
           table: `${(tipo == 'stars') ? "min-w-[480px]" : 'min-w-[320px]'} overflow-scroll`,
-      }}>
+      }} aria-label="Rank Table">
         <TableHeader>
             {cols}
         </TableHeader>

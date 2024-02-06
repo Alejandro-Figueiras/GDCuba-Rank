@@ -6,7 +6,24 @@ import {
   DropdownItem
 } from '@nextui-org/react'
 
-const StuffItemTitle = ({title, id, handlers, manage = false}) => {
+const StuffItemTitle = ({title, id, handlers, manage = false, accStuff = ""}) => {
+
+  const handleMove = (down = false) => {
+    const stuff = accStuff.split(',')
+    const index = stuff.findIndex(val => val==id);
+    if (!down) {
+      const temp = stuff[index]
+      stuff[index] = stuff[index-1]
+      stuff[index-1] = temp;
+    } {
+      const temp = stuff[index]
+      stuff[index] = stuff[index+1]
+      stuff[index+1] = temp;
+    }
+    const newStuff = stuff.join(',')
+    handlers.handleSort(newStuff)
+  }
+
   const titleSpan = <span className="text-xs font-medium text-default-500">{title}</span>;
 
   return manage ? (<div className='flex flex-row justify-start'>
@@ -18,12 +35,12 @@ const StuffItemTitle = ({title, id, handlers, manage = false}) => {
         {handlers.handleEdit && <DropdownItem onPress={() => {if (handlers.handleEdit) handlers.handleEdit()}}>
           Editar
         </DropdownItem>}
-        <DropdownItem>
-          Subir (TODO)
-        </DropdownItem>
-        <DropdownItem>
-          Bajar (TODO)
-        </DropdownItem>
+        {!accStuff.startsWith(id) && <DropdownItem onPress={() => handleMove(false)}>
+          Subir
+        </DropdownItem>}
+        {!accStuff.endsWith(id) && <DropdownItem onPress={() => handleMove(true)}>
+          Bajar
+        </DropdownItem>}
         <DropdownItem
           color="danger"
           className="text-danger"

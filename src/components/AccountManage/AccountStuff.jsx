@@ -7,7 +7,7 @@ import {
 import AddStuffModal from './AddStuffModal'
 import StuffBio from './Stuff/StuffBio'
 import { useStuff } from './useStuff'
-import { deleteStuffItemAction } from '@/actions/accounts/stuffActions'
+import { deleteStuffItemAction, updateAccountStuffAction } from '@/actions/accounts/stuffActions'
 import { notify } from '@/libs/toastNotifications'
 import StuffHardest from './Stuff/StuffHardest'
 
@@ -37,7 +37,24 @@ const AccountStuff = ({account, setAccount, stuffItems = [], setStuffItems, load
     }
   }
 
+  const handleSort = async(accStuff) => {
+    const infoToast = notify('Realizando cambios en la cuenta', 'info')
+    const result = await updateAccountStuffAction({
+      accountid: account.accountid,
+      username: account.username,
+      stuff: accStuff
+    })
+    
+    await loadAccount()
+    if (result == 1) {
+      notify(`Items organizados`, 'success')
+    } else {
+      notify(`ERROR al eliminar el item. Error Code: ${result}`, 'error')
+    }
+  }
+
   const handlers = manage ? {
+    handleSort,
     handleDelete,
     setStuffItems
   } : {}
@@ -60,10 +77,10 @@ const AccountStuff = ({account, setAccount, stuffItems = [], setStuffItems, load
           data = JSON.parse(data)
         }
         if (data.type=='bio') {
-          return <StuffBio itemData={data} key={i} id={id} handlers={handlers} manage={manage}/>
+          return <StuffBio itemData={data} key={i} id={id} handlers={handlers} manage={manage} accStuff={account.stuff}/>
         }
         if (data.type=='hardest') {
-          return <StuffHardest itemData={data} key={i} id={id} handlers={handlers} manage={manage}/>
+          return <StuffHardest itemData={data} key={i} id={id} handlers={handlers} manage={manage} accStuff={account.stuff}/>
         }
         
         return <p key={i}>{JSON.stringify(data)}</p>

@@ -9,6 +9,7 @@ import StuffBio from './Stuff/StuffBio'
 import { useStuff } from './useStuff'
 import { deleteStuffItemAction } from '@/actions/accounts/stuffActions'
 import { notify } from '@/libs/toastNotifications'
+import StuffHardest from './Stuff/StuffHardest'
 
 const AccountStuff = ({account, setAccount, stuffItems = [], setStuffItems, loadAccount, manage = false}) => {
   // TODO autorizaciones
@@ -60,6 +61,9 @@ const AccountStuff = ({account, setAccount, stuffItems = [], setStuffItems, load
         }
         if (data.type=='bio') {
           return <StuffBio itemData={data} key={i} id={id} handlers={handlers} manage={manage}/>
+        }
+        if (data.type=='hardest') {
+          return <StuffHardest itemData={data} key={i} id={id} handlers={handlers} manage={manage}/>
         }
         
         return <p key={i}>{JSON.stringify(data)}</p>

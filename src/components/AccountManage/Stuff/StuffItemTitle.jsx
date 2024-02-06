@@ -15,9 +15,9 @@ const StuffItemTitle = ({title, id, handlers, manage = false}) => {
         {titleSpan}
       </DropdownTrigger>
       <DropdownMenu aria-label="Dynamic Actions">
-        <DropdownItem onPress={() => {if (handlers.handleEdit) handlers.handleEdit()}}>
+        {handlers.handleEdit && <DropdownItem onPress={() => {if (handlers.handleEdit) handlers.handleEdit()}}>
           Editar
-        </DropdownItem>
+        </DropdownItem>}
         <DropdownItem>
           Subir (TODO)
         </DropdownItem>

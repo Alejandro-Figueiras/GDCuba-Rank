@@ -19,7 +19,8 @@ import { submitStuffItemAction, updateAccountStuffAction } from '@/actions/accou
 import { useSesion } from '@/hooks/useSesion'
 
 const ITEM_TYPES = {
-  bio: 'Biografía'
+  bio: 'Biografía',
+  hardest: 'Hardest Levels'
 }
 
 const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, setStuffItems }) => {
@@ -37,8 +38,8 @@ const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, setStuffItem
   }
 
   const handleSubmit = async(onClose) => {
-    if (itemType=='bio') {
-      if (itemData.text=='') return;
+    if (itemType=='bio' || itemType == 'hardest') {
+      if (itemType == 'bio ' && itemData.text=='') return;
       setLoading(true)
       const item = {
         accountid: currentUser.accountid,
@@ -73,7 +74,8 @@ const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, setStuffItem
   useEffect(() => {
     if (disabled) {
       if (
-        (itemType == 'bio' && itemData.text != '')
+        (itemType == 'bio' && itemData.text != '') ||
+        (itemType == 'hardest')
         ) setDisabled(false)
     } else {
       if (itemType == 'none' || 

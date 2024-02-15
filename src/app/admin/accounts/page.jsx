@@ -6,7 +6,7 @@ import {
   Button,
   useDisclosure
 } from '@nextui-org/react'
-import AddAccount from "./AddAccount";
+import AddAccount from "../../../components/Admin/Accounts/AddAccount";
 
 export default () => {
   const [accounts, setAccounts] = useState([]);

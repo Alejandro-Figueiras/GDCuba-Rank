@@ -64,12 +64,6 @@ export default () => {
                   href="/admin/accounts"
                 />
                 <SidebarItem
-                  isActive={ruta === "/admin/users/AddAccount"}
-                  title="Agregar Cuenta"
-                  icon={<NewIcon />}
-                  href="/admin/users/AddAccount"
-                />
-                <SidebarItem
                   isActive={ruta === "/admin/levels/extreme"}
                   title="Extreme Score"
                   icon={<LevelSliderIcon/>}

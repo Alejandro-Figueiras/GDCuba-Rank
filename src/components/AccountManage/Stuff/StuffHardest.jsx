@@ -3,6 +3,7 @@
 import { getHardestLevelsAction } from "@/actions/accounts/getHardestLevelsAction";
 import StuffItemTitle from "./StuffItemTitle";
 import { useEffect, useState } from "react";
+import RecordCard from "@/components/Records/RecordCard";
 
 const StuffHardest = ({itemData, id, handlers, manage = false, accStuff}) => {
   const [levels, setLevels] = useState([])
@@ -16,8 +17,8 @@ const StuffHardest = ({itemData, id, handlers, manage = false, accStuff}) => {
 
   return <div className="flex flex-col my-2">
     <StuffItemTitle title='Hardest Levels' id={id} handlers={{...handlers}} manage={manage} accStuff={accStuff}/>
-    <div>
-      {levels.map(level => <p>{level.levelname}: {level.percent}</p>)}
+    <div className="flex flex-row gap-2 justify-center flex-wrap mt-4">
+      {levels.map(level => <RecordCard record={level} className="border-2 border-default" mini={true}/>)}
     </div>
   </div>
 }

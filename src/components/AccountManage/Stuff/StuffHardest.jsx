@@ -1,20 +1,23 @@
 'use client'
 
-import { useDisclosure } from '@nextui-org/react'
-import StuffBioEditModal from "./StuffBioEditModal";
+import { getHardestLevelsAction } from "@/actions/accounts/getHardestLevelsAction";
 import StuffItemTitle from "./StuffItemTitle";
-import { updateStuffItemDataAction } from '@/actions/accounts/stuffActions'
-import { useSesion } from '@/hooks/useSesion';
-import { notify } from '@/libs/toastNotifications';
+import { useEffect, useState } from "react";
 
 const StuffHardest = ({itemData, id, handlers, manage = false, accStuff}) => {
+  const [levels, setLevels] = useState([])
+  // TODO loading error 
+
+  useEffect(() => {
+    getHardestLevelsAction(itemData.accountid).then(response => {
+      setLevels(JSON.parse(response))
+    })
+  }, [])
 
   return <div className="flex flex-col my-2">
     <StuffItemTitle title='Hardest Levels' id={id} handlers={{...handlers}} manage={manage} accStuff={accStuff}/>
     <div>
-      {/* {itemData.text.split(`\n`).map((text, i)=><p key={`bio${i}`}>
-        {text}
-      </p>)} */}
+      {levels.map(level => <p>{level.levelname}: {level.percent}</p>)}
     </div>
   </div>
 }

@@ -40,6 +40,7 @@ const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, stuffItems =
   const handleSubmit = async(onClose) => {
     if (itemType=='bio' || itemType == 'hardest') {
       if (itemType == 'bio ' && itemData.text=='') return;
+      if (itemType == 'hardest') itemData.accountid = currentUser.accountid;
       setLoading(true)
       const item = {
         accountid: currentUser.accountid,

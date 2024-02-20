@@ -99,6 +99,12 @@ export const getAllLevelsByDifficulty = async({difficulty = 15}) => {
   return (result.rowCount)?result.rows:[];
 }
 
+export const getHardestLevels = async(accountid) => {
+  noStore();
+  const result = await sql`SELECT * FROM records WHERE accountid = ${accountid} AND aval = 1 ORDER BY difficulty DESC, percent DESC, difficultyscore DESC`
+  return (result.rowCount)?result.rows:[];
+}
+
 export const reposicionarNivel = async(levelid, oldScore = 0, newScore = 1) => {
   noStore();
   if (oldScore == 0) {

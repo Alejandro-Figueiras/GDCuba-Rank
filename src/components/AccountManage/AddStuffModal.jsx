@@ -19,10 +19,11 @@ import { submitStuffItemAction, updateAccountStuffAction } from '@/actions/accou
 import { useSesion } from '@/hooks/useSesion'
 
 const ITEM_TYPES = {
-  bio: 'Biografía'
+  bio: 'Biografía',
+  hardest: 'Hardest Levels'
 }
 
-const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, setStuffItems }) => {
+const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, stuffItems = [], setStuffItems }) => {
   const { currentUser } = useSesion();
   const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(true)
@@ -37,8 +38,9 @@ const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, setStuffItem
   }
 
   const handleSubmit = async(onClose) => {
-    if (itemType=='bio') {
-      if (itemData.text=='') return;
+    if (itemType=='bio' || itemType == 'hardest') {
+      if (itemType == 'bio ' && itemData.text=='') return;
+      if (itemType == 'hardest') itemData.accountid = currentUser.accountid;
       setLoading(true)
       const item = {
         accountid: currentUser.accountid,
@@ -73,7 +75,8 @@ const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, setStuffItem
   useEffect(() => {
     if (disabled) {
       if (
-        (itemType == 'bio' && itemData.text != '')
+        (itemType == 'bio' && itemData.text != '') ||
+        (itemType == 'hardest')
         ) setDisabled(false)
     } else {
       if (itemType == 'none' || 
@@ -103,7 +106,15 @@ const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, setStuffItem
                   setItemData(data)
                 }}
               >
-                {Object.keys(ITEM_TYPES).map((key) => (
+                {Object.keys(ITEM_TYPES).filter(val => {
+                  if (['bio', 'hardest'].includes(val)) {
+                    for (const item of stuffItems) {
+                      console.log(item, val)
+                      if (item.type == val) return false;
+                    }
+                  }
+                  return true
+                }).map((key) => (
                   <SelectItem key={key} value={key}>
                     {ITEM_TYPES[key]}
                   </SelectItem>

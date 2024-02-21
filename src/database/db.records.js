@@ -87,9 +87,21 @@ export const getAllInsaneDemonsVerified = async() => {
   return (result.rowCount)?result.rows:[];
 }
 
+export const getAllRecordsUser = async(username) => {
+  noStore();
+  const result = await sql`SELECT * FROM records WHERE username = ${username}`
+  return (result.rowCount)?result.rows:[];
+}
+
 export const getAllLevelsByDifficulty = async({difficulty = 15}) => {
   noStore();
   const result = await sql`SELECT levelid, levelname, difficulty, difficultyscore, featured FROM records WHERE difficulty = ${difficulty}`
+  return (result.rowCount)?result.rows:[];
+}
+
+export const getHardestLevels = async(accountid) => {
+  noStore();
+  const result = await sql`SELECT * FROM records WHERE accountid = ${accountid} AND aval = 1 ORDER BY difficulty DESC, percent DESC, difficultyscore DESC`
   return (result.rowCount)?result.rows:[];
 }
 

@@ -30,7 +30,7 @@ export default () => {
           <div className={Sidebar.Header()}>
             
             <div className="flex items-center gap-2">
-              <img src="/assets/logo.png" alt="Logo" width="42" />
+              <img src="/assets/SD_256.png" alt="Logo" width="42" />
               <div className="flex flex-col gap-4">
                 <h3 className="text-xl font-medium m-0 text-default-900 -mb-4 whitespace-nowrap">
                   GD Cuba ΔΔΔ
@@ -62,12 +62,6 @@ export default () => {
                   title="Cuentas"
                   icon={<AccountsIcon />}
                   href="/admin/accounts"
-                />
-                <SidebarItem
-                  isActive={ruta === "/admin/users/AddAccount"}
-                  title="Agregar Cuenta"
-                  icon={<NewIcon />}
-                  href="/admin/users/AddAccount"
                 />
                 <SidebarItem
                   isActive={ruta === "/admin/levels/extreme"}

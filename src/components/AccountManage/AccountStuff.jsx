@@ -7,10 +7,11 @@ import {
 import AddStuffModal from './AddStuffModal'
 import StuffBio from './Stuff/StuffBio'
 import { useStuff } from './useStuff'
-import { deleteStuffItemAction } from '@/actions/accounts/stuffActions'
+import { deleteStuffItemAction, updateAccountStuffAction } from '@/actions/accounts/stuffActions'
 import { notify } from '@/libs/toastNotifications'
+import StuffHardest from './Stuff/StuffHardest'
 
-const AccountStuffMe = ({account, setAccount, stuffItems = [], setStuffItems, loadAccount}) => {
+const AccountStuff = ({account, setAccount, stuffItems = [], setStuffItems, loadAccount, manage = false}) => {
   // TODO autorizaciones
   const {
     stuff,
@@ -36,10 +37,27 @@ const AccountStuffMe = ({account, setAccount, stuffItems = [], setStuffItems, lo
     }
   }
 
-  const handlers = {
+  const handleSort = async(accStuff) => {
+    const infoToast = notify('Realizando cambios en la cuenta', 'info')
+    const result = await updateAccountStuffAction({
+      accountid: account.accountid,
+      username: account.username,
+      stuff: accStuff
+    })
+    
+    await loadAccount()
+    if (result == 1) {
+      notify(`Items organizados`, 'success')
+    } else {
+      notify(`ERROR al eliminar el item. Error Code: ${result}`, 'error')
+    }
+  }
+
+  const handlers = manage ? {
+    handleSort,
     handleDelete,
     setStuffItems
-  }
+  } : {}
 
   return (<div className="flex flex-col w-full gap-2">
     <AddStuffModal 
@@ -48,6 +66,7 @@ const AccountStuffMe = ({account, setAccount, stuffItems = [], setStuffItems, lo
       accountStuff={account.stuff}
       account={account}
       setAccount={setAccount}
+      stuffItems={stuffItems}
       setStuffItems={setStuffItems}
       />
     
@@ -59,14 +78,17 @@ const AccountStuffMe = ({account, setAccount, stuffItems = [], setStuffItems, lo
           data = JSON.parse(data)
         }
         if (data.type=='bio') {
-          return <StuffBio itemData={data} key={i} id={id} handlers={handlers}/>
+          return <StuffBio itemData={data} key={i} id={id} handlers={handlers} manage={manage} accStuff={account.stuff}/>
+        }
+        if (data.type=='hardest') {
+          return <StuffHardest itemData={data} key={i} id={id} handlers={handlers} manage={manage} accStuff={account.stuff}/>
         }
         
         return <p key={i}>{JSON.stringify(data)}</p>
       })}
     </div>
     {
-      itemTypesLeft != 0 && 
+      (manage && itemTypesLeft != 0) && 
       <Button
         type='priamry'
         onClick={onOpen}
@@ -76,4 +98,4 @@ const AccountStuffMe = ({account, setAccount, stuffItems = [], setStuffItems, lo
   </div>)
 }
 
-export default AccountStuffMe
+export default AccountStuff

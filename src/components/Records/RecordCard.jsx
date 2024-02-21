@@ -15,8 +15,8 @@ const RecordCard = ({record, className, mini=false}) => {
       <div className="flex flex-row gap-3 justify-between">
         <Image
           alt="diff"
-          height={!mini?40:30}
-          width={!mini?40:30}
+          height={!mini?40:35}
+          width={!mini?40:35}
           radius="sm"
           src={getDifficultyPath({
             featured: record.featured, 
@@ -39,7 +39,7 @@ const RecordCard = ({record, className, mini=false}) => {
         </div>
       </div>
       <div className='flex flex-col justify-center'>
-        {(record.percent == 100)?<img src='/assets/ui/success.png' width={!mini?30:20}/>:`${record.percent}%`}
+        {(record.percent == 100)?<img src='/assets/ui/success.png' width={!mini?30:24}/>:`${record.percent}%`}
       </div>
     </CardBody>
   </Card>)

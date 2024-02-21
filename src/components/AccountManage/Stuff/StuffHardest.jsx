@@ -17,8 +17,8 @@ const StuffHardest = ({itemData, id, handlers, manage = false, accStuff}) => {
 
   return <div className="flex flex-col my-2">
     <StuffItemTitle title='Hardest Levels' id={id} handlers={{...handlers}} manage={manage} accStuff={accStuff}/>
-    <div className="flex flex-row gap-2 justify-center flex-wrap mt-4">
-      {levels.map(level => <RecordCard record={level} className="border-2 border-default" mini={true}/>)}
+    <div className="flex flex-row gap-2 justify-between flex-wrap mt-2">
+      {levels.map((level, i) => <RecordCard key={i} record={level} className="border-2 border-default" mini={true}/>)}
     </div>
   </div>
 }

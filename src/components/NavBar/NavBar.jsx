@@ -98,7 +98,7 @@ export default () => {
             className="md:hidden"
           />
           <NavbarBrand>
-            <img src="/assets/logo.png" className={`mr-2 sm:mr-3 navbar__logo ${(currentUser.username ? '' : 'no-acc')}`} />
+            <img src="/assets/SD_256.png" className={`mr-2 sm:mr-3 navbar__logo ${(currentUser.username ? '' : 'no-acc')}`} />
             <p className={`font-bold text-xl navbar__brand ${(currentUser.username ? '' : 'no-acc')}`}>GD Cuba ΔΔΔ</p>
           </NavbarBrand>
         </NavbarContent>

@@ -1,0 +1,9 @@
+@media (max-width: 720px) {
+  .record-card__mini {
+    width: 400px;
+  }
+
+  .hardest-levels__sm-row {
+    justify-content: center;
+  }
+}

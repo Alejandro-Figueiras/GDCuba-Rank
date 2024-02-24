@@ -101,7 +101,7 @@ export const getAllLevelsByDifficulty = async({difficulty = 15}) => {
 
 export const getHardestLevels = async(accountid) => {
   noStore();
-  const result = await sql`SELECT * FROM records WHERE accountid = ${accountid} AND aval = 1 ORDER BY difficulty DESC, percent DESC, difficultyscore DESC`
+  const result = await sql`SELECT * FROM records WHERE accountid = ${accountid} AND aval = 1 ORDER BY difficulty DESC, percent DESC, difficultyscore DESC LIMIT 6`
   return (result.rowCount)?result.rows:[];
 }
 

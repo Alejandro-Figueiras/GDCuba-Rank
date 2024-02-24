@@ -17,10 +17,12 @@ import {
 import StuffBioForm from './Stuff/StuffBioForm'
 import { submitStuffItemAction, updateAccountStuffAction } from '@/actions/accounts/stuffActions'
 import { useSesion } from '@/hooks/useSesion'
+import StuffCreatedForm from './Stuff/StuffCreatedForm'
 
 const ITEM_TYPES = {
   bio: 'Biografía',
-  hardest: 'Hardest Levels'
+  hardest: 'Hardest Levels',
+  created: 'Mis Creaciones / Participaciones'
 }
 
 const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, stuffItems = [], setStuffItems }) => {
@@ -86,7 +88,7 @@ const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, stuffItems =
   }, [itemType, itemData])
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center" size='xl'>
       <ModalContent>
         {(onClose) => (
           <>
@@ -121,6 +123,7 @@ const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, stuffItems =
                 ))}
               </Select>
               {itemType=='bio' && <StuffBioForm itemData={itemData} setItemData={setItemData}/>}
+              {itemType=='created' && <StuffCreatedForm itemData={itemData} setItemData={setItemData}/>}
             </ModalBody>
             <ModalFooter>
               <Button

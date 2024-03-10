@@ -5,5 +5,5 @@ export const getLevelsFromGD = async ({ data }) => {
   
   console.log("Buscando", data);
   const levels = await getLevels(data);
-  return levels;
+  return JSON.stringify(levels);
 };

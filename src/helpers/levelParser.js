@@ -38,7 +38,7 @@ export const parseDifficulty = (level) => {
 }
 
 export const getDifficultyPath = ({featured, difficultyName}) => {
-  if (difficultyName == 'N/A') return '/assets/dificultades/N/A.png'
+  if (difficultyName == 'N/A') return '/assets/dificultades/na.png'
   return `/assets/dificultades/${featured.toLowerCase()}/${difficultyName.replace(' ', '_').toLowerCase()}.png`
 }
 

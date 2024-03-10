@@ -1,5 +1,6 @@
 'use client'
 import { getLevelsFromGD } from '@/actions/levels/levels';
+import { parseDifficulty } from '@/helpers/levelParser';
 import {
   Button,
   Input
@@ -7,7 +8,8 @@ import {
 
 import {
   useRef,
-  useState
+  useState,
+  useEffect
 } from "react"
 
 const StuffCreatedForm = ({itemData, setItemData}) => {
@@ -34,6 +36,14 @@ const StuffCreatedForm = ({itemData, setItemData}) => {
     setSelectedLevels(levels => levels.filter(val => val.id != level.id))
   }
 
+  useEffect(() => {
+    setItemData(data => {
+      const newData = {...data}
+      newData.levels = selectedLevels
+      return newData
+    })
+  }, [selectedLevels])
+
   return <>
     <div className='flex flex-row gap-2'>
       <Input type="text" size='sm' placeholder='Nombre o ID Preferiblemente' label='' ref={inputRef}></Input>
@@ -54,13 +64,23 @@ const StuffCreatedForm = ({itemData, setItemData}) => {
 
 const LevelName = ({level, handleSelect = () => {}, green, hoverGreen, hoverRed}) => {
   const classNames = [
-    'w-full hover:underline hover:cursor-pointer',
+    'w-full flex gap-1 hover:underline hover:cursor-pointer',
     green && 'text-green-500',
     hoverGreen && 'hover:text-green-500',
     hoverRed && 'hover:text-danger'
   ]
+  
+  const diff = parseDifficulty(level)
+
   return <>
-    <div className={classNames.join(' ')} onClick={() => handleSelect(level)}>{level.levelname}</div>
+    <div className={classNames.join(' ')} onClick={() => handleSelect(level)}>
+      <div className="flex flex-col justify-center">
+        <img src={diff.path} style={{
+          height: '16px'
+        }}/>
+      </div>
+      {level.levelname}
+    </div>
   </>
 }
 

@@ -17,10 +17,12 @@ import {
 import StuffBioForm from './Stuff/StuffBioForm'
 import { submitStuffItemAction, updateAccountStuffAction } from '@/actions/accounts/stuffActions'
 import { useSesion } from '@/hooks/useSesion'
+import StuffCreatedForm from './Stuff/StuffCreatedForm'
 
 const ITEM_TYPES = {
   bio: 'Biografía',
-  hardest: 'Hardest Levels'
+  hardest: 'Hardest Levels',
+  created: 'Mis Creaciones / Participaciones'
 }
 
 const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, stuffItems = [], setStuffItems }) => {
@@ -38,8 +40,9 @@ const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, stuffItems =
   }
 
   const handleSubmit = async(onClose) => {
-    if (itemType=='bio' || itemType == 'hardest') {
-      if (itemType == 'bio ' && itemData.text=='') return;
+    if (itemType=='bio' || itemType == 'hardest' || itemType == 'created') {
+      if (itemType == 'bio' && itemData.text=='') return;
+      if (itemType == 'created' && itemData.levels.length == 0) return;
       if (itemType == 'hardest') itemData.accountid = currentUser.accountid;
       setLoading(true)
       const item = {
@@ -76,17 +79,19 @@ const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, stuffItems =
     if (disabled) {
       if (
         (itemType == 'bio' && itemData.text != '') ||
-        (itemType == 'hardest')
+        (itemType == 'hardest') ||
+        (itemType == 'created' && itemData.levels.length > 0)
         ) setDisabled(false)
     } else {
       if (itemType == 'none' || 
-        (itemType == 'bio' && itemData.text == '')
+        (itemType == 'bio' && itemData.text == '') ||
+        (itemType == 'created' && itemData.levels.length == 0)
       ) setDisabled(true)
     }
   }, [itemType, itemData])
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center" size='xl'>
       <ModalContent>
         {(onClose) => (
           <>
@@ -102,14 +107,18 @@ const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, stuffItems =
                   const data = {
                     type: target.value
                   }
+
+                  // DEFAULT VALUES OF ITEM DATA
                   if (target.value == 'bio') data.text = ''
+                  if (target.value == 'created') data.levels = []
+                  // ---------------------------
+
                   setItemData(data)
                 }}
               >
                 {Object.keys(ITEM_TYPES).filter(val => {
                   if (['bio', 'hardest'].includes(val)) {
                     for (const item of stuffItems) {
-                      console.log(item, val)
                       if (item.type == val) return false;
                     }
                   }
@@ -121,6 +130,7 @@ const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, stuffItems =
                 ))}
               </Select>
               {itemType=='bio' && <StuffBioForm itemData={itemData} setItemData={setItemData}/>}
+              {itemType=='created' && <StuffCreatedForm itemData={itemData} setItemData={setItemData}/>}
             </ModalBody>
             <ModalFooter>
               <Button

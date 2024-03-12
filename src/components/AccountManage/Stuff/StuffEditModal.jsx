@@ -12,35 +12,38 @@ import {
   ModalFooter,
   Button
 } from '@nextui-org/react'
-import StuffBioForm from './StuffBioForm'
 
-const StuffBioEditModal = ({ isOpen, onOpenChange, itemDataOld = {}, handleUpdate}) => {
+const StuffEditModal = ({ 
+  isOpen,
+  onOpenChange,
+  title,
+  itemDataOld = {},
+  Form,
+  handleUpdate,
+  updateListener = () => {},
+  submitPreventer = () => {}
+}) => {
+
   const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(true)
   const [itemData, setItemData] = useState(itemDataOld)
 
-  const clear = () => {
+  const clear = (itemData) => {
     setLoading(false)
     setDisabled(true)
-    setItemData(itemDataOld)
+    setItemData(itemData ? itemData : itemDataOld)
   }
 
   const handleSubmit = async(onClose) => {
-    if (itemData.text=='') return;
+    if (!submitPreventer(itemData)) return;
     setLoading(true)
     await handleUpdate(itemData)
 
-    clear()
+    clear(itemData)
     onClose()
   }
 
-  useEffect(() => {
-    if (disabled) {
-      if (itemData.text != '') setDisabled(false)
-    } else {
-      if (itemData.text == '') setDisabled(true)
-    }
-  }, [itemData])
+  useEffect(() => updateListener(itemData, disabled, setDisabled), [itemData])
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
@@ -48,10 +51,10 @@ const StuffBioEditModal = ({ isOpen, onOpenChange, itemDataOld = {}, handleUpdat
         {(onClose) => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              Editar Biografía
+              {title}
             </ModalHeader>
             <ModalBody>
-              <StuffBioForm itemData={itemData} setItemData={setItemData}/>
+              <Form itemData={itemData} setItemData={setItemData} />
             </ModalBody>
             <ModalFooter>
               <Button
@@ -80,4 +83,4 @@ const StuffBioEditModal = ({ isOpen, onOpenChange, itemDataOld = {}, handleUpdat
   )
 }
 
-export default StuffBioEditModal;
+export default StuffEditModal;

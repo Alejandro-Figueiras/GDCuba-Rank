@@ -1,50 +1,36 @@
 'use client'
 
-import { useDisclosure } from '@nextui-org/react'
-import StuffBioEditModal from "./StuffBioEditModal";
+import StuffBioForm from "./StuffBioForm";
+import StuffEditModal from "./StuffEditModal";
 import StuffItemTitle from "./StuffItemTitle";
-import { updateStuffItemDataAction } from '@/actions/accounts/stuffActions'
-import { useSesion } from '@/hooks/useSesion';
-import { notify } from '@/libs/toastNotifications';
+import { useEditStuffItem } from "./useEditStuffItem";
 
 const StuffBio = ({itemData, id, handlers, manage = false, accStuff = ""}) => {
-  const { currentUser } = useSesion();
-  const {isOpen, onOpen, onOpenChange} = useDisclosure();
-
-  const handleEdit = () => {
-    onOpen();
-  }
-
-  const handleUpdate = async(itemData = '') => {
-    const item = {
-      accountid: currentUser.accountid,
-      username: currentUser.username,
-      data: JSON.stringify(itemData),
-      id
-    }
-    
-    const result = await updateStuffItemDataAction(item)
-    console.log(result)
-    if (result) {
-      item.id = id;
-      handlers.setStuffItems(items => {
-        const newItems = [];
-        for (const item of items) {
-          if (item.id == id)
-            item.data = JSON.stringify(itemData)
-          newItems.push(item)
-        }
-        return newItems
-      })
-
-      notify('Biografía actualizada', 'success')
-    } else {
-      notify('Error al actualizar la biografía', 'error')
-    }
-  }
+  const {handleEdit, handleUpdate, modalDisclosure} = useEditStuffItem({id, handlers, notifyTexts: {
+    success: 'Biografía actualizada',
+    error: 'Error al actualizar la biografía'
+  }})
 
   return <div className="flex flex-col my-2">
-    {manage && <StuffBioEditModal isOpen={isOpen} onOpenChange={onOpenChange} itemDataOld={itemData} handleUpdate={handleUpdate}/>}
+    {manage && <StuffEditModal 
+      {...modalDisclosure} 
+      itemDataOld={itemData}
+      title="Editar Biografía"
+      handleUpdate={handleUpdate}
+      Form={StuffBioForm}
+      updateListener={(itemDataNew, disabled, setDisabled) => {
+        if (disabled) {
+          if (itemDataNew.text != '') setDisabled(false)
+        } else {
+          if (itemDataNew.text == '') setDisabled(true)
+        }
+      }}
+      submitPreventer={(itemDataNew) => {
+        if (itemDataNew.text == '') return false;
+        return true;
+      }}
+    />}
+
     <StuffItemTitle title='Biografía' id={id} handlers={{...handlers, handleEdit}} manage={manage} accStuff={accStuff}/>
     <div>
       {itemData.text.split(`\n`).map((text, i)=><p key={`bio${i}`}>

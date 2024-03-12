@@ -18,9 +18,10 @@ export const useStuff = ({
       return false
     }))
 
-    let itemTypesLeft = 2;
+    let itemTypesLeft = 3;
     if (newItemTypes.includes('bio')) itemTypesLeft--
     if (newItemTypes.includes('hardest')) itemTypesLeft--
+    if (newItemTypes.includes('created')) itemTypesLeft--
     setStuff(stuffOrder)
     setItemTypesLeft(itemTypesLeft)
   }, [account, stuffItems])

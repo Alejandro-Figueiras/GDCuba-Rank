@@ -49,10 +49,13 @@ const StuffCreatedForm = ({itemData, setItemData}) => {
       <Input type="text" size='sm' placeholder='Nombre o ID Preferiblemente' label='' ref={inputRef}></Input>
       <Button size='lg' onClick={handleSearch}>Buscar</Button>
     </div>
-    <div className='grid grid-cols-2 gap-2'>
+    <div className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
       <div className='flex flex-col'>
         <h2 className='text-sm text-default-500'>Busqueda</h2>
-        {searchResult.map((level,i) => <LevelName level={level} key={i} hoverGreen handleSelect={handleSelect}/>)}
+        {searchResult.map((level,i) => {
+          const encontrado = !!selectedLevels.find(val => val.id==level.id)
+          return <LevelName level={level} key={i} hoverGreen={!encontrado} hoverRed={encontrado} green={encontrado} handleSelect={encontrado?handleUnselect:handleSelect}/>
+        })}
       </div>
       <div className='flex flex-col'>
         <h2 className='text-sm text-default-500'>Niveles Seleccionados</h2>

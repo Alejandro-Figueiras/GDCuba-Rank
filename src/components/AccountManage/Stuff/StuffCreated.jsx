@@ -1,11 +1,7 @@
 'use client'
 
-import { getHardestLevelsAction } from "@/actions/accounts/getHardestLevelsAction";
 import StuffItemTitle from "./StuffItemTitle";
-import { useEffect, useState } from "react";
-import RecordCard from "@/components/Records/RecordCard";
 import './StuffHardest.css'
-import LevelCardTiny from "@/components/Levels/LevelCardTiny";
 import CreatedLevelCard from "@/components/Levels/CreatedLevelCard";
 
 const StuffCreated = ({itemData, id, handlers, manage = false, accStuff}) => {

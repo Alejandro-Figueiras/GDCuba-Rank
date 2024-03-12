@@ -5,7 +5,7 @@ import {
   Image,
   Link
 } from "@nextui-org/react";
-import { getDifficultyNameByNumber, getDifficultyPath, parseDifficulty } from '@/helpers/levelParser';
+import { parseDifficulty } from '@/helpers/levelParser';
 import YouTubeIcon from "../Icons/YouTubeIcon";
 
 const CreatedLevelCard = ({level, className}) => {

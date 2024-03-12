@@ -1,6 +1,6 @@
 {
   "name": "gd-cuba-rank",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "A Ranking for Geometry Dash Cuban Players",
   "scripts": {
     "dev": "next dev",

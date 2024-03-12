@@ -8,6 +8,7 @@ import { useSesion } from '@/hooks/useSesion';
 import { notify } from '@/libs/toastNotifications';
 
 const StuffBio = ({itemData, id, handlers, manage = false, accStuff = ""}) => {
+  // TODO extraer esto en un custom hook
   const { currentUser } = useSesion();
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 

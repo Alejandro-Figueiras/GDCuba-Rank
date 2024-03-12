@@ -14,7 +14,7 @@ import {
 
 const StuffCreatedForm = ({itemData, setItemData}) => {
   const inputRef = useRef(null);
-  const [selectedLevels, setSelectedLevels] = useState([])
+  const [selectedLevels, setSelectedLevels] = useState(itemData.levels)
   const [searchResult, setSearchResult] = useState([])
 
   const handleSearch = async() => {
@@ -46,8 +46,8 @@ const StuffCreatedForm = ({itemData, setItemData}) => {
 
   return <>
     <div className='flex flex-row gap-2'>
-      <Input type="text" size='sm' placeholder='Nombre o ID Preferiblemente' label='' ref={inputRef}></Input>
-      <Button size='lg' onClick={handleSearch}>Buscar</Button>
+      <Input type="text" size='md' placeholder='Nombre o ID Preferiblemente' label='' ref={inputRef}></Input>
+      <Button size='md' onClick={handleSearch}>Buscar</Button>
     </div>
     <div className='grid grid-cols-1 sm:grid-cols-2 gap-2'>
       <div className='flex flex-col'>

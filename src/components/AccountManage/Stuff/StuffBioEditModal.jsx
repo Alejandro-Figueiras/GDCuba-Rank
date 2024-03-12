@@ -19,10 +19,10 @@ const StuffBioEditModal = ({ isOpen, onOpenChange, itemDataOld = {}, handleUpdat
   const [disabled, setDisabled] = useState(true)
   const [itemData, setItemData] = useState(itemDataOld)
 
-  const clear = () => {
+  const clear = (itemData) => {
     setLoading(false)
     setDisabled(true)
-    setItemData(itemDataOld)
+    setItemData(itemData ? itemData : itemDataOld)
   }
 
   const handleSubmit = async(onClose) => {
@@ -30,7 +30,7 @@ const StuffBioEditModal = ({ isOpen, onOpenChange, itemDataOld = {}, handleUpdat
     setLoading(true)
     await handleUpdate(itemData)
 
-    clear()
+    clear(itemData)
     onClose()
   }
 

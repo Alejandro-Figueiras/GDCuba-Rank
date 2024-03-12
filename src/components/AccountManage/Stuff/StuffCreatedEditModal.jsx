@@ -12,7 +12,6 @@ import {
   ModalFooter,
   Button
 } from '@nextui-org/react'
-import StuffBioForm from './StuffBioForm'
 import StuffCreatedForm from './StuffCreatedForm'
 
 const StuffCreatedEditModal = ({ isOpen, onOpenChange, itemDataOld = {}, handleUpdate}) => {
@@ -20,19 +19,18 @@ const StuffCreatedEditModal = ({ isOpen, onOpenChange, itemDataOld = {}, handleU
   const [disabled, setDisabled] = useState(true)
   const [itemData, setItemData] = useState(itemDataOld)
 
-  const clear = () => {
+  const clear = (itemData) => {
     setLoading(false)
     setDisabled(true)
-    setItemData(itemDataOld)
+    setItemData(itemData ? itemData : itemDataOld)
   }
 
   const handleSubmit = async(onClose) => {
-    // TODO fix
-    if (itemData.text=='') return;
+    if (itemData.levels.length==0) return;
     setLoading(true)
     await handleUpdate(itemData)
 
-    clear()
+    clear(itemData)
     onClose()
   }
 

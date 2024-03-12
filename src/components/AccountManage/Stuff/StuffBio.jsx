@@ -1,6 +1,7 @@
 'use client'
 
-import StuffBioEditModal from "./StuffBioEditModal";
+import StuffBioForm from "./StuffBioForm";
+import StuffEditModal from "./StuffEditModal";
 import StuffItemTitle from "./StuffItemTitle";
 import { useEditStuffItem } from "./useEditStuffItem";
 
@@ -11,7 +12,25 @@ const StuffBio = ({itemData, id, handlers, manage = false, accStuff = ""}) => {
   }})
 
   return <div className="flex flex-col my-2">
-    {manage && <StuffBioEditModal {...modalDisclosure} itemDataOld={itemData} handleUpdate={handleUpdate}/>}
+    {manage && <StuffEditModal 
+      {...modalDisclosure} 
+      itemDataOld={itemData}
+      title="Editar Biografía"
+      handleUpdate={handleUpdate}
+      Form={StuffBioForm}
+      updateListener={(itemDataNew, disabled, setDisabled) => {
+        if (disabled) {
+          if (itemDataNew.text != '') setDisabled(false)
+        } else {
+          if (itemDataNew.text == '') setDisabled(true)
+        }
+      }}
+      submitPreventer={(itemDataNew) => {
+        if (itemDataNew.text == '') return false;
+        return true;
+      }}
+    />}
+
     <StuffItemTitle title='Biografía' id={id} handlers={{...handlers, handleEdit}} manage={manage} accStuff={accStuff}/>
     <div>
       {itemData.text.split(`\n`).map((text, i)=><p key={`bio${i}`}>

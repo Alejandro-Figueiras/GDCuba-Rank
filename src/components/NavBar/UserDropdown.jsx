@@ -15,7 +15,6 @@ import { useContext } from "react";
 import { usePathname } from "next/navigation";
 import { logout as logoutAction } from "@/actions/logout/logout";
 import { notify } from "@/libs/toastNotifications";
-import { useUser } from "@/hooks/useUser";
 import SubmitRecordModal from "../NewRecord/SubmitRecordModal";
 import './UserDropdown.css'
 
@@ -49,10 +48,6 @@ const UserDropdown = ({
     onOpenChange: onOpenChangeSubmitRecord,
     onOpen: onOpenSubmitRecord,
   } = useDisclosure();
-
-  // TODO eliminar
-  const { openUserView } = useUser();
-  
 
   return (
     <><Dropdown

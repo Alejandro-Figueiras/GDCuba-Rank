@@ -43,7 +43,7 @@ export default ({levels: unsortedLevels, handleRefresh}) => {
       <Table aria-label="Todos los records">
         <TableHeader>
           <TableColumn>Nivel</TableColumn>
-          <TableColumn>Score</TableColumn>
+          <TableColumn className="text-center">Score</TableColumn>
           <TableColumn>Acciones</TableColumn>
         </TableHeader>
         <TableBody>
@@ -68,7 +68,7 @@ export default ({levels: unsortedLevels, handleRefresh}) => {
                   </Chip>}
                 </div>
               </TableCell>
-              <TableCell>{level.difficultyscore}</TableCell>
+              <TableCell className="text-center">{level.difficultyscore}</TableCell>
               <TableCell>
                 <Button 
                   size='sm'

@@ -59,7 +59,7 @@ const AccountIconsRow = ({ user }) => {
   const rowsClassnames = "flex flex-row justify-evenly gap-6 flex-wrap align-middle"
 
   return (
-    <Card className="bg-default-200 max-w-full w-full">
+    <Card className="bg-default-200 max-w-full w-full overflow-visible">
       <CardBody className="p-4">
         <div className={rowsClassnames}>
           <AccountIcon

@@ -73,7 +73,7 @@ export default function SubmitRecordModal({
                     className="max-w-md mx-auto"
                   />
                   {/* TODO verificar el video de YT */}
-                  <Input type="text" className="max-w-md mx-auto" ref={videoRef} placeholder="YouTube Video URL (Opcional)" size='sm'/>
+                  <Input type="text" className="max-w-md mx-auto" size='lg' radius='sm' ref={videoRef} placeholder="YouTube Video URL (Opcional)"/>
                 </div>
               </>}
             </div>:<SubmitResult submitResult={submitResult} />}

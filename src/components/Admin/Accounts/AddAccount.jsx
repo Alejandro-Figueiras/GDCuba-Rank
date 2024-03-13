@@ -11,7 +11,7 @@ import {
 } from '@nextui-org/react'
 import { useRef, useState } from 'react'
 import AccountCard from './AccountCard';
-import { notify, notifyDismiss } from "@/libs/toastNotifications";
+import { notify } from "@/libs/toastNotifications";
 import { addNewAccountAction } from '@/actions/admin/addNewAccountAction';
 
 const AddAccount = ({isOpen, onOpen, onOpenChange, onClose}) => {
@@ -54,9 +54,9 @@ const AddAccount = ({isOpen, onOpen, onOpenChange, onClose}) => {
             <ModalHeader className="flex flex-col gap-1">Agregar cuenta</ModalHeader>
             <ModalBody>
               <div className="w-100 m-4">
-                <div className="flex flex-row align-middle justify-center gap-4">
-                  <Input type="text" label="GD Account Username" className="w-96" ref={inputRef}/>
-                  <Button onClick={handleSearch}>Buscar Cuenta</Button>
+                <div className="flex flex-row align-middle justify-center gap-2">
+                  <Input size='sm' type="text" label="GD Account Username" className="w-96" ref={inputRef}/>
+                  <Button size='lg' className='rounded-md' onClick={handleSearch}>Buscar</Button>
                 </div>
                 <div className="mt-6 w-100">
                   {(account.username) ? (

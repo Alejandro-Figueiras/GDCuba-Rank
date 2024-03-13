@@ -25,8 +25,8 @@ export default () => {
   return (
     <div className="w-100 m-4">
       <div className="flex flex-row align-middle justify-center gap-4">
-        <Input type="text" label="Search" className="w-96" ref={inputRef}/>
-        <Button onClick={handleSearch}>Buscar</Button>
+        <Input type="text" size='sm' label="Search" className="w-96" ref={inputRef}/>
+        <Button size="lg" onClick={handleSearch}>Buscar</Button>
       </div>
       <div className="mt-6 w-100 flex flex-col gap-4 mx-auto">
         {niveles.map(level => <LevelCard level={level}/>)}

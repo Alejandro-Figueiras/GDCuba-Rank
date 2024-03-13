@@ -26,7 +26,9 @@ export default function SubmitRecordModal({
   // Submit
   const handleSubmit = async() => {
     const percent = sliderValue.current
-    const video = videoRef.current.value
+    let  video = videoRef.current.value
+    video.replace('m.youtube', 'www.youtube')
+    if (!video.includes("youtube.com") || !video.includes("youtu.be")) video = ''
 
     const submitResult = await submitRecord({
       percent, video
@@ -72,7 +74,6 @@ export default function SubmitRecordModal({
                     label="Porciento Completado"
                     className="max-w-md mx-auto"
                   />
-                  {/* TODO verificar el video de YT */}
                   <Input type="text" className="max-w-md mx-auto" size='lg' radius='sm' ref={videoRef} placeholder="YouTube Video URL (Opcional)"/>
                 </div>
               </>}

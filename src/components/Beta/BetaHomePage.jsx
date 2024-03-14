@@ -9,7 +9,7 @@ export default function BetaHomePage() {
   }, [])
 
   return (
-    <div className='m-4 flex flex-col text-center justify-center global-full-height'>
+    <div className='m-4 flex flex-col text-center justify-center'>
       <div className='container max-w-[800px] mx-auto'>
         <h1 className='text-3xl font-bold'>Beta Cerrada</h1>
         <p className='text-xl font-semibold mb-4'>Fase 1: Completando Features</p>

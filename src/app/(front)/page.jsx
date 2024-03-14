@@ -1,11 +1,15 @@
 "use client";
 
 import BetaHomePage from "@/components/Beta/BetaHomePage";
+import MainHero from "@/components/LandingPage/MainHero";
 
 export default function Home() {
   return (
     <>
-      <BetaHomePage />
+      <MainHero/>
+      <div>
+        <BetaHomePage />
+      </div>
     </>
   );
 }

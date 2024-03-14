@@ -3,6 +3,6 @@
 @tailwind utilities;
 
 .global-full-height {
-  min-height: calc(100dvh - 65px - 2rem);
-  padding-bottom: calc(65px + 1rem);
+  min-height: calc(100dvh - 65px);
+  padding-bottom: calc(65px);
 }

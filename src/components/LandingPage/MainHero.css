@@ -1,4 +1,12 @@
-.main-hero-background {
-  padding-bottom: 100dvh;
-  background-image: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,0) 100%);
+.gdcuba-main-text {
+  background-clip: text;
+  background-image: linear-gradient(120deg, #029FFE 30%, #029FFE);
+  color: transparent;
+}
+
+.gdcuba-hero-image {
+  background-image: url('/assets/HD_512.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }

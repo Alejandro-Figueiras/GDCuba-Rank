@@ -83,6 +83,12 @@ export default () => {
                   icon={<TestTubeIcon/>}
                   href="/admin/testing/searchLevel"
                 />
+                <SidebarItem
+                  isActive={ruta === "/admin/testing/landingStats"}
+                  title="LandingStats"
+                  icon={<TestTubeIcon/>}
+                  href="/admin/testing/landingStats"
+                />
               </SidebarMenu>
 
               {/* <SidebarMenu title="General">

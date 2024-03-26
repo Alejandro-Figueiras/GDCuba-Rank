@@ -2,11 +2,9 @@
 import { getAllAccountsAction } from "@/actions/admin/getAllAccountsAction";
 import TablaAccounts from "@/components/Admin/Accounts/TablaAccounts";
 import { useEffect, useState } from 'react'
-import { 
-  Button,
-  useDisclosure
-} from '@nextui-org/react'
+import { useDisclosure } from '@nextui-org/react'
 import AddAccount from "../../../components/Admin/Accounts/AddAccount";
+import TablaHeader from "@/components/Admin/TablaHeader";
 
 export default () => {
   const [accounts, setAccounts] = useState([]);
@@ -28,25 +26,25 @@ export default () => {
   
   useEffect(updateAccounts, [])
   return (
-    <div className="component px-8 py-4">
-      <div className="flex justify-between">
-        <h2 className="pt-4 pb-2 text-2xl">Cuentas de Geometry Dash</h2>
-        <div className="flex gap-2">
-          <Button onClick={agregarCuenta}>
-            Agregar cuenta
-          </Button>
-          <Button onClick={updateAccounts}>
-            Refresh
-          </Button>
-        </div>
-      </div>
-      <TablaAccounts gdaccounts={accounts} updateAccounts={updateAccounts} />
+    <>
+      <TablaHeader title="Cuentas de Geometry Dash" buttons={[
+        {
+          text: "Agregar cuenta",
+          handleClick: agregarCuenta
+        }, 
+        {
+          text: "Refresh",
+          handleClick: updateAccounts
+        }
+      ]}>
+        <TablaAccounts gdaccounts={accounts} updateAccounts={updateAccounts} />
+      </TablaHeader>
       <AddAccount
         isOpen={isOpen}
         onOpen={onOpen}
         onOpenChange={onOpenChange}
         onClose={onClose}
         />
-    </div>
+    </>
   );
 };

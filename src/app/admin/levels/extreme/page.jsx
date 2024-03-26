@@ -1,8 +1,8 @@
 'use client'
 import { getAllLevelsByDifficultyAction } from '@/actions/admin/recordLevelsAction'
 import { useEffect, useState } from 'react'
-import TableTitle from '@/components/Admin/TableTitle'
 import TablaNivelesDifficultyScore from '@/components/Admin/Records/TablaNivelesDifficultyScore'
+import TablaHeader from '@/components/Admin/TablaHeader'
 
 const LevelsDificulty = () => {
   const [levels, setLevels] = useState({})
@@ -33,10 +33,13 @@ const LevelsDificulty = () => {
 
   useEffect(updateLevels, [])
   
-  return (<div className="component px-8 py-4">
-    <TableTitle title="Extreme Demons" handleRefresh={updateLevels}/>
+  return (<TablaHeader title="Extreme Demons" buttons={[{
+    text: "Refresh",
+    handleClick: updateLevels
+  }]}>
     <TablaNivelesDifficultyScore levels={Object.values(levels)} handleRefresh={updateLevels}/>
-  </div>)
+  </TablaHeader>
+  )
 }
 
 export default LevelsDificulty

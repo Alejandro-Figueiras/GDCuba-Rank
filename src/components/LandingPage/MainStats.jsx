@@ -1,14 +1,15 @@
 'use client'
+import { getLandingStatsAction } from "@/actions/landing/getLandingStats";
 import StatsCard from "./StatsCard"
 import { useState, useEffect } from 'react'
 
 const MainStats = ({}) => {
   const [landingStats, setLandingStats] = useState({
-    totalStars: 0,
-    totalDemons: 0,
-    totalUsercoins: 0,
-    totalCreatorPoints: 0,
-    totalMoons: 0,
+    totalStars: 'Cargando...',
+    totalDemons: 'Cargando...',
+    totalUsercoins: 'Cargando...',
+    totalCreatorPoints: 'Cargando...',
+    totalMoons: 'Cargando...',
     hardest: {}
   });
 
@@ -44,6 +45,12 @@ const MainStats = ({}) => {
       img: '/assets/stats/creatorpoints.png'
     },
   ]
+
+  useEffect(() => {
+    getLandingStatsAction().then((response) => {
+      setLandingStats(JSON.parse(response))
+    })
+  }, [])
 
   return <div class="container mx-auto my-12 flex justify-center flex-wrap gap-6 md:gap-10">
     {cards.map(card => {

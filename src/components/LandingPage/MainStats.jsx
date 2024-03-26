@@ -10,6 +10,7 @@ const MainStats = ({}) => {
     totalUsercoins: 'Cargando...',
     totalCreatorPoints: 'Cargando...',
     totalMoons: 'Cargando...',
+    totalExtremes: 'Cargando...',
     hardest: {}
   });
 
@@ -44,6 +45,19 @@ const MainStats = ({}) => {
       value: landingStats.totalCreatorPoints,
       img: '/assets/stats/creatorpoints.png'
     },
+    {
+      id: 'extremes',
+      title: "Total de Extremes Acumulados",
+      value: landingStats.totalExtremes,
+      img: '/assets/dificultades/none/extreme_demon.png'
+    },
+    {
+      id: 'hardest',
+      title: "Hardest",
+      value: landingStats.hardest.levelname,
+      subtitle: `Completed by ${landingStats.hardest.username}`,
+      img: '/assets/dificultades/epic/extreme_demon.png'
+    },
   ]
 
   useEffect(() => {
@@ -53,8 +67,8 @@ const MainStats = ({}) => {
   }, [])
 
   return <div class="container mx-auto my-12 flex justify-center flex-wrap gap-6 md:gap-10">
-    {cards.map(card => {
-      return <StatsCard {...card}/>
+    {cards.map((card, i) => {
+      return <StatsCard {...card} key={i} />
     })}
   </div>
 }

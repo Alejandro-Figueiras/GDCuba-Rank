@@ -49,6 +49,7 @@ export const updateLandingStatsRecords = async({oldData, records}) => {
 
   const info = {
     ...oldData,
+    totalExtremes: 0,
     hardest: {
       difficultyscore: 0,
       levelid: 0,
@@ -58,6 +59,13 @@ export const updateLandingStatsRecords = async({oldData, records}) => {
 
   for (const record of records) {
     if (record.aval != 1 || record.percent != 100 || record.difficulty != 15) continue;
+
+    // -------------------------------
+    // si algun dia cambia la iteración para niveles que sean menos que extreme,
+    // poner aqui un if (record.difficulty != 15)
+    info.totalExtremes++; 
+    // -------------------------------
+
     if (record.difficultyscore >= info.hardest.difficultyscore) {
       if (record.levelid == info.hardest.levelid && record.id > info.hardest.id)  continue;
       info.hardest = record

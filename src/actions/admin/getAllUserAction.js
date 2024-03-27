@@ -1,10 +1,16 @@
 'use server'
 
-import { getAllUsers} from "@/database/db.users";
+import { getAllUsers, getUnverifiedUsers} from "@/database/db.users";
 import { authorize } from "@/libs/secure";
 
 export const getAllUsersAction = async() => {
   if (await authorize()) {
     return JSON.stringify(await getAllUsers())
+  }
+}
+
+export const getUnverifiedUsersAction = async() => {
+  if (await authorize()) {
+    return JSON.stringify(await getUnverifiedUsers())
   }
 }

@@ -53,6 +53,11 @@ export const getAllUsers = async() => {
   return (await sql`SELECT * from users`).rows
 }
 
+export const getUnverifiedUsers = async() => {
+  noStore();
+  return (await sql`SELECT * from users WHERE status = 'u'`).rows
+}
+
 /**
  * Esta función verifica el usuario dentro del sitio. Cambia el status de 'u' a 'v'. También puede actuar de invalidador cuando se le pasa el parametro `unvalidate: true`
  * @async

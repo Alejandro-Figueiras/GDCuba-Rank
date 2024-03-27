@@ -75,6 +75,12 @@ export const getAllRecords = async() => {
   return result.rowCount?result.rows:[];
 }
 
+export const getUnverifiedRecords = async() => {
+  noStore()
+  const result = await sql`SELECT * FROM records WHERE aval = 0 OR aval = -2`;
+  return result.rowCount?result.rows:[];
+}
+
 export const getAllExtremesVerified = async() => {
   noStore();
   const result = await sql`SELECT * FROM records WHERE difficulty = 15 AND percent = 100 AND aval = 1`

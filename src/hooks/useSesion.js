@@ -4,7 +4,7 @@ import { useContext } from "react";
 
 export const useSesion = () => {
   const { currentUser, setCurrentUser } = useContext(GlobalContext);
-  const {onOpenLogin, onOpenSignUp} = useContext(ModalContext);
+  const {onOpenLogin, onOpenSignUp, onOpenPassword} = useContext(ModalContext);
 
   const logout = () => {
     setCurrentUser({
@@ -21,5 +21,9 @@ export const useSesion = () => {
     onOpenLogin();
   };
 
-  return { currentUser, logout, signUp, login };
+  const changePassword = () => {
+    onOpenPassword();
+  }
+
+  return { currentUser, logout, signUp, login, changePassword };
 };

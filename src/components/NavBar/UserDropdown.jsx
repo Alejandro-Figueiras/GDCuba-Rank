@@ -22,6 +22,7 @@ const UserDropdown = ({
   currentUser,
   onOpenLogin,
   onOpenChangeSignUp,
+  onOpenChangePassword,
   logout,
 }) => {
   const ruta = usePathname();
@@ -142,6 +143,13 @@ const UserDropdown = ({
               onClick={()=> {onOpenChangeSubmitRecord()}}
             >
               Nuevo Record
+            </DropdownItem>
+          )}
+          {logged && (
+            <DropdownItem
+            key="changePass-btn" onPress={onOpenChangePassword}
+            >
+              Cambiar contraseña
             </DropdownItem>
           )}
           {

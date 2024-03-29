@@ -6,8 +6,10 @@ import TablaHeader from '@/components/Admin/TablaHeader'
 
 const LevelsDificulty = () => {
   const [levels, setLevels] = useState({})
+  const [loading, setLoading] = useState(true)
 
   const updateLevels = () => {
+    setLoading(true)
     getAllLevelsByDifficultyAction({difficulty: 15}).then(response => {
       console.log(response)
       const records = JSON.parse(response)
@@ -28,6 +30,7 @@ const LevelsDificulty = () => {
 
       console.log(newLevels)
       setLevels(newLevels)
+      setLoading(false)
     })
   }
 
@@ -37,7 +40,7 @@ const LevelsDificulty = () => {
     text: "Refresh",
     handleClick: updateLevels
   }]}>
-    <TablaNivelesDifficultyScore levels={Object.values(levels)} handleRefresh={updateLevels}/>
+    <TablaNivelesDifficultyScore levels={Object.values(levels)} handleRefresh={updateLevels} loading={loading}/>
   </TablaHeader>
   )
 }

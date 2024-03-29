@@ -8,10 +8,11 @@ import SubmitRecordModal from "@/components/NewRecord/SubmitRecordModal";
 
 const AdminRecordsPanel = ({home = false}) => {
   const [records, setRecords] = useState([]);
+  const [loading, setLoading] = useState(true)
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const updateRecords = () => {
-    ( home
+    (home
       ?getUnverifiedRecordsAction()
       :getAllRecordsAction()
     ).then(response => {
@@ -26,6 +27,7 @@ const AdminRecordsPanel = ({home = false}) => {
         return b.id - a.id;
       })
       setRecords(nuevosRecords)
+      setLoading(false)
     })
   }
   
@@ -41,7 +43,7 @@ const AdminRecordsPanel = ({home = false}) => {
         handleClick: updateRecords
       }
     ]}>
-      <TablaRecords records={records} updateRecords={updateRecords} />
+      <TablaRecords records={records} updateRecords={updateRecords} loading={loading}/>
       <SubmitRecordModal isOpen={isOpen} onOpenChange={onOpenChange} admin/>
     </TablaHeader>
   );

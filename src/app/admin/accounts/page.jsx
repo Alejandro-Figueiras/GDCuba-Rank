@@ -8,19 +8,21 @@ import TablaHeader from "@/components/Admin/TablaHeader";
 
 export default () => {
   const [accounts, setAccounts] = useState([]);
+  const [loading, setLoading] = useState(true)
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   const updateAccounts = () => {
+    setLoading(true)
     getAllAccountsAction().then(response => {
       const newData = JSON.parse(response)
       newData.sort((a,b)=>b.id-a.id)
       console.log(newData)
       setAccounts(newData)
+      setLoading(false)
     })
   }
 
   const agregarCuenta = () => {
-    console.log("Cuenta");
     onOpen()
   }
   
@@ -37,7 +39,7 @@ export default () => {
           handleClick: updateAccounts
         }
       ]}>
-        <TablaAccounts gdaccounts={accounts} updateAccounts={updateAccounts} />
+        <TablaAccounts gdaccounts={accounts} updateAccounts={updateAccounts} loading={loading}/>
       </TablaHeader>
       <AddAccount
         isOpen={isOpen}

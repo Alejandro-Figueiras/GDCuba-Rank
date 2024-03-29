@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 
 const AdminUsuariosPanel = ({home = false}) => {
   const [usuarios, setUsuarios] = useState([]);
+  const [loading, setLoading] = useState(true)
 
   const updateData = () => {
     (home
@@ -14,6 +15,7 @@ const AdminUsuariosPanel = ({home = false}) => {
     ).then(response => {
       const nuevosUsuarios = JSON.parse(response)
       setUsuarios(nuevosUsuarios)
+      setLoading(false)
     })
   }
 
@@ -23,7 +25,7 @@ const AdminUsuariosPanel = ({home = false}) => {
       text: "Refresh",
       handleClick: updateData
     }]}>
-      <TablaUsuarios usuarios={usuarios} updateData={updateData}/>
+      <TablaUsuarios usuarios={usuarios} updateData={updateData} loading={loading}/>
     </TablaHeader>
   );
 };

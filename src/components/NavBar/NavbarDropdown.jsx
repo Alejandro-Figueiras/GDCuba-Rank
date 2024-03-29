@@ -12,7 +12,11 @@ import { usePathname } from 'next/navigation';
 const NavbarDropdown = ({info}) => {
   const rutaActual = usePathname();
   return (
-  <Dropdown>
+  <Dropdown
+   classNames={{
+    content: "bg-background/90 border border-default-200"
+   }}
+  >
     <NavbarItem>
       <DropdownTrigger>
         <Button
@@ -29,7 +33,17 @@ const NavbarDropdown = ({info}) => {
     <DropdownMenu
       aria-label={info.title}
       itemClasses={{
-        base: "gap-4",
+        base: [
+          "gap-4",
+          "rounded-md",
+          "transition-opacity",
+          "data-[hover=true]:text-foreground",
+          "data-[hover=true]:bg-[#FFFFFF22]",
+          "dark:data-[hover=true]:bg-[#FFFFFF33]",
+          "data-[selectable=true]:focus:bg-[#FFFFFF33]",
+          "data-[pressed=true]:opacity-70",
+          "data-[focus-visible=true]:ring-default-500",
+        ]
       }}
     >
       {info.items.map(item => (

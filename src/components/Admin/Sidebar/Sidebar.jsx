@@ -50,7 +50,7 @@ export default () => {
                 isActive={ruta === "/admin"}
                 href="/admin"
               />
-              <SidebarMenu title="Administración">
+              <SidebarMenu title="Cuentas">
                 <SidebarItem
                   isActive={ruta === "/admin/users"}
                   title="Usuarios"
@@ -63,6 +63,8 @@ export default () => {
                   icon={<AccountsIcon />}
                   href="/admin/accounts"
                 />
+              </SidebarMenu>
+              <SidebarMenu title="Niveles">
                 <SidebarItem
                   isActive={ruta === "/admin/levels/extreme"}
                   title="Extreme Score"
@@ -76,14 +78,14 @@ export default () => {
                   href="/admin/records"
                 />
               </SidebarMenu>
-              <SidebarMenu title="Testing">
+              {/* <SidebarMenu title="Testing">
                 <SidebarItem
-                  isActive={ruta === "/admin/testing/searchLevel"}
-                  title="Buscar Nivel"
+                  isActive={ruta === "/admin/testing/"}
+                  title="Testing Item Example"
                   icon={<TestTubeIcon/>}
-                  href="/admin/testing/searchLevel"
+                  href="/admin/testing/"
                 />
-              </SidebarMenu>
+              </SidebarMenu> */}
 
               {/* <SidebarMenu title="General">
                 <SidebarItem

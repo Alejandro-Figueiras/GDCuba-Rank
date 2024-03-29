@@ -12,13 +12,8 @@ import {
   ModalFooter,
 } from "@nextui-org/modal";
 import { Input } from "@nextui-org/input";
-import { Link } from "@nextui-org/link";
-import { log } from "../../helpers/log";
-import { SelectSection } from "@nextui-org/react";
 import { GlobalContext } from "@/app/context/GlobalContext";
-import { toast } from "react-toastify";
-import { notify, notifyDismiss } from "@/libs/toastNotifications";
-import config from "../../../config";
+import { notify } from "@/libs/toastNotifications";
 import { login } from "@/actions/auth/login";
 
 export default ({ isOpen, onOpenChange }) => {
@@ -52,16 +47,6 @@ export default ({ isOpen, onOpenChange }) => {
     }
   };
 
-  const onFetched = (data) => {
-    if (data.status == "ok") {
-      setLoading(false);
-      log("Login successfuly");
-      return;
-    }
-
-    log(data.message);
-  };
-
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
       <ModalContent>
@@ -85,11 +70,6 @@ export default ({ isOpen, onOpenChange }) => {
                 variant="bordered"
                 ref={passwordRef}
               />
-              <div className="flex py-2 px-1 justify-between">
-                <Link color="primary" href="#" size="sm">
-                  ¿Olvidaste tu contraseña?
-                </Link>
-              </div>
             </ModalBody>
             <ModalFooter>
               <Button

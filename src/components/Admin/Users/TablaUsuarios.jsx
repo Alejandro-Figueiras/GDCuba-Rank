@@ -1,7 +1,7 @@
 "use client"
 import { AdminContext } from "@/app/context/AdminContext";
 import { Chip } from "@nextui-org/chip";
-import {  Table,  TableHeader,  TableBody,  TableColumn,  TableRow,  TableCell, Link} from "@nextui-org/react";
+import {  Table,  TableHeader,  TableBody,  TableColumn,  TableRow,  TableCell, Link, Spinner } from "@nextui-org/react";
 import { useContext } from "react";
 
 const renderRoleOrStatus = (arg) => {
@@ -40,11 +40,11 @@ export const getWhatsAppURL = (phone) => {
   return `http://wa.me/${phone}`
 }
 
-export default ({usuarios, updateData}) => {
+export default ({usuarios, updateData, loading = false}) => {
   const {openUserGestorFor} = useContext(AdminContext);
   return (
     <>
-      <Table aria-label="Todos los usuarios">
+      <Table aria-label="Todos los usuarios" classNames={{table: loading?'min-h-[300px]':''}}>
         <TableHeader>
           <TableColumn>ID</TableColumn>
           <TableColumn>Usuario</TableColumn>
@@ -53,7 +53,11 @@ export default ({usuarios, updateData}) => {
           <TableColumn>Rol</TableColumn>
           <TableColumn>Estado</TableColumn>
         </TableHeader>
-        <TableBody>
+        <TableBody
+          isLoading={loading}
+          loadingContent={<Spinner label="Cargando datos..." />}
+          emptyContent={loading?null:"No hay usuarios para mostrar"}
+        >
           {usuarios && usuarios.map((user, i) => (
             <TableRow key={user.id} className="cursor-pointer hover:bg-zinc-700 duration-75" onClick={() => openUserGestorFor(user, updateData)}>
               <TableCell>{user.id}</TableCell>

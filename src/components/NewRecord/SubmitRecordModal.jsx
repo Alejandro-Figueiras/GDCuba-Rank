@@ -6,29 +6,45 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  Slider
+  Slider,
+  Select,
+  SelectItem
 } from "@nextui-org/react";
 import React, { useEffect, useState, useRef } from "react";
 import SearchLevel from '@/components/NewRecord/SearchLevel'
 import LevelCard from '@/components/Levels/LevelCard'
 import { submitRecord } from '@/actions/record/submitRecord'
 import SubmitResult from './SubmitResult'
+import { submitRecordAdminAction } from "@/actions/admin/submitRecordAdminAction";
+import { getAllAccountsAction } from "@/actions/admin/getAllAccountsAction";
 
 export default function SubmitRecordModal({
   onOpenChange,
   isOpen,
+  admin=false
 }) {
   const [level, setLevel] = useState(null)
   const [submitResult, setSubmitResult] = useState(0)
+  const [account, setAccount] = useState({}) // Only admin
+  const [accountList, setAccountList] = useState([]) // Only admin
   const sliderValue = useRef(100);
   const videoRef = useRef(null)
 
   // Submit
   const handleSubmit = async() => {
     const percent = sliderValue.current
-    const video = videoRef.current.value
+    let  video = videoRef.current.value
+    video.replace('m.youtube', 'www.youtube')
+    if (!video.includes("youtube.com") || !video.includes("youtu.be")) video = ''
 
-    const submitResult = await submitRecord({
+    const submitResult = (admin)
+    ? await submitRecordAdminAction({
+      percent,
+      video,
+      accountid: account.accountid,
+      username: account.username
+    }, level)
+    : await submitRecord({
       percent, video
     }, level)
     
@@ -40,6 +56,14 @@ export default function SubmitRecordModal({
     if (isOpen) {
       setLevel(null)
       setSubmitResult(0)
+      setAccount({})
+      if (admin) {
+        setAccount({})
+        getAllAccountsAction().then(accounts => {
+          setAccount({})
+          setAccountList(JSON.parse(accounts))
+        })
+      }
     }
   }, [isOpen]);
 
@@ -53,9 +77,30 @@ export default function SubmitRecordModal({
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader>Nuevo Record</ModalHeader>
+            <ModalHeader>Nuevo Record {admin && `(admin)`}</ModalHeader>
             <ModalBody>
               {(submitResult==0)?<div className="">
+              {admin && 
+                <Select
+                  items={accountList}
+                  label="Cuenta objetivo"
+                  placeholder="Selecciona una cuenta"
+                  className="mb-2"
+                  onSelectionChange={(keys) => {
+                    const accountid = keys.currentKey
+                    if (accountid == account.accountid) setAccount({});
+                    else {
+                      
+                      setAccount(accountList.find(val => {
+                        return val.accountid == accountid
+                      }))
+                    }
+                  }}
+                >
+                  {(account) => <SelectItem key={account.accountid}>{account.username}</SelectItem>}
+                </Select>
+              
+              }
               <SearchLevel setNewLevel={setLevel} level={level}/>
               {level && <>
                 <LevelCard level={level} />
@@ -72,8 +117,7 @@ export default function SubmitRecordModal({
                     label="Porciento Completado"
                     className="max-w-md mx-auto"
                   />
-                  {/* TODO verificar el video de YT */}
-                  <Input type="text" className="max-w-md mx-auto" ref={videoRef} placeholder="YouTube Video URL (Opcional)" size='sm'/>
+                  <Input type="text" className="max-w-md mx-auto" size='lg' radius='sm' ref={videoRef} placeholder="YouTube Video URL (Opcional)"/>
                 </div>
               </>}
             </div>:<SubmitResult submitResult={submitResult} />}
@@ -83,7 +127,7 @@ export default function SubmitRecordModal({
                 color="success"
                 variant="flat"
                 onPress={handleSubmit}
-                isDisabled={!level}
+                isDisabled={!level || (admin && !account.username)}
               >
                 Enviar Record
               </Button>}

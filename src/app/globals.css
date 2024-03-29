@@ -3,6 +3,28 @@
 @tailwind utilities;
 
 .global-full-height {
-  min-height: calc(100dvh - 65px - 2rem);
-  padding-bottom: calc(65px + 1rem);
+  min-height: calc(100dvh - 65px);
+  padding-bottom: calc(65px);
+}
+
+.global-full-viewport {
+  min-height: calc(100dvh - 65px);
+}
+
+.global-margin {
+  margin-top: 65px;
+}
+
+.global-padding {
+  padding-top: 65px;
+}
+
+.landing-background {
+  top: 0;
+  height: 200dvh;
+  overflow: visible;
+  background-image: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,0) 100%);
+  background-position: 50% -50dvh;
+  background-repeat: no-repeat;
+  mask-image: linear-gradient(black 60%, transparent 75%, transparent);
 }

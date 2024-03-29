@@ -2,13 +2,14 @@
 import { getAllCubansAction } from "@/actions/accounts/getAllCubansAction"
 import { getAllExtremesVerifiedAction } from "@/actions/record/getAllExtremeDemons"
 import RankTable from "@/components/Rank/RankTable"
-import { getAllRecordsByDifficulty } from "@/database/db.records"
-import {useState, useEffect} from 'react'
+import { useState, useEffect } from 'react'
 
 export default ({tipo = 'stars'}) => {
   const [rank, setRank] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    setLoading(true)
     getAllCubansAction().then(async(players) => {
       players = JSON.parse(players)
       if (tipo == 'extreme_demons') {
@@ -54,17 +55,13 @@ export default ({tipo = 'stars'}) => {
         return b.stars-a.stars;
       })
       setRank(players)
+      setLoading(false)
     })
   }, [])
 
   return (
-    <>
-      {(rank.length==0)
-        ? (<p className="text-center text-xl mt-8">Cargando datos...</p>)
-        : (<div className="container mx-auto my-4 max-w-3xl">
-        <RankTable ranking={rank} tipo={tipo}/>
-      </div>)
-      }
-    </>
+    <div className="container mx-auto my-4 max-w-3xl">
+      <RankTable ranking={rank} tipo={tipo} loading={loading}/>
+    </div>
   )
 }

@@ -2,6 +2,7 @@
 import { getAccountAction } from "@/actions/accounts/getAccountAction";
 import { getStuffItemsAction } from "@/actions/accounts/stuffActions";
 import ModalAccept from "@/components/Admin/ModalAccept";
+import ChangePassword from "@/components/Forms/ChangePassword";
 import Login from "@/components/Forms/Login";
 import SignUp from "@/components/Forms/SignUp";
 import Modal from "@/components/Modal";
@@ -35,6 +36,11 @@ export default function ModalProvider({ children }) {
     onOpen: onOpenSignUp,
     onOpenChange: onOpenChangeSignUp,
   } = useDisclosure();
+  const {
+    isOpen: isOpenPassword,
+    onOpen: onOpenPassword,
+    onOpenChange: onOpenChangePassword,
+  } = useDisclosure();
 
   const openModal = ({ title, desc, onSubmit, action = "none" }) => {
     if (!isOpen) {
@@ -60,7 +66,7 @@ export default function ModalProvider({ children }) {
   };
 
   return (
-    <ModalContext.Provider value={{ openModal, openUserView, onOpenLogin, onOpenSignUp }}>
+    <ModalContext.Provider value={{ openModal, openUserView, onOpenLogin, onOpenSignUp, onOpenPassword }}>
       <UserModalView
         user={currentUserInView}
         onOpenChange={onOpenChangeUserView}
@@ -75,9 +81,8 @@ export default function ModalProvider({ children }) {
         submit={current.onSubmit}
       />
       <Login isOpen={isOpenLogin} onOpenChange={onOpenChangeLogin} />
-
-      {/* Sign up Form */}
       <SignUp isOpen={isOpenSignUp} onOpenChange={onOpenChangeSignUp} />
+      <ChangePassword isOpen={isOpenPassword} onOpenChange={onOpenChangePassword}/>
       {children}
     </ModalContext.Provider>
   );

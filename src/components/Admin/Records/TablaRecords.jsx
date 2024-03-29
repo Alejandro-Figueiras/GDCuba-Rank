@@ -8,7 +8,8 @@ import {
   TableRow,
   TableCell,
   Button,
-  Link
+  Link,
+  Spinner
 } from "@nextui-org/react";
 import RecordAvalDropdown from "./RecordAvalDropdown";
 import { removeRecord } from "@/actions/admin/changeRecord";
@@ -16,7 +17,7 @@ import { useContext } from 'react'
 import { ModalContext } from "@/app/context/ModalContext";
 import { notify } from "@/libs/toastNotifications";
 
-export default ({records, updateRecords}) => {
+export default ({records, updateRecords, loading=false}) => {
   const { openModal } = useContext(ModalContext);
 
   const handleDelete = async(record) => {
@@ -42,7 +43,7 @@ export default ({records, updateRecords}) => {
 
   return (
     <>
-      <Table aria-label="Todos los records">
+      <Table aria-label="Todos los records" classNames={{table: loading?'min-h-[300px]':''}}>
         <TableHeader>
           <TableColumn>ID</TableColumn>
           <TableColumn>Usuario</TableColumn>
@@ -52,7 +53,11 @@ export default ({records, updateRecords}) => {
           <TableColumn>Aval</TableColumn>
           <TableColumn>Acciones</TableColumn>
         </TableHeader>
-        <TableBody>
+        <TableBody
+          isLoading={loading}
+          loadingContent={<Spinner label="Cargando datos..." />}
+          emptyContent={loading?null:"No hay records para mostrar"}
+        >
           {records && records.map((record) => (
             <TableRow key={record.id}>
               <TableCell>{record.id}</TableCell>

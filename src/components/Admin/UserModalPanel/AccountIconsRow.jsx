@@ -58,97 +58,69 @@ const AccountIconsRow = ({ user }) => {
 
   const rowsClassnames = "flex flex-row justify-evenly gap-6 flex-wrap align-middle"
 
+  const comunProps = {
+    c1: user.playercolor,
+    c2: user.playercolor2,
+    c3: user.playercolor3,
+    glow: user.accglow,
+    effectDeps: [user]
+  }
+
   return (
-    <Card className="bg-default-200 max-w-full w-full">
+    <Card className="bg-default-200 max-w-full w-full overflow-visible">
       <CardBody className="p-4">
         <div className={rowsClassnames}>
           <AccountIcon
             type={"cube"}
             iconNumber={user.accicon}
-            c1={user.playercolor}
-            c2={user.playercolor2}
-            c3={user.playercolor3}
-            glow={user.accglow}
-            effectDeps={[user]}
+            {...comunProps}
           />
           <a href="#" onClick={() => setJetpack(v=>!v)} className="min-w-11 flex flex-row justify-center icons__ship">
               <AccountIcon
                 type={"jetpack"}
                 iconNumber={user.accjetpack}
-                c1={user.playercolor}
-                c2={user.playercolor2}
-                c3={user.playercolor3}
-                glow={user.accglow}
-                effectDeps={[user]}
+                {...comunProps}
                 className={(!jetpack)?'hidden':''}
               />
               <AccountIcon
                 type={"ship"}
                 iconNumber={user.accship}
-                c1={user.playercolor}
-                c2={user.playercolor2}
-                c3={user.playercolor3}
-                glow={user.accglow}
-                effectDeps={[user]}
+                {...comunProps}
                 className={(jetpack)?'hidden':''}
               />
           </a>
           <AccountIcon
             type={"ball"}
             iconNumber={user.accball}
-            c1={user.playercolor}
-            c2={user.playercolor2}
-            c3={user.playercolor3}
-            glow={user.accglow}
-            effectDeps={[user]}
+            {...comunProps}
           />
           <AccountIcon
             type={"ufo"}
             iconNumber={user.accbird}
-            c1={user.playercolor}
-            c2={user.playercolor2}
-            c3={user.playercolor3}
-            glow={user.accglow}
-            effectDeps={[user]}
+            {...comunProps}
           />
           <AccountIcon
             type={"wave"}
             iconNumber={user.accwave}
-            c1={user.playercolor}
-            c2={user.playercolor2}
-            c3={user.playercolor3}
-            glow={user.accglow}
-            effectDeps={[user]}
+            {...comunProps}
             className="icons__4down-hide"
           />
           <AccountIcon
             type={"robot"}
             iconNumber={user.accrobot}
-            c1={user.playercolor}
-            c2={user.playercolor2}
-            c3={user.playercolor3}
-            glow={user.accglow}
-            effectDeps={[user]}
+            {...comunProps}
             className="icons__3down-hide"
           />
           <AccountIcon
             type={"spider"}
             iconNumber={user.accspider}
-            c1={user.playercolor}
-            c2={user.playercolor2}
-            c3={user.playercolor3}
-            glow={user.accglow}
-            effectDeps={[user]}
+            {...comunProps}
             className="icons__3down-hide"
           />
           <AccountIcon
             type={"swing"}
             iconNumber={user.accswing}
-            c1={user.playercolor}
-            c2={user.playercolor2}
-            c3={user.playercolor3}
-            glow={user.accglow}
-            effectDeps={[user]}
+            {...comunProps}
             className="icons__3down-hide"
           />
         </div>
@@ -157,39 +129,23 @@ const AccountIconsRow = ({ user }) => {
         <AccountIcon
             type={"wave"}
             iconNumber={user.accwave}
-            c1={user.playercolor}
-            c2={user.playercolor2}
-            c3={user.playercolor3}
-            glow={user.accglow}
-            effectDeps={[user]}
+            {...comunProps}
             className="icons__4down-show"
           />
           <AccountIcon
             type={"robot"}
             iconNumber={user.accrobot}
-            c1={user.playercolor}
-            c2={user.playercolor2}
-            c3={user.playercolor3}
-            glow={user.accglow}
-            effectDeps={[user]}
+            {...comunProps}
           />
           <AccountIcon
             type={"spider"}
             iconNumber={user.accspider}
-            c1={user.playercolor}
-            c2={user.playercolor2}
-            c3={user.playercolor3}
-            glow={user.accglow}
-            effectDeps={[user]}
+            {...comunProps}
           />
           <AccountIcon
             type={"swing"}
             iconNumber={user.accswing}
-            c1={user.playercolor}
-            c2={user.playercolor2}
-            c3={user.playercolor3}
-            glow={user.accglow}
-            effectDeps={[user]}
+            {...comunProps}
           />
         </div>
       </CardBody>

@@ -21,8 +21,8 @@ const SearchLevelPrompt = ({ setNiveles = ()=>{}, setNewLevel = ()=>{}}) => {
   }
   
   return (
-  <div className="flex flex-row align-middle justify-center gap-4">
-    <Input type="text" placeholder="Escribe el nombre del nivel" size='sm' ref={inputRef} startContent={<SearchIcon />}/>
+  <div className="flex flex-row align-middle justify-center gap-2">
+    <Input type="text" placeholder="Escribe el nombre del nivel" size='lg' radius='sm' ref={inputRef} startContent={<SearchIcon />}/>
     <Button onClick={handleSearch} size="lg" radius="sm">Buscar</Button>
   </div>)
 }

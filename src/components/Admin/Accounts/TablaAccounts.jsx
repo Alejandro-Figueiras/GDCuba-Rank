@@ -6,7 +6,7 @@ import {
   TableRow,
   TableCell,
   Button,
-  Checkbox
+  Spinner
 } from "@nextui-org/react";
 import { useContext } from 'react'
 import { ModalContext } from "@/app/context/ModalContext";
@@ -15,7 +15,7 @@ import UsernameCell from "@/components/Rank/UsernameCell";
 import CubanCheckbox from "./CubanCheckbox.jsx";
 import { removeGDAccountAction } from "@/actions/admin/accountsActions.js";
 
-export default ({gdaccounts, updateAccounts}) => {
+export default ({ gdaccounts, updateAccounts, loading = false }) => {
   const { openModal } = useContext(ModalContext);
 
   const handleDelete = async(acc) => {
@@ -41,14 +41,18 @@ export default ({gdaccounts, updateAccounts}) => {
 
   return (
     <>
-      <Table aria-label="Todos los records">
+      <Table aria-label="Todos los records" classNames={{table: loading?'min-h-[300px]':''}}>
         <TableHeader>
           <TableColumn>ID</TableColumn>
           <TableColumn>Usuario</TableColumn>
           <TableColumn>Cubano</TableColumn>
           <TableColumn>Acciones</TableColumn>
         </TableHeader>
-        <TableBody>
+        <TableBody
+          isLoading={loading}
+          loadingContent={<Spinner label="Cargando datos..." />}
+          emptyContent={loading?null:"No hay cuentas para mostrar"}
+        >
           {gdaccounts && gdaccounts.map((acc) => (
             <TableRow key={acc.id}>
               <TableCell>{acc.id}</TableCell>

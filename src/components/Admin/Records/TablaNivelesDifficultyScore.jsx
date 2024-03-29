@@ -9,12 +9,13 @@ import {
   TableCell,
   Button,
   Chip,
+  Spinner,
   useDisclosure
 } from "@nextui-org/react";
 import { useState } from 'react'
 import NivelesRescoreModal from "./NivelesRescoreModal";
 
-export default ({levels: unsortedLevels, handleRefresh}) => {
+export default ({ levels: unsortedLevels, handleRefresh, loading=false }) => {
   const { isOpen, onOpen, onOpenChange} = useDisclosure()
   const [selectedLevel, setSelectedLevel] = useState({})
 
@@ -40,13 +41,17 @@ export default ({levels: unsortedLevels, handleRefresh}) => {
         levels={levels}
         handleRefresh={handleRefresh}
         />
-      <Table aria-label="Todos los records">
+      <Table aria-label="Todos los records" classNames={{table: loading?'min-h-[300px]':''}}>
         <TableHeader>
           <TableColumn>Nivel</TableColumn>
-          <TableColumn>Score</TableColumn>
+          <TableColumn className="text-center">Score</TableColumn>
           <TableColumn>Acciones</TableColumn>
         </TableHeader>
-        <TableBody>
+        <TableBody
+          isLoading={loading}
+          loadingContent={<Spinner label="Cargando datos..." />}
+          emptyContent={loading?null:"No hay niveles para mostrar"}
+        >
           {levels && levels.map((level) => (
             <TableRow key={level.levelid}>
               <TableCell>
@@ -68,7 +73,7 @@ export default ({levels: unsortedLevels, handleRefresh}) => {
                   </Chip>}
                 </div>
               </TableCell>
-              <TableCell>{level.difficultyscore}</TableCell>
+              <TableCell className="text-center">{level.difficultyscore}</TableCell>
               <TableCell>
                 <Button 
                   size='sm'

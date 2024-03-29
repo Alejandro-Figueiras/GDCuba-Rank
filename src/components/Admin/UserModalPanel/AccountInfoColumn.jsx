@@ -1,6 +1,18 @@
-import {Card, CardHeader} from '@nextui-org/react'
+import { resetPasswordAction } from '@/actions/admin/resetPasswordAction';
+import { notify } from '@/libs/toastNotifications';
+import {Card, CardHeader, Button} from '@nextui-org/react'
 
 const AccountInfoColumn = ({user}) => {
+  const handleResetPassword = () => {
+    resetPasswordAction({username: user.username}).then(result => {
+      if (result == 1) {
+        notify(`La nueva contraseña de ${user.username} es 1234`, "success");
+      } else {
+        notify("Error al cambiar la contraseña", 'error')
+      }
+    })
+  }
+
   return (<div>
     <Card classNames={{base: "mb-2"}}>
       <CardHeader className="text-small justify-between">
@@ -15,6 +27,8 @@ const AccountInfoColumn = ({user}) => {
         <p>{user.phone}</p>
       </CardHeader>
     </Card>
+
+    <Button className="mb-2 w-full" color='warning' onPress={handleResetPassword}>R. Contraseña</Button>
   </div>)
 }
 

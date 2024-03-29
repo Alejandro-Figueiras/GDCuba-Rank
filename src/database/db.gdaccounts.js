@@ -4,6 +4,7 @@ import { addAccountCloud, updateAccountCloud } from "./db.gdaccounts.functions";
 import { kv } from '@vercel/kv'
 import { sql } from '@vercel/postgres'
 import { unstable_noStore as noStore } from 'next/cache';
+import { updateLandingStatsAcc } from "./db.staticInfo";
 /**
  * Agrega una cuenta de GD a la base de datos, y especifica si es cubano o no.
  * @async
@@ -94,6 +95,7 @@ export const updateAccounts = async({limit= 3, timeLimit = 60000}) => {
     const timestamp = new Date().getTime()
     await kv.set('accUpdateLimit', timestamp);
 
+    updateLandingStatsAcc();
     console.log("DATABASE: actualizando accounts completado")
 
   } else {

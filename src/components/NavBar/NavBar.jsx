@@ -18,7 +18,7 @@ import { ResponsiveNavAccordion } from "./ResponsiveNavAccordion";
 import './NavBar.css'
 
 export default () => {
-  const { currentUser, logout, signUp, login } = useSesion();
+  const { currentUser, logout, signUp, login, changePassword } = useSesion();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [{ href: "/", label: "Home" }];
@@ -119,6 +119,7 @@ export default () => {
               logout={logout}
               onOpenLogin={login}
               onOpenChangeSignUp={signUp}
+              onOpenChangePassword={changePassword}
             />
           </NavbarItem>
         </NavbarContent>

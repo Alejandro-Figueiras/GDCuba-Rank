@@ -89,6 +89,7 @@ const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels, handleRefres
                 onValueChange={value => setScoreRequested(value)}
                 label='Score'
                 />
+                {/* TODO fix this */}
               <RescoreTable levels={[level]} />
 
             </ModalBody>

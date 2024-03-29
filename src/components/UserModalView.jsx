@@ -30,7 +30,8 @@ export default function UserModalView({ user = {account: {}, stuff: []}, isOpen,
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      size={!isLoading ? "2xl" : ""}
+      size={!isLoading ? "3xl" : ""}
+      scrollBehavior='inside'
     >
       <ModalContent>
         {(onClose) => (

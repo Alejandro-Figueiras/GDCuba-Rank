@@ -15,7 +15,6 @@ import { useContext } from "react";
 import { usePathname } from "next/navigation";
 import { logout as logoutAction } from "@/actions/logout/logout";
 import { notify } from "@/libs/toastNotifications";
-import { useUser } from "@/hooks/useUser";
 import SubmitRecordModal from "../NewRecord/SubmitRecordModal";
 import './UserDropdown.css'
 
@@ -23,6 +22,7 @@ const UserDropdown = ({
   currentUser,
   onOpenLogin,
   onOpenChangeSignUp,
+  onOpenChangePassword,
   logout,
 }) => {
   const ruta = usePathname();
@@ -50,17 +50,13 @@ const UserDropdown = ({
     onOpen: onOpenSubmitRecord,
   } = useDisclosure();
 
-  // TODO eliminar
-  const { openUserView } = useUser();
-  
-
   return (
     <><Dropdown
       placement="bottom-end"
       classNames={{
         base: "before:bg-default-200", // change arrow background
         content:
-          "py-1 px-1 border border-default-200 bg-gradient-to-br from-default-50 to-black",
+          "py-1 px-1 border border-default-200 bg-background/90",
       }}
     >
       <DropdownTrigger>
@@ -83,12 +79,11 @@ const UserDropdown = ({
         itemClasses={{
           base: [
             "rounded-md",
-            "text-default-500",
             "transition-opacity",
             "data-[hover=true]:text-foreground",
-            "data-[hover=true]:bg-default-100",
-            "dark:data-[hover=true]:bg-default-50",
-            "data-[selectable=true]:focus:bg-default-50",
+            "data-[hover=true]:bg-[#FFFFFF22]",
+            "dark:data-[hover=true]:bg-[#FFFFFF33]",
+            "data-[selectable=true]:focus:bg-[#FFFFFF33]",
             "data-[pressed=true]:opacity-70",
             "data-[focus-visible=true]:ring-default-500",
           ],
@@ -148,6 +143,13 @@ const UserDropdown = ({
               onClick={()=> {onOpenChangeSubmitRecord()}}
             >
               Nuevo Record
+            </DropdownItem>
+          )}
+          {logged && (
+            <DropdownItem
+            key="changePass-btn" onPress={onOpenChangePassword}
+            >
+              Cambiar contraseña
             </DropdownItem>
           )}
           {

@@ -21,7 +21,7 @@ export const addRecord = async(record = {}) => {
     if (record.percent > oldPercent) {
       const result = await sql`UPDATE records SET
       percent=${record.percent},
-      aval=${0},
+      aval=${record.aval?record.aval:-2},
       video=${record.video}
       WHERE id=${recordID}
       `;
@@ -72,6 +72,12 @@ export const getDifficultyFromLevel = async({levelid}) => {
 export const getAllRecords = async() => {
   noStore()
   const result = await sql`SELECT * FROM records`;
+  return result.rowCount?result.rows:[];
+}
+
+export const getUnverifiedRecords = async() => {
+  noStore()
+  const result = await sql`SELECT * FROM records WHERE aval = 0 OR aval = -2`;
   return result.rowCount?result.rows:[];
 }
 

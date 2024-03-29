@@ -11,8 +11,9 @@ import {
 } from '@nextui-org/react'
 import { useRef, useState } from 'react'
 import AccountCard from './AccountCard';
-import { notify, notifyDismiss } from "@/libs/toastNotifications";
+import { notify } from "@/libs/toastNotifications";
 import { addNewAccountAction } from '@/actions/admin/addNewAccountAction';
+import { changeCubanAction } from '@/actions/admin/accountsActions';
 
 const AddAccount = ({isOpen, onOpen, onOpenChange, onClose}) => {
   const inputRef = useRef();
@@ -30,7 +31,9 @@ const AddAccount = ({isOpen, onOpen, onOpenChange, onClose}) => {
     if (local) {
       local = JSON.parse(local);
       if (local.cuba == 0 && cuba) {
-        // TODO Convertir a Cubano
+        changeCubanAction({username: account.username, cuba: cuba?1:0})
+          .then(() => notify('La cuenta ya existía, pero fue cambiada de nacionalidad', 'success'))
+          .error(() => notify('La cuenta ya exise, pero hubo un error al cambiarla de nacionalidad', 'error'))
       } else {
         notify('La cuenta ya está en la base de datos', 'info')
       }
@@ -54,9 +57,9 @@ const AddAccount = ({isOpen, onOpen, onOpenChange, onClose}) => {
             <ModalHeader className="flex flex-col gap-1">Agregar cuenta</ModalHeader>
             <ModalBody>
               <div className="w-100 m-4">
-                <div className="flex flex-row align-middle justify-center gap-4">
-                  <Input type="text" label="GD Account Username" className="w-96" ref={inputRef}/>
-                  <Button onClick={handleSearch}>Buscar Cuenta</Button>
+                <div className="flex flex-row align-middle justify-center gap-2">
+                  <Input size='sm' type="text" label="GD Account Username" className="w-96" ref={inputRef}/>
+                  <Button size='lg' className='rounded-md' onClick={handleSearch}>Buscar</Button>
                 </div>
                 <div className="mt-6 w-100">
                   {(account.username) ? (

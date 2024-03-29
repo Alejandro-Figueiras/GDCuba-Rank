@@ -1,17 +1,23 @@
 'use server'
 import { changeCuban, removeGDAccount } from "@/database/db.gdaccounts"
+import { updateLandingStatsAcc } from "@/database/db.staticInfo"
 import { authorize } from "@/libs/secure"
 
 export const changeCubanAction = async({username, cuba}) => {
   if (await authorize()) {
-    return await changeCuban(username, cuba)
+    const result = await changeCuban(username, cuba)
+    updateLandingStatsAcc();
+    return result
   }
   return 0
 }
 
 export const removeGDAccountAction = async({username}) => {
   if (await authorize()) {
-    return await removeGDAccount(username)
+    const result = await removeGDAccount(username)
+    // TODO eliminar sus records
+    updateLandingStatsAcc();
+    return result
   }
   return 0
 }

@@ -3,9 +3,12 @@ import { getAllRecordsAction, getUnverifiedRecordsAction } from "@/actions/admin
 import TablaRecords from "@/components/Admin/Records/TablaRecords";
 import { useEffect, useState } from 'react'
 import TablaHeader from "@/components/Admin/TablaHeader";
+import { useDisclosure } from '@nextui-org/react'
+import SubmitRecordModal from "@/components/NewRecord/SubmitRecordModal";
 
 const AdminRecordsPanel = ({home = false}) => {
   const [records, setRecords] = useState([]);
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const updateRecords = () => {
     ( home
@@ -28,11 +31,18 @@ const AdminRecordsPanel = ({home = false}) => {
   
   useEffect(updateRecords, [])
   return (
-    <TablaHeader title={home?"Records (Sin verificar)":"Records"} buttons={[{
-      text: "Refresh",
-      handleClick: updateRecords
-    }]}>
+    <TablaHeader title={home?"Records (Sin verificar)":"Records"} buttons={[
+      {
+        text: "Agregar Record",
+        handleClick: onOpen
+      },
+      {
+        text: "Refresh",
+        handleClick: updateRecords
+      }
+    ]}>
       <TablaRecords records={records} updateRecords={updateRecords} />
+      <SubmitRecordModal isOpen={isOpen} onOpenChange={onOpenChange} admin/>
     </TablaHeader>
   );
 };

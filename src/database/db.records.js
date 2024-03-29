@@ -21,7 +21,7 @@ export const addRecord = async(record = {}) => {
     if (record.percent > oldPercent) {
       const result = await sql`UPDATE records SET
       percent=${record.percent},
-      aval=${0},
+      aval=${record.aval?record.aval:-2},
       video=${record.video}
       WHERE id=${recordID}
       `;

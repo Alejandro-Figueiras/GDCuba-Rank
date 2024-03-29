@@ -1,10 +1,10 @@
 'use client'
 import { calcularTrofeo } from "@/helpers/calcularTrofeoGR";
 import { useUser } from "@/hooks/useUser";
-import { Table,  TableHeader,  TableBody,  TableColumn,  TableRow,  TableCell } from "@nextui-org/table";
+import { Table,  TableHeader,  TableBody,  TableColumn,  TableRow,  TableCell, Spinner } from "@nextui-org/react";
 import UsernameCell from "./UsernameCell";
 
-export default ({ ranking, tipo = 'stars' }) => {
+export default ({ ranking, tipo = 'stars', loading = false }) => {
   const { openUserView } = useUser();
 
   const cols = [], cells = [];
@@ -41,12 +41,16 @@ export default ({ ranking, tipo = 'stars' }) => {
   return (
     <div className="m-2 sm:m-4">
       <Table selectionMode="single" classNames={{
-          table: `${(tipo == 'stars') ? "min-w-[480px]" : 'min-w-[320px]'} overflow-scroll`,
+          table: `${(tipo == 'stars') ? "min-w-[480px]" : 'min-w-[320px]'} overflow-scroll min-h-[400px]`,
       }} aria-label="Rank Table">
         <TableHeader>
             {cols}
         </TableHeader>
-        <TableBody>
+        <TableBody
+          isLoading={loading}
+          loadingContent={<Spinner label="Cargando datos..." />}
+          emptyContent={"No hay usuarios para mostrar"}
+        >
           {
             ranking.map((player, i) => 
               <TableRow key={i+1} onClick={() => openUserView(player)}>

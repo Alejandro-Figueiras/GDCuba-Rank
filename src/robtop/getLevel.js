@@ -35,7 +35,6 @@ const parseResponse = (body) => {
  */
 export const getLevelByID = async (id) => {
   try {
-    // TODO filtrar query para evitar sql injection
     const body = await gdRequest("getGJLevels21", {
       type: '0',
       gdw: '0',
@@ -59,7 +58,6 @@ export const getLevelByID = async (id) => {
  */
 export const getLevels = async (query) => {
   try {
-    // TODO filtrar query para evitar sql injection
     const body = await gdRequest("getGJLevels21", {
       type: '0',
       gdw: '0',

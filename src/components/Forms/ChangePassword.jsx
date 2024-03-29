@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 import { Button } from "@nextui-org/button";
 
@@ -13,23 +13,29 @@ import {
 } from "@nextui-org/modal";
 import { Input } from "@nextui-org/input";
 import { notify } from "@/libs/toastNotifications";
+import { useSesion } from "@/hooks/useSesion";
+import { changePasswordAction } from "@/actions/auth/changePassword";
 
 export default ({ isOpen, onOpenChange }) => {;
   const oldPasswordRef = useRef();
   const newPasswordRef = useRef();
   const newPasswordRef2 = useRef();
+  const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  const { currentUser } = useSesion();
   
 
   const handleSubmitButton = async (action, onClose) => {
     if (action == "submit") {
-      /*const formData = {
-        username: "",
-        password: passwordRef.current.value,
+      const formData = {
+        username: currentUser.username,
+        oldPassword: oldPasswordRef.current.value,
+        newPassword: newPasswordRef.current.value,
       };
       setLoading(true);
 
-      const data = JSON.parse(await login(formData))
+      const data = JSON.parse(await changePasswordAction(formData))
       setLoading(false);
       if (data.status == "error") {
         notify(data.message, 'error')
@@ -37,11 +43,7 @@ export default ({ isOpen, onOpenChange }) => {;
         return;
       }
       notify(data.message, 'success')
-      setCurrentUser(prev => ({
-        ...prev, 
-        ...data
-      }));
-      onClose();*/
+      onClose();
     }
   };
 
@@ -85,6 +87,7 @@ export default ({ isOpen, onOpenChange }) => {;
                 color="primary"
                 onPress={() => handleSubmitButton("submit", onClose)}
                 isLoading={loading}
+                isDisabled={disabled}
               >
                 Adelante
               </Button>

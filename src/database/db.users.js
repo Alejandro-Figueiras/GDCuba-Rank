@@ -96,3 +96,10 @@ export const eliminarUser = async({username}) => {
   }
   throw new Error("Unauthorized")
 }
+
+export const setUserPassword = async({username, password}) => {
+  noStore()
+  const result = await sql`UPDATE users SET password = ${password} WHERE username = ${username} `;
+  if (!result) throw new Error('Error al cambiar password: ' + result)
+  return 1;
+}

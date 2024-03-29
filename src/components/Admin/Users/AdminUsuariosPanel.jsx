@@ -21,7 +21,7 @@ const AdminUsuariosPanel = ({home = false}) => {
 
   useEffect(updateData, [])
   return (
-    <TablaHeader title={home?"Usuarios (sin verificar)":"Usuarios"} buttons={[{
+    <TablaHeader title={home?"Usuarios (sin verificar)":"Usuarios"} buttons={home?[]:[{
       text: "Refresh",
       handleClick: updateData
     }]}>

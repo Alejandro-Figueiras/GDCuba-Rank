@@ -33,7 +33,7 @@ const AdminRecordsPanel = ({home = false}) => {
   
   useEffect(updateRecords, [])
   return (
-    <TablaHeader title={home?"Records (Sin verificar)":"Records"} buttons={[
+    <TablaHeader title={home?"Records (Sin verificar)":"Records"} buttons={home?[]:[
       {
         text: "Agregar Record",
         handleClick: onOpen

@@ -1,16 +1,18 @@
 "use client"
 import { getAllCubansAction } from "@/actions/accounts/getAllCubansAction"
-import { getAllExtremesVerifiedAction } from "@/actions/record/getAllExtremeDemons"
 import { getAllInsaneDemonsVerifiedAction } from "@/actions/record/getAllInsaneDemons"
 import ListLevelVictors from "@/components/Lists/ListLevelVictors"
 import {useState, useEffect} from 'react'
+import { Spinner } from '@nextui-org/react'
 
 export default () => {
   const [players, setPlayers] = useState({})
   const [levels, setLevels] = useState([])
   const [records, setRecords] = useState([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    setLoading(true)
     getAllCubansAction().then(async(players) => {
       const newPlayers = JSON.parse(players)
       const playersObject = {};
@@ -43,6 +45,7 @@ export default () => {
       setLevels(levels)
       setPlayers(playersObject)
       setRecords(records)
+      setLoading(false)
     })
   }, [])
 
@@ -51,22 +54,23 @@ export default () => {
   }
 
   return (
-    <>
-      {(records.length==0)
-        ? (<p className="text-center text-xl mt-8">Cargando datos...</p>)
-        : (<div className="container mx-auto my-4 max-w-3xl">
-          <h1 className="text-2xl text-center my-4" key='title'><strong>Lista de Insane Demons</strong></h1>
-        {
-          levels.map((level, i) => 
+    <div className="container mx-auto my-4 max-w-3xl">
+      <h1 className="text-2xl text-center my-4" key='title'><strong>Lista de Insane Demons</strong></h1>
+      {(loading)
+        ? (<div className="flex flex-col gap-2 mt-8 items-center">
+          <Spinner/>
+          <p className="text-center text-xl">Cargando datos...</p>
+        </div>)
+        :levels.map((level, i) => 
           <ListLevelVictors
             key={i}
             level={level}
             players={players}
             records={filterRecords(level.levelid)}
           />)
-        }
-      </div>)
       }
-    </>
+    </div>
   )
 }
+
+  // TODO vacio

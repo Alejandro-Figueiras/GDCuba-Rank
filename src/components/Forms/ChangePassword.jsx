@@ -16,22 +16,21 @@ import { notify } from "@/libs/toastNotifications";
 import { useSesion } from "@/hooks/useSesion";
 import { changePasswordAction } from "@/actions/auth/changePassword";
 
-export default ({ isOpen, onOpenChange }) => {;
-  const oldPasswordRef = useRef();
-  const newPasswordRef = useRef();
-  const newPasswordRef2 = useRef();
+export default ({ isOpen, onOpenChange }) => {
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newPassword2, setNewPassword2] = useState("");
+  const [newPassword2Error, setNewPassword2Error] = useState("")
   const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
-
   const { currentUser } = useSesion();
   
-
   const handleSubmitButton = async (action, onClose) => {
     if (action == "submit") {
       const formData = {
         username: currentUser.username,
-        oldPassword: oldPasswordRef.current.value,
-        newPassword: newPasswordRef.current.value,
+        oldPassword,
+        newPassword,
       };
       setLoading(true);
 
@@ -47,6 +46,21 @@ export default ({ isOpen, onOpenChange }) => {;
     }
   };
 
+  useEffect(() => {
+    if (newPassword == "" || newPassword.length < 4 || newPassword2 == "" || newPassword2.length < 4) {
+      setNewPassword2Error("")
+      setDisabled(true);
+    } else if (newPassword != newPassword2) {
+      setNewPassword2Error("Las contraseñas no coinciden")
+      setDisabled(true)
+    } else {
+      setNewPassword2Error("")
+      setDisabled(false)
+    }
+  }, [
+    newPassword, newPassword2
+  ])
+
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
       <ModalContent>
@@ -56,23 +70,39 @@ export default ({ isOpen, onOpenChange }) => {;
               Cambiar contraseña
             </ModalHeader>
             <ModalBody>
+              {/* Esto esta puesto para ayudar a Google Passwords y demás Password Managers */}
+              {currentUser.username && <Input
+                label="Usuario"
+                type="user"
+                variant="bordered"
+                value={currentUser.username}
+                aria-hidden={true}
+                className="hidden"
+              />}
               <Input
                 label="Contraseña antigua"
                 type="password"
                 variant="bordered"
-                ref={oldPasswordRef}
+                onValueChange={(value) => {
+                  setOldPassword(value)
+                }}
               />
               <Input
                 label="Nueva Contraseña"
                 type="password"
                 variant="bordered"
-                ref={newPasswordRef}
+                onValueChange={(value) => {
+                  setNewPassword(value)
+                }}
               />
               <Input
                 label="Repite la Contraseña"
                 type="password"
                 variant="bordered"
-                ref={newPasswordRef2}
+                onValueChange={(value) => {
+                  setNewPassword2(value)
+                }}
+                errorMessage={newPassword2Error}
               />
             </ModalBody>
             <ModalFooter>

@@ -15,7 +15,33 @@ const inter = Inter({
 
 export const metadata = {
   title: 'GD Cuba ΔΔΔ',
-  description: 'Una página web y ranking para la comunidad cubana de Geometry Dash',
+  description: 'Comunidad Cubana de Geometry Dash',
+  author: 'Alejandro Figueiras',
+  category: 'gaming',
+  keywords: ["gdcuba", "geometrydash", "cuba", "gd", "ranking"],
+  openGraph: {
+    title: 'GD Cuba ΔΔΔ',
+    description: 'Comunidad Cubana de Geometry Dash',
+    url: 'https://gdcuba.vercel.app/',
+    siteName: 'GD Cuba ΔΔΔ',
+    images: [
+      {
+        url: 'https://gdcuba.vercel.app/og-card.jpg', // Must be an absolute URL
+        width: 1800,
+        height: 1600,
+        alt: 'GD Cuba ΔΔΔ',
+      },
+    ],
+    locale: 'es_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'GD Cuba ΔΔΔ',
+    description: 'Comunidad Cubana de Geometry Dash',
+    creator: '@AleFigueiras_',
+    images: ['https://gdcuba.vercel.app/og-card.jpg'], // Must be an absolute URL
+  },
 }
 
 export default async({ children }) => {

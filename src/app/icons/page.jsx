@@ -1,5 +1,5 @@
 'use client'
-import { makeIcon } from '@/robtop/iconkit/makeIcon';
+import { makeIcon } from '@/robtop/iconkit/makeIconOld';
 import {useState, useEffect} from 'react'
 
 export default function Home() {

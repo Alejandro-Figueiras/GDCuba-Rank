@@ -1,11 +1,11 @@
 'use server'
 
 import Jimp from 'jimp';
-import { getIconSprites } from './getIconSprites';
+import { getIconSprites } from './getIconSpritesOld';
 import colors from './colors.json'
 import robotInfo from './robotInfo.json'
 import spiderInfo from './spiderInfo.json'
-import { getLayer } from './getLayer';
+import { getLayer } from './getLayerOld';
 
 const icon22 = {
   cube: 484,

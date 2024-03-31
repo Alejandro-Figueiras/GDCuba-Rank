@@ -1,6 +1,5 @@
 import fs from 'fs'
 import plist from 'plist'
-import sharp from 'sharp';
 
 const parseWeirdArray = (data) => {
   return data.replace(/[^0-9,-]/g, "").split(",").map(x => +x)
@@ -8,7 +7,6 @@ const parseWeirdArray = (data) => {
 
 const logic = async() => {
   const folder = fs.readdirSync('./icons');
-  const files = {};
   // filtrar iconos
   for (const icon of folder) {
     const parts = icon.split('.')
@@ -35,26 +33,23 @@ const logic = async() => {
             }
         
             else if (keyName == "textureRect") {
-                info[frameName].textureRect = {
-                  pos: [],
-                  size: []
-                };
-                let textureArr = keyData.slice(1, -1).split("},{").map(x => parseWeirdArray(x))
-                info[frameName].textureRect.pos = textureArr[0]
-                info[frameName].textureRect.size = textureArr[1]
+              info[frameName].textureRect = {
+                pos: [],
+                size: []
+              };
+              let textureArr = keyData.slice(1, -1).split("},{").map(x => parseWeirdArray(x))
+              info[frameName].textureRect.pos = textureArr[0]
+              info[frameName].textureRect.size = textureArr[1]
             }  
           }  
         }
 
         // Move texture
         fs.renameSync("./icons/"+parts[0]+'.png', './gdicons/'+parts[0]+'.png')
-
-        files[array[0]] = info
+        fs.writeFileSync('./gdicons/'+parts[0]+'.json', JSON.stringify(info));
       }
     }
   }
-
-  fs.writeFileSync('./gameSheet.json', JSON.stringify(files));
 
 }
 

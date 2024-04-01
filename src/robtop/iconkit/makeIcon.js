@@ -27,7 +27,9 @@ const layerPriority = {
 }
 
 const printSprites = async(spritesToPrint) => {
-  const mainSprite = new Container();
+  const mainSprite = new Container({
+    isRenderGroup: true
+  });
   for (const {sprite, x, y} of spritesToPrint) {
     mainSprite.addChild(sprite)
     sprite.anchor.set(0.5)
@@ -46,7 +48,10 @@ const printSprites = async(spritesToPrint) => {
   }
   app.stage.addChild(mainSprite)
   app.render()
-  return app.canvas.toDataURL()
+  const data = app.canvas.toDataURL()
+  app.destroy()
+  mainSprite.destroy()
+  return data;
 }
 
 export const makeIcon = async({type, iconNumber, c1, c2, c3, glow, hostURL}) => {
@@ -55,7 +60,7 @@ export const makeIcon = async({type, iconNumber, c1, c2, c3, glow, hostURL}) => 
   if (c2>icon22.colors) {c2=5};
   if (c3>icon22.colors) {c3=12};
 
-  const { textures, spritesInfo, layerNames } = await getIconTextures({
+  const { textures, spritesInfo, layerNames, spritesheet } = await getIconTextures({
     type,
     iconNumber,
     hostURL
@@ -81,6 +86,7 @@ export const makeIcon = async({type, iconNumber, c1, c2, c3, glow, hostURL}) => 
     const path = layerName.join('_');
     const spriteOffset = spritesInfo[path].spriteOffset
     const sprite = await getLayerSprite({texture, info: spritesInfo[path], color, rotate, scaleX, scaleY})
+    texture.destroy()
     spritesToPrint.push({
       path,
       sprite, 
@@ -120,5 +126,10 @@ export const makeIcon = async({type, iconNumber, c1, c2, c3, glow, hostURL}) => 
     }
   }
 
-  return await printSprites(spritesToPrint);
+  const data = await printSprites(spritesToPrint);
+  for (const {sprite} of spritesToPrint) {
+    sprite.destroy();
+  }
+  
+  return data;
 }

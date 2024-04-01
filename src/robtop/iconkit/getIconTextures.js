@@ -61,6 +61,7 @@ export const getIconTextures = async({type, iconNumber, hostURL}) => {
   const spritesheet = new Spritesheet(sheetTexture, sheetData)
   await spritesheet.parse();
   const textures = spritesheet.textures
+  spritesheet.destroy()
 
   return { textures, spritesInfo: plist, layerNames }
 }

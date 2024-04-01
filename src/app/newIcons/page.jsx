@@ -1,8 +1,8 @@
 "use client"
 
-import { getIconTextures } from "@/robtop/iconkit/newIcons/getIconTextures"
-import { getLayerSprite } from "@/robtop/iconkit/newIcons/getLayerSprite"
-import { makeIcon } from "@/robtop/iconkit/newIcons/makeIcon"
+import { getIconTextures } from "@/robtop/iconkit/getIconTextures"
+import { getLayerSprite } from "@/robtop/iconkit/getLayerSprite"
+import { makeIcon } from "@/robtop/iconkit/makeIcon"
 import { useGDIcon } from "@/robtop/iconkit/useGDIcon"
 import { Application, Assets, Sprite, Spritesheet } from "pixi.js"
 import { useEffect, useState, useRef } from "react"

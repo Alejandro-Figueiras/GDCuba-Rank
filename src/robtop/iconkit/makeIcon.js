@@ -1,8 +1,8 @@
 import { getIconTextures } from "./getIconTextures"
 import { getLayerSprite } from "./getLayerSprite"
-import colors from '../colors.json'
-import robotInfo from '../robotInfo.json'
-import spiderInfo from '../spiderInfo.json'
+import colors from './colors.json'
+import robotInfo from './robotInfo.json'
+import spiderInfo from './spiderInfo.json'
 import { Application, Container } from "pixi.js"
 
 const icon22 = {

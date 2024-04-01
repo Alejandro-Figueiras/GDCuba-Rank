@@ -11,17 +11,20 @@ export default function Home() {
 
     const asyncF = async() => {
       const newIcons = [];
-      const types = {
-        cube: 142,
-        ship: 51,
-        ball: 43,
-        ufo: 35,
-        wave: 35,
-        robot: 26,
-        spider: 17
+      const icon22 = {
+        cube: 484,
+        ship: 169,
+        ball: 118,
+        ufo: 149,
+        wave: 96,
+        robot: 68,
+        spider: 69,
+        swing: 43,
+        jetpack: 5,
       }
-      for (const type of Object.keys(types)) {
-        for (let i = 1; i < types[type]; i++) {
+      
+      for (const type of Object.keys(icon22)) {
+        for (let i = 1; i < icon22[type]; i++) {
           newIcons.push(await makeIcon({
             type,
             iconNumber: i,

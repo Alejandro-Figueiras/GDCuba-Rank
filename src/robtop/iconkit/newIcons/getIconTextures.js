@@ -31,21 +31,36 @@ export const getIconTextures = async({type, iconNumber, hostURL}) => {
       }
     }
   }
+
+  const layerNames = []
   
   for (const key of Object.keys(plist)) {
+    let size = plist[key].textureRect.size;
+    if (plist[key].textureRotated) size = [...size].reverse()
+
     sheetData.frames[key] = {
       frame: {
         x: plist[key].textureRect.pos[0],
         y: plist[key].textureRect.pos[1],
-        w: plist[key].textureRect.size[0],
-        h: plist[key].textureRect.size[1]
+        w: size[0],
+        h: size[1]
       },
     }
+
+    let layerInfo = key.split("_");
+    if (layerInfo[1] == "ball") {
+      const newSprite = ['player_ball'];
+      for (let i = 2; i < layerInfo.length; i++) {
+        newSprite.push(layerInfo[i])
+      }
+      layerInfo = newSprite;
+    }
+    layerNames.push(layerInfo)
   }
 
   const spritesheet = new Spritesheet(sheetTexture, sheetData)
   await spritesheet.parse();
   const textures = spritesheet.textures
 
-  return { textures, spritesInfo: plist, spritesheet }
+  return { textures, spritesInfo: plist, layerNames }
 }

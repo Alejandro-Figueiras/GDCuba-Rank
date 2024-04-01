@@ -37,7 +37,6 @@ const printSprites = async(spritesToPrint) => {
   console.log(mainSprite.width, mainSprite.height)
   const app = new Application();
   await app.init({
-    background: "#222222",
     width: Math.ceil(mainSprite.width),
     height: Math.ceil(mainSprite.height)
   })
@@ -64,7 +63,7 @@ export const makeIcon = async({type, iconNumber, c1, c2, c3, glow, hostURL}) => 
 
   const spritesToPrint = []
 
-  const makeSprites = async({texture, layerName, rotate = null, offsetX = 0, offsetY = 0, scale = null}) => {
+  const makeSprites = async({texture, layerName, rotate = null, offsetX = 0, offsetY = 0, scaleX = 1, scaleY = 1}) => {
     let color = null;
   
     const spriteLayer = (['robot', 'spider'].includes(layerName[0]))
@@ -81,7 +80,7 @@ export const makeIcon = async({type, iconNumber, c1, c2, c3, glow, hostURL}) => 
 
     const path = layerName.join('_');
     const spriteOffset = spritesInfo[path].spriteOffset
-    const sprite = await getLayerSprite({texture, info: spritesInfo[path], color, rotate, scale})
+    const sprite = await getLayerSprite({texture, info: spritesInfo[path], color, rotate, scaleX, scaleY})
     spritesToPrint.push({
       path,
       sprite, 
@@ -106,6 +105,8 @@ export const makeIcon = async({type, iconNumber, c1, c2, c3, glow, hostURL}) => 
             rotate: frame.rotation,
             offsetX: frame.pos[0]*4,
             offsetY: frame.pos[1]*4,
+            scaleX: (frame.flipped[0]?-1:1)*frame.scale[1],
+            scaleY: (frame.flipped[1]?-1:1)*frame.scale[0],
             scale: frame.scale
           })
       }

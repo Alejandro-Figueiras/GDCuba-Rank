@@ -3,7 +3,7 @@ import { getLayerSprite } from "./getLayerSprite"
 import colors from '../colors.json'
 import robotInfo from '../robotInfo.json'
 import spiderInfo from '../spiderInfo.json'
-import { Application } from "pixi.js"
+import { Application, Container } from "pixi.js"
 
 const icon22 = {
   cube: 484,
@@ -27,21 +27,25 @@ const layerPriority = {
 }
 
 const printSprites = async(spritesToPrint) => {
-  // TODO crop
+  const mainSprite = new Container();
+  for (const {sprite, x, y} of spritesToPrint) {
+    mainSprite.addChild(sprite)
+    sprite.anchor.set(0.5)
+    sprite.x = x
+    sprite.y = y
+  }
+  console.log(mainSprite.width, mainSprite.height)
   const app = new Application();
   await app.init({
     background: "#222222",
-    width: 300,
-    height: 300
+    width: Math.ceil(mainSprite.width),
+    height: Math.ceil(mainSprite.height)
   })
-
   for (const {sprite, x, y} of spritesToPrint) {
-    app.stage.addChild(sprite)
-    sprite.anchor.set(0.5)
     sprite.x = app.screen.width / 2 + x
     sprite.y = app.screen.height / 2 + y
   }
-
+  app.stage.addChild(mainSprite)
   app.render()
   return app.canvas.toDataURL()
 }

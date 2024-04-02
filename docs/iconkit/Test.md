@@ -1,3 +1,6 @@
+# Deep icon test
+
+```jsx
 'use client'
 import { makeIcon } from '@/robtop/iconkit/makeIcon';
 import {useState, useEffect} from 'react'
@@ -54,3 +57,4 @@ export default function Home() {
     {icons.map((icon, i) => (<img src={icon} alt={`icon ${i}`} key={i}/>))}
   </main>)
 }
+```

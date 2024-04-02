@@ -43,6 +43,7 @@ const printSprites = async(spritesToPrint) => {
 
   const app = new Application();
   await app.init({
+    backgroundAlpha: 0,
     width: Math.ceil(mainSprite.width),
     height: Math.ceil(mainSprite.height)
   })
@@ -61,7 +62,7 @@ export const makeIcon = ({type, iconNumber, c1, c2, c3, glow, hostURL}) => {
   if (c3>icon22.colors) {c3=12};
 
   return new Promise(async(resolve, reject) => {
-    const { textures, spritesInfo, layerNames, spritesheet } = await getIconTextures({
+    const { textures, spritesInfo, layerNames } = await getIconTextures({
       type,
       iconNumber,
       hostURL

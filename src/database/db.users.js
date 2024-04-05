@@ -2,6 +2,8 @@
 import { authorize } from "@/libs/secure";
 import { sql } from '@vercel/postgres'
 import { unstable_noStore as noStore } from 'next/cache';
+import { renameUserInRecords } from "./db.records";
+import { renameUserInStuffItems } from "./db.accstuffitems";
 
 /**
  * Esta función agrega un usuario a la base de datos. Los parametros faltantes se ponen por default en la base de datos.
@@ -28,6 +30,11 @@ export const addUser = async({ user, password, phone, accountid }) => {
 export const getUser = async({user}) => {
   noStore();
   return (await sql`SELECT * from users WHERE username = ${user} `).rows[0];
+}
+
+export const getUserByAccountID = async({accountid}) => {
+  noStore();
+  return (await sql`SELECT * from users WHERE accountid = ${accountid}`).rows[0];
 }
 
 /**
@@ -102,4 +109,15 @@ export const setUserPassword = async({username, password}) => {
   const result = await sql`UPDATE users SET password = ${password} WHERE username = ${username} `;
   if (!result) throw new Error('Error al cambiar password: ' + result)
   return 1;
+}
+
+export const renameUser = async({accountid, username}) => {
+  noStore();
+  const result = await sql`UPDATE users SET username = ${username} WHERE accountid = ${accountid}`;
+  if (result.rowCount) {
+    await renameUserInRecords({accountid, username})
+    await renameUserInStuffItems({accountid, username})
+  }
+  console.log(`Renombrada cuenta ${username} \#${accountid}`)
+  return result.rowCount
 }

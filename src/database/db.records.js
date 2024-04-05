@@ -123,3 +123,8 @@ export const reposicionarNivel = async(levelid, oldScore = 0, newScore = 1) => {
   const updateLevel = await sql`UPDATE records SET difficultyscore = ${newScore} WHERE levelid = ${levelid}`
   return updateLevel.rowCount
 }
+
+export const renameUserInRecords = async({accountid, username}) => {
+  noStore();
+  return (await sql`UPDATE records SET username = ${username} WHERE accountid = ${accountid}`).rowCount;
+}

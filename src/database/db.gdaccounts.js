@@ -83,12 +83,12 @@ export const updateAccounts = async({limit= 3, timeLimit = 60000}) => {
   
   console.log("DATABASE: actualizando accounts")
   // Pregunta las cuentas con la información más antigua
-  const result = (await sql`SELECT accountid FROM gdaccounts ORDER BY timestamp ASC LIMIT ${limit} `).rows
+  const result = (await sql`SELECT accountid,username FROM gdaccounts ORDER BY timestamp ASC LIMIT ${limit} `).rows
 
   if (result) {
     // Request a los servidores de Rob
     for (const acc of result) {
-      await updateAccountCloud(acc.accountid)
+      await updateAccountCloud(acc.accountid, acc.username)
     }
 
     // Actualizando Timestamp

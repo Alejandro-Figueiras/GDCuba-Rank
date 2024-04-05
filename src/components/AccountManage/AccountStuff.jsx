@@ -50,7 +50,7 @@ const AccountStuff = ({account, setAccount, stuffItems = [], setStuffItems, load
     if (result == 1) {
       notify(`Items organizados`, 'success')
     } else {
-      notify(`ERROR al eliminar el item. Error Code: ${result}`, 'error')
+      notify(`ERROR al ordenar el item. Error Code: ${result}`, 'error')
     }
   }
 

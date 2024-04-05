@@ -41,7 +41,7 @@ export default ({ ranking, tipo = 'stars', loading = false }) => {
   return (
     <div className="m-2 sm:m-4">
       <Table selectionMode="single" classNames={{
-          table: `${(tipo == 'stars') ? "min-w-[480px]" : 'min-w-[320px]'} overflow-scroll min-h-[400px]`,
+          table: `${(tipo == 'stars') ? "min-w-[480px]" : 'min-w-[320px]'} overflow-scroll ${loading?'min-h-[400px]':''}`,
       }} aria-label="Rank Table">
         <TableHeader>
             {cols}
@@ -49,7 +49,7 @@ export default ({ ranking, tipo = 'stars', loading = false }) => {
         <TableBody
           isLoading={loading}
           loadingContent={<Spinner label="Cargando datos..." />}
-          emptyContent={"No hay usuarios para mostrar"}
+          emptyContent={loading?null:"No hay usuarios para mostrar"}
         >
           {
             ranking.map((player, i) => 

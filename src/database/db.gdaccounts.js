@@ -5,6 +5,8 @@ import { kv } from '@vercel/kv'
 import { sql } from '@vercel/postgres'
 import { unstable_noStore as noStore } from 'next/cache';
 import { updateLandingStatsAcc } from "./db.staticInfo";
+import { removeRecordsByUsername } from "./db.records";
+import { eliminarUser } from "./db.users";
 /**
  * Agrega una cuenta de GD a la base de datos, y especifica si es cubano o no.
  * @async
@@ -64,6 +66,10 @@ export const changeCuban = async(username, cuba) => {
 export const removeGDAccount = async(username) => {
   noStore();
   const result = await sql`DELETE FROM gdaccounts WHERE username=${username} `
+  if (result.rowCount) {
+    await removeRecordsByUsername(username);
+    await eliminarUser({username});
+  }
   return result.rowCount?1:0
 }
 

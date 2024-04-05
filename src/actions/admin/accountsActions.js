@@ -15,7 +15,6 @@ export const changeCubanAction = async({username, cuba}) => {
 export const removeGDAccountAction = async({username}) => {
   if (await authorize()) {
     const result = await removeGDAccount(username)
-    // TODO eliminar sus records
     updateLandingStatsAcc();
     return result
   }

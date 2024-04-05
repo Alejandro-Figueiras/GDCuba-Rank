@@ -128,3 +128,8 @@ export const renameUserInRecords = async({accountid, username}) => {
   noStore();
   return (await sql`UPDATE records SET username = ${username} WHERE accountid = ${accountid}`).rowCount;
 }
+
+export const removeRecordsByUsername = async(username) => {
+  noStore();
+  return (await sql`DELETE FROM records WHERE username = ${username}`).rowCount;
+}

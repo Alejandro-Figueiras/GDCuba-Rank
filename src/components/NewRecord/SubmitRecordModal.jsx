@@ -8,7 +8,8 @@ import {
   ModalHeader,
   Slider,
   Select,
-  SelectItem
+  SelectItem,
+  Spinner
 } from "@nextui-org/react";
 import React, { useEffect, useState, useRef } from "react";
 import SearchLevel from '@/components/NewRecord/SearchLevel'
@@ -27,6 +28,7 @@ export default function SubmitRecordModal({
   const [submitResult, setSubmitResult] = useState(0)
   const [account, setAccount] = useState({}) // Only admin
   const [accountList, setAccountList] = useState([]) // Only admin
+  const [loading, setLoading] = useState(false)
   const sliderValue = useRef(100);
   const videoRef = useRef(null)
 
@@ -37,6 +39,7 @@ export default function SubmitRecordModal({
     video.replace('m.youtube', 'www.youtube')
     if (!video.includes("youtube.com") || !video.includes("youtu.be")) video = ''
 
+    setLoading(true)
     const submitResult = (admin)
     ? await submitRecordAdminAction({
       percent,
@@ -49,6 +52,7 @@ export default function SubmitRecordModal({
     }, level)
     
     setSubmitResult(submitResult)
+    setLoading(false)
   }
 
   // Si es plataforma, poner 100% por default
@@ -66,9 +70,11 @@ export default function SubmitRecordModal({
       setAccount({})
       if (admin) {
         setAccount({})
+        setLoading(true)
         getAllAccountsAction().then(accounts => {
           setAccount({})
           setAccountList(JSON.parse(accounts))
+          setLoading(false)
         })
       }
     }
@@ -86,7 +92,12 @@ export default function SubmitRecordModal({
           <>
             <ModalHeader>Nuevo Record {admin && `(admin)`}</ModalHeader>
             <ModalBody>
-              {(submitResult==0)?<div className="">
+              {loading ? <div className="flex flex-col justify-center gap-4">
+                <Spinner />
+                <p className="text text-medium text-center">Cargando...</p>
+              </div> :
+              (submitResult==0)
+              ?<div className="">
               {admin && 
                 <Select
                   items={accountList}
@@ -132,10 +143,12 @@ export default function SubmitRecordModal({
                   <Input type="text" className="max-w-md mx-auto" size='lg' radius='sm' ref={videoRef} placeholder="YouTube Video URL (Opcional)"/>
                 </div>
               </>}
-            </div>:<SubmitResult submitResult={submitResult} />}
+            </div>:<SubmitResult submitResult={submitResult} />
+              
+              }
             </ModalBody>
             <ModalFooter>
-              {submitResult==0 && <Button
+              {(submitResult==0 && !loading) && <Button
                 color="success"
                 variant="flat"
                 onPress={handleSubmit}

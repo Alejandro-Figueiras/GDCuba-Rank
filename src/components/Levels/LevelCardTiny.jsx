@@ -9,18 +9,17 @@ import {
 const LevelCardTiny = ({level, hover=false}) => {
   const dificultad = parseDifficulty(level)
   return (
-    <div className="flex justify-center">
     <Card
       isBlurred
       className={`
       bg-background/60 border-solid border-3 border-divider dark:bg-default-100/50 
-      w-max overflow-hidden
+      overflow-hidden w-full
       ${hover?'hover:bg-primary-50':''}`}
       shadow="sm"
     >
       <CardBody>
-        <div className="grid grid-cols-12 gap-4 items-center justify-center">
-          <div className="relative col-span-2 flex justify-center">
+        <div className="flex flex-row gap-4 items-center justify-start">
+          <div className="relative min-w-14 flex justify-center">
             <Image
               alt="Difficulty"
               className="object-cover"
@@ -33,10 +32,10 @@ const LevelCardTiny = ({level, hover=false}) => {
             <div className="flex justify-between items-start">
               <div className="flex flex-col gap-0">
 
-                <div className="">
-                  <h1 className="font-medium mt-2">
-                    <span className="text-xl">{level.levelname}</span>
-                    <span className="text-lg ml-2 text-foreground/70">by {level.author}</span>
+                <div className=" ">
+                  <h1 className="font-medium mt-2 flex flex-row flex-wrap">
+                    <span className="text-xl ">{level.levelname}</span>
+                    <span className="text-lg ml-2 text-foreground/70 text-nowrap">by {level.author}</span>
                   </h1>
                   <h3 className="font-medium ">
                     
@@ -59,14 +58,11 @@ const LevelCardTiny = ({level, hover=false}) => {
                     {level.coins}
                   </span> 
                   <span>
-                    {level.platformer?'Plataforma':'Tradicional'}
-                  </span>
-                  {level.platformer ? '' :
-                    <span className="flex">
+                    {level.platformer?'Plataforma': <span className="flex">
                       <img src="/assets/levelIcons/length.png" style={{height: '18px', marginRight: '4px'}}/>
                       {getLengthName({length: level.length, noPlatformer: true})}
-                    </span>
-                  }
+                    </span>}
+                  </span>
                 </p>
                 
               </div>
@@ -75,7 +71,6 @@ const LevelCardTiny = ({level, hover=false}) => {
         </div>
       </CardBody>
     </Card>
-    </div>
   )
 }
 

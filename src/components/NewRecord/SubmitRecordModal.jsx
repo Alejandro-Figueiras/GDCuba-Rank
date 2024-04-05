@@ -51,6 +51,13 @@ export default function SubmitRecordModal({
     setSubmitResult(submitResult)
   }
 
+  // Si es plataforma, poner 100% por default
+  useEffect(() => {
+    if (level && level.platformer) {
+      sliderValue.current = 100
+    }
+  }, [])
+
   // ----- RESET -----
   useEffect(() => {
     if (isOpen) {
@@ -105,18 +112,23 @@ export default function SubmitRecordModal({
               {level && <>
                 <LevelCard level={level} />
                 <div className='mt-2 flex flex-col gap-4'>
-                  <Slider
-                    color='success'
-                    step={1}
-                    onChange={value => {
-                      sliderValue.current=value
-                    }}
-                    maxValue={100}
-                    minValue={0}
-                    defaultValue={100}
-                    label="Porciento Completado"
-                    className="max-w-md mx-auto"
-                  />
+                  {
+                    level.platformer 
+                    ? <span className="text-center">Los niveles del modo plataforma se tomarán como totalmente completados al mandar el Record.<br/>Si no has completado el nivel, <b>no lo envíes</b>.</span>
+                    : <Slider
+                      color='success'
+                      step={1}
+                      onChange={value => {
+                        sliderValue.current=value
+                      }}
+                      maxValue={100}
+                      minValue={0}
+                      defaultValue={100}
+                      label="Porciento Completado"
+                      className="max-w-md mx-auto"
+                    />
+
+                  }
                   <Input type="text" className="max-w-md mx-auto" size='lg' radius='sm' ref={videoRef} placeholder="YouTube Video URL (Opcional)"/>
                 </div>
               </>}

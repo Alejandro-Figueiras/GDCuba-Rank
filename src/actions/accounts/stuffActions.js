@@ -40,6 +40,8 @@ export const updateAccountStuffAction = async({accountid, username, stuff}) => {
 }
 
 export const deleteStuffItemAction = async({accountid, username, stuff, id}) => {
+  const auth = JSON.parse(await authMe())
+  if (auth.username != username || auth.accountid != accountid) return 403;
   const newStuff = []
   for (const item of stuff.split(',')) {
     if (item!=id) newStuff.push(item)

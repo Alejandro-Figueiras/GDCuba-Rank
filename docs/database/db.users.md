@@ -10,7 +10,7 @@ Esta función agrega un usuario a la base de datos. Los parametros faltantes se 
   user,     // String
   password, // String (hash)
   phone,    // String
-  accountID // Number
+  accountid // Number
 }
 ```
 

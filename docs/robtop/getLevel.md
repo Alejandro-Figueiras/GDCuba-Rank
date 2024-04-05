@@ -11,7 +11,7 @@ Las respuesta tienen de formato de objeto de la siguiente manera
     {
       playerID: Integer
       playerName: String
-      accountID: Integer
+      accountid: Integer
     },
     ...
   ],

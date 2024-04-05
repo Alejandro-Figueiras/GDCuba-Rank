@@ -9,7 +9,7 @@ export const useSesion = () => {
   const logout = () => {
     setCurrentUser({
       username: undefined,
-      accountID: undefined,
+      accountid: undefined,
     });
   };
 

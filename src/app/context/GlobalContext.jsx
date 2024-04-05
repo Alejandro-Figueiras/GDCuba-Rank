@@ -9,7 +9,7 @@ export const GlobalContext = createContext();
 export default function GlobalContextProvider({ children }) {
   const [currentUser, setCurrentUser] = useState({
     username: undefined,
-    accountID: undefined,
+    accountid: undefined,
     phone: undefined,
     role: undefined
   });

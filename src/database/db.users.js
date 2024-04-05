@@ -8,7 +8,7 @@ import { renameUserInStuffItems } from "./db.accstuffitems";
 /**
  * Esta función agrega un usuario a la base de datos. Los parametros faltantes se ponen por default en la base de datos.
  * @async
- * @param {Object} { user, password, phone, accountID }
+ * @param {Object} { user, password, phone, accountid }
  * @returns {Object} 
  */
 export const addUser = async({ user, password, phone, accountid }) => {

@@ -14,7 +14,7 @@ export const authMe = async () => {
 
       const user = {
         username: payload.username,
-        accountID: payload.accountid,
+        accountid: payload.accountid,
         phone: payload.phone,
         role: payload.role
       };

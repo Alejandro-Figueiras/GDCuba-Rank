@@ -35,8 +35,8 @@ export const getAccountByID = async(targetAccountID) => {
 export const getAccount = async(target) => {
     try {
         const body = await gdRequest("getGJUsers20", {str: target});
-        let accountID = parseInt(responseToObj(body, ":")[16]); // AccountID
-        return await getAccountByID(accountID);
+        let accountid = parseInt(responseToObj(body, ":")[16]); // AccountID
+        return await getAccountByID(accountid);
     } catch (err) {
         return -1;
     }

@@ -66,7 +66,7 @@ const MainStats = ({}) => {
     })
   }, [])
 
-  return <div className="container mx-auto my-12 flex justify-center flex-wrap gap-6 md:gap-10">
+  return <div className="container mx-auto my-12 px-4 flex justify-center flex-wrap gap-6 md:gap-10 text-center">
     {cards.map((card, i) => {
       return <StatsCard {...card} key={i} />
     })}

@@ -19,7 +19,7 @@ const AccountStat = ({ value, icon = null, className }) => {
 }
 
 const AccountStatsRow = ({user}) => {
-  return (<div className="min-h-8 w-full">
+  return (<div className="min-h-20 min-[721px]:min-h-8 w-full max-w-full">
     <div className="flex justify-evenly gap-4 user__stats-up-row">
       <AccountStat value={user.stars} icon="/assets/stats/starsIcon.png"/>
       <AccountStat value={user.moons} icon="/assets/stats/moonsIcon.png"/>

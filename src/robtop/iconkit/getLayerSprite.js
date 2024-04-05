@@ -8,9 +8,6 @@ const intToHex = (c) => {
 }
 
 export const getLayerSprite = async({texture, info = {}, color = null, rotate = null, scaleX = 1, scaleY = 1}) => {
-  // TODO si es necesario
-  // image.resize(image.getWidth() * scale[0], image.getHeight() * scale[1])
-  
   const sprite = new Sprite(texture);
   sprite.angle = 
   ((info.textureRotated) ? -90 : 0) +

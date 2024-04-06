@@ -5,7 +5,8 @@ import {
   ModalBody,
   ModalFooter,
   Button,
-  Divider
+  Divider,
+  Spinner
 } from "@nextui-org/react";
 import React, {
   useEffect,
@@ -21,9 +22,12 @@ import RecordsLinkButton from "./Records/RecordsLinkButton";
 export default function UserModalView({ user = {account: {}, stuff: []}, isOpen, onOpenChange }) {
   const { account, stuff = [] } = user
   const [isLoading, setIsLoading] = useState(false);
+  const [stuffLoading, setStuffLoading] = useState(false)
 
   useEffect(() => {
-    setIsLoading(isOpen && account.isLoading);
+    setIsLoading(isOpen && user.isLoading);
+    if (isOpen && !user.isLoading && user.isStuffLoading) setStuffLoading(true)
+    else setStuffLoading(false)
   }, [user]);
 
   return (
@@ -48,12 +52,18 @@ export default function UserModalView({ user = {account: {}, stuff: []}, isOpen,
                 <ModalBody>
                   <AccountStatsRow user={account} />
                   <AccountIconsRow user={account} />
-                  {stuff.length != 0 && <Divider />}
+                  {account.stuff != '' && <Divider />}
                   <AccountStuff
                     account={account}
                     stuffItems={stuff}
                     manage={false}
                   />
+                  {
+                    stuffLoading && <div className="flex flex-col mt-2 items-center">
+                      <Spinner />
+                      <p className="text-medium">Cargando stuff...</p>
+                    </div>
+                  }
                 </ModalBody>
                 <ModalFooter>
                   <RecordsLinkButton username={account.username} />

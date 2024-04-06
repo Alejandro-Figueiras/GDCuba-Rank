@@ -1,7 +1,6 @@
 "use client"
 import { getAccountAction } from "@/actions/accounts/getAccountAction";
 import { getStuffItemsAction } from "@/actions/accounts/stuffActions";
-import ModalAccept from "@/components/Admin/ModalAccept";
 import ChangePassword from "@/components/Forms/ChangePassword";
 import Login from "@/components/Forms/Login";
 import SignUp from "@/components/Forms/SignUp";
@@ -52,16 +51,17 @@ export default function ModalProvider({ children }) {
 
   const openUserView = async (user) => {
     const shouldLoad = user.stars == null;
-    setCurrentUetuserInView({ account: user, stuff: [], isLoading: shouldLoad });
+    setCurrentUetuserInView({ account: user, stuff: [], isLoading: shouldLoad, isStuffLoading: user && user.stuff != '' });
     onOpenUserView();
     if (shouldLoad) {
       user = JSON.parse(
         await getAccountAction({ username: user.username })
       );
     }
-    const stuff = JSON.parse(
+    const stuff = (user.stuff != '')?JSON.parse(
       await getStuffItemsAction({accountid: user.accountid})
-    );
+    ) : []
+    ;
     setCurrentUetuserInView({account: user, stuff});
   };
 

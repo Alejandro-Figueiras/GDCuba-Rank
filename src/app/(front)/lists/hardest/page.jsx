@@ -10,34 +10,45 @@ export default () => {
   const [levels, setLevels] = useState([])
   const [records, setRecords] = useState([])
   const [loading, setLoading] = useState(true)
+  const [loadingError, setLoadingError] = useState('')
 
   useEffect(() => {
     setLoading(true)
     getAllCubansAction().then(async(players) => {
-      const newPlayers = JSON.parse(players)
-      const playersObject = {};
-      for (const player of newPlayers) {
-        playersObject[player.accountid] = player
-      }
-      const records = JSON.parse(await getAllExtremesVerifiedAction())
-      const newLevels = {};
-      for (const record of records) {
-        const level = {
-          levelid: record.levelid,
-          levelname: record.levelname,
-          featured: record.featured,
-          difficulty: record.difficulty,
-          difficultyscore: record.difficultyscore
+      try {
+        const newPlayers = JSON.parse(players)
+        const playersObject = {};
+        for (const player of newPlayers) {
+          playersObject[player.accountid] = player
         }
-        if (newLevels[level.levelid] == undefined) {
-          newLevels[level.levelid] = level;
+        const records = JSON.parse(await getAllExtremesVerifiedAction())
+        const newLevels = {};
+        for (const record of records) {
+          const level = {
+            levelid: record.levelid,
+            levelname: record.levelname,
+            featured: record.featured,
+            difficulty: record.difficulty,
+            difficultyscore: record.difficultyscore
+          }
+          if (newLevels[level.levelid] == undefined) {
+            newLevels[level.levelid] = level;
+          }
         }
+        const levels = Object.values(newLevels).sort((a,b) => b.difficultyscore - a.difficultyscore)
+        setLevels(levels)
+        setPlayers(playersObject)
+        setRecords(records)
+        setLoading(false)
+      } catch(err) {
+        console.log(err)
+        setLoading(false)
+        setLoadingError("Error al descargar los datos")
       }
-      const levels = Object.values(newLevels).sort((a,b) => b.difficultyscore - a.difficultyscore)
-      setLevels(levels)
-      setPlayers(playersObject)
-      setRecords(records)
+    }).catch(err => {
+      console.log(err)
       setLoading(false)
+      setLoadingError("Error al descargar los datos")
     })
   }, [])
 
@@ -62,8 +73,17 @@ export default () => {
               records={filterRecords(level.levelid)}
             />)
       }
+      {
+        (!loading && !loadingError && levels.length == 0) && 
+          <p className="mt-2 text-medium text-center">No hay datos para mostrar</p>
+      }
+      {
+        (!loading && loadingError) && 
+        <div className="flex flex-col items-center mt-2">
+          <img src="/assets/ui/delete.png" className="w-8"/>
+          <p className="text-medium">{loadingError}</p>
+        </div>
+      }
     </div>
   )
 }
-
-// TODO vacio

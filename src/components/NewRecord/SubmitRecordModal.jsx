@@ -45,7 +45,8 @@ export default function SubmitRecordModal({
       percent,
       video,
       accountid: account.accountid,
-      username: account.username
+      username: account.username,
+      cuba: account.cuba
     }, level)
     : await submitRecord({
       percent, video

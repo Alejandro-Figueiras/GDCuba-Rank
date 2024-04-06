@@ -4,7 +4,7 @@ import { authorize } from "@/libs/secure";
 import { getAllCubans } from "./db.gdaccounts"
 import { sql } from '@vercel/postgres'
 import { unstable_noStore as noStore } from 'next/cache';
-import { getAllRecords } from "./db.records";
+import { getAllCubanRecords } from "./db.records";
 
 const updateDBInfoLandingStats = async(info) => {
   noStore();
@@ -42,10 +42,9 @@ export const updateLandingStatsAcc = async({accounts, oldData} = {}) => {
 }
 
 export const updateLandingStatsRecords = async({oldData, records}) => {
-  // TODO Filtrar records por cuba
   if (!authorize()) return;
   if (!oldData) oldData = await getLandingStats();
-  if (!records) records = await getAllRecords(); // TODO filtrar only cubans
+  if (!records) records = await getAllCubanRecords();
 
   const info = {
     ...oldData,

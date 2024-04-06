@@ -1,7 +1,7 @@
 'use server'
 
-import { getAllInsaneDemonsVerified } from "@/database/db.records"
+import { getAllCubanInsaneDemonsVerified } from "@/database/db.records"
 
-export const getAllInsaneDemonsVerifiedAction = async() => {
-  return JSON.stringify(await getAllInsaneDemonsVerified())
+export const getAllCubanInsaneDemonsVerifiedAction = async() => {
+  return JSON.stringify(await getAllCubanInsaneDemonsVerified())
 }

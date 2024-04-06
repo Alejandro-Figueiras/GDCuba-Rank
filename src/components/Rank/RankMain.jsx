@@ -1,6 +1,6 @@
 "use client"
 import { getAllCubansAction } from "@/actions/accounts/getAllCubansAction"
-import { getAllExtremesVerifiedAction } from "@/actions/record/getAllExtremeDemons"
+import { getAllCubanExtremesVerifiedAction } from "@/actions/record/getAllExtremeDemons"
 import RankTable from "@/components/Rank/RankTable"
 import { useState, useEffect } from 'react'
 
@@ -13,7 +13,7 @@ export default ({tipo = 'stars'}) => {
     getAllCubansAction().then(async(players) => {
       players = JSON.parse(players)
       if (tipo == 'extreme_demons') {
-        const records = JSON.parse(await getAllExtremesVerifiedAction())
+        const records = JSON.parse(await getAllCubanExtremesVerifiedAction())
         const newPlayers = []
         for (const player of players) {
           player.verified_extreme_demons = records.filter((val, i, array) => val.accountid == player.accountid).length;

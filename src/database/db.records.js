@@ -40,7 +40,8 @@ export const addRecord = async(record = {}) => {
     video,
     difficulty,
     featured,
-    difficultyscore
+    difficultyscore,
+    cuba
   ) VALUES(
     ${record.accountid},
     ${record.username},
@@ -51,7 +52,8 @@ export const addRecord = async(record = {}) => {
     ${record.video},
     ${record.difficulty},
     ${record.featured},
-    ${difficultyscore}
+    ${difficultyscore},
+    ${record.cuba}
   )`;
   
   return result.rowCount ? 1 : -1;
@@ -75,21 +77,27 @@ export const getAllRecords = async() => {
   return result.rowCount?result.rows:[];
 }
 
+export const getAllCubanRecords = async() => {
+  noStore()
+  const result = await sql`SELECT * FROM records WHERE cuba = 1`;
+  return result.rowCount?result.rows:[];
+}
+
 export const getUnverifiedRecords = async() => {
   noStore()
   const result = await sql`SELECT * FROM records WHERE aval = 0 OR aval = -2`;
   return result.rowCount?result.rows:[];
 }
 
-export const getAllExtremesVerified = async() => {
+export const getAllCubanExtremesVerified = async() => {
   noStore();
-  const result = await sql`SELECT * FROM records WHERE difficulty = 15 AND percent = 100 AND aval = 1`
+  const result = await sql`SELECT * FROM records WHERE difficulty = 15 AND percent = 100 AND aval = 1 AND cuba = 1`
   return (result.rowCount)?result.rows:[];
 }
 
-export const getAllInsaneDemonsVerified = async() => {
+export const getAllCubanInsaneDemonsVerified = async() => {
   noStore();
-  const result = await sql`SELECT * FROM records WHERE difficulty = 14 AND percent = 100 AND aval = 1`
+  const result = await sql`SELECT * FROM records WHERE difficulty = 14 AND percent = 100 AND aval = 1 AND cuba = 1`
   return (result.rowCount)?result.rows:[];
 }
 
@@ -132,4 +140,9 @@ export const renameUserInRecords = async({accountid, username}) => {
 export const removeRecordsByUsername = async(username) => {
   noStore();
   return (await sql`DELETE FROM records WHERE username = ${username}`).rowCount;
+}
+
+export const changeCubanInRecords = async(username, cuba = 0) => {
+  noStore();
+  return (await sql`UPDATE records SET cuba = ${cuba} WHERE username = ${username}`).rowCount;
 }

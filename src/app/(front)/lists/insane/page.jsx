@@ -1,6 +1,6 @@
 "use client"
 import { getAllCubansAction } from "@/actions/accounts/getAllCubansAction"
-import { getAllInsaneDemonsVerifiedAction } from "@/actions/record/getAllInsaneDemons"
+import { getAllCubanInsaneDemonsVerifiedAction } from "@/actions/record/getAllInsaneDemons"
 import ListLevelVictors from "@/components/Lists/ListLevelVictors"
 import {useState, useEffect} from 'react'
 import { Spinner } from '@nextui-org/react'
@@ -21,7 +21,7 @@ export default () => {
         for (const player of newPlayers) {
           playersObject[player.accountid] = player
         }
-        const records = JSON.parse(await getAllInsaneDemonsVerifiedAction())
+        const records = JSON.parse(await getAllCubanInsaneDemonsVerifiedAction())
         const newLevels = {};
         for (const record of records) {
           const level = {

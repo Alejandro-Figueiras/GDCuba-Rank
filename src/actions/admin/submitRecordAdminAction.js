@@ -10,6 +10,7 @@ export const submitRecordAdminAction = async(datos = {}, level = {}) => {
   const record = {
     accountid: datos.accountid,
     username: datos.username,
+    cuba: datos.cuba,
     levelname: level.levelname,
     levelid: level.id,
     percent: datos.percent,

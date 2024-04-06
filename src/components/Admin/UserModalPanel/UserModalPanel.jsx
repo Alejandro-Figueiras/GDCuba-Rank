@@ -9,8 +9,7 @@ import {
   Button,
   Spinner,
 } from "@nextui-org/react";
-import React, { useContext, useEffect, useId, useRef, useState } from "react";
-import config from "../../../../config";
+import React, { useContext, useEffect, useState } from "react";
 
 import BodyCard from "./BodyCard";
 import CardSelect from "./CardSelect";
@@ -20,7 +19,6 @@ import AccountInfoColumn from "./AccountInfoColumn";
 import { roles, status, types } from "./selectKeys";
 import { validateUserAction } from "@/actions/admin/validateUserAction";
 import { removeUserAction } from "@/actions/admin/removeUserAction";
-import GDSpinner from "@/components/GDIcons/GDSpinner";
 
 export default function UserModalPanel({
   user,
@@ -120,8 +118,8 @@ export default function UserModalPanel({
               {user.username}
             </ModalHeader>
             {isLoading || loadingExtra ? (
-              <div className="p-2 w-full flex justify-center items-center my-6">
-                <GDSpinner className={'w-10 h-10'} />
+              <div className="p-2 w-full flex flex-col h-10 justify-center items-center my-6">
+                <Spinner />
               </div>
             ) : (
               <>

@@ -1,6 +1,5 @@
-import GDSpinner from "@/components/GDIcons/GDSpinner";
 import { useGDIconRef } from "@/robtop/iconkit/useGDIcon";
-import { Card, CardBody } from "@nextui-org/react";
+import { Card, CardBody, Spinner } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 
 import './AccountIcons.css'
@@ -41,7 +40,7 @@ const AccountIcon = ({
   return (
     <div className={`flex flex-row justify-center ${className}`}>
       <div className="h-10 min-w-10 flex flex-col justify-center">
-        {loading && <GDSpinner className='h-8 w-8' />}
+        {loading && <Spinner color="danger" />}
         <img
           ref={icon}
           alt="Icon"

@@ -15,7 +15,6 @@ import React, {
 
 import AccountStatsRow from "./Admin/UserModalPanel/AccountStatsRow";
 import AccountIconsRow from "./Admin/UserModalPanel/AccountIconsRow";
-import GDSpinner from "@/components/GDIcons/GDSpinner";
 import AccountStuff from "./AccountManage/AccountStuff";
 import RecordsLinkButton from "./Records/RecordsLinkButton";
 
@@ -44,8 +43,8 @@ export default function UserModalView({ user = {account: {}, stuff: []}, isOpen,
               {account.username}
             </ModalHeader>
             {isLoading ? (
-              <div className="p-2 w-full flex justify-center items-center my-6">
-                <GDSpinner className={"w-10 h-10"} />
+              <div className="p-2 w-full flex flex-col justify-center items-center my-6 h-10">
+                <Spinner/>
               </div>
             ) : (
               <>

@@ -6,11 +6,11 @@ import {
   CardBody,
   Divider,
   Image,
+  Spinner
 } from "@nextui-org/react";
 import { useGDIcon } from "@/robtop/iconkit/useGDIcon";
 import { getAccountAction } from "@/actions/accounts/getAccountAction";
 import AccountStatsRow from "../Admin/UserModalPanel/AccountStatsRow";
-import GDSpinner from "../GDIcons/GDSpinner";
 import AccountIconsRow from "../Admin/UserModalPanel/AccountIconsRow";
 import AccountStuff from "./AccountStuff";
 import { getStuffItemsAction } from "@/actions/accounts/stuffActions";
@@ -78,7 +78,10 @@ export default function AccountView({manage = false, username }) {
               />
             </>
           ) : (
-            <GDSpinner />
+            <div className="flex flex-col h-[300px] justify-center items-center">
+              <Spinner/>
+              <p className="text-medium">Descargando cuenta</p>
+            </div>
           )}
         </CardBody>
       </Card>

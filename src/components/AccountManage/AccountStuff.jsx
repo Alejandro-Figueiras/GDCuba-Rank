@@ -12,7 +12,6 @@ import StuffHardest from './Stuff/StuffHardest'
 import StuffCreated from './Stuff/StuffCreated'
 
 const AccountStuff = ({account, setAccount, stuffItems = [], setStuffItems, loadAccount, manage = false}) => {
-  // TODO autorizaciones
   const {
     stuff,
     itemTypesLeft

@@ -117,9 +117,11 @@ const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, stuffItems =
                 }}
               >
                 {Object.keys(ITEM_TYPES).filter(val => {
-                  if (['bio', 'hardest'].includes(val)) {
+                  if (['bio', 'hardest', 'created'].includes(val)) {
                     for (const item of stuffItems) {
-                      if (item.type == val) return false;
+                      if (!account.stuff.split(',').includes(`${item.id}`)) continue;
+                      const { type } = JSON.parse(item.data)
+                      if (type == val) return false;
                     }
                   }
                   return true

@@ -9,7 +9,7 @@ import {
 const StuffItemTitle = ({title, id, handlers, manage = false, accStuff = ""}) => {
 
   const handleMove = (down = false) => {
-    const stuff = accStuff.split(',')
+    let stuff = accStuff.split(',')
     const index = stuff.findIndex(val => val==id);
     if (!down) {
       const temp = stuff[index]
@@ -20,6 +20,7 @@ const StuffItemTitle = ({title, id, handlers, manage = false, accStuff = ""}) =>
       stuff[index] = stuff[index+1]
       stuff[index+1] = temp;
     }
+    stuff = stuff.filter(val => val != "" && val != null)
     const newStuff = stuff.join(',')
     handlers.handleSort(newStuff)
   }

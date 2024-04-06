@@ -42,7 +42,7 @@ export const updateAccountStuffAction = async({accountid, username, stuff}) => {
 export const deleteStuffItemAction = async({accountid, username, stuff, id}) => {
   const newStuff = []
   for (const item of stuff.split(',')) {
-    if (item!=id) newStuff.push(item)
+    if (item!=id && item!='' && item!=null) newStuff.push(item)
   }
   // este server action ya valida la cuenta
   const updateResult = await updateAccountStuffAction({accountid, username, stuff: newStuff.join(','), id});

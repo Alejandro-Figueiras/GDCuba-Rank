@@ -1,5 +1,4 @@
 'use client'
-import { useState, useEffect } from 'react'
 import {
   Button,
   useDisclosure
@@ -18,7 +17,6 @@ const AccountStuff = ({account, setAccount, stuffItems = [], setStuffItems, load
     stuff,
     itemTypesLeft
   } = useStuff({account, stuffItems})
-
   const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
   const handleDelete = async(id) => {

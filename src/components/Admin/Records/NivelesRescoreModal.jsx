@@ -17,6 +17,7 @@ import {
 import RescoreTable from './ReescoreTable'
 import { reposicionarLevelAction } from '@/actions/admin/recordLevelsAction'
 import { notify } from '@/libs/toastNotifications'
+import RecordCard from '@/components/Records/RecordCard'
 
 const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels, handleRefresh}) => {
   const [loading, setLoading] = useState(false)
@@ -28,6 +29,7 @@ const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels, handleRefres
     setDisabled(true)
     setScoreRequested(level.difficultyscore)
   }
+  useEffect(clear, [isOpen])
 
   const getMaxDifficultyScore = (levels) => {
     return Math.max(...levels.map(level => level.difficultyscore))
@@ -89,9 +91,9 @@ const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels, handleRefres
                 onValueChange={value => setScoreRequested(value)}
                 label='Score'
                 />
-                {/* TODO fix this */}
-              <RescoreTable levels={[level]} />
-
+              <div className='flex flex-row justify-center'>
+                <RecordCard record={{...level, aval: 1}} className='border-1 border-default-200' />
+              </div>
             </ModalBody>
             <ModalFooter>
               <Button

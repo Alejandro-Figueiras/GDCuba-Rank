@@ -38,9 +38,9 @@ const RecordCard = ({record, className, mini=false}) => {
           }
         </div>
       </div>
-      <div className='flex flex-col justify-center'>
+      {record.percent && <div className='flex flex-col justify-center'>
         {(record.percent == 100)?<img src='/assets/ui/success.png' width={!mini?30:24}/>:`${record.percent}%`}
-      </div>
+      </div>}
     </CardBody>
   </Card>)
 }

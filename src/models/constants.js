@@ -1,6 +1,6 @@
 export const COOKIES_INFO = {
   name: 'gdcuba',
-  exp: 15
+  exp: 365
 }
 
 export const RECORDS_AVAL_VALUES = {

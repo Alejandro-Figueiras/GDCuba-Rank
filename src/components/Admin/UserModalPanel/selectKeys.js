@@ -1,6 +1,7 @@
 export const roles = [
   { key: "user", label: "Usuario" },
   { key: "admin", label: "Moderador" },
+  { key: "owner", label: "Owner" },
 ];
 export const status = [
   { key: "v", label: "Verificado" },

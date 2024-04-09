@@ -15,6 +15,10 @@ const renderRoleOrStatus = (arg) => {
       color = "success"
       texto = "Admin"  
       break;
+    case "owner":
+      color = "secondary"
+      texto = "Owner"  
+      break;
     case "v":
       color = "default"
       texto = "Verificado"

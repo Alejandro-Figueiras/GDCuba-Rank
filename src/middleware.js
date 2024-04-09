@@ -15,7 +15,7 @@ export async function middleware(request) {
 
       access =
         payload.role === "admin" ||
-        payload.username === process.env.SUPER_USER;
+        payload.role === "owner";
 
     } else if (process.env.NODE_ENV == "development") {
       access = true;

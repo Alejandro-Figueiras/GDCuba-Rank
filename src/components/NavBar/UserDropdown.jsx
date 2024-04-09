@@ -154,7 +154,7 @@ const UserDropdown = ({
           )}
           {
             // Admin Link
-            !admin && logged && currentUser.role == "admin" && (
+            !admin && logged && (currentUser.role == "admin" || currentUser.role == "owner") && (
               <DropdownItem key="admin-link" href="/admin">
                 Admin Dashboard
               </DropdownItem>

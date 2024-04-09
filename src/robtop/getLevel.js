@@ -56,14 +56,15 @@ export const getLevelByID = async (id) => {
  * @param {String} query
  * @returns {{levels, authors, songs}}
  */
-export const getLevels = async (query) => {
+export const getLevels = async(query) => {
   try {
     const body = await gdRequest("getGJLevels21", {
       type: '0',
       gdw: '0',
       str: query,
     });
-    return parseResponse(body)
+    const response = parseResponse(body)
+    return response;
   } catch (err) {
     console.log(err)
     return -1;

@@ -42,9 +42,9 @@ export default class Level {
         // Song
         this.officialsong = parseInt(body[12])
         this.songid = parseInt(body[35])
-        if (this.songid || !song || Object.keys(songs) == 0) {
+        if (!this.officialsong && (this.songid || !song || songs.length == 0)) {
             song = songs.find(v => v.id == this.songid);
-            if (!songs) song = {}
+            if (!song) song = {}
         }
         this.songname = song.name;
         this.songartistid = song.artistid;

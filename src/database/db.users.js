@@ -76,7 +76,15 @@ export const validateUser = async({user, unvalidate = false}) => {
   noStore()
   if (!(await authorize())) return undefined;
   const result = await sql`UPDATE users SET status = ${unvalidate? 'u' : 'v'} WHERE username = ${user}`;
-  if (!result) throw new Error('Error al validar' + result)
+  if (!result) throw new Error('Error al validar ' + result)
+  return 1;
+}
+
+export const changeUserRole = async({user, role = "user"}) => {
+  noStore()
+  if (!(await authorize())) return undefined;
+  const result = await sql`UPDATE users SET role = ${role} WHERE username = ${user}`;
+  if (!result) throw new Error('Error al cambiar el rol ' + result)
   return 1;
 }
 

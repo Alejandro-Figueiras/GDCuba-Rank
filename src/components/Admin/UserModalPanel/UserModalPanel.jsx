@@ -20,6 +20,8 @@ import { roles, status } from "./selectKeys";
 import { validateUserAction } from "@/actions/admin/validateUserAction";
 import { removeUserAction } from "@/actions/admin/removeUserAction";
 import { banUser } from "@/database/db.users";
+import { useSesion } from "@/hooks/useSesion";
+import { changeUserRoleAction } from "@/actions/admin/changeUserRoleAction";
 
 export default function UserModalPanel({
   user,
@@ -27,6 +29,7 @@ export default function UserModalPanel({
   onOpenChange,
   isLoading,
 }) {
+  const { currentUser } = useSesion();
   const [loadingExtra, setLoadingExtra] = useState(false)
 
   const [oldValues, setOldValues] = useState({
@@ -99,8 +102,12 @@ export default function UserModalPanel({
         } else {
           await validateUserAction({user: user.username, unvalidate: true})
         }
-      } else if (change == 'role') {
-        // TODO handle change role
+      } else if (change == 'role' && currentUser.role == "owner") {
+        const role = 
+          fields.role.has('owner') ? 'owner'
+          : fields.role.has('admin') ? 'admin'
+          : 'user'
+        await changeUserRoleAction({user: user.username, role})
       }
     }
     if (user.updateData) user.updateData()
@@ -136,7 +143,7 @@ return (
                         label={"Nivel"}
                         selectedKeys={fields.role}
                         onChange={(e) => handleSelectionChange(e, "role")}
-                        isDisabled={true}
+                        isDisabled={(currentUser.role != "owner")}
                       />
                       <CardSelect
                         items={status}
@@ -159,9 +166,10 @@ return (
                   >
                     Actualizar
                   </Button>
-                  <Button color="danger" onClick={() => handleDelete(onClose)}>
+                  {/* TODO delete cooldown */}
+                  {(user.role == 'user' || currentUser.role == 'owner') && <Button color="danger" onClick={() => handleDelete(onClose)}>
                     Eliminar
-                  </Button>
+                  </Button>}
                   <Button color="danger" variant="light" onPress={onClose}>
                     Cancelar
                   </Button>

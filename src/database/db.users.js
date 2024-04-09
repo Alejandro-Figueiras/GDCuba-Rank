@@ -82,7 +82,6 @@ export const validateUser = async({user, unvalidate = false}) => {
 
 export const changeUserRole = async({user, role = "user"}) => {
   noStore()
-  if (!(await authorize())) return undefined;
   const result = await sql`UPDATE users SET role = ${role} WHERE username = ${user}`;
   if (!result) throw new Error('Error al cambiar el rol ' + result)
   return 1;
@@ -90,7 +89,8 @@ export const changeUserRole = async({user, role = "user"}) => {
 
 export const banUser = async({user}) => {
   noStore()
-  if (!(await authorize())) return undefined;
+  const accInfo = await getUser({user})
+  if (!(await authorize({owner: accInfo.role != 'user'}))) return undefined;
   const result = await sql`UPDATE users SET status = ${'b'} WHERE username = ${user}`;
   if (result.rowCount > 0) {
     // Removing stuff items
@@ -109,7 +109,8 @@ export const banUser = async({user}) => {
  */
 export const eliminarUser = async({username}) => {
   noStore()
-  const auth = await authorize();
+  const accInfo = await getUser({user: username})
+  const auth = await authorize({owner: accInfo.role != 'user'});
   if (auth) {
     if (!username) return undefined;
     const result = await sql`DELETE FROM users WHERE username = ${username} `;

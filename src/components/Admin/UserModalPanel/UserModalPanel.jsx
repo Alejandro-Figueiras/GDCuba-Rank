@@ -95,6 +95,7 @@ export default function UserModalPanel({
   const handleUpdate = async(e) => {
     for (const change of changes) {
       if (change == 'status') {
+        // TODO authorize
         if (fields[change].has('b')) {
           await banUser({user: user.username})
         } else if (fields[change].has('v')) {
@@ -150,6 +151,7 @@ return (
                         label={"Estado"}
                         selectedKeys={fields.status}
                         onChange={(e) => handleSelectionChange(e, "status")}
+                        isDisabled={(user.role != "user" && currentUser.role != 'owner')}
                       />
                     </BodyCard>
                   </div>

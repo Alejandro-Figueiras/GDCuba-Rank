@@ -42,6 +42,12 @@ export const deleteStuffItem = async(id) => {
   return (result.rowCount)?1:0
 }
 
+export const deleteStuffItemsByUsername = async(username) => {
+  noStore();
+  const result = await sql`DELETE FROM accstuffitems WHERE username = ${username}`
+  return (result.rowCount)?1:0
+}
+
 export const renameUserInStuffItems = async({accountid, username}) => {
   noStore();
   return (await sql`UPDATE accstuffitems SET username = ${username} WHERE accountid = ${accountid}`).rowCount;

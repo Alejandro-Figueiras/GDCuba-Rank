@@ -16,9 +16,10 @@ import CardSelect from "./CardSelect";
 import AccountStatsRow from "./AccountStatsRow";
 import AccountIconsRow from "./AccountIconsRow";
 import AccountInfoColumn from "./AccountInfoColumn";
-import { roles, status, types } from "./selectKeys";
+import { roles, status } from "./selectKeys";
 import { validateUserAction } from "@/actions/admin/validateUserAction";
 import { removeUserAction } from "@/actions/admin/removeUserAction";
+import { banUser } from "@/database/db.users";
 
 export default function UserModalPanel({
   user,
@@ -31,23 +32,21 @@ export default function UserModalPanel({
   const [oldValues, setOldValues] = useState({
     role: user.role,
     status: user.status,
-    // type: user.status
   });
-
+  
   const [changes, setChanges] = useState([]);
   const [fields, setFields] = useState({
     role: new Set([]),
     status: new Set([]),
-    // type: new Set([])
   });
-
+  
   const { openModal } = useContext(ModalContext);
 
   const handleSelectionChange = (e, whatChange) => {
     if (e.target.value == '') return;
-
+    
     const value = new Set([e.target.value]);
-
+    
     setFields((prev) => ({ ...prev, [whatChange]: value }));
     if (
       e.target.value != oldValues[whatChange] &&
@@ -65,14 +64,14 @@ export default function UserModalPanel({
     setOldValues({ role: user.role, status: user.status, type: user.playerType });
     setChanges([]);
   }, [user]);
-
+  
   const handleDelete = (onClose) => {
     openModal({
       title: `Eliminar ${user.username}`,
       desc: `¿Seguro que quieres eliminar a ${user.username}`,
       onSubmit: async () => {
         const result = JSON.parse(await removeUserAction({username: user.username}))
-
+        
         if (result) {
           const success = notify(
             `Usuario ${user.username} eliminado`,
@@ -93,7 +92,9 @@ export default function UserModalPanel({
   const handleUpdate = async(e) => {
     for (const change of changes) {
       if (change == 'status') {
-        if (fields[change].has('v')) {
+        if (fields[change].has('b')) {
+          await banUser({user: user.username})
+        } else if (fields[change].has('v')) {
           await validateUserAction({user: user.username})
         } else {
           await validateUserAction({user: user.username, unvalidate: true})
@@ -105,7 +106,7 @@ export default function UserModalPanel({
     if (user.updateData) user.updateData()
   }
 
-  return (
+return (
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
@@ -143,12 +144,6 @@ export default function UserModalPanel({
                         selectedKeys={fields.status}
                         onChange={(e) => handleSelectionChange(e, "status")}
                       />
-                      {/* <CardSelect
-                        items={types}
-                        label={"Tipo de cuenta"}
-                        selectedKeys={fields.type}
-                        onChange={(e) => handleSelectionChange(e, "types")}
-                      /> */}
                     </BodyCard>
                   </div>
                 </ModalBody>

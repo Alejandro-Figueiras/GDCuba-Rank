@@ -9,7 +9,7 @@ export const getStuffItemsAction = async(props) => {
 }
 
 export const submitStuffItemAction = async(props) => {
-  const auth = JSON.parse(await authMe());
+  const auth = JSON.parse(await authMe({forceRevalidate: true}));
   if (auth.username == props.username && auth.accountid == props.accountid) {
     return await addStuffItem(props)
   } else {
@@ -18,7 +18,7 @@ export const submitStuffItemAction = async(props) => {
 }
 
 export const updateStuffItemDataAction = async(props) => {
-  const auth = JSON.parse(await authMe());
+  const auth = JSON.parse(await authMe({forceRevalidate: true}));
   if (auth.username == props.username && auth.accountid == props.accountid) {
     return await updateStuffItemData(props.id, props.data)
   } else {
@@ -27,7 +27,7 @@ export const updateStuffItemDataAction = async(props) => {
 }
 
 export const updateAccountStuffAction = async({accountid, username, stuff}) => {
-  const auth = JSON.parse(await authMe());
+  const auth = JSON.parse(await authMe({forceRevalidate: true}));
   if (auth.username == username && auth.accountid == accountid) {
     return await updateAccountStuff({
       username,

@@ -23,6 +23,10 @@ const renderRoleOrStatus = (arg) => {
       color = "warning"
       texto = "No Verificado"
       break;
+    case "b":
+      color = "danger"
+      texto = "Baneado"
+      break;
   }
 
   return (

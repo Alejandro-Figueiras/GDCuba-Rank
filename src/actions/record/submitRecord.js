@@ -7,7 +7,7 @@ import { getGDAccount } from "@/database/db.gdaccounts"
 
 export const submitRecord = async(datos = {}, level = {}) => {
   const difficulty = parseDifficulty(level)
-  const auth = JSON.parse(await authMe());
+  const auth = JSON.parse(await authMe({forceRevalidate: true}));
   if (auth.status == 401) return JSON.stringify(auth)
   const acc = await getGDAccount(auth.username)
   const record = {

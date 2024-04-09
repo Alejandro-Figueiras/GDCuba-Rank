@@ -3,7 +3,8 @@ import { authorize } from "@/libs/secure";
 import { sql } from '@vercel/postgres'
 import { unstable_noStore as noStore } from 'next/cache';
 import { renameUserInRecords } from "./db.records";
-import { renameUserInStuffItems } from "./db.accstuffitems";
+import { deleteStuffItemsByUsername, renameUserInStuffItems } from "./db.accstuffitems";
+import { updateAccountStuff } from "./db.gdaccounts";
 
 /**
  * Esta función agrega un usuario a la base de datos. Los parametros faltantes se ponen por default en la base de datos.
@@ -74,8 +75,21 @@ export const getUnverifiedUsers = async() => {
 export const validateUser = async({user, unvalidate = false}) => {
   noStore()
   if (!(await authorize())) return undefined;
-  const result = await sql`UPDATE users SET status = ${unvalidate? 'u' : 'v'} WHERE username = ${user} `;
+  const result = await sql`UPDATE users SET status = ${unvalidate? 'u' : 'v'} WHERE username = ${user}`;
   if (!result) throw new Error('Error al validar' + result)
+  return 1;
+}
+
+export const banUser = async({user}) => {
+  noStore()
+  if (!(await authorize())) return undefined;
+  const result = await sql`UPDATE users SET status = ${'b'} WHERE username = ${user}`;
+  if (result.rowCount > 0) {
+    // Removing stuff items
+    const removeAccOrder = await updateAccountStuff({username: user, stuff: ''});
+    if (removeAccOrder) await deleteStuffItemsByUsername(user);
+  }
+  if (!result) throw new Error('Error al banear ' + result)
   return 1;
 }
 

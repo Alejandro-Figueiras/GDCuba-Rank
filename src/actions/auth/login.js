@@ -17,6 +17,18 @@ export const login = async ({ username, password }) => {
   if (user) {
     const passwordMatch = await compare(password, user.password);
     if (passwordMatch) {
+      if (user.status == 'b') {
+        return JSON.stringify({
+          status: "error",
+          message: responseText.bannedAccount,
+        });
+      } else if (user.status == 'u') {
+        return JSON.stringify({
+          status: "error",
+          message: responseText.unverifiedAccount,
+        });
+      }
+
       const token = createToken(user);
       console.log(token)
 

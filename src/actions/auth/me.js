@@ -5,24 +5,29 @@ import { COOKIES_INFO } from "@/models/constants";
 import { responseText } from "@/locales/siteText";
 import { getUserByAccountID } from "@/database/db.users";
 import jwt from "jsonwebtoken";
+import { logout } from "../logout/logout";
 
-export const authMe = async () => {
+export const authMe = async ({forceRevalidate = false} = {}) => {
   const cookie = cookies().get(COOKIES_INFO.name);
 
   if (cookie) {
     try {
-      const payload = verify(cookie.value, process.env.JWT_SECRET);
+      let payload = verify(cookie.value, process.env.JWT_SECRET);
+      
+      if (Math.floor(Date.now() / 1000) - payload.iat > 24*60*60 || forceRevalidate) {
+        const result = await revalidateToken(payload.accountid)
+        if (result == -1) {
+          return JSON.stringify({ error: responseText.badRequest, status: 401 });
+        }
+        payload = verify(result, process.env.JWT_SECRET)
+      }
       const user = {
         username: payload.username,
         accountid: payload.accountid,
         phone: payload.phone,
         role: payload.role
       };
-
-      if (Math.floor(Date.now() / 1000) - payload.iat > 24*60*60) {
-        await revalidateToken(payload.accountid)
-      }
-
+      
       return JSON.stringify(user);
     } catch (err) {
       console.log(err)
@@ -35,6 +40,10 @@ export const authMe = async () => {
 
 const revalidateToken = async(accountid) => {
   const account = await getUserByAccountID({ accountid: accountid });
+  if (account.status == 'b') {
+    await logout();
+    return -1;
+  }
   const token = jwt.sign(
     {
       username: account.username,
@@ -52,4 +61,5 @@ const revalidateToken = async(accountid) => {
     maxAge: 60 * 60 * 24 * COOKIES_INFO.exp
   });
   console.log("Token revalidated")
+  return token;
 }

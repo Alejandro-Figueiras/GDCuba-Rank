@@ -139,7 +139,7 @@ export default function UserModalPanel({
                       />
                       <CardSelect
                         items={status}
-                        label={"Estado de la cuenta"}
+                        label={"Estado"}
                         selectedKeys={fields.status}
                         onChange={(e) => handleSelectionChange(e, "status")}
                       />

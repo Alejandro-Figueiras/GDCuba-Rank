@@ -55,7 +55,7 @@ const AccountIcon = ({
 const AccountIconsRow = ({ user }) => {
   const [jetpack, setJetpack] = useState(false)
 
-  const rowsClassnames = "flex flex-row justify-evenly gap-6 flex-wrap align-middle"
+  const rowsClassnames = "flex flex-row justify-evenly gap-6 align-middle"
 
   const comunProps = {
     c1: user.playercolor,

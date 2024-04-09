@@ -37,7 +37,6 @@ export default ({ isOpen, onOpenChange }) => {
       passwordRef.current.value.length > 0 && !fieldsError.notMatchPassword;
 
     setCanSubmit(validPassword && validUser);
-    console.log(fieldsError.notMatchPassword);
   };
 
   const passwordCheck = () => {
@@ -94,18 +93,10 @@ export default ({ isOpen, onOpenChange }) => {
               <Input
                 autoFocus
                 label="Número de Teléfono"
-                placeholder="Ej: +53 55390833"
-                type="number"
+                placeholder="Ej: +53 51234567"
+                type="phone"
                 variant="bordered"
                 ref={phoneRef}
-                onChange={(e) => {
-                  console.log(e.target.value.startsWith('5', 0))
-                  if (phoneRef.current.value.length !== 8 || !phoneRef.current.value.startsWith('5'))
-                    setFieldsError((prev) => ({ ...prev, phoneField: true }));
-                  else
-                    setFieldsError((prev) => ({ ...prev, phoneField: false }));
-                }}
-                // onKeyUp={updateCanSubmit}
               />
               <Input
                 label="Usuario"

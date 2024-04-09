@@ -36,15 +36,15 @@ const LevelCard = ({level, hover=false}) => {
                 <h3 className="font-medium text-foreground/90">
                   <span>{level.author}</span>
                 </h3>
-                <p className="text-small text-foreground/80 flex gap-2">
-                  <span className="flex">
+                <p className="text-small text-foreground/80 flex flex-wrap">
+                  <span className="flex mr-2">
                     <img 
                       src={`/assets/stats/${(level.platformer?'moons':'stars')}Icon${level.stars?'':'BN'}.png`} 
                       alt="Stars" style={{height: '18px'}}
                     />
                     {level.stars == 0 ? 'Unrated' : level.stars}
                   </span>
-                  <span className="flex">
+                  <span className="flex mr-2">
                     <img 
                       src={`/assets/stats/${(level.verifiedcoins)?'user':'bronze'}coin.png`} 
                       alt="Coins" style={{height: '18px'}}
@@ -52,20 +52,19 @@ const LevelCard = ({level, hover=false}) => {
                     />
                     {level.coins}
                   </span> 
-                  <span>
+                  <span className='mr-2'>
                     {level.platformer?'Plataforma':'Tradicional'}
                   </span>
                   {level.platformer ? '' :
-                    <span className="flex">
+                    <span className="flex mr-2">
                       <img src="/assets/levelIcons/length.png" style={{height: '18px', marginRight: '4px'}}/>
                       {getLengthName({length: level.length, noPlatformer: true})}
                     </span>
                   }
+                  <span className="flex mr-2"><img src="/assets/levelIcons/downloads.png" style={{height: '18px'}} alt="D"/>{level.downloads}</span>
+                  <span className="flex mr-2"><img src="/assets/levelIcons/likes.png" style={{height: '18px'}} alt="L"/>{level.likes}</span>
+                  <span>#{level.id}</span>
                 </p>
-                <p className="text-small text-foreground/80 flex gap-2">
-                  <span className="flex"><img src="/assets/levelIcons/downloads.png" style={{height: '18px'}} alt="D"/>{level.downloads}</span>
-                  <span className="flex"><img src="/assets/levelIcons/likes.png" style={{height: '18px'}} alt="L"/>{level.likes}</span>
-                  <span>#{level.id}</span></p>
               </div>
             </div>
           </div>

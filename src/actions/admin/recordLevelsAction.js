@@ -14,7 +14,7 @@ export const getAllLevelsByDifficultyAction = async({difficulty = 15}) => {
 export const reposicionarLevelAction = async({levelid, oldScore, newScore}) => {
   if ((await authorize()).can) {
     const result = await reposicionarNivel(levelid, oldScore, newScore)
-    updateLandingStatsRecords()
+    await updateLandingStatsRecords()
     return result
   }
   return 0;

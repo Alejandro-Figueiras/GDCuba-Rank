@@ -105,7 +105,7 @@ export const updateAccounts = async({limit= 3, timeLimit = 60000}) => {
     const timestamp = new Date().getTime()
     await kv.set('accUpdateLimit', timestamp);
 
-    updateLandingStatsAcc();
+    await updateLandingStatsAcc();
     console.log("DATABASE: actualizando accounts completado")
 
   } else {

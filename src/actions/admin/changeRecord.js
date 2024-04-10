@@ -14,7 +14,7 @@ export const changeAval = async({id, aval}) => {
     const result = await sql`UPDATE records SET aval=${aval} WHERE id=${id}`;
     if (result.rowCount) {
       await addLog(`${authResult.username} cambió el aval del record #${id} a ${RECORDS_AVAL_VALUES[aval].value}`)
-      updateLandingStatsRecords();
+      await updateLandingStatsRecords();
       return 1
     }
   }
@@ -27,7 +27,7 @@ export const removeRecord = async({id}) => {
     const result = await sql`DELETE FROM records WHERE id=${id}`;
     if (result.rowCount) {
       await addLog(`${authResult.username} eliminó el record #${id}`)
-      updateLandingStatsRecords();
+      await updateLandingStatsRecords();
       return 1;
     }
   }

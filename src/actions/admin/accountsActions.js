@@ -10,7 +10,7 @@ export const changeCubanAction = async({username, cuba}) => {
   if (authResult.can) {
     const result = await changeCuban(username, cuba)
     await addLog(`${authResult.username} cambió la etiqueta cuba de ${username} a ${cuba}`)
-    updateLandingStatsAcc();
+    await updateLandingStatsAcc();
     return result
   }
   return 0
@@ -22,7 +22,7 @@ export const removeGDAccountAction = async({username}) => {
   if (authResult.can) {
     const result = await removeGDAccount(username)
     await addLog(`${authResult.username} eliminó la cuenta de GD de ${username} y todos sus datos en la página`)
-    updateLandingStatsAcc();
+    await updateLandingStatsAcc();
     return result
   }
   return 0

@@ -2,14 +2,15 @@
 import { getLatestAction } from "@/actions/admin/auditorylogActions";
 import TablaHeader from "@/components/Admin/TablaHeader";
 import { useEffect, useState } from 'react'
+import { Spinner } from '@nextui-org/react'
 
 const AdminAuditoryPanel = ({home = false}) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true)
-  // TODO improve loading
 
   const updateData = () => {
-    (getLatestAction()).then(response => {
+    setLoading(true);
+    getLatestAction().then(response => {
       const datos = JSON.parse(response)
       setData(datos)
       setLoading(false)
@@ -22,7 +23,12 @@ const AdminAuditoryPanel = ({home = false}) => {
       text: "Refresh",
       handleClick: updateData
     }]}>
-      {data.map(log => <p className="mt-1"><span className="font-bold text-danger">#{log.id}: </span>{log.message}</p>)}
+      {
+        loading ? <div className="flex flex-row justify-center items-center text-center">
+          <Spinner label="Cargando datos..." />
+        </div> : 
+        data.map(log => <p className="mt-1"><span className="font-bold text-danger">#{log.id}: </span>{log.message}</p>)
+      }
     </TablaHeader>
   );
 };

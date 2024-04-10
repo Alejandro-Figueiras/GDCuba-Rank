@@ -28,7 +28,7 @@ export const removeRecord = async({id}) => {
     if (result.rowCount) {
       await addLog(`${authResult.username} eliminó el record #${id}`)
       updateLandingStatsRecords();
-      return 1
+      return 1;
     }
   }
   return 0;

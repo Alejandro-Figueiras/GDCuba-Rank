@@ -78,6 +78,14 @@ export default () => {
                   href="/admin/records"
                 />
               </SidebarMenu>
+              <SidebarMenu title="General">
+                <SidebarItem
+                  isActive={ruta === "/admin/auditory_log"}
+                  title="Auditory Log"
+                  icon={<SettingsIcon />}
+                  href="/admin/auditory_log"
+                />
+              </SidebarMenu>
               {/* <SidebarMenu title="Testing">
                 <SidebarItem
                   isActive={ruta === "/admin/testing/"}
@@ -86,16 +94,6 @@ export default () => {
                   href="/admin/testing/"
                 />
               </SidebarMenu> */}
-
-              {/* <SidebarMenu title="General">
-                <SidebarItem
-                  isActive={ruta === "/settings"}
-                  title="Settings"
-                  icon={<SettingsIcon />}
-                  href="#"
-                />
-              </SidebarMenu> */}
-
               {/* <SidebarMenu title="Updates">
                 <SidebarItem
                   isActive={ruta === "/changelog"}

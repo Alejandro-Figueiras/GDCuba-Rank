@@ -6,8 +6,8 @@ export default () => {
 
   return (
     <ListTemplate 
-      title="Lista de Insane Demons"
-      type="insane"
+      title="Lista de Hardest (Tradicional)"
+      type="hardest"
     />
   )
 }

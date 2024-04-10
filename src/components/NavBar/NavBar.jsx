@@ -71,10 +71,16 @@ export default () => {
     startsWith: '/lists',
     items: [
       {
-        key: "hardest",
+        key: "hardest-trad",
         img: '/assets/dificultades/none/extreme_demon.png',
-        href: "/lists/hardest",
-        label: "Hardest"
+        href: "/lists/hardest/trad",
+        label: "Hardest Tradicional"
+      },
+      {
+        key: "hardest-plat",
+        img: '/assets/dificultades/none/extreme_demon.png',
+        href: "/lists/hardest/plat",
+        label: "Hardest Plataforma"
       },
       {
         key: "insane",

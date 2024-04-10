@@ -97,6 +97,18 @@ export const getAllCubanExtremesVerified = async() => {
   return (result.rowCount)?result.rows:[];
 }
 
+export const getAllCubanExtremesVerifiedTradicional = async() => {
+  noStore();
+  const result = await sql`SELECT * FROM records WHERE difficulty = 15 AND percent = 100 AND aval = 1 AND cuba = 1 AND platformer = 0`
+  return (result.rowCount)?result.rows:[];
+}
+
+export const getAllCubanExtremesVerifiedPlatformer = async() => {
+  noStore();
+  const result = await sql`SELECT * FROM records WHERE difficulty = 15 AND percent = 100 AND aval = 1 AND cuba = 1 AND platformer = 1`
+  return (result.rowCount)?result.rows:[];
+}
+
 export const getAllCubanInsaneDemonsVerified = async() => {
   noStore();
   const result = await sql`SELECT * FROM records WHERE difficulty = 14 AND percent = 100 AND aval = 1 AND cuba = 1`

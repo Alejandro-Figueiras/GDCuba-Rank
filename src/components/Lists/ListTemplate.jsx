@@ -55,6 +55,7 @@ export default ({ title, type = 'hardest' }) => {
             return 0;
           })
         )
+
         setLevels(levels)
         setPlayers(playersObject)
         setRecords(records)

@@ -61,9 +61,7 @@ export const changeCuban = async(username, cuba) => {
   noStore();
   const result = await sql`UPDATE gdaccounts SET cuba=${cuba} WHERE username=${username}`
   const rowCount = result.rowCount;
-  if (rowCount) {
-    await changeCubanInRecords(username, cuba)
-  }
+  await changeCubanInRecords(username, cuba)
   return rowCount?1:0
 }
 

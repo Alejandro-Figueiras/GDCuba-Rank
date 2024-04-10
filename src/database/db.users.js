@@ -47,7 +47,7 @@ export const getUserByAccountID = async({accountid}) => {
  */
 export const findUser = async({user = ""}) => {
   noStore();
-  const result = await sql`SELECT * from users WHERE username ILIKE ${user} `
+  const result = await sql`SELECT * from users WHERE username ILIKE ${user}`
   if (result.rowCount) return result.rows[0]
   return undefined;
 }

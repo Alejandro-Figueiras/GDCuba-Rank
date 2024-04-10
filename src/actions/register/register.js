@@ -17,7 +17,7 @@ export const register = async (data) => {
 
   
   const accountRegistered = await findUser({user: fields.user})
-  if (accountRegistered == undefined) {
+  if (!accountRegistered || accountRegistered.accountid) {
     const gdAccount = await getAccount(data.username);
     if (gdAccount !== -1) {
       const passwordEncrypt = await hash(fields.password, 5);

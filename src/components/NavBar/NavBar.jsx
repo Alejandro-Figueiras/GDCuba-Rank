@@ -72,13 +72,13 @@ export default () => {
     items: [
       {
         key: "hardest-trad",
-        img: '/assets/dificultades/none/extreme_demon.png',
+        img: '/assets/ui/extreme_demon_trad.png',
         href: "/lists/hardest/trad",
         label: "Hardest Tradicional"
       },
       {
         key: "hardest-plat",
-        img: '/assets/dificultades/none/extreme_demon.png',
+        img: '/assets/ui/extreme_demon_plat.png',
         href: "/lists/hardest/plat",
         label: "Hardest Plataforma"
       },

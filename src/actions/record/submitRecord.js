@@ -19,7 +19,8 @@ export const submitRecord = async(datos = {}, level = {}) => {
     percent: datos.percent,
     video: datos.video,
     difficulty: difficulty.difficultyNumber,
-    featured: difficulty.featured
+    featured: difficulty.featured,
+    platformer: level.platformer
   }
   const dbResult = await addRecord(record)
   return dbResult

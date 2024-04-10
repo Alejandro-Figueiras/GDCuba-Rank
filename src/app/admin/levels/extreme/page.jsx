@@ -21,8 +21,11 @@ const LevelsDificulty = () => {
           levelname: record.levelname,
           featured: record.featured,
           difficulty: record.difficulty,
-          difficultyscore: record.difficultyscore
+          difficultyscore: record.difficultyscore,
+          platformer: record.platformer
         }
+
+        console.log(level)
         if (newLevels[level.levelid] == undefined) {
           newLevels[level.levelid] = level;
         }
@@ -36,13 +39,18 @@ const LevelsDificulty = () => {
 
   useEffect(updateLevels, [])
   
-  return (<TablaHeader title="Extreme Demons" buttons={[{
-    text: "Refresh",
-    handleClick: updateLevels
-  }]}>
-    <TablaNivelesDifficultyScore levels={Object.values(levels)} handleRefresh={updateLevels} loading={loading}/>
-  </TablaHeader>
-  )
+  return (<div>
+    <TablaHeader title="Extreme Demons Tradicionales" buttons={[{
+      text: "Refresh",
+      handleClick: updateLevels
+    }]}>
+      <TablaNivelesDifficultyScore levels={Object.values(levels).filter(val => val.platformer == 0)} handleRefresh={updateLevels} loading={loading}/>
+    </TablaHeader>
+
+    <TablaHeader title="Extreme Demons Plataforma" buttons={[]}>
+      <TablaNivelesDifficultyScore levels={Object.values(levels).filter(val => val.platformer == 1)} handleRefresh={updateLevels} loading={loading}/>
+    </TablaHeader>
+  </div>)
 }
 
 export default LevelsDificulty

@@ -41,7 +41,8 @@ export const addRecord = async(record = {}) => {
     difficulty,
     featured,
     difficultyscore,
-    cuba
+    cuba,
+    platformer
   ) VALUES(
     ${record.accountid},
     ${record.username},
@@ -53,6 +54,7 @@ export const addRecord = async(record = {}) => {
     ${record.difficulty},
     ${record.featured},
     ${difficultyscore},
+    ${record.platformer}
     ${record.cuba}
   )`;
   
@@ -109,7 +111,7 @@ export const getAllRecordsUser = async(username) => {
 
 export const getAllLevelsByDifficulty = async({difficulty = 15}) => {
   noStore();
-  const result = await sql`SELECT levelid, levelname, difficulty, difficultyscore, featured FROM records WHERE difficulty = ${difficulty}`
+  const result = await sql`SELECT levelid, levelname, difficulty, difficultyscore, featured, platformer FROM records WHERE difficulty = ${difficulty}`
   return (result.rowCount)?result.rows:[];
 }
 

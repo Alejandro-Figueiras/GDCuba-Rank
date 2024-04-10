@@ -17,7 +17,8 @@ export const submitRecordAdminAction = async(datos = {}, level = {}) => {
     video: datos.video,
     aval: 1,
     difficulty: difficulty.difficultyNumber,
-    featured: difficulty.featured
+    featured: difficulty.featured,
+    platformer: level.platformer
   }
 
   console.log(record)

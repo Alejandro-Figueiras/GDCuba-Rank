@@ -40,7 +40,7 @@ export const updateLandingStatsAcc = async({accounts, oldData} = {}) => {
   await updateDBInfoLandingStats(info)
 }
 
-export const updateLandingStatsRecords = async({oldData, records}) => {;
+export const updateLandingStatsRecords = async({oldData, records} = {}) => {;
   if (!oldData) oldData = await getLandingStats();
   if (!records) records = await getAllCubanRecords();
 

@@ -1,6 +1,5 @@
 'use server'
 
-import { authorize } from "@/libs/secure";
 import { getAllCubans } from "./db.gdaccounts"
 import { sql } from '@vercel/postgres'
 import { unstable_noStore as noStore } from 'next/cache';
@@ -41,8 +40,7 @@ export const updateLandingStatsAcc = async({accounts, oldData} = {}) => {
   await updateDBInfoLandingStats(info)
 }
 
-export const updateLandingStatsRecords = async({oldData, records}) => {
-  if (!authorize()) return;
+export const updateLandingStatsRecords = async({oldData, records}) => {;
   if (!oldData) oldData = await getLandingStats();
   if (!records) records = await getAllCubanRecords();
 

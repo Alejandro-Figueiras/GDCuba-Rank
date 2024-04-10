@@ -54,7 +54,7 @@ export const addRecord = async(record = {}) => {
     ${record.difficulty},
     ${record.featured},
     ${difficultyscore},
-    ${record.platformer}
+    ${record.platformer?1:0},
     ${record.cuba}
   )`;
   

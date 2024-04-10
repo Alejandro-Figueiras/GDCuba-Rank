@@ -9,7 +9,7 @@ export async function middleware(request) {
   const cookieData = cookie ? cookie.value : undefined;
   let access = false;
   try {
-    if (cookieData != undefined && process.env.NODE_ENV !== "development") {
+    if (cookieData != undefined) {
       const key = new TextEncoder().encode(process.env.JWT_SECRET);
       const { payload } = await jwtVerify(cookieData, key);
 
@@ -17,8 +17,6 @@ export async function middleware(request) {
         payload.role === "admin" ||
         payload.role === "owner";
 
-    } else if (process.env.NODE_ENV == "development") {
-      access = true;
     }
   } catch (err) {
     console.error("ERROR: ", err);

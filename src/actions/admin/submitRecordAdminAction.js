@@ -3,10 +3,12 @@
 import { parseDifficulty } from "@/helpers/levelParser"
 import { addRecord } from "@/database/db.records"
 import { authorize } from "@/libs/secure"
+import { addLog } from "@/database/db.auditorylog"
 
 export const submitRecordAdminAction = async(datos = {}, level = {}) => {
   const difficulty = parseDifficulty(level)
-  if (!(await authorize())) return 401;
+  const authResult = await authorize()
+  if (!authResult.can) return 401;
   const record = {
     accountid: datos.accountid,
     username: datos.username,
@@ -20,9 +22,8 @@ export const submitRecordAdminAction = async(datos = {}, level = {}) => {
     featured: difficulty.featured,
     platformer: level.platformer
   }
-
-  console.log(record)
   const dbResult = await addRecord(record)
+  if (dbResult) await addLog(`${authResult.username} agregó el record de ${level.levelname} ${datos.percent}% para ${datos.username}`)
   return dbResult
 }
 

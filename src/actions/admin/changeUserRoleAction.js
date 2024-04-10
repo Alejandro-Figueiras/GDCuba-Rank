@@ -1,13 +1,14 @@
 'use server'
 
+import { addLog } from "@/database/db.auditorylog";
 import { changeUserRole } from "@/database/db.users";
 import { authorize } from "@/libs/secure";
 import {responseText} from '@/locales/siteText';
 
 export const changeUserRoleAction = async ({user, role}) => {
-  const authorized = await authorize({owner: true});
+  const authResult = await authorize({owner: true});
 
-  if (!authorized) {
+  if (!authResult.can) {
     return JSON.stringify({ 
       error: responseText.unauthorize,
       status: 401
@@ -16,6 +17,7 @@ export const changeUserRoleAction = async ({user, role}) => {
 
   const result = await changeUserRole({user, role});
   if (!result) {
+    await addLog(`${authResult.username} le otorgó a ${user} el rol de ${role}`)
     return JSON.stringify(
       { 
         message: `Usuario ${params.username} ahora es ${role}`,

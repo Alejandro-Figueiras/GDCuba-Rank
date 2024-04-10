@@ -95,7 +95,7 @@ export default function UserModalPanel({
   const handleUpdate = async(e) => {
     for (const change of changes) {
       if (change == 'status') {
-        // TODO authorize
+        // TODO authorize in action
         if (fields[change].has('b')) {
           await banUser({user: user.username})
         } else if (fields[change].has('v')) {

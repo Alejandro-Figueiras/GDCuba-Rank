@@ -1,10 +1,12 @@
 'use server'
+import { addLog } from "@/database/db.auditorylog";
 import { eliminarUser } from "@/database/db.users";
 import { authorize } from "@/libs/secure";
 import { responseText } from "@/locales/siteText";
 
 export const removeUserAction = async ({username}) => {
-  if (!(await authorize()) || !username) {
+  const authResult = await authorize();
+  if (!authResult.can || !username) {
     return JSON.stringify({ 
       error: responseText.unauthorize,
       status: 401
@@ -25,7 +27,12 @@ export const removeUserAction = async ({username}) => {
           status: "info",
         };
       }
-      console.log(`User ${username} removed`);
+
+      if (response.status == 'success') {
+        console.log(`User ${username} removed`);
+        await addLog(`${authResult.username} eliminó el usuario de ${username}`)
+      }
+
       return JSON.stringify(response);
     }
     return JSON.stringify({ 

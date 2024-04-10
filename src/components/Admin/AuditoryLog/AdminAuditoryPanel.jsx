@@ -22,7 +22,7 @@ const AdminAuditoryPanel = ({home = false}) => {
       text: "Refresh",
       handleClick: updateData
     }]}>
-      {data.map(log => <p className="mt-1"><span className="text-bold">#{log.id}: </span>{log.message}</p>)}
+      {data.map(log => <p className="mt-1"><span className="font-bold text-danger">#{log.id}: </span>{log.message}</p>)}
     </TablaHeader>
   );
 };

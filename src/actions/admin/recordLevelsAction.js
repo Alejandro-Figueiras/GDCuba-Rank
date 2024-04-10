@@ -5,14 +5,14 @@ import { updateLandingStatsRecords } from "@/database/db.staticInfo";
 import { authorize } from "@/libs/secure"
 
 export const getAllLevelsByDifficultyAction = async({difficulty = 15}) => {
-  if (await authorize()) {
+  if ((await authorize()).can) {
     return JSON.stringify(await getAllLevelsByDifficulty({difficulty}))
   }
   return '[]';
 }
 
 export const reposicionarLevelAction = async({levelid, oldScore, newScore}) => {
-  if (await authorize()) {
+  if ((await authorize()).can) {
     const result = await reposicionarNivel(levelid, oldScore, newScore)
     updateLandingStatsRecords()
     return result

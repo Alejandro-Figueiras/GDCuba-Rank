@@ -2,11 +2,12 @@
 import { authorize } from "@/libs/secure";
 import {responseText} from '@/locales/siteText';
 import { validateUser } from "@/database/db.users";
+import { addLog } from "@/database/db.auditorylog";
 
 export const validateUserAction = async ({user, unvalidate}) => {
-  const authorized = await authorize();
+  const authResult = await authorize();
 
-  if (!authorized) {
+  if (!authResult.can) {
     return JSON.stringify({ 
       error: responseText.unauthorize,
       status: 401
@@ -14,10 +15,11 @@ export const validateUserAction = async ({user, unvalidate}) => {
   }
 
   const result = await validateUser({user, unvalidate});
-  if (!result) {
+  if (result) {
+    await addLog(`${authResult.username} cambió el estado de ${user} a ${unvalidate?'Sin Verificar': 'Verificado'}`)
     return JSON.stringify(
       { 
-        message: `Usuario ${params.username} validado correctamente`,
+        message: `Usuario ${user} validado correctamente`,
         status: 200,
         user: result
       }

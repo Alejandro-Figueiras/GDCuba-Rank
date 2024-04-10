@@ -5,6 +5,7 @@ import { unstable_noStore as noStore } from 'next/cache';
 import { renameUserInRecords } from "./db.records";
 import { deleteStuffItemsByUsername, renameUserInStuffItems } from "./db.accstuffitems";
 import { updateAccountStuff } from "./db.gdaccounts";
+import { addLog } from "./db.auditorylog";
 
 /**
  * Esta función agrega un usuario a la base de datos. Los parametros faltantes se ponen por default en la base de datos.
@@ -30,7 +31,7 @@ export const addUser = async({ user, password, phone, accountid }) => {
  */
 export const getUser = async({user}) => {
   noStore();
-  return (await sql`SELECT * from users WHERE username = ${user} `).rows[0];
+  return (await sql`SELECT * from users WHERE username = ${user}`).rows[0];
 }
 
 export const getUserByAccountID = async({accountid}) => {
@@ -74,7 +75,6 @@ export const getUnverifiedUsers = async() => {
  */
 export const validateUser = async({user, unvalidate = false}) => {
   noStore()
-  if (!(await authorize())) return undefined;
   const result = await sql`UPDATE users SET status = ${unvalidate? 'u' : 'v'} WHERE username = ${user}`;
   if (!result) throw new Error('Error al validar ' + result)
   return 1;
@@ -90,12 +90,14 @@ export const changeUserRole = async({user, role = "user"}) => {
 export const banUser = async({user}) => {
   noStore()
   const accInfo = await getUser({user})
-  if (!(await authorize({owner: accInfo.role != 'user'}))) return undefined;
+  const authResult = await authorize({owner: (accInfo && accInfo.role != 'user')})
+  if (!authResult.can) return undefined;
   const result = await sql`UPDATE users SET status = ${'b'} WHERE username = ${user}`;
   if (result.rowCount > 0) {
     // Removing stuff items
     const removeAccOrder = await updateAccountStuff({username: user, stuff: ''});
     if (removeAccOrder) await deleteStuffItemsByUsername(user);
+    await addLog(`${authResult.username} baneó a ${user}`)
   }
   if (!result) throw new Error('Error al banear ' + result)
   return 1;
@@ -109,22 +111,17 @@ export const banUser = async({user}) => {
  */
 export const eliminarUser = async({username}) => {
   noStore()
-  const accInfo = await getUser({user: username})
-  const auth = await authorize({owner: accInfo.role != 'user'});
-  if (auth) {
-    if (!username) return undefined;
-    const result = await sql`DELETE FROM users WHERE username = ${username} `;
-    if (result) {
-      let response = 1;
-      if (result.rowCount != 0)
-        response = 0;
-      
-      console.log(`User ${username} removed`);
-      return response;
-    }
-    return undefined;
+  if (!username) return undefined;
+  const result = await sql`DELETE FROM users WHERE username = ${username} `;
+  if (result) {
+    let response = 1;
+    if (result.rowCount == 0)
+      response = 0;
+    
+    console.log(`User ${username} removed`);
+    return response;
   }
-  throw new Error("Unauthorized")
+  return undefined;
 }
 
 export const setUserPassword = async({username, password}) => {

@@ -1,6 +1,5 @@
 "use client";
 
-import BetaHomePage from "@/components/Beta/BetaHomePage";
 import MainHero from "@/components/LandingPage/MainHero";
 import MainStats from "@/components/LandingPage/MainStats";
 import MainFooter from "@/components/LandingPage/MainFooter";

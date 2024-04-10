@@ -26,9 +26,9 @@ export default ({records, updateRecords, loading=false}) => {
       desc: `¿Seguro que quieres eliminar este Record`,
       action: "delete",
       onSubmit: async () => {
-        const result = JSON.parse(await removeRecord({id: record.id}))
+        const result = await removeRecord({id: record.id})
 
-        if (result==1) {
+        if (result) {
           const success = notify(
             `Record #${record.id} eliminado`,
             "success"

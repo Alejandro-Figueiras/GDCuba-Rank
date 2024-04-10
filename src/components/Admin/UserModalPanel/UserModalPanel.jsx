@@ -18,8 +18,8 @@ import AccountIconsRow from "./AccountIconsRow";
 import AccountInfoColumn from "./AccountInfoColumn";
 import { roles, status } from "./selectKeys";
 import { validateUserAction } from "@/actions/admin/validateUserAction";
+import { banUserAction } from "@/actions/admin/banUserAction";
 import { removeUserAction } from "@/actions/admin/removeUserAction";
-import { banUser } from "@/database/db.users";
 import { useSesion } from "@/hooks/useSesion";
 import { changeUserRoleAction } from "@/actions/admin/changeUserRoleAction";
 
@@ -95,9 +95,8 @@ export default function UserModalPanel({
   const handleUpdate = async(e) => {
     for (const change of changes) {
       if (change == 'status') {
-        // TODO authorize in action
         if (fields[change].has('b')) {
-          await banUser({user: user.username})
+          await banUserAction({user: user.username})
         } else if (fields[change].has('v')) {
           await validateUserAction({user: user.username})
         } else {

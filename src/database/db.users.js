@@ -1,11 +1,9 @@
 'use server'
-import { authorize } from "@/libs/secure";
 import { sql } from '@vercel/postgres'
 import { unstable_noStore as noStore } from 'next/cache';
 import { renameUserInRecords } from "./db.records";
 import { deleteStuffItemsByUsername, renameUserInStuffItems } from "./db.accstuffitems";
 import { updateAccountStuff } from "./db.gdaccounts";
-import { addLog } from "./db.auditorylog";
 
 /**
  * Esta función agrega un usuario a la base de datos. Los parametros faltantes se ponen por default en la base de datos.
@@ -89,18 +87,15 @@ export const changeUserRole = async({user, role = "user"}) => {
 
 export const banUser = async({user}) => {
   noStore()
-  const accInfo = await getUser({user})
-  const authResult = await authorize({owner: (accInfo && accInfo.role != 'user')})
-  if (!authResult.can) return undefined;
   const result = await sql`UPDATE users SET status = ${'b'} WHERE username = ${user}`;
   if (result.rowCount > 0) {
     // Removing stuff items
     const removeAccOrder = await updateAccountStuff({username: user, stuff: ''});
     if (removeAccOrder) await deleteStuffItemsByUsername(user);
-    await addLog(`${authResult.username} baneó a ${user}`)
+    return 1;
   }
   if (!result) throw new Error('Error al banear ' + result)
-  return 1;
+  return 0;
 }
 
 /**

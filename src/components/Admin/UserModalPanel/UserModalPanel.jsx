@@ -167,7 +167,6 @@ return (
                   >
                     Actualizar
                   </Button>
-                  {/* TODO delete cooldown */}
                   {(user.role == 'user' || currentUser.role == 'owner') && <Button color="danger" onClick={() => handleDelete(onClose)}>
                     Eliminar
                   </Button>}

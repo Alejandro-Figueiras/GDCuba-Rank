@@ -37,7 +37,7 @@ export default function SubmitRecordModal({
     const percent = sliderValue.current
     let video = videoRef.current.value
     video.replace('m.youtube', 'www.youtube')
-    if (!video.includes("youtube.com") || !video.includes("youtu.be")) video = ''
+    if (!video.includes("youtube.com") && !video.includes("youtu.be")) video = ''
 
     setLoading(true)
     const submitResult = (admin)

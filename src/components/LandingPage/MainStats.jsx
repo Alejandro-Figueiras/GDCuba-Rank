@@ -76,9 +76,8 @@ const MainStats = ({}) => {
         levelname: '???',
         username: '???'
        }
-      
-      console.log(newStats)
-      if (newStats.hardest.levelname) newStats.hardest.levelname = '???'
+
+      if (!newStats.hardest.levelname) newStats.hardest.levelname = '???'
       setLandingStats(newStats)
     })
   }, [])

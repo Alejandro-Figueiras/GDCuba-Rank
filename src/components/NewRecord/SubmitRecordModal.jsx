@@ -35,7 +35,7 @@ export default function SubmitRecordModal({
   // Submit
   const handleSubmit = async() => {
     const percent = sliderValue.current
-    let  video = videoRef.current.value
+    let video = videoRef.current.value
     video.replace('m.youtube', 'www.youtube')
     if (!video.includes("youtube.com") || !video.includes("youtu.be")) video = ''
 

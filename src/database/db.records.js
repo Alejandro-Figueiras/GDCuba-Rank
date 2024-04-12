@@ -54,8 +54,8 @@ export const addRecord = async(record = {}) => {
     ${record.difficulty},
     ${record.featured},
     ${difficultyscore},
-    ${record.platformer?1:0},
     ${record.cuba}
+    ${record.platformer?1:0},
   )`;
   
   return result.rowCount ? 1 : -1;

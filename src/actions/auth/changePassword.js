@@ -1,8 +1,15 @@
 'use server'
 import { compare, hash } from 'bcryptjs'
 import { findUser, setUserPassword } from "@/database/db.users";
+import { authMe } from './me';
 
 export const changePasswordAction = async({username, oldPassword, newPassword}) => {
+  const auth = JSON.parse(await authMe({forceRevalidate: true}));
+  if (auth.status != 200 || auth.username != username) return JSON.stringify({
+    status: "error",
+    message: "Unauthorized"
+  });
+
   const user = await findUser({ user: username });
 
   if (user) {

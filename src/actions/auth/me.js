@@ -15,7 +15,7 @@ export const authMe = async ({forceRevalidate = false} = {}) => {
       let payload = verify(cookie.value, process.env.JWT_SECRET);
       
       if (Math.floor(Date.now() / 1000) - payload.iat > 24*60*60 || forceRevalidate) {
-        const result = await revalidateToken(payload.accountid)
+        const result = await revalidateToken(payload.accountid, payload.sessiontoken)
         if (result == -1) {
           return JSON.stringify({ error: responseText.badRequest, status: 401 });
         }
@@ -25,8 +25,12 @@ export const authMe = async ({forceRevalidate = false} = {}) => {
         username: payload.username,
         accountid: payload.accountid,
         phone: payload.phone,
-        role: payload.role
+        role: payload.role,
+        sessiontoken: payload.sessiontoken,
+        status: 200
       };
+
+      if (user.sessiontoken == undefined) user.sessiontoken = 0
       
       return JSON.stringify(user);
     } catch (err) {
@@ -38,9 +42,9 @@ export const authMe = async ({forceRevalidate = false} = {}) => {
 };
 
 
-const revalidateToken = async(accountid) => {
+const revalidateToken = async(accountid, sessiontoken) => {
   const account = await getUserByAccountID({ accountid: accountid });
-  if (!account || account.status == 'b') {
+  if (!account || account.status == 'b' || account.sessiontoken != sessiontoken) {
     await logout();
     return -1;
   }
@@ -50,6 +54,7 @@ const revalidateToken = async(accountid) => {
       accountid: account.accountid,
       phone: account.phone,
       role: account.role,
+      sessiontoken: account.sessiontoken
     },
     process.env.JWT_SECRET,
   );

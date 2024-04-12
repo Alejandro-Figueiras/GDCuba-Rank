@@ -121,7 +121,8 @@ export const eliminarUser = async({username}) => {
 
 export const setUserPassword = async({username, password}) => {
   noStore()
-  const result = await sql`UPDATE users SET password = ${password} WHERE username = ${username} `;
+  const newSessionToken = Math.floor(Math.random()*1000000);
+  const result = await sql`UPDATE users SET password = ${password}, sessiontoken = ${newSessionToken} WHERE username = ${username} `;
   if (!result) throw new Error('Error al cambiar password: ' + result)
   return 1;
 }

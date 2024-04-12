@@ -40,7 +40,7 @@ export const authMe = async ({forceRevalidate = false} = {}) => {
 
 const revalidateToken = async(accountid) => {
   const account = await getUserByAccountID({ accountid: accountid });
-  if (account.status == 'b') {
+  if (!account || account.status == 'b') {
     await logout();
     return -1;
   }

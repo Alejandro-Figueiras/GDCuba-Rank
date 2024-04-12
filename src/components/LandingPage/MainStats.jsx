@@ -11,7 +11,10 @@ const MainStats = ({}) => {
     totalCreatorPoints: 'Cargando...',
     totalMoons: 'Cargando...',
     totalExtremes: 'Cargando...',
-    hardest: {}
+    hardest: {
+      levelname: 'Cargando',
+      username: '???'
+    }
   });
 
   const cards = [
@@ -62,7 +65,21 @@ const MainStats = ({}) => {
 
   useEffect(() => {
     getLandingStatsAction().then((response) => {
-      setLandingStats(JSON.parse(response))
+      const newStats = JSON.parse(response)
+      if (!newStats.totalStars) newStats.totalStars = '???';
+      if (!newStats.totalDemons) newStats.totalDemons = '???';
+      if (!newStats.totalUsercoins) newStats.totalUsercoins = '???';
+      if (!newStats.totalCreatorPoints) newStats.totalCreatorPoints = '???';
+      if (!newStats.totalMoons) newStats.totalMoons = '???';
+      if (!newStats.totalExtremes) newStats.totalExtremes = '???';
+      if (!newStats.hardest) newStats.hardest = { 
+        levelname: '???',
+        username: '???'
+       }
+      
+      console.log(newStats)
+      if (newStats.hardest.levelname) newStats.hardest.levelname = '???'
+      setLandingStats(newStats)
     })
   }, [])
 

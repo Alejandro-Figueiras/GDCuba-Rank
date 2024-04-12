@@ -24,7 +24,8 @@ CREATE TABLE IF NOT EXISTS public.users
     phone character varying(25) COLLATE pg_catalog."default",
     status character varying(10) COLLATE pg_catalog."default" NOT NULL DEFAULT 'u'::character varying,
     role character varying(10) COLLATE pg_catalog."default" NOT NULL DEFAULT 'user'::character varying,
-    CONSTRAINT users_pkey PRIMARY KEY (id)
+    CONSTRAINT users_pkey PRIMARY KEY (id),
+    CONSTRAINT unique_users UNIQUE (id, username, accountid, phone)
 )
 
 TABLESPACE pg_default;
@@ -73,7 +74,8 @@ CREATE TABLE IF NOT EXISTS public.gdaccounts
     accjetpack integer,
     demonsbreakdown character varying(255) COLLATE pg_catalog."default" DEFAULT 'none'::character varying,
     stuff character varying(255) COLLATE pg_catalog."default" DEFAULT ''::character varying,
-    CONSTRAINT gdaccounts_pkey PRIMARY KEY (id)
+    CONSTRAINT gdaccounts_pkey PRIMARY KEY (id),
+    CONSTRAINT unique_gdacc UNIQUE (id, username, accountid)
 )
 
 TABLESPACE pg_default;
@@ -91,8 +93,11 @@ CREATE TABLE IF NOT EXISTS public.records
     percent integer NOT NULL DEFAULT 0,
     aval integer NOT NULL DEFAULT 0,
     video character varying(255) COLLATE pg_catalog."default",
-    difficulty integer DEFAULT 0,
     difficultyscore integer DEFAULT 0,
+    difficulty integer DEFAULT 0,
+    featured character varying COLLATE pg_catalog."default" NOT NULL DEFAULT 'none'::character varying,
+    cuba integer DEFAULT 0,
+    platformer smallint DEFAULT 0,
     CONSTRAINT records_pkey PRIMARY KEY (id)
 )
 
@@ -113,4 +118,29 @@ CREATE TABLE IF NOT EXISTS public.accstuffitems
 TABLESPACE pg_default;
 
 ALTER TABLE IF EXISTS public.accstuffitems
+    OWNER to "default";
+
+CREATE TABLE IF NOT EXISTS public.auditorylog
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( CYCLE INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    message text COLLATE pg_catalog."default",
+    CONSTRAINT auditory_log_pkey PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.auditorylog
+    OWNER to "default";
+
+CREATE TABLE IF NOT EXISTS public.staticinfo
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( CYCLE INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    key character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    value json,
+    CONSTRAINT "staticInfo_pkey" PRIMARY KEY (id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.staticinfo
     OWNER to "default";

@@ -81,5 +81,5 @@ export const updateLandingStatsAll = async({accounts, records} = {}) => {
 export const getLandingStats = async() => {
   noStore();
   const result = await sql`SELECT * FROM staticinfo WHERE key='landingstats'`
-  return (result.rows)?result.rows[0].value:{}
+  return (result.rowCount)?result.rows[0].value:{}
 }

@@ -15,6 +15,7 @@ import AccountIconsRow from "../Admin/UserModalPanel/AccountIconsRow";
 import AccountStuff from "./AccountStuff";
 import { getStuffItemsAction } from "@/actions/accounts/stuffActions";
 import RecordsLinkButton from "../Records/RecordsLinkButton";
+import { useRouter } from 'next/navigation'
 export default function AccountView({manage = false, username }) {
   
   const { icon: iconAvatar } = useGDIcon({
@@ -25,16 +26,21 @@ export default function AccountView({manage = false, username }) {
 
   const [account, setAccount] = useState(undefined);
   const [accountStuff, setAccountStuff] = useState(undefined);
+  const router = useRouter()
 
   const loadAccount = async() => {
-    const account = JSON.parse(
-      await getAccountAction({ username: username })
-    );
-    const stuff = JSON.parse(
-      await getStuffItemsAction({accountid: account.accountid})
-    );
-    setAccount(account);
-    setAccountStuff(stuff)
+    try {
+      const account = JSON.parse(
+        await getAccountAction({ username: username })
+      );
+      const stuff = JSON.parse(
+        await getStuffItemsAction({accountid: account.accountid})
+      );
+      setAccount(account);
+      setAccountStuff(stuff)
+    } catch {
+      router.push('/')
+    }
   };
 
   useEffect(() => {

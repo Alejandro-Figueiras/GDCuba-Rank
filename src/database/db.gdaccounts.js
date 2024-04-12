@@ -38,7 +38,7 @@ export const getAllGDAccounts = async() => {
  */
 export const getGDAccount = async(username) => {
   noStore();
-  const result = await sql`SELECT * FROM gdaccounts WHERE username = ${username} `
+  const result = await sql`SELECT * FROM gdaccounts WHERE username = ${username}`
   if (result.rowCount) {
     return result.rows[0]
   } else {

@@ -22,6 +22,10 @@ export default ({tipo = 'stars'}) => {
         players = newPlayers
       }
       players = players.filter((value => {
+        if (['stars', 'demons', 'usercoins', 'moons'].includes(tipo) && value.globalrank == 0) {
+          return false
+        }
+
         if (tipo == 'cp' && value.creatorpoints == 0) {
           return false
         }

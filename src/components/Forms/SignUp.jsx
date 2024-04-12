@@ -12,8 +12,7 @@ import {
   ModalBody,
   ModalFooter,
 } from "@nextui-org/modal";
-import { notify, notifyDismiss } from "@/libs/toastNotifications";
-import config from "../../../config";
+import { notify } from "@/libs/toastNotifications";
 import { register } from "@/actions/register/register";
 
 
@@ -30,13 +29,15 @@ export default ({ isOpen, onOpenChange }) => {
   const userRef = useRef();
   const passwordRef = useRef();
   const passwordSecureRef = useRef();
+  const phoneRegex = /^\+[0-9\s]+$/;
 
   const updateCanSubmit = () => {
     const validUser = !fieldsError.userField;
     const validPassword =
       passwordRef.current.value.length > 0 && !fieldsError.notMatchPassword;
+    const validPhone = phoneRegex.test(phoneRef.current.value)
 
-    setCanSubmit(validPassword && validUser);
+    setCanSubmit(validPassword && validUser && validPhone);
   };
 
   const passwordCheck = () => {
@@ -49,6 +50,20 @@ export default ({ isOpen, onOpenChange }) => {
       setFieldsError((prev) => ({
         ...prev,
         notMatchPassword: false,
+      }));
+  };
+
+  const phoneCheck = () => {
+    if (!phoneRegex.test(phoneRef.current.value)) {
+      console.log("invalid")
+      setFieldsError((prev) => ({
+        ...prev,
+        phoneInvalid: true,
+      }));
+    } else
+      setFieldsError((prev) => ({
+        ...prev,
+        phoneInvalid: false,
       }));
   };
 
@@ -97,6 +112,12 @@ export default ({ isOpen, onOpenChange }) => {
                 type="phone"
                 variant="bordered"
                 ref={phoneRef}
+                onChange={phoneCheck}
+                errorMessage={
+                  fieldsError.phoneInvalid
+                    ? "Número de telefono inválido"
+                    : ""
+                }
               />
               <Input
                 label="Usuario"

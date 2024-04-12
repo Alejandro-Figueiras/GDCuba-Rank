@@ -133,14 +133,14 @@ export const getHardestLevels = async(accountid) => {
   return (result.rowCount)?result.rows:[];
 }
 
-export const reposicionarNivel = async(levelid, oldScore = 0, newScore = 1) => {
+export const reposicionarNivel = async(levelid, oldScore = 0, newScore = 1, platformer = 0) => {
   noStore();
   if (oldScore == 0) {
-    const updateRowsResult = await sql`UPDATE records SET difficultyscore = difficultyscore + 1 WHERE difficultyscore >= ${newScore}`
+    const updateRowsResult = await sql`UPDATE records SET difficultyscore = difficultyscore + 1 WHERE platformer = ${platformer} AND difficultyscore >= ${newScore}`
   } else if (oldScore < newScore) {
-    const updateRowsResult = await sql`UPDATE records SET difficultyscore = difficultyscore - 1 WHERE difficultyscore > ${oldScore} AND difficultyscore <= ${newScore}`
+    const updateRowsResult = await sql`UPDATE records SET difficultyscore = difficultyscore - 1 WHERE platformer = ${platformer} AND difficultyscore > ${oldScore} AND difficultyscore <= ${newScore}`
   } else {
-    const updateRowsResult = await sql`UPDATE records SET difficultyscore = difficultyscore + 1 WHERE difficultyscore < ${oldScore} AND difficultyscore >= ${newScore}`
+    const updateRowsResult = await sql`UPDATE records SET difficultyscore = difficultyscore + 1 WHERE platformer = ${platformer} AND difficultyscore < ${oldScore} AND difficultyscore >= ${newScore}`
   }
   const updateLevel = await sql`UPDATE records SET difficultyscore = ${newScore} WHERE levelid = ${levelid}`
   return updateLevel.rowCount

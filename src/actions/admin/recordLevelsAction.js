@@ -11,9 +11,9 @@ export const getAllLevelsByDifficultyAction = async({difficulty = 15}) => {
   return '[]';
 }
 
-export const reposicionarLevelAction = async({levelid, oldScore, newScore}) => {
+export const reposicionarLevelAction = async({levelid, oldScore, newScore, platformer}) => {
   if ((await authorize()).can) {
-    const result = await reposicionarNivel(levelid, oldScore, newScore)
+    const result = await reposicionarNivel(levelid, oldScore, newScore, platformer)
     await updateLandingStatsRecords()
     return result
   }

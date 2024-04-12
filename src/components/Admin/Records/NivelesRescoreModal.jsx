@@ -41,7 +41,8 @@ const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels, handleRefres
     const result = await reposicionarLevelAction({
       levelid: level.levelid,
       oldScore: level.difficultyscore,
-      newScore: scoreRequested
+      newScore: scoreRequested,
+      platformer: level.platformer
     })
     if (result > 0) {
       notify(`Nivel reposicionado correctamente.`, 'success')

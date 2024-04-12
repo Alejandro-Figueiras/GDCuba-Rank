@@ -59,7 +59,7 @@ const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels, handleRefres
     if (
       scoreRequested < 1 || 
       scoreRequested == level.difficultyscore ||
-      scoreRequested > getMaxDifficultyScore(levels)+1 ||
+      scoreRequested > getMaxDifficultyScore(levels)+(level.difficultyscore == 0 ? 1 : 0) ||
       !Number.isInteger(parseFloat(scoreRequested))
     ) {
       setDisabled(true)
@@ -67,7 +67,7 @@ const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels, handleRefres
     if (
       scoreRequested >= 1 && 
       scoreRequested != level.difficultyscore &&
-      scoreRequested <= getMaxDifficultyScore(levels)+1 &&
+      scoreRequested <= getMaxDifficultyScore(levels)+(level.difficultyscore == 0 ? 1 : 0) &&
       Number.isInteger(parseFloat(scoreRequested))
     ) {
       setDisabled(false)

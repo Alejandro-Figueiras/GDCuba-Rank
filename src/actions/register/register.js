@@ -9,9 +9,9 @@ export const register = async (data) => {
   let errorMessage = "La cuenta solicitada no existe en Geometry Dash";
 
   let fields = {
-    user: data.username,
-    password: data.password,
-    phone: data.phone,
+    user: data.username.trim(),
+    password: data.password.trimEnd(),
+    phone: data.phone.trim(),
     accountid: null
   };
 

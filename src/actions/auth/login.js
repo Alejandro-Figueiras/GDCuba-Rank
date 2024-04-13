@@ -12,6 +12,8 @@ const ERROR_RESPONSE = {
 };
 
 export const login = async ({ username, password }) => {
+  username = username.trim()
+  password = password.trimEnd();
   const user = await findUser({ user: username });
 
   if (user) {

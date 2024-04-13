@@ -58,7 +58,7 @@ export default ({ isOpen, onOpenChange }) => {
             <ModalBody>
               <Input
                 autoFocus
-                label="Usuario"
+                label="Usuario en GD"
                 placeholder="Introduce tu nombre de usuario"
                 variant="bordered"
                 ref={userRef}

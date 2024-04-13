@@ -120,7 +120,7 @@ export default ({ isOpen, onOpenChange }) => {
                 }
               />
               <Input
-                label="Usuario"
+                label="Usuario en GD"
                 placeholder="Introduce tu nombre de usuario"
                 variant="bordered"
                 ref={userRef}

@@ -136,7 +136,7 @@ return (
                   <AccountIconsRow user={user} />
                   <div className="h-[300px] grid grid-cols-[0.5fr,_1fr] gap-2">
                     {/* grid grid-cols-[0.5fr,_1fr] gap-2 */}
-                    <AccountInfoColumn user={user} />
+                    <AccountInfoColumn user={user} canResetPw={currentUser.role == 'owner'}/>
                     <BodyCard cardTitle={"Datos y Permisos"}>
                       <CardSelect
                         items={roles}

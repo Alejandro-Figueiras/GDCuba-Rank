@@ -2,7 +2,7 @@ import { resetPasswordAction } from '@/actions/admin/resetPasswordAction';
 import { notify } from '@/libs/toastNotifications';
 import {Card, CardHeader, Button} from '@nextui-org/react'
 
-const AccountInfoColumn = ({user}) => {
+const AccountInfoColumn = ({user, canResetPw = false}) => {
   const handleResetPassword = () => {
     resetPasswordAction({username: user.username}).then(result => {
       if (result == 1) {
@@ -28,7 +28,7 @@ const AccountInfoColumn = ({user}) => {
       </CardHeader>
     </Card>
 
-    <Button className="mb-2 w-full" color='warning' onPress={handleResetPassword}>R. Contraseña</Button>
+    <Button className="mb-2 w-full" color='warning' onPress={handleResetPassword} isDisabled={canResetPw}>R. Contraseña</Button>
   </div>)
 }
 

@@ -7,7 +7,7 @@ import { responseText } from "@/locales/siteText";
 import { hash } from "bcryptjs"
 
 export const resetPasswordAction = async({username}) => {
-  const authResult = await authorize()
+  const authResult = await authorize({owner: true})
   if (!authResult.can || !username) {
     return JSON.stringify({ 
       error: responseText.unauthorize,

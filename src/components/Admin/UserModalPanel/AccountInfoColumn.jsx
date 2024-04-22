@@ -28,7 +28,7 @@ const AccountInfoColumn = ({user, canResetPw = false}) => {
       </CardHeader>
     </Card>
 
-    <Button className="mb-2 w-full" color='warning' onPress={handleResetPassword} isDisabled={canResetPw}>R. Contraseña</Button>
+    <Button className="mb-2 w-full" color='warning' onPress={handleResetPassword} isDisabled={!canResetPw}>R. Contraseña</Button>
   </div>)
 }
 

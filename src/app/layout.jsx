@@ -45,7 +45,7 @@ export const metadata = {
 }
 
 export default async({ children }) => {
-  await updateAccounts({limit: 1}); // <- Actualiza los datos de la db
+  updateAccounts({limit: 5}); // <- Actualiza los datos de la db
   return (
     <html lang="es">
       <body className={inter.className}>

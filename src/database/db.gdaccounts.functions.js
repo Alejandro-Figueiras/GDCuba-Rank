@@ -144,5 +144,5 @@ export const updateAccountCloud = async(id, username) => {
   
    if (username != account.username) renameUser({accountid: id, username: account.username})
 
-  return 1;
+  return account;
 }

@@ -1,11 +1,13 @@
 "use client"
 import { getAccountAction } from "@/actions/accounts/getAccountAction";
 import { getStuffItemsAction } from "@/actions/accounts/stuffActions";
+import { updateAccountAction } from "@/actions/accounts/updateAccountAction";
 import ChangePassword from "@/components/Forms/ChangePassword";
 import Login from "@/components/Forms/Login";
 import SignUp from "@/components/Forms/SignUp";
 import Modal from "@/components/Modal";
 import UserModalView from "@/components/UserModalView";
+import { updateAccountCloud } from "@/database/db.gdaccounts.functions";
 import { useDisclosure } from "@nextui-org/react";
 import React, { createContext, useState } from "react";
 
@@ -49,7 +51,7 @@ export default function ModalProvider({ children }) {
     }
   };
 
-  const openUserView = async (user) => {
+  const openUserView = async ({user, update = false}) => {
     const shouldLoad = user.stars == null;
     setCurrentUetuserInView({ account: user, stuff: [], isLoading: shouldLoad, isStuffLoading: user && user.stuff != '' });
     onOpenUserView();
@@ -57,6 +59,10 @@ export default function ModalProvider({ children }) {
       user = JSON.parse(
         await getAccountAction({ username: user.username })
       );
+    }
+    if (update) {
+      const newData = JSON.parse(await updateAccountAction(user.accountid, user.username))
+      user = {...user, ...newData}
     }
     const stuff = (user.stuff != '')?JSON.parse(
       await getStuffItemsAction({accountid: user.accountid})

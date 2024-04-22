@@ -53,7 +53,7 @@ export default ({ ranking, tipo = 'stars', loading = false }) => {
         >
           {
             ranking.map((player, i) => 
-              <TableRow key={i+1} onClick={() => openUserView(player)}>
+              <TableRow key={i+1} onClick={() => openUserView({user: player, update: true})}>
                 {cells.map(cell => cell(player, i))}
               </TableRow>
             )

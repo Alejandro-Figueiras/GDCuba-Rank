@@ -120,7 +120,7 @@ const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, stuffItems =
                   if (['bio', 'hardest', 'created'].includes(val)) {
                     for (const item of stuffItems) {
                       if (!account.stuff.split(',').includes(`${item.id}`)) continue;
-                      const { type } = JSON.parse(item.data)
+                      const { type } = (typeof item.data == String) ? JSON.parse(item.data) : item.data;
                       if (type == val) return false;
                     }
                   }

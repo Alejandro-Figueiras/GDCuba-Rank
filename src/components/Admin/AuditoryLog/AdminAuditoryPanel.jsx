@@ -27,7 +27,7 @@ const AdminAuditoryPanel = ({home = false}) => {
         loading ? <div className="flex flex-row justify-center items-center text-center">
           <Spinner label="Cargando datos..." />
         </div> : 
-        data.map(log => <p className="mt-1"><span className="font-bold text-danger">#{log.id}: </span>{log.message}</p>)
+        data.map((log, i) => <p className="mt-1" key={i}><span className="font-bold text-danger">#{log.id}: </span>{log.message}</p>)
       }
     </TablaHeader>
   );

@@ -59,7 +59,7 @@ const getIcon = async({
 }
 
 export const useGDIconRef = ({
-  type = 'cube', iconNumber = 1, c1 = 0, c2=5, c3=12, glow = false, effectDeps = [],
+  type = 'cube', iconNumber = 1, c1 = 0, c2=5, c3=12, glow = false,
   username = null
 }) => {
   const finalImage = useRef()

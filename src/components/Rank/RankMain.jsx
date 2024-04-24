@@ -4,7 +4,7 @@ import { getAllCubanExtremesVerifiedAction } from "@/actions/record/getAllExtrem
 import RankTable from "@/components/Rank/RankTable"
 import { useState, useEffect } from 'react'
 
-export default ({tipo = 'stars'}) => {
+const RankMain = ({tipo = 'stars'}) => {
   const [rank, setRank] = useState([])
   const [loading, setLoading] = useState(true)
 
@@ -61,7 +61,7 @@ export default ({tipo = 'stars'}) => {
       setRank(players)
       setLoading(false)
     })
-  }, [])
+  }, [tipo])
 
   return (
     <div className="container mx-auto my-4 max-w-3xl">
@@ -69,3 +69,5 @@ export default ({tipo = 'stars'}) => {
     </div>
   )
 }
+
+export default RankMain

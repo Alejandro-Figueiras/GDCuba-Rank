@@ -1,6 +1,8 @@
 'use client'
 
 import RankMain from "@/components/Rank/RankMain"
-export default () => {
+const RankCoins = () => {
   return (<RankMain tipo="usercoins"/>)
 }
+
+export default RankCoins

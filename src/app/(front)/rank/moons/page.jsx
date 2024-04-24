@@ -1,6 +1,8 @@
 'use client'
 
 import RankMain from "@/components/Rank/RankMain"
-export default () => {
+const RankMoons = () => {
   return (<RankMain tipo="moons"/>)
 }
+
+export default RankMoons

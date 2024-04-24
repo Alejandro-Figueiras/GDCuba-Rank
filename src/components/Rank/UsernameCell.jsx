@@ -11,7 +11,7 @@ const UsernameCell = ({ player }) => {
     c3: player.playercolor3,
     glow: player.accglow
   })
-  return (<span className="flex gap-4"><img ref={icon} className="h-6"/>{player.username}</span>)
+  return (<span className="flex gap-4"><img ref={icon} className="h-6" alt=""/>{player.username}</span>)
 }
 
 export default UsernameCell

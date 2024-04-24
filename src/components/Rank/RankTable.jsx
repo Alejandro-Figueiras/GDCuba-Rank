@@ -4,7 +4,7 @@ import { useUser } from "@/hooks/useUser";
 import { Table,  TableHeader,  TableBody,  TableColumn,  TableRow,  TableCell, Spinner } from "@nextui-org/react";
 import UsernameCell from "./UsernameCell";
 
-export default ({ ranking, tipo = 'stars', loading = false }) => {
+const RankTable = ({ ranking, tipo = 'stars', loading = false }) => {
   const { openUserView } = useUser();
 
   const cols = [], cells = [];
@@ -63,3 +63,5 @@ export default ({ ranking, tipo = 'stars', loading = false }) => {
     </div>
   )
 }
+
+export default RankTable

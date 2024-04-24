@@ -44,7 +44,7 @@ export const metadata = {
   },
 }
 
-export default async({ children }) => {
+const GlobalLayout = async({ children }) => {
   updateAccounts({limit: 5}); // <- Actualiza los datos de la db
   return (
     <html lang="es">
@@ -57,3 +57,5 @@ export default async({ children }) => {
     </html>
   )
 }
+
+export default GlobalLayout

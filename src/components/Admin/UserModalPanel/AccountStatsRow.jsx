@@ -8,6 +8,7 @@ const AccountStat = ({ value, icon = null, className }) => {
           <img
             src={icon}
             className="w-100 top-0 left-0"
+            alt=""
           />
         ) : (
           "ic"

@@ -27,7 +27,7 @@ const AccountCard = ({account, submitAccount}) => {
   return (
     <Card className="max-w-[800px] mx-auto">
       <CardHeader className="flex gap-3">
-        <img src={icon} width={40} height={40} />
+        <img src={icon} width={40} height={40} alt=''/>
         <div className="flex flex-col">
           <p className="text-md">{account.username}</p>
           <p className="text-small text-default-500">AccountID: {account.accountid}</p>

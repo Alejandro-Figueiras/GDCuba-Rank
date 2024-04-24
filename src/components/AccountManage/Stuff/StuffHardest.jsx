@@ -21,7 +21,7 @@ const StuffHardest = ({itemData, id, handlers, manage = false, accStuff}) => {
     }).finally(() => {
       setLoading(false)
     })
-  }, [])
+  }, [itemData.accountid])
 
   return <div className="flex flex-col my-2">
     <StuffItemTitle title='Hardest Levels' id={id} handlers={{...handlers}} manage={manage} accStuff={accStuff}/>

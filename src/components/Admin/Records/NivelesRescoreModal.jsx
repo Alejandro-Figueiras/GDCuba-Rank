@@ -29,7 +29,7 @@ const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels, handleRefres
     setDisabled(true)
     setScoreRequested(level.difficultyscore)
   }
-  useEffect(clear, [isOpen])
+  useEffect(clear, [isOpen, level.difficultyscore])
 
   const getMaxDifficultyScore = (levels) => {
     return Math.max(...levels.map(level => level.difficultyscore))
@@ -72,7 +72,7 @@ const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels, handleRefres
     ) {
       setDisabled(false)
     }
-  }, [scoreRequested])
+  }, [scoreRequested, level.difficultyscore, levels])
 
   console.log(level)
 

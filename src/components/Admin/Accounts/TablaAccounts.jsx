@@ -15,7 +15,7 @@ import UsernameCell from "@/components/Rank/UsernameCell";
 import CubanCheckbox from "./CubanCheckbox.jsx";
 import { removeGDAccountAction } from "@/actions/admin/accountsActions.js";
 
-export default ({ gdaccounts, updateAccounts, loading = false }) => {
+const TablaAccounts = ({ gdaccounts, updateAccounts, loading = false }) => {
   const { openModal } = useContext(ModalContext);
 
   const handleDelete = async(acc) => {
@@ -72,3 +72,5 @@ export default ({ gdaccounts, updateAccounts, loading = false }) => {
     </>
   );
 }
+
+export default TablaAccounts

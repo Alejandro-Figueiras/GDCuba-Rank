@@ -30,6 +30,7 @@ const RescoreTable = ({levels}) => {
                     height:"24px",
                     filter: `grayscale(${(level.difficultyscore==0)?100:0}%)`
                   }}
+                  alt=''
                   />
                   
                 {level.levelname}

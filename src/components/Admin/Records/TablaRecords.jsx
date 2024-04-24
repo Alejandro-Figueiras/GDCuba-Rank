@@ -17,7 +17,7 @@ import { useContext } from 'react'
 import { ModalContext } from "@/app/context/ModalContext";
 import { notify } from "@/libs/toastNotifications";
 
-export default ({records, updateRecords, loading=false}) => {
+const TablaRecords = ({records, updateRecords, loading=false}) => {
   const { openModal } = useContext(ModalContext);
 
   const handleDelete = async(record) => {
@@ -70,6 +70,7 @@ export default ({records, updateRecords, loading=false}) => {
                       difficultyName: getDifficultyNameByNumber(record.difficulty)
                     })}
                     style={{height:"24px"}}
+                    alt=""
                   />
                     
                   {record.levelname}
@@ -101,3 +102,4 @@ export default ({records, updateRecords, loading=false}) => {
   );
 }
 
+export default TablaRecords

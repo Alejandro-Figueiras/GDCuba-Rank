@@ -48,7 +48,7 @@ export const getWhatsAppURL = (phone) => {
   return `http://wa.me/${phone}`
 }
 
-export default ({usuarios, updateData, loading = false}) => {
+const TablaUsuarios = ({usuarios, updateData, loading = false}) => {
   const {openUserGestorFor} = useContext(AdminContext);
   return (
     <>
@@ -85,3 +85,5 @@ export default ({usuarios, updateData, loading = false}) => {
     </>
   );
 }
+
+export default TablaUsuarios

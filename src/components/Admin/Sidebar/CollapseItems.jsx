@@ -4,7 +4,6 @@ import ChevronUpIcon from "@/components/Icons/ChevronUpIcon";
 import Link from "next/link";
 
 export const CollapseItems = ({ icon, items, title }) => {
-  const [open, setOpen] = useState(false);
 
   return (
     <div className="flex gap-4 h-full items-center cursor-pointer">

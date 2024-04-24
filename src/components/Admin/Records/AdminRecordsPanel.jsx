@@ -31,7 +31,7 @@ const AdminRecordsPanel = ({home = false}) => {
     })
   }
   
-  useEffect(updateRecords, [])
+  useEffect(updateRecords, [home])
   return (
     <TablaHeader title={home?"Records (Sin verificar)":"Records"} buttons={home?[]:[
       {

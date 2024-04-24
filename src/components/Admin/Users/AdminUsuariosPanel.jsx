@@ -33,7 +33,7 @@ const AdminUsuariosPanel = ({home = false}) => {
     })
   }
 
-  useEffect(updateData, [])
+  useEffect(updateData, [home])
   return (
     <TablaHeader title={home?"Usuarios (sin verificar)":"Usuarios"} buttons={home?[]:[{
       text: "Refresh",

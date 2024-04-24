@@ -2,34 +2,16 @@
 import React, { useContext } from "react";
 import {
   Navbar,
-  NavbarBrand,
   NavbarContent,
   NavbarItem,
-  NavbarMenuToggle,
-  NavbarMenu,
-  NavbarMenuItem,
 } from "@nextui-org/navbar";
-
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownSection,
-  DropdownItem,
-} from "@nextui-org/dropdown";
-
-import { User } from "@nextui-org/user";
-import { Button } from "@nextui-org/button";
-import { Link } from "@nextui-org/link";
 
 import { GlobalContext } from "@/app/context/GlobalContext";
 import { BurguerButton } from "./BurgerButton";
 import UserDropdown from "@/components/NavBar/UserDropdown";
-import { useSesion } from "@/hooks/useSesion";
 
-export default () => {
+const AdminNavBar = () => {
   const {currentUser} = useContext(GlobalContext);
-  const { logout } = useSesion();
   return (
     <>
       <Navbar isBordered maxWidth="2xl">
@@ -50,3 +32,5 @@ export default () => {
     </>
   );
 }
+
+export default AdminNavBar

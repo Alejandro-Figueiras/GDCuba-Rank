@@ -15,7 +15,7 @@ import {
 import { useState } from 'react'
 import NivelesRescoreModal from "./NivelesRescoreModal";
 
-export default ({ levels: unsortedLevels, handleRefresh, loading=false }) => {
+const TablaNivelesDifficultyScore = ({ levels: unsortedLevels, handleRefresh, loading=false }) => {
   const { isOpen, onOpen, onOpenChange} = useDisclosure()
   const [selectedLevel, setSelectedLevel] = useState({})
 
@@ -65,6 +65,7 @@ export default ({ levels: unsortedLevels, handleRefresh, loading=false }) => {
                       height:"24px",
                       filter: `grayscale(${(level.difficultyscore==0)?100:0}%)`
                     }}
+                    alt=""
                     />
                     
                   {level.levelname}
@@ -89,3 +90,4 @@ export default ({ levels: unsortedLevels, handleRefresh, loading=false }) => {
   );
 }
 
+export default TablaNivelesDifficultyScore

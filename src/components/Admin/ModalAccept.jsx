@@ -2,12 +2,11 @@ import {
   Modal,
   ModalContent,
   ModalHeader,
-  ModalBody,
   ModalFooter,
 } from "@nextui-org/modal";
 import { Button } from "@nextui-org/button";
 
-export default ({isOpen, onOpenChange, title, submit}) => {
+const ModalAccept = ({isOpen, onOpenChange, title, submit}) => {
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
       <ModalContent>
@@ -41,3 +40,5 @@ export default ({isOpen, onOpenChange, title, submit}) => {
     </Modal>
   )	
 }
+
+export default ModalAccept

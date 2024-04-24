@@ -14,7 +14,7 @@ import TestTubeIcon from "@/components/Icons/TestTubeIcon";
 import CheckIcon from "@/components/Icons/CheckIcon";
 import LevelSliderIcon from "@/components/Icons/LevelSliderIcon";
 
-export default () => {
+const SidebarMain = () => {
   const { collapsed, setCollapsed } = useSidebarContext();
   const ruta = usePathname()
     return (
@@ -116,3 +116,5 @@ export default () => {
   title="Balances"
 />
 */
+
+export default SidebarMain

@@ -11,12 +11,11 @@ const css = tv({
   },})
 
 export const BurguerButton = () => {
-  const { collapsed, setCollapsed } = useSidebarContext();
+  const { setCollapsed } = useSidebarContext();
 
   return (
     <div
       className={css()}
-      // open={collapsed}
       onClick={setCollapsed}
     >
       <div />

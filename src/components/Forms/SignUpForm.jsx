@@ -15,8 +15,7 @@ import {
 import { notify } from "@/libs/toastNotifications";
 import { register } from "@/actions/register/register";
 
-
-export default ({ isOpen, onOpenChange }) => {
+const SignUpForm = ({ isOpen, onOpenChange }) => {
   const [fieldsError, setFieldsError] = useState({
     userField: false,
     notMatchPassword: false,
@@ -176,3 +175,5 @@ export default ({ isOpen, onOpenChange }) => {
     </Modal>
   );
 };
+
+export default SignUpForm

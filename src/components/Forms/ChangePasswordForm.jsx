@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Button } from "@nextui-org/button";
 
@@ -16,7 +16,7 @@ import { notify } from "@/libs/toastNotifications";
 import { useSesion } from "@/hooks/useSesion";
 import { changePasswordAction } from "@/actions/auth/changePassword";
 
-export default ({ isOpen, onOpenChange }) => {
+const ChangePasswordForm = ({ isOpen, onOpenChange }) => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPassword2, setNewPassword2] = useState("");
@@ -128,3 +128,5 @@ export default ({ isOpen, onOpenChange }) => {
     </Modal>
   );
 };
+
+export default ChangePasswordForm

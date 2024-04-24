@@ -2,9 +2,9 @@
 import { getAccountAction } from "@/actions/accounts/getAccountAction";
 import { getStuffItemsAction } from "@/actions/accounts/stuffActions";
 import { updateAccountAction } from "@/actions/accounts/updateAccountAction";
-import ChangePassword from "@/components/Forms/ChangePassword";
-import Login from "@/components/Forms/Login";
-import SignUp from "@/components/Forms/SignUp";
+import ChangePasswordForm from "@/components/Forms/ChangePasswordForm";
+import LoginForm from "@/components/Forms/LoginForm";
+import SignUpForm from "@/components/Forms/SignUpForm";
 import Modal from "@/components/Modal";
 import UserModalView from "@/components/UserModalView";
 import { useDisclosure } from "@nextui-org/react";
@@ -85,9 +85,9 @@ export default function ModalProvider({ children }) {
         action={current.action}
         submit={current.onSubmit}
       />
-      <Login isOpen={isOpenLogin} onOpenChange={onOpenChangeLogin} />
-      <SignUp isOpen={isOpenSignUp} onOpenChange={onOpenChangeSignUp} />
-      <ChangePassword isOpen={isOpenPassword} onOpenChange={onOpenChangePassword}/>
+      <LoginForm isOpen={isOpenLogin} onOpenChange={onOpenChangeLogin} />
+      <SignUpForm isOpen={isOpenSignUp} onOpenChange={onOpenChangeSignUp} />
+      <ChangePasswordForm isOpen={isOpenPassword} onOpenChange={onOpenChangePassword}/>
       {children}
     </ModalContext.Provider>
   );

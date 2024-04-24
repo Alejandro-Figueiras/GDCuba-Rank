@@ -16,7 +16,7 @@ import { GlobalContext } from "@/app/context/GlobalContext";
 import { notify } from "@/libs/toastNotifications";
 import { login } from "@/actions/auth/login";
 
-export default ({ isOpen, onOpenChange }) => {
+const LoginForm = ({ isOpen, onOpenChange }) => {
   const userRef = useRef();
   const passwordRef = useRef();
   const [loading, setLoading] = useState(false);
@@ -93,3 +93,5 @@ export default ({ isOpen, onOpenChange }) => {
     </Modal>
   );
 };
+
+export default LoginForm

@@ -1,4 +1,4 @@
-export default () => {
+const LevelSliderIcon = () => {
   return (
     <svg 
     width="24" 
@@ -16,3 +16,5 @@ export default () => {
     </svg>
   );
 };
+
+export default LevelSliderIcon

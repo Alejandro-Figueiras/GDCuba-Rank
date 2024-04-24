@@ -1,4 +1,4 @@
-export default ({fill, size, height, width, ...props}) => {
+const NewIcon = ({fill, size, height, width, ...props}) => {
 
   return (
     <svg 
@@ -64,3 +64,5 @@ export default ({fill, size, height, width, ...props}) => {
     </svg>
   )
 }
+
+export default NewIcon

@@ -1,5 +1,4 @@
-import React from "react";
-export const PlusIcon = ({size = 24, width, height, ...props}) => (
+const PlusIcon = ({size = 24, width, height, ...props}) => (
   <svg
     aria-hidden="true"
     fill="none"
@@ -22,3 +21,5 @@ export const PlusIcon = ({size = 24, width, height, ...props}) => (
     </g>
   </svg>
 );
+
+export default PlusIcon

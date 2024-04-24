@@ -1,4 +1,4 @@
-export default () => {
+const YouTubeIcon = () => {
   return (<svg height="22" width="22" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 461.001 461.001" xmlSpace="preserve">
   <g>
@@ -9,3 +9,5 @@ export default () => {
   </g>
   </svg>)
 }
+
+export default YouTubeIcon

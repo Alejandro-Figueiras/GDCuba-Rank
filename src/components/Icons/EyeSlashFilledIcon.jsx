@@ -1,5 +1,4 @@
-import React from "react";
-export const EyeSlashFilledIcon = (props) => (
+const EyeSlashFilledIcon = (props) => (
   <svg
     aria-hidden="true"
     fill="none"
@@ -32,3 +31,5 @@ export const EyeSlashFilledIcon = (props) => (
     />
   </svg>
 );
+
+export default EyeSlashFilledIcon

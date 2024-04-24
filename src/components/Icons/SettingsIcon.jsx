@@ -1,6 +1,4 @@
-import React from "react";
-
-export const SettingsIcon = () => {
+const SettingsIcon = () => {
   return (
     <svg
       width="24"
@@ -19,3 +17,5 @@ export const SettingsIcon = () => {
     </svg>
   );
 };
+
+export default SettingsIcon

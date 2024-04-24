@@ -1,4 +1,4 @@
-export default ({fill, size, height, width, ...props}) => {
+const DeleteIcon = ({fill, size, height, width, ...props}) => {
     return (
     <svg 
       width={size || width || 24}
@@ -41,3 +41,4 @@ export default ({fill, size, height, width, ...props}) => {
     );
  };
  
+ export default DeleteIcon

@@ -1,5 +1,4 @@
-import React from "react";
-export const UserIconOutline = ({
+const UserIconOutline = ({
   fill = 'currentColor',
   filled,
   size,
@@ -37,3 +36,5 @@ export const UserIconOutline = ({
     </svg>
   );
 };
+
+export default UserIconOutline

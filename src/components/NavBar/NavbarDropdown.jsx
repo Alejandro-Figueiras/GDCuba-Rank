@@ -6,7 +6,7 @@ import {
   Button,
   NavbarItem,
 } from '@nextui-org/react'
-import { ChevronDownIcon } from '../Icons/ChevonDrownIcon';
+import ChevronDownIcon from '../Icons/ChevonDrownIcon';
 import { usePathname } from 'next/navigation';
 
 const NavbarDropdown = ({info}) => {

@@ -2,10 +2,10 @@ import { useSidebarContext } from "@/app/admin/layout-context";
 import { Sidebar } from "./sidebar.styles"
 import { SidebarMenu } from "./SidebarMenu";
 import { SidebarItem } from "./SidebarItem";
-import { HomeIcon } from "@/components/Icons/HomeIcon";
+import HomeIcon from "@/components/Icons/HomeIcon";
 import AccountsIcon from "@/components/Icons/AccountsIcon";
 import ReportsIcon from "@/components/Icons/ReportsIcon";
-import { SettingsIcon } from "@/components/Icons/SettingsIcon";
+import SettingsIcon from "@/components/Icons/SettingsIcon";
 import ChangelogIcon from "@/components/Icons/ChangelogIcon";
 import { usePathname } from "next/navigation";
 import DatabaseIcon from "@/components/Icons/DatabaseIcon";

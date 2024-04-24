@@ -1,4 +1,4 @@
-export default () => {
+const TestTubeIcon = () => {
   return (
   <svg height="24" width="24" version="1.1" id="_x32_" xmlns="http://www.w3.org/2000/svg" 
     viewBox="0 0 512 512"  xml-space="preserve">
@@ -24,3 +24,5 @@ export default () => {
   </svg>
   );
 };
+
+export default TestTubeIcon

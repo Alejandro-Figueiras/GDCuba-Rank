@@ -2,7 +2,7 @@ import { getLevelByIDAction, getLevelsAction } from "@/actions/admin/getLevelAct
 import { isNumeric } from "@/libs/utils"
 import { useRef } from "react"
 import { Button, Input } from '@nextui-org/react'
-import { SearchIcon } from "../Icons/SearchIcon"
+import SearchIcon from "../Icons/SearchIcon"
 
 const SearchLevelPrompt = ({ setNiveles = ()=>{}, setNewLevel = ()=>{}}) => {
   const inputRef = useRef()

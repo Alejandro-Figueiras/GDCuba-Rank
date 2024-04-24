@@ -7,7 +7,6 @@ import Login from "@/components/Forms/Login";
 import SignUp from "@/components/Forms/SignUp";
 import Modal from "@/components/Modal";
 import UserModalView from "@/components/UserModalView";
-import { updateAccountCloud } from "@/database/db.gdaccounts.functions";
 import { useDisclosure } from "@nextui-org/react";
 import React, { createContext, useState } from "react";
 

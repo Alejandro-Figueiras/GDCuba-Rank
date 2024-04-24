@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useRef, useState } from "react";
 import { notify, notifyDismiss } from "@/libs/toastNotifications.js";
 import { authMe } from "@/actions/auth/me.js";
 
@@ -14,11 +14,11 @@ export default function GlobalContextProvider({ children }) {
     role: undefined
   });
   const [appliactionLoading, setAppliactionLoading] = useState({ toast: null });
-  let firstAssembly = false;
+  const firstAssembly = useRef(false);
 
   useEffect(() => {
     async function auth() {
-      if (firstAssembly) return;
+      if (firstAssembly.current) return;
       const data = JSON.parse(await authMe());
         console.log(data);
       if (!data.error) {
@@ -28,7 +28,7 @@ export default function GlobalContextProvider({ children }) {
     }
 
     auth();
-    firstAssembly = true;
+    firstAssembly.current = true;
   }, []);
 
   const setGlobaLoading = (loading) => {

@@ -3,7 +3,6 @@ import {
   Card,
   CardBody,
   Image,
-  Button,
 } from '@nextui-org/react'
 
 const LevelCardTiny = ({level, hover=false}) => {
@@ -59,7 +58,7 @@ const LevelCardTiny = ({level, hover=false}) => {
                   </span> 
                   <span>
                     {level.platformer?'Plataforma': <span className="flex">
-                      <img src="/assets/levelIcons/length.png" style={{height: '18px', marginRight: '4px'}}/>
+                      <img src="/assets/levelIcons/length.png" style={{height: '18px', marginRight: '4px'}} alt=""/>
                       {getLengthName({length: level.length, noPlatformer: true})}
                     </span>}
                   </span>

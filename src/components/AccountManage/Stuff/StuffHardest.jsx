@@ -30,7 +30,7 @@ const StuffHardest = ({itemData, id, handlers, manage = false, accStuff}) => {
     </div>
     {
       loadingError != '' && <div className="flex flex-col items-center mt-2">
-        <img src="/assets/ui/delete.png" className="w-8"/>
+        <img src="/assets/ui/delete.png" className="w-8" alt="delete"/>
         <p className="text-medium">{loadingError}</p>
       </div>
     }

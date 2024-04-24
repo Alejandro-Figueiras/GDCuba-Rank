@@ -88,7 +88,7 @@ const AddStuffModal = ({ isOpen, onOpenChange, account, setAccount, stuffItems =
         (itemType == 'created' && itemData.levels.length == 0)
       ) setDisabled(true)
     }
-  }, [itemType, itemData])
+  }, [itemType, itemData, disabled])
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center" size='xl'>

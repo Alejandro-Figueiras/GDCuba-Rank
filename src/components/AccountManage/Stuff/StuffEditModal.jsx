@@ -43,7 +43,7 @@ const StuffEditModal = ({
     onClose()
   }
 
-  useEffect(() => updateListener(itemData, disabled, setDisabled), [itemData])
+  useEffect(() => updateListener(itemData, disabled, setDisabled), [itemData, disabled, updateListener])
 
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">

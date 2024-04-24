@@ -42,7 +42,7 @@ const StuffCreatedForm = ({itemData, setItemData}) => {
       newData.levels = selectedLevels
       return newData
     })
-  }, [selectedLevels])
+  }, [selectedLevels, setItemData])
 
   return <>
     <div className='flex flex-row gap-2'>
@@ -80,7 +80,7 @@ const LevelName = ({level, handleSelect = () => {}, green, hoverGreen, hoverRed}
       <div className="flex flex-col justify-center">
         <img src={diff.path} style={{
           height: '16px'
-        }}/>
+        }} alt=''/>
       </div>
       {level.levelname}
     </div>

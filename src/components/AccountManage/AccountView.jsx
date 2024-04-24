@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Card,
   CardHeader,
@@ -28,7 +28,7 @@ export default function AccountView({manage = false, username }) {
   const [accountStuff, setAccountStuff] = useState(undefined);
   const router = useRouter()
 
-  const loadAccount = async() => {
+  const loadAccount = useCallback(async() => {
     try {
       const account = JSON.parse(
         await getAccountAction({ username: username })
@@ -41,12 +41,12 @@ export default function AccountView({manage = false, username }) {
     } catch {
       router.push('/')
     }
-  };
+  }, [username, router]);
 
   useEffect(() => {
     if (username == undefined) return;
     loadAccount();
-  }, [username]);
+  }, [username, loadAccount]);
 
   return (
     <>

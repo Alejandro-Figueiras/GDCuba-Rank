@@ -8,7 +8,7 @@ import { SidebarContext } from "./layout-context";
 import AdminNavBar from "@/components/Admin/NavBar/AdminNavBar";
 import AdminProvider from "../context/AdminContext";
 
-export default ({ children }) => {
+const AdminLayout = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const [_, setLocked] = useLockedBody(false);
   const handleToggleSidebar = () => {
@@ -35,3 +35,5 @@ export default ({ children }) => {
     </AdminProvider>
   );
 };
+
+export default AdminLayout

@@ -1,5 +1,7 @@
 import AdminUsuariosPanel from "@/components/Admin/Users/AdminUsuariosPanel";
 
-export default () => {
+const AdminUsersPage = () => {
   return (<AdminUsuariosPanel/>);
 };
+
+export default AdminUsersPage

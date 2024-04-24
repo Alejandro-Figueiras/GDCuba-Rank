@@ -6,7 +6,7 @@ import { useDisclosure } from '@nextui-org/react'
 import AddAccount from "../../../components/Admin/Accounts/AddAccount";
 import TablaHeader from "@/components/Admin/TablaHeader";
 
-export default () => {
+const AdminAccountsPage = () => {
   const [accounts, setAccounts] = useState([]);
   const [loading, setLoading] = useState(true)
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -50,3 +50,5 @@ export default () => {
     </>
   );
 };
+
+export default AdminAccountsPage

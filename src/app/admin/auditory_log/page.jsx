@@ -1,5 +1,7 @@
 import AdminAuditoryPanel from "@/components/Admin/AuditoryLog/AdminAuditoryPanel";
 
-export default () => {
+const AuditoryLogPage = () => {
   return (<AdminAuditoryPanel/>);
 };
+
+export default AuditoryLogPage

@@ -11,7 +11,7 @@ import responseToObj from '@/helpers/responseToObj.js';
  * @returns {Song | -1} Song object
  * @author Alejandro-Figueiras
  */
-export default async(songID) => {
+const getSong = async(songID) => {
     if (typeof songID != 'number') throw new Error("Se esperaba un id numerico");
 
     try {
@@ -22,3 +22,5 @@ export default async(songID) => {
         return -1; // Si no existe la canción va a tirar un server error con -1
     }
 }
+
+export default getSong

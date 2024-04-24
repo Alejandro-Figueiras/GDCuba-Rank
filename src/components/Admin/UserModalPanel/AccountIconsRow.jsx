@@ -11,7 +11,6 @@ const AccountIcon = ({
   c2 = 5,
   c3 = 12,
   glow = false,
-  effectDeps = [],
   className = ''
 
 }) => {
@@ -21,8 +20,7 @@ const AccountIcon = ({
     c1,
     c2,
     c3,
-    glow,
-    effectDeps,
+    glow
   });
   const [loading, setLoading] = useState(true);
 
@@ -62,7 +60,6 @@ const AccountIconsRow = ({ user }) => {
     c2: user.playercolor2,
     c3: user.playercolor3,
     glow: user.accglow,
-    effectDeps: [user]
   }
 
   return (

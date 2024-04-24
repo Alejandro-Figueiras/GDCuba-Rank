@@ -1,4 +1,4 @@
-export default (str = "", separador = ":") => {
+const responseToObj = (str = "", separador = ":") => {
     const data = str.split('#')[0].split(separador);
 
     let res = {};
@@ -7,4 +7,6 @@ export default (str = "", separador = ":") => {
     }
 
     return res;
-} 
+}
+
+export default responseToObj

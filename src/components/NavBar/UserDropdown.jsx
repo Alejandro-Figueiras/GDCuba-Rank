@@ -39,8 +39,7 @@ const UserDropdown = ({
   // Icon
   const { icon: iconAvatar } = useGDIcon({
     type: "cube",
-    username: currentUser.username,
-    effectDeps: [currentUser.username],
+    username: currentUser.username
   });
 
   // Submit Record

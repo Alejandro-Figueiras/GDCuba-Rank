@@ -20,7 +20,6 @@ Se le debe pasar un objeto como parametros con las siguientes propiedades:
   c1: number,
   c2: number,
   glow: boolean,
-  effectDeps: [],
 }
 ```
 
@@ -30,15 +29,16 @@ Pero opcionalmente, si no contamos con los datos del usuario, pero si con el `us
 {
   type: String,
   username: String,
-  effectDeps: []
 }
 ```
 
 ## Retorno
 
 Ambos hooks retornarán un objeto con la propiedad `icon`.
+
 * En el caso de `useGDIcon` será un state
 * En el caso de `useGDIconRef` será una ref que se le debe pasar a la etiqueda `img` de la siguiente manera
+
 ```jsx
 <img ref={icon} alt="RobTop Icon">
 ```
@@ -46,7 +46,7 @@ Ambos hooks retornarán un objeto con la propiedad `icon`.
 ## Funcionalidad
 
 1. Crea el state o la ref correspondiente
-2. Crea un useEffect con las dependencias `effectDeps` y una función que se tratará más adelante
+2. Crea un useEffect con una función que se tratará más adelante
 3. Devuelve el state o la ref
 
 ### En el useEffect
@@ -55,4 +55,4 @@ Ambos hooks retornarán un objeto con la propiedad `icon`.
 2. Si se especificó el username, se buscará en la base de datos, y se obtendrán sus datos.
 3. Se comprueban los limites de la 2.1, para evitar iconos en blanco
 4. Se comprueba si el icono esta en el local storage, si no lo está se llama la función makeIcon y el resultado se guarda en el local storage
-5. Una vez obtenida la imagen se guardará en el state o ref correspondiente.
+5. Una vez obtenida la imagen se guardará en el state o ref correspondiente

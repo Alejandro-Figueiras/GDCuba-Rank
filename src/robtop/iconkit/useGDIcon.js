@@ -79,13 +79,13 @@ export const useGDIconRef = ({
       setLoading(false);
     }
     logic()
-  }, [...effectDeps])
+  }, [c1, c2, c3, glow, iconNumber, type, username])
 
   return { icon: finalImage, loading }
 }
 
 export const useGDIcon = ({
-  type = 'cube', iconNumber = 1, c1 = 0, c2=5, c3=12, glow = false, effectDeps = [],
+  type = 'cube', iconNumber = 1, c1 = 0, c2=5, c3=12, glow = false,
   username = null
 }) => {
   const [iconSrc, setIcon] = useState(DEFAULT_CUBE)
@@ -100,7 +100,7 @@ export const useGDIcon = ({
       setIcon(img)
     }
     logic()
-  }, [...effectDeps])
+  }, [type, iconNumber, c1, c2, c3, glow, username])
 
   return { icon: iconSrc }
 }

@@ -13,8 +13,7 @@ const AccountCard = ({account, submitAccount}) => {
     c1: account.playercolor,
     c2: account.playercolor2,
     c3: account.playercolor3,
-    glow: account.accglow,
-    effectDeps: [account]
+    glow: account.accglow
   })
 
   const handleSubmit = (e) => {

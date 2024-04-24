@@ -33,8 +33,7 @@ const AccountRecordsPage = ({params}) => {
   const [loading, setLoading] = useState(true)
   const { icon: iconAvatar } = useGDIcon({
     type: "cube",
-    username: params.username,
-    effectDeps: [params.username],
+    username: params.username
   });
 
   useEffect(() => {

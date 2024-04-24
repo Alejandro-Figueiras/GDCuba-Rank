@@ -4,7 +4,6 @@
 // Then:  node parseRobTopResources
 import fs from 'fs'
 import plist from 'plist'
-import { parseWeirdArray } from './helpers.js';
 import sharp from 'sharp';
 
 const plistPath = 'GJ_GameSheet02-uhd.plist'

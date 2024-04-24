@@ -21,7 +21,6 @@ export default function AccountView({manage = false, username }) {
   const { icon: iconAvatar } = useGDIcon({
     type: "cube",
     username: username,
-    effectDeps: [username],
   });
 
   const [account, setAccount] = useState(undefined);

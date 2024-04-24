@@ -6,7 +6,7 @@ import {useState, useEffect} from 'react'
 import { Spinner } from '@nextui-org/react'
 import { getAllCubanInsaneDemonsVerifiedAction } from "@/actions/record/getAllInsaneDemons"
 
-export default ({ title, type = 'hardest' }) => {
+const ListTemplate = ({ title, type = 'hardest' }) => {
   const [players, setPlayers] = useState({})
   const [levels, setLevels] = useState([])
   const [records, setRecords] = useState([])
@@ -70,7 +70,7 @@ export default ({ title, type = 'hardest' }) => {
       setLoading(false)
       setLoadingError("Error al descargar los datos")
     })
-  }, [])
+  }, [type])
 
   const filterRecords = (levelid) => {
     return records.filter((val) => val.levelid == levelid)
@@ -100,10 +100,12 @@ export default ({ title, type = 'hardest' }) => {
       {
         (!loading && loadingError) && 
         <div className="flex flex-col items-center mt-2">
-          <img src="/assets/ui/delete.png" className="w-8"/>
+          <img src="/assets/ui/delete.png" alt="" className="w-8"/>
           <p className="text-medium">{loadingError}</p>
         </div>
       }
     </div>
   )
 }
+
+export default ListTemplate

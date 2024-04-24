@@ -1,6 +1,6 @@
 import NavBar from "@/components/NavBar/NavBar"
 
-export default ({children}) => {
+const FrontLayout = ({children}) => {
   return (
     <>
       <NavBar />
@@ -8,3 +8,5 @@ export default ({children}) => {
     </>
   )
 }
+
+export default FrontLayout

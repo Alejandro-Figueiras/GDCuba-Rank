@@ -2,7 +2,7 @@
 
 import ListTemplate from "@/components/Lists/ListTemplate"
 
-export default () => {
+const InsaneDemonsList = () => {
 
   return (
     <ListTemplate 
@@ -11,3 +11,5 @@ export default () => {
     />
   )
 }
+
+export default InsaneDemonsList

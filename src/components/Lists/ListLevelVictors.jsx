@@ -26,11 +26,13 @@ const ListLevelVictors = ({level, records, pos, players}) => {
                 featured: level.featured, 
                 difficultyName: getDifficultyNameByNumber(level.difficulty)
               })}
+              alt="Difficulty"
               style={{
                 height:"28px",
                 filter: `grayscale(${(level.difficulty == 15 && level.difficultyscore==0)?100:0}%)`
               }}
               />
+              
             {level.levelname}
           </div>
           </TableColumn>

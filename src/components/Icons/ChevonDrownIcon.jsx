@@ -1,4 +1,4 @@
-import React from "react";
+// TODO make default
 export const ChevronDownIcon = ({strokeWidth = 1.5, ...otherProps}) => (
   <svg
     aria-hidden="true"

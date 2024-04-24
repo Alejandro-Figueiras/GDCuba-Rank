@@ -1,4 +1,4 @@
-export default () => {
+const ChangelogIcon = () => {
   return (
     <svg
       width="24"
@@ -17,3 +17,5 @@ export default () => {
     </svg>
   );
 };
+
+export default ChangelogIcon

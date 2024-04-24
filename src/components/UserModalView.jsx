@@ -18,7 +18,7 @@ import AccountIconsRow from "./Admin/UserModalPanel/AccountIconsRow";
 import AccountStuff from "./AccountManage/AccountStuff";
 import RecordsLinkButton from "./Records/RecordsLinkButton";
 
-export default function UserModalView({ user = {account: {}, stuff: []}, isOpen, onOpenChange }) {
+const UserModalView = ({ user = {account: {}, stuff: []}, isOpen, onOpenChange }) => {
   const { account, stuff = [] } = user
   const [isLoading, setIsLoading] = useState(false);
   const [stuffLoading, setStuffLoading] = useState(false)
@@ -27,7 +27,7 @@ export default function UserModalView({ user = {account: {}, stuff: []}, isOpen,
     setIsLoading(isOpen && user.isLoading);
     if (isOpen && !user.isLoading && user.isStuffLoading) setStuffLoading(true)
     else setStuffLoading(false)
-  }, [user]);
+  }, [user, isOpen]);
 
   return (
     <Modal
@@ -83,3 +83,5 @@ export default function UserModalView({ user = {account: {}, stuff: []}, isOpen,
     </Modal>
   );
 }
+
+export default UserModalView

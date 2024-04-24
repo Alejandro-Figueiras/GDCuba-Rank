@@ -1,6 +1,6 @@
 const { useSesion } = require("@/hooks/useSesion");
 
-export const NoAccount = ({ message }) => {
+const NoAccount = ({ message }) => {
   const defaultMessage = "Necesitas una cuenta para esta sección xd";
   const { login, signUp } = useSesion();
   return (
@@ -24,3 +24,5 @@ export const NoAccount = ({ message }) => {
     </div>
   );
 };
+
+export default NoAccount

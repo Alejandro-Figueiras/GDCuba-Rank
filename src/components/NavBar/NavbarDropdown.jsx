@@ -49,7 +49,7 @@ const NavbarDropdown = ({info}) => {
       {info.items.map(item => (
         <DropdownItem
           key={item.key}
-          startContent={<img src={item.img} width="24"/>}
+          startContent={<img src={item.img} width="24" alt="" />}
           href={item.href}
         >
           {item.label}

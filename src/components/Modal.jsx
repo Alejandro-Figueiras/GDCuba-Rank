@@ -8,7 +8,7 @@ import {
 import { Button } from "@nextui-org/button";
 import { useState } from "react";
 
-export default ({ isOpen, onOpenChange, title, action, desc, submit }) => {
+const ModalTemplate = ({ isOpen, onOpenChange, title, action, desc, submit }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const onOpen = (e) => {
@@ -76,3 +76,5 @@ const translate = (action) => {
       return "Aceptar";
   }
 };
+
+export default ModalTemplate

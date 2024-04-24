@@ -61,7 +61,7 @@ export default function SubmitRecordModal({
     if (level && level.platformer) {
       sliderValue.current = 100
     }
-  }, [])
+  }, [level])
 
   // ----- RESET -----
   useEffect(() => {
@@ -79,7 +79,7 @@ export default function SubmitRecordModal({
         })
       }
     }
-  }, [isOpen]);
+  }, [isOpen, admin]);
 
   return (
     <Modal 

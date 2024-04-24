@@ -17,7 +17,7 @@ import NavbarDropdown from "./NavbarDropdown";
 import { ResponsiveNavAccordion } from "./ResponsiveNavAccordion";
 import './NavBar.css'
 
-export default () => {
+const NavBar = () => {
   const { currentUser, logout, signUp, login, changePassword } = useSesion();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -104,7 +104,7 @@ export default () => {
             className="md:hidden"
           />
           <NavbarBrand>
-            <img src="/assets/SD_256.png" className={`mr-2 sm:mr-3 navbar__logo ${(currentUser.username ? '' : 'no-acc')}`} />
+            <img src="/assets/SD_256.png" className={`mr-2 sm:mr-3 navbar__logo ${(currentUser.username ? '' : 'no-acc')}`} alt=""/>
             <p className={`font-bold text-xl navbar__brand ${(currentUser.username ? '' : 'no-acc')}`}>GD Cuba ΔΔΔ</p>
           </NavbarBrand>
         </NavbarContent>
@@ -146,3 +146,5 @@ export default () => {
     </>
   );
 };
+
+export default NavBar

@@ -3,7 +3,7 @@ import { getLandingStatsAction } from "@/actions/landing/getLandingStats";
 import StatsCard from "./StatsCard"
 import { useState, useEffect } from 'react'
 
-const MainStats = ({}) => {
+const MainStats = () => {
   const [landingStats, setLandingStats] = useState({
     totalStars: 'Cargando...',
     totalDemons: 'Cargando...',

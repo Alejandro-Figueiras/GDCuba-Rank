@@ -6,7 +6,7 @@ const MainFooter = () => {
     </div>
     <div className="flex flex-row gap-4 min-w-10">
       <a href="https://github.com/Alejandro-Figueiras/GDCuba-Rank" target="_blank" rel="noopener noreferrer">
-        <img src="/assets/ui/github-mark-white.svg" className="w-8 hover:scale-125 transition"/>
+        <img src="/assets/ui/github-mark-white.svg" className="w-8 hover:scale-125 transition" alt="GitHub Repo"/>
       </a>
     </div>
   </div>

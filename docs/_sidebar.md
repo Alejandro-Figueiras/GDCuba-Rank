@@ -9,7 +9,6 @@
 ## **Database**
 - [db.users](/database/db.users)
 - [db.gdaccounts](/database/db.gdaccounts)
-- [db.levels](/database/db.levels)
 
 ## **Icon Kit**
 - [Anatomía del ícono](/iconkit/Anatomia)

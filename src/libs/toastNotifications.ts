@@ -1,7 +1,7 @@
-import { toast } from "react-toastify";
+import { Id, toast, ToastOptions } from "react-toastify";
 
-export const notify = (message, type = "info") => {
-  const configs = {
+export const notify = (message: string, type = "info") => {
+  const configs: ToastOptions = {
     position: "bottom-center",
     theme: "dark",
   };
@@ -17,7 +17,7 @@ export const notify = (message, type = "info") => {
   }
 };
 
-export const notifyDismiss = (toastInstance, delay = 0.5) => {
+export const notifyDismiss = (toastInstance: Id, delay = 0.5) => {
   return setTimeout(() => {
     toast.dismiss(toastInstance);
   }, 1000 * delay);

@@ -1,14 +1,11 @@
-import { gdRequest } from "@/helpers/request-helper.js";
-import responseToObj from '@/helpers/responseToObj.js';
+import { gdRequest } from "@/helpers/request-helper";
+import responseToObj from '@/helpers/responseToObj';
 import Account from "@/models/Account";
 
 /**
  * Hace una request a los servidores de RobTop usando la id y devuelve un objeto Account con los datos obtenidos
  * 
  * Si no hay resultados devuelve -1
- * @async
- * @param {Number} targetAccountID 
- * @returns {Account | -1}
  */
 export const getAccountByID = async(targetAccountID: number) => {
     if (typeof targetAccountID != 'number') throw new Error("Se esperaba un id numerico");
@@ -28,8 +25,6 @@ export const getAccountByID = async(targetAccountID: number) => {
  * Si no hay resultados devuelve -1
  * 
  * **IMPORTANTE:** Siempre que sea posible usar la función `getAccountByID`
- * @param {String} target Nombre del usuario objetivo
- * @returns {Account | -1}
  */
 export const getAccount = async(target: string) => {
     try {

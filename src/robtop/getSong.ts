@@ -1,6 +1,6 @@
-import { gdRequest } from "@/helpers/request-helper.js";
-import Song from '@/models/Song.js'
-import responseToObj from '@/helpers/responseToObj.js';
+import { gdRequest } from "@/helpers/request-helper";
+import Song from '@/models/Song'
+import responseToObj from '@/helpers/responseToObj';
 
 /**
  * Hace una request a los servidores de RobTop y con el body construye un objecto Song

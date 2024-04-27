@@ -1,5 +1,5 @@
-import { gdRequest } from "@/helpers/request-helper.js";
-import responseToObj from '@/helpers/responseToObj.js';
+import { gdRequest } from "@/helpers/request-helper";
+import responseToObj from '@/helpers/responseToObj';
 import Level from "@/models/Level";
 import Song from "@/models/Song";
 import Author from "@/models/Author"

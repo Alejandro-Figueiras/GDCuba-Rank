@@ -1,5 +1,7 @@
+import Level from "@/models/Level"
 
-export const parseDifficulty = (level) => {
+// TODO implementar record
+export const parseDifficulty = (level: Level) => {
   const difficulty = (level.difficultydenominator)?level.difficultynumerator/level.difficultydenominator:"N/A"
   const featured = 
     (level.epic == 3) ? 'Mythic' :
@@ -37,12 +39,21 @@ export const parseDifficulty = (level) => {
   }
 }
 
-export const getDifficultyPath = ({featured, difficultyName}) => {
+type DifficultyPathParams = {
+  featured: string,
+  difficultyName: string
+}
+export const getDifficultyPath = ({featured, difficultyName}: DifficultyPathParams) => {
   if (difficultyName == 'N/A') return '/assets/dificultades/na.png'
   return `/assets/dificultades/${featured.toLowerCase()}/${difficultyName.replace(' ', '_').toLowerCase()}.png`
 }
 
-export const getDifficultyNumber = ({difficulty = 0, demondifficulty, demon}) => {
+type DifficultyNumberParams = {
+  difficulty: number | "N/A"
+  demondifficulty?: number
+  demon?: boolean
+}
+export const getDifficultyNumber = ({difficulty = 0, demondifficulty = 3, demon = false}: DifficultyNumberParams) => {
   if (demon) {
     return (demondifficulty == 3) ? 11 : // Easy Demon
     (demondifficulty == 4) ? 12 : // Medium Demon
@@ -50,10 +61,11 @@ export const getDifficultyNumber = ({difficulty = 0, demondifficulty, demon}) =>
     (demondifficulty == 6) ? 15 : // Extreme Demon
     13 //Hard Demon
   }
+  if (difficulty == 'N/A') return 0;
   return difficulty
 }
 
-export const getDifficultyNameByNumber = (n) => {
+export const getDifficultyNameByNumber = (n: number) => {
   return (n == 0) ? "N/A" :
   (n == 1) ? "Easy" :
   (n == 2) ? "Normal" :
@@ -68,7 +80,7 @@ export const getDifficultyNameByNumber = (n) => {
   'N/A'
 }
 
-export const getLengthName = ({length, noPlatformer = false}) => {
+export const getLengthName = ({length = 3, noPlatformer = false}) => {
   return (length==0) ? 'Tiny' :
     (length==1) ? 'Short' :
     (length==2) ? 'Medium' :

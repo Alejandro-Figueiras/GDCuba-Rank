@@ -1,6 +1,6 @@
 const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
 
-export const decryptBase64 = (input) => {
+export const decryptBase64 = (input: string) => {
     let output = '';
 
     var i = 0;
@@ -21,7 +21,7 @@ export const decryptBase64 = (input) => {
     return output;
 }
 
-export const cryptBase64 = (input) => {
+export const cryptBase64 = (input: string) => {
     let output     = '';
 
     let i = 0;

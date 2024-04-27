@@ -1,4 +1,4 @@
-export const calcularTrofeo = (globalrank) => {
+export const calcularTrofeo = (globalrank: number) => {
   if (globalrank == 0) return '/assets/trofeos/rankIcon_all_001.png'
   if (globalrank == 1) {
     return '/assets/trofeos/rankIcon_1_001.png'

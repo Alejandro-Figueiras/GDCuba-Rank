@@ -1,6 +1,5 @@
 import Level from "@/models/Level"
 
-// TODO implementar record
 export const parseDifficulty = (level: Level) => {
   const difficulty = (level.difficultydenominator)?level.difficultynumerator/level.difficultydenominator:"N/A"
   const featured = 

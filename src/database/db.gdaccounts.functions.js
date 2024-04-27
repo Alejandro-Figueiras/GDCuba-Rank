@@ -1,6 +1,6 @@
 'use server'
 import { sql } from '@vercel/postgres'
-import { getAccountByID } from "@/robtop/getAccount.js";
+import { getAccountByID } from "@/robtop/getAccount";
 import { unstable_noStore as noStore } from 'next/cache';
 import { renameUser } from './db.users';
 

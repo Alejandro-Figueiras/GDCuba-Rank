@@ -6,12 +6,9 @@ import responseToObj from '@/helpers/responseToObj.js';
  * Hace una request a los servidores de RobTop y con el body construye un objecto Song
  * 
  * Si la canción no existe, o por alguna razón ocurre un error, devuelve -1
- * @async
- * @param {number} songID
- * @returns {Song | -1} Song object
  * @author Alejandro-Figueiras
  */
-const getSong = async(songID) => {
+const getSong = async(songID: number) => {
     if (typeof songID != 'number') throw new Error("Se esperaba un id numerico");
 
     try {

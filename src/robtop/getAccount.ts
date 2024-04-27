@@ -10,7 +10,7 @@ import Account from "@/models/Account";
  * @param {Number} targetAccountID 
  * @returns {Account | -1}
  */
-export const getAccountByID = async(targetAccountID) => {
+export const getAccountByID = async(targetAccountID: number) => {
     if (typeof targetAccountID != 'number') throw new Error("Se esperaba un id numerico");
     try {
         const body = await gdRequest("getGJUserInfo20", {
@@ -28,11 +28,10 @@ export const getAccountByID = async(targetAccountID) => {
  * Si no hay resultados devuelve -1
  * 
  * **IMPORTANTE:** Siempre que sea posible usar la función `getAccountByID`
- * @async
  * @param {String} target Nombre del usuario objetivo
  * @returns {Account | -1}
  */
-export const getAccount = async(target) => {
+export const getAccount = async(target: string) => {
     try {
         const body = await gdRequest("getGJUsers20", {str: target});
         let accountid = parseInt(responseToObj(body, ":")[16]); // AccountID

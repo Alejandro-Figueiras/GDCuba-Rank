@@ -1,8 +1,60 @@
 import { decryptBase64 } from "@/helpers/base64"
+import Song from "./Song"
+import Author from "./Author"
+
+type LevelOptions = {
+    author?: Author | undefined
+    song?: Song | undefined
+    authors?: Author[]
+    songs?: Song[]
+    timestamp?: number
+}
 
 export default class Level {
+    gameversion: number
+    id: number
+    levelname: string
+    description: string
+    version: number
+
+    playerid: number
+    accountid: number | undefined
+    author: string | undefined
+
+    length: number
+    platformer: boolean
+    downloads: number
+    likes: number
+    coins: number
+    verifiedcoins: boolean
+
+    stars: number
+    starsrequested: number
+    difficultydenominator: number
+    difficultynumerator: number
+    auto: boolean
+    demon: boolean
+    demondifficulty: number
+    featurescore: number
+    epic: number
+
+    officialsong: number | undefined
+    songid: number | undefined
+    songname: string | undefined
+    songartistid: number | undefined
+    songartistname: string | undefined
+    songsize: number | undefined
+    songvideo: string | undefined
+    songartistyt: string | undefined
+    songdownloadlink: string | undefined
+
+    twoplayer: number
+    dailynumber: number | undefined
+    copiedid: number | undefined
+    objects: number | undefined
+    timestamp: number
     
-    constructor(body = {}, {author = {}, song = {}, authors = [], songs = [], timestamp = 0}) {
+    constructor(body = {}, {author, song, authors = [], songs = [], timestamp = 0}: LevelOptions) {
         this.gameversion = parseInt(body[13])
         
         // General Info
@@ -13,12 +65,13 @@ export default class Level {
 
         // Author
         this.playerid = parseInt(body[6])
-        if (!author || Object.keys(author) == 0) {
+        if (!author || !author.playername) {
             author = authors.find(v => v.playerid == this.playerid);
-            if (!author) author = {}
+            if (author) {
+                this.accountid = author.accountid
+                this.author = author.playername
+            }
         }
-        this.accountid = author.accountid;
-        this.author = author.playername
         
         // Stats
         this.length = parseInt(body[15]) // 0-4, where 0 is tiny and 4 is XL, 5 is platformer
@@ -44,15 +97,16 @@ export default class Level {
         this.songid = parseInt(body[35])
         if (!this.officialsong && (this.songid || !song || songs.length == 0)) {
             song = songs.find(v => v.id == this.songid);
-            if (!song) song = {}
+            if (song) {
+                this.songname = song.name;
+                this.songartistid = song.artistid;
+                this.songartistname = song.artistname;
+                this.songsize = song.size; // Peso en MB, redondeado a 2 lugares decimales
+                this.songvideo = song.video;
+                this.songartistyt = song.artistyt;
+                this.songdownloadlink = song.downloadlink;
+            }
         }
-        this.songname = song.name;
-        this.songartistid = song.artistid;
-        this.songartistname = song.artistname;
-        this.songsize = song.size; // Peso en MB, redondeado a 2 lugares decimales
-        this.songvideo = song.video;
-        this.songartistyt = song.artistyt;
-        this.songdownloadlink = song.downloadlink;
 
         // General
         this.twoplayer = parseInt(body[31])

@@ -2,10 +2,11 @@ import { gdRequest } from "@/helpers/request-helper.js";
 import responseToObj from '@/helpers/responseToObj.js';
 import Level from "@/models/Level";
 import Song from "@/models/Song";
+import Author from "@/models/Author"
 
-const parseResponse = (body) => {
+const parseResponse = (body: string) => {
   const data = body.split("#");
-  const authors = data[1].split("|").map(authorRaw => {
+  const authors = data[1].split("|").map((authorRaw): Author => {
     const author = authorRaw.split(":")
     return {
       playerid: parseInt(author[0]),
@@ -29,11 +30,8 @@ const parseResponse = (body) => {
  * Si no existe, devuelve -1
  * 
  * **IMPORTANTE**: Si no tienes el LevelID, usa la función `getLevels`
- * @async
- * @param {Number} id LevelID
- * @returns {{level, author, song}}
  */
-export const getLevelByID = async (id) => {
+export const getLevelByID = async (id: number) => {
   try {
     const body = await gdRequest("getGJLevels21", {
       type: '0',
@@ -52,11 +50,8 @@ export const getLevelByID = async (id) => {
  * Hace una request a los servidores de robtop buscando la query, y devuelve un objeto (consultar [documentación web](http://localhost:9508/#/robtop/getLevel)) con los resultados
  * 
  * Si no hay resultados, devuelve -1
- * @async
- * @param {String} query
- * @returns {{levels, authors, songs}}
  */
-export const getLevels = async(query) => {
+export const getLevels = async(query: string) => {
   try {
     const body = await gdRequest("getGJLevels21", {
       type: '0',

@@ -1,5 +1,13 @@
 export default class Song {
-    
+    id: number
+    name: string
+    artistid: number
+    artistname: string
+    size: number
+    video: string | undefined
+    artistyt: string | undefined
+    downloadlink: string | undefined
+
     constructor(body = {}) {
         this.id = parseInt(body[1]);
         this.name = body[2];

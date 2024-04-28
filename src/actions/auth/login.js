@@ -14,7 +14,7 @@ const ERROR_RESPONSE = {
 export const login = async ({ username, password }) => {
   username = username.trim()
   password = password.trimEnd()
-  const user = await findUser({ user: username })
+  const user = await findUser({ user: username, password: true })
 
   if (user) {
     const passwordMatch = await compare(password, user.password)
@@ -32,7 +32,6 @@ export const login = async ({ username, password }) => {
       }
 
       const token = createToken(user)
-      console.log(token)
 
       cookies().set(COOKIES_INFO.name, token, {
         httpOnly: true, // esto es algo de privadicad pero no recuerdo que

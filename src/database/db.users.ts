@@ -7,84 +7,113 @@ import {
   renameUserInStuffItems
 } from './db.accstuffitems'
 import { updateAccountStuff } from './db.gdaccounts'
+import { type User } from '@/models/User'
 
 /**
  * Esta función agrega un usuario a la base de datos. Los parametros faltantes se ponen por default en la base de datos.
- * @async
- * @param {Object} { user, password, phone, accountid }
- * @returns {Object}
  */
-export const addUser = async ({ user, password, phone, accountid }) => {
+export const addUser = async ({
+  user,
+  password,
+  phone,
+  accountid
+}: {
+  user: string
+  password: string
+  phone: string
+  accountid: number
+}) => {
   noStore()
   const result =
     await sql`INSERT INTO users(username, password, phone, accountid) VALUES(${user}, ${password}, ${phone}, ${accountid})`
   if (!result) {
     throw result
   } else {
-    return (await sql`SELECT * from users WHERE accountid = ${accountid}`)
-      .rows[0]
+    return (
+      await sql`SELECT id,username,accountid,phone,status,role,sessiontoken from users WHERE accountid = ${accountid}`
+    ).rows[0] as User
   }
 }
 
 /**
  * Esta función retorna un usuario directamente de la base de datos online
- * @async
- * @param {Object} { user }
- * @returns {Object}
  */
-export const getUser = async ({ user }) => {
+export const getUser = async ({ user }: { user: string }) => {
   noStore()
-  return (await sql`SELECT * from users WHERE username = ${user}`).rows[0]
+  return (
+    await sql`SELECT id,username,accountid,phone,status,role,sessiontoken from users WHERE username = ${user}`
+  ).rows[0] as User
 }
 
-export const getUserByAccountID = async ({ accountid }) => {
+export const getUserByAccountID = async ({
+  accountid
+}: {
+  accountid: number
+}) => {
   noStore()
-  return (await sql`SELECT * from users WHERE accountid = ${accountid}`).rows[0]
+  return (
+    await sql`SELECT id,username,accountid,phone,status,role,sessiontoken from users WHERE accountid = ${accountid}`
+  ).rows[0] as User
 }
 
 /**
  * Esta función es igual a la función getUser pero no tiene en cuenta las mayusculas y minusculas, retorna datos del usuario directamente de la base de datos online.
- * @async
- * @param {Object} { user }
- * @returns
  */
-export const findUser = async ({ user = '' }) => {
+export const findUser = async ({
+  user = '',
+  password = false
+}): Promise<User | undefined> => {
   noStore()
-  const result = await sql`SELECT * from users WHERE username ILIKE ${user}`
-  if (result.rowCount) return result.rows[0]
+  const result = !password
+    ? await sql`SELECT id,username,accountid,phone,status,role,sessiontoken from users WHERE username ILIKE ${user}`
+    : await sql`SELECT * from users WHERE username ILIKE ${user}`
+  if (result.rowCount) {
+    return result.rows[0] as User
+  }
   return undefined
 }
 
 /**
  * Esta función retorna todos los usuarios directamente de la base de datos online. Puede ser muy lenta asi que evitar su uso repetitivo
- * @async
- * @returns {Array}
  */
 export const getAllUsers = async () => {
   noStore()
-  return (await sql`SELECT * from users`).rows
+  return (
+    await sql`SELECT id,username,accountid,phone,status,role,sessiontoken from users`
+  ).rows as User[]
 }
 
 export const getUnverifiedUsers = async () => {
   noStore()
-  return (await sql`SELECT * from users WHERE status = 'u'`).rows
+  return (
+    await sql`SELECT id,username,accountid,phone,status,role,sessiontoken from users WHERE status = 'u'`
+  ).rows as User[]
 }
 
 /**
  * Esta función verifica el usuario dentro del sitio. Cambia el status de 'u' a 'v'. También puede actuar de invalidador cuando se le pasa el parametro `unvalidate: true`
- * @async
- * @param {Object} { user, unvalidate? }
- * @returns {Object} user object, si falla se debe manejar el catch de la promesa
  */
-export const validateUser = async ({ user, unvalidate = false }) => {
+export const validateUser = async ({
+  user,
+  unvalidate = false
+}: {
+  user: string
+  unvalidate?: boolean
+}) => {
   noStore()
   const result =
     await sql`UPDATE users SET status = ${unvalidate ? 'u' : 'v'} WHERE username = ${user}`
-  if (!result) throw new Error('Error al validar ' + result)
+  if (!result.rowCount) throw new Error('Error al validar ' + result)
   return 1
 }
 
-export const changeUserRole = async ({ user, role = 'user' }) => {
+export const changeUserRole = async ({
+  user,
+  role = 'user'
+}: {
+  user: string
+  role?: string
+}) => {
   noStore()
   const result =
     await sql`UPDATE users SET role = ${role} WHERE username = ${user}`
@@ -92,7 +121,7 @@ export const changeUserRole = async ({ user, role = 'user' }) => {
   return 1
 }
 
-export const banUser = async ({ user }) => {
+export const banUser = async ({ user }: { user: string }) => {
   noStore()
   const result =
     await sql`UPDATE users SET status = ${'b'} WHERE username = ${user}`
@@ -111,11 +140,9 @@ export const banUser = async ({ user }) => {
 
 /**
  * Elimina el usuario de la base de datos sin dejar rastro de él.
- * @async
- * @param {Object} { username }
- * @returns {Number} 1 si se eliminó exitosamente, 0 si no encontró resultados, undefined si no tiene permisos
+ * Retorna 1 si se eliminó exitosamente, 0 si no encontró resultados, undefined si no tiene permisos
  */
-export const eliminarUser = async ({ username }) => {
+export const eliminarUser = async ({ username }: { username: string }) => {
   noStore()
   if (!username) return undefined
   const result = await sql`DELETE FROM users WHERE username = ${username} `
@@ -129,7 +156,13 @@ export const eliminarUser = async ({ username }) => {
   return undefined
 }
 
-export const setUserPassword = async ({ username, password }) => {
+export const setUserPassword = async ({
+  username,
+  password
+}: {
+  username: string
+  password: string
+}) => {
   noStore()
   const newSessionToken = Math.floor(Math.random() * 1000000)
   const result =
@@ -138,7 +171,13 @@ export const setUserPassword = async ({ username, password }) => {
   return 1
 }
 
-export const renameUser = async ({ accountid, username }) => {
+export const renameUser = async ({
+  accountid,
+  username
+}: {
+  accountid: number
+  username: string
+}) => {
   noStore()
   const result =
     await sql`UPDATE users SET username = ${username} WHERE accountid = ${accountid}`

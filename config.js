@@ -1,5 +1,5 @@
 // !!!!!!!!! SE UTILIZA EN EL CLIENTE !!!!!!!!!!!!!!!!
-export default {
+const REQUEST_CONFIG = {
     // Siempre se debe enviar estos datos a los servidores
     params: {
         secret: 'Wmfd2893gb7',
@@ -11,3 +11,5 @@ export default {
 
     endpoint: "http://www.boomlings.com/database/"
 }
+
+export default REQUEST_CONFIG

@@ -1,13 +1,13 @@
 'use server'
 
-import { parseDifficulty } from "@/helpers/levelParser"
-import { authMe } from "../auth/me"
-import { addRecord } from "@/database/db.records"
-import { getGDAccount } from "@/database/db.gdaccounts"
+import { parseDifficulty } from '@/helpers/levelParser'
+import { authMe } from '../auth/me'
+import { addRecord } from '@/database/db.records'
+import { getGDAccount } from '@/database/db.gdaccounts'
 
-export const submitRecord = async(datos = {}, level = {}) => {
+export const submitRecord = async (datos = {}, level = {}) => {
   const difficulty = parseDifficulty(level)
-  const auth = JSON.parse(await authMe({forceRevalidate: true}));
+  const auth = JSON.parse(await authMe({ forceRevalidate: true }))
   if (auth.status == 401) return JSON.stringify(auth)
   const acc = await getGDAccount(auth.username)
   const record = {
@@ -25,4 +25,3 @@ export const submitRecord = async(datos = {}, level = {}) => {
   const dbResult = await addRecord(record)
   return dbResult
 }
-

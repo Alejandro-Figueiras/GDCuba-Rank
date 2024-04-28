@@ -1,12 +1,19 @@
-import {Select, SelectItem} from "@nextui-org/react"
+import { Select, SelectItem } from '@nextui-org/react'
 
-const CardSelect = ({ items, placeholder, label, onChange, selectedKeys, isDisabled = false }) => {
+const CardSelect = ({
+  items,
+  placeholder,
+  label,
+  onChange,
+  selectedKeys,
+  isDisabled = false
+}) => {
   return (
     <Select
       items={items}
       label={label}
       placeholder={placeholder}
-      className="max-w-xs"
+      className='max-w-xs'
       selectedKeys={selectedKeys}
       onChange={onChange}
       isDisabled={isDisabled}
@@ -17,7 +24,7 @@ const CardSelect = ({ items, placeholder, label, onChange, selectedKeys, isDisab
         </SelectItem>
       ))}
     </Select>
-  );
+  )
 }
 
 export default CardSelect

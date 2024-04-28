@@ -1,13 +1,12 @@
-"use client"
+'use client'
 
-import ListTemplate from "@/components/Lists/ListTemplate"
+import ListTemplate from '@/components/Lists/ListTemplate'
 
 const PlatformerList = () => {
-
   return (
-    <ListTemplate 
-      title="Lista de Hardest (Plataforma)"
-      type="hardest-platformer"
+    <ListTemplate
+      title='Lista de Hardest (Plataforma)'
+      type='hardest-platformer'
     />
   )
 }

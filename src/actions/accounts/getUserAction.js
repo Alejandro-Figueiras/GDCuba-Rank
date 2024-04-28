@@ -1,12 +1,12 @@
 'use server'
 
-import { getUser } from "@/database/db.users";
+import { getUser } from '@/database/db.users'
 
-export const getUserAction = async({user}) => {
+export const getUserAction = async ({ user }) => {
   if (user) {
-    const info = {...(await getUser({user}))};
-    if (info) info.password = null;
-    return JSON.stringify(info);
+    const info = { ...(await getUser({ user })) }
+    if (info) info.password = null
+    return JSON.stringify(info)
   }
-  return null;
+  return null
 }

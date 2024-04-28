@@ -1,15 +1,11 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
 import {
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
-import {
-  Modal, 
-  ModalContent, 
-  ModalHeader, 
-  ModalBody, 
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
   ModalFooter,
   Button,
   Input
@@ -19,7 +15,13 @@ import { reposicionarLevelAction } from '@/actions/admin/recordLevelsAction'
 import { notify } from '@/libs/toastNotifications'
 import RecordCard from '@/components/Records/RecordCard'
 
-const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels, handleRefresh}) => {
+const NivelesRescoreModal = ({
+  isOpen,
+  onOpenChange,
+  level,
+  levels,
+  handleRefresh
+}) => {
   const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(true)
   const [scoreRequested, setScoreRequested] = useState(level.difficultyscore)
@@ -32,10 +34,10 @@ const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels, handleRefres
   useEffect(clear, [isOpen, level.difficultyscore])
 
   const getMaxDifficultyScore = (levels) => {
-    return Math.max(...levels.map(level => level.difficultyscore))
+    return Math.max(...levels.map((level) => level.difficultyscore))
   }
 
-  const handleSubmit = async(onClose) => {
+  const handleSubmit = async (onClose) => {
     setLoading(true)
 
     const result = await reposicionarLevelAction({
@@ -57,17 +59,19 @@ const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels, handleRefres
 
   useEffect(() => {
     if (
-      scoreRequested < 1 || 
+      scoreRequested < 1 ||
       scoreRequested == level.difficultyscore ||
-      scoreRequested > getMaxDifficultyScore(levels)+(level.difficultyscore == 0 ? 1 : 0) ||
+      scoreRequested >
+        getMaxDifficultyScore(levels) + (level.difficultyscore == 0 ? 1 : 0) ||
       !Number.isInteger(parseFloat(scoreRequested))
     ) {
       setDisabled(true)
     }
     if (
-      scoreRequested >= 1 && 
+      scoreRequested >= 1 &&
       scoreRequested != level.difficultyscore &&
-      scoreRequested <= getMaxDifficultyScore(levels)+(level.difficultyscore == 0 ? 1 : 0) &&
+      scoreRequested <=
+        getMaxDifficultyScore(levels) + (level.difficultyscore == 0 ? 1 : 0) &&
       Number.isInteger(parseFloat(scoreRequested))
     ) {
       setDisabled(false)
@@ -77,31 +81,34 @@ const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels, handleRefres
   console.log(level)
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement='top-center'>
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1">
+            <ModalHeader className='flex flex-col gap-1'>
               Reposicionar nivel
             </ModalHeader>
             <ModalBody>
-              <Input 
+              <Input
                 type='number'
                 size='sm'
                 min={1}
-                max={getMaxDifficultyScore(levels)+1}
+                max={getMaxDifficultyScore(levels) + 1}
                 defaultValue={level.difficultyscore}
-                onValueChange={value => setScoreRequested(value)}
+                onValueChange={(value) => setScoreRequested(value)}
                 label='Score'
-                />
+              />
               <div className='flex flex-row justify-center'>
-                <RecordCard record={{...level, aval: 1}} className='border-1 border-default-200' />
+                <RecordCard
+                  record={{ ...level, aval: 1 }}
+                  className='border-1 border-default-200'
+                />
               </div>
             </ModalBody>
             <ModalFooter>
               <Button
-                color="default"
-                variant="flat"
+                color='default'
+                variant='flat'
                 onPress={() => {
                   clear()
                   onClose()
@@ -110,8 +117,10 @@ const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels, handleRefres
                 Cerrar
               </Button>
               <Button
-                color="primary"
-                onPress={() => {handleSubmit(onClose)}}
+                color='primary'
+                onPress={() => {
+                  handleSubmit(onClose)
+                }}
                 isLoading={loading}
                 isDisabled={disabled}
               >
@@ -125,4 +134,4 @@ const NivelesRescoreModal = ({ isOpen, onOpenChange, level, levels, handleRefres
   )
 }
 
-export default NivelesRescoreModal;
+export default NivelesRescoreModal

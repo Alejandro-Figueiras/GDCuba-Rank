@@ -1,33 +1,33 @@
 'use server'
-import { authorize } from "@/libs/secure";
-import {responseText} from '@/locales/siteText';
-import { validateUser } from "@/database/db.users";
-import { addLog } from "@/database/db.auditorylog";
+import { authorize } from '@/libs/secure'
+import { responseText } from '@/locales/siteText'
+import { validateUser } from '@/database/db.users'
+import { addLog } from '@/database/db.auditorylog'
 
-export const validateUserAction = async ({user, unvalidate}) => {
-  const authResult = await authorize();
+export const validateUserAction = async ({ user, unvalidate }) => {
+  const authResult = await authorize()
 
   if (!authResult.can) {
-    return JSON.stringify({ 
+    return JSON.stringify({
       error: responseText.unauthorize,
       status: 401
-    });
+    })
   }
 
-  const result = await validateUser({user, unvalidate});
+  const result = await validateUser({ user, unvalidate })
   if (result) {
-    await addLog(`${authResult.username} cambió el estado de ${user} a ${unvalidate?'Sin Verificar': 'Verificado'}`)
-    return JSON.stringify(
-      { 
-        message: `Usuario ${user} validado correctamente`,
-        status: 200,
-        user: result
-      }
-    );
+    await addLog(
+      `${authResult.username} cambió el estado de ${user} a ${unvalidate ? 'Sin Verificar' : 'Verificado'}`
+    )
+    return JSON.stringify({
+      message: `Usuario ${user} validado correctamente`,
+      status: 200,
+      user: result
+    })
   }
 
-  return JSON.stringify({ 
+  return JSON.stringify({
     error: responseText.badRequest,
     status: 400
-  });
-};
+  })
+}

@@ -1,8 +1,8 @@
 'use client'
 
-import RankMain from "@/components/Rank/RankMain"
+import RankMain from '@/components/Rank/RankMain'
 const RankDemons = () => {
-  return (<RankMain tipo="demons"/>)
+  return <RankMain tipo='demons' />
 }
 
 export default RankDemons

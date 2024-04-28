@@ -4,7 +4,7 @@
 
 @media (max-width: 420px) {
   .navbar__brand {
-    font-size:large;
+    font-size: large;
   }
 
   .navbar__logo {
@@ -14,7 +14,7 @@
 
 @media (max-width: 400px) {
   .navbar__brand.no-acc {
-    font-size:medium;
+    font-size: medium;
   }
 
   .navbar__logo.no-acc {
@@ -24,7 +24,7 @@
 
 @media (max-width: 340px) {
   .navbar__brand.no-acc {
-    font-size:small;
+    font-size: small;
   }
 
   .navbar__logo.no-acc {

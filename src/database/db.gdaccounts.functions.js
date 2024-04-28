@@ -1,10 +1,10 @@
 'use server'
 import { sql } from '@vercel/postgres'
-import { getAccountByID } from "@/robtop/getAccount";
-import { unstable_noStore as noStore } from 'next/cache';
-import { renameUser } from './db.users';
+import { getAccountByID } from '@/robtop/getAccount'
+import { unstable_noStore as noStore } from 'next/cache'
+import { renameUser } from './db.users'
 
-// Aqui se encuentran las funciones extensas 
+// Aqui se encuentran las funciones extensas
 // para no tener un archivo de accounts tan largo
 
 export const addAccountCloud = async (account, cuba = 0) => {
@@ -93,15 +93,15 @@ export const addAccountCloud = async (account, cuba = 0) => {
       ${account.twitch},
       ${account.timestamp},
       ${cuba}
-    )`;
-  return result;
-};
+    )`
+  return result
+}
 
-export const updateAccountCloud = async(id, username) => {
+export const updateAccountCloud = async (id, username) => {
   noStore()
-  const account = await getAccountByID(id);
+  const account = await getAccountByID(id)
   if (account == -1) {
-    console.log("ERROR en updateAccount, getAccountByID devuelve -1")
+    console.log('ERROR en updateAccount, getAccountByID devuelve -1')
     return
   }
   const result = await sql`UPDATE gdaccounts SET
@@ -140,9 +140,10 @@ export const updateAccountCloud = async(id, username) => {
     twitter = ${account.twitter},
     twitch = ${account.twitch},
     timestamp = ${account.timestamp}
-   WHERE accountid = ${id}`;
-  
-   if (username != account.username) renameUser({accountid: id, username: account.username})
+   WHERE accountid = ${id}`
 
-  return account;
+  if (username != account.username)
+    renameUser({ accountid: id, username: account.username })
+
+  return account
 }

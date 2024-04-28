@@ -1,23 +1,25 @@
-import UserModalPanel from "@/components/Admin/UserModalPanel/UserModalPanel";
-import { useDisclosure } from "@nextui-org/react";
-import React, { createContext, useState } from "react";
-import { notify } from "@/libs/toastNotifications";
-import { responseText } from "@/locales/siteText";
-import { getAccountAction } from "@/actions/accounts/getAccountAction";
+import UserModalPanel from '@/components/Admin/UserModalPanel/UserModalPanel'
+import { useDisclosure } from '@nextui-org/react'
+import React, { createContext, useState } from 'react'
+import { notify } from '@/libs/toastNotifications'
+import { responseText } from '@/locales/siteText'
+import { getAccountAction } from '@/actions/accounts/getAccountAction'
 
-export const AdminContext = createContext();
+export const AdminContext = createContext()
 
 export default function AdminProvider({ children }) {
-  const [userInCheck, setUserInCheck] = useState({});
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const [loadingUser, setLoadingUser] = useState(false);
+  const [userInCheck, setUserInCheck] = useState({})
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
+  const [loadingUser, setLoadingUser] = useState(false)
 
   const openUserGestorFor = async (user, updateData) => {
-    setUserInCheck((prev) => ({ ...prev, username: user.username }));
-    onOpen();
-    setLoadingUser(true);
+    setUserInCheck((prev) => ({ ...prev, username: user.username }))
+    onOpen()
+    setLoadingUser(true)
 
-    const account = JSON.parse(await getAccountAction({username: user.username}))
+    const account = JSON.parse(
+      await getAccountAction({ username: user.username })
+    )
     console.log(account)
     if (account) {
       setUserInCheck({
@@ -27,13 +29,13 @@ export default function AdminProvider({ children }) {
         status: user.status,
         playerType: user.playertype,
         updateData: updateData
-      });
+      })
     } else {
-      onClose();
-      notify(responseText.error, "error");
+      onClose()
+      notify(responseText.error, 'error')
     }
-    setLoadingUser(false);
-  };
+    setLoadingUser(false)
+  }
 
   return (
     <AdminContext.Provider
@@ -47,5 +49,5 @@ export default function AdminProvider({ children }) {
       />
       {children}
     </AdminContext.Provider>
-  );
+  )
 }

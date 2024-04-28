@@ -7,44 +7,45 @@ import {
   Button,
   Divider,
   Spinner
-} from "@nextui-org/react";
-import React, {
-  useEffect,
-  useState,
-} from "react";
+} from '@nextui-org/react'
+import React, { useEffect, useState } from 'react'
 
-import AccountStatsRow from "./Admin/UserModalPanel/AccountStatsRow";
-import AccountIconsRow from "./Admin/UserModalPanel/AccountIconsRow";
-import AccountStuff from "./AccountManage/AccountStuff";
-import RecordsLinkButton from "./Records/RecordsLinkButton";
+import AccountStatsRow from './Admin/UserModalPanel/AccountStatsRow'
+import AccountIconsRow from './Admin/UserModalPanel/AccountIconsRow'
+import AccountStuff from './AccountManage/AccountStuff'
+import RecordsLinkButton from './Records/RecordsLinkButton'
 
-const UserModalView = ({ user = {account: {}, stuff: []}, isOpen, onOpenChange }) => {
+const UserModalView = ({
+  user = { account: {}, stuff: [] },
+  isOpen,
+  onOpenChange
+}) => {
   const { account, stuff = [] } = user
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
   const [stuffLoading, setStuffLoading] = useState(false)
 
   useEffect(() => {
-    setIsLoading(isOpen && user.isLoading);
+    setIsLoading(isOpen && user.isLoading)
     if (isOpen && !user.isLoading && user.isStuffLoading) setStuffLoading(true)
     else setStuffLoading(false)
-  }, [user, isOpen]);
+  }, [user, isOpen])
 
   return (
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      size={!isLoading ? "3xl" : ""}
+      size={!isLoading ? '3xl' : ''}
       scrollBehavior='inside'
     >
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1 text-center">
+            <ModalHeader className='flex flex-col gap-1 text-center'>
               {account.username}
             </ModalHeader>
             {isLoading ? (
-              <div className="p-2 w-full flex flex-col justify-center items-center my-6 h-10">
-                <Spinner/>
+              <div className='my-6 flex h-10 w-full flex-col items-center justify-center p-2'>
+                <Spinner />
               </div>
             ) : (
               <>
@@ -57,19 +58,19 @@ const UserModalView = ({ user = {account: {}, stuff: []}, isOpen, onOpenChange }
                     stuffItems={stuff}
                     manage={false}
                   />
-                  {
-                    stuffLoading && <div className="flex flex-col mt-2 items-center">
+                  {stuffLoading && (
+                    <div className='mt-2 flex flex-col items-center'>
                       <Spinner />
-                      <p className="text-medium">Cargando stuff...</p>
+                      <p className='text-medium'>Cargando stuff...</p>
                     </div>
-                  }
+                  )}
                 </ModalBody>
                 <ModalFooter>
                   <RecordsLinkButton username={account.username} />
                   <Button
-                    color="primary"
+                    color='primary'
                     onPress={async (e) => {
-                      onClose();
+                      onClose()
                     }}
                   >
                     Cerrar
@@ -81,7 +82,7 @@ const UserModalView = ({ user = {account: {}, stuff: []}, isOpen, onOpenChange }
         )}
       </ModalContent>
     </Modal>
-  );
+  )
 }
 
 export default UserModalView

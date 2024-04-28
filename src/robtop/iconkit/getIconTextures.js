@@ -1,5 +1,5 @@
 'use client'
-import { Assets, Spritesheet } from "pixi.js"
+import { Assets, Spritesheet } from 'pixi.js'
 
 const types = {
   cube: 'player',
@@ -13,13 +13,13 @@ const types = {
   jetpack: 'jetpack'
 }
 
-export const getIconTextures = async({type, iconNumber, hostURL}) => {
-  const path = `${types[type]}_${(iconNumber< 10)?'0'+iconNumber:iconNumber}`
+export const getIconTextures = async ({ type, iconNumber, hostURL }) => {
+  const path = `${types[type]}_${iconNumber < 10 ? '0' + iconNumber : iconNumber}`
 
   const padrePath = `${hostURL}/assets/gdicons/${path}-uhd.png`
   const plistPath = `${hostURL}/assets/gdicons/${path}-uhd.json`
 
-  const sheetTexture = await Assets.load(padrePath);
+  const sheetTexture = await Assets.load(padrePath)
   const plist = await (await fetch(plistPath)).json()
   const sheetData = {
     frames: {},
@@ -33,9 +33,9 @@ export const getIconTextures = async({type, iconNumber, hostURL}) => {
   }
 
   const layerNames = []
-  
+
   for (const key of Object.keys(plist)) {
-    let size = plist[key].textureRect.size;
+    let size = plist[key].textureRect.size
     if (plist[key].textureRotated) size = [...size].reverse()
 
     sheetData.frames[key] = {
@@ -44,22 +44,22 @@ export const getIconTextures = async({type, iconNumber, hostURL}) => {
         y: plist[key].textureRect.pos[1],
         w: size[0],
         h: size[1]
-      },
+      }
     }
 
-    let layerInfo = key.split("_");
-    if (layerInfo[1] == "ball") {
-      const newSprite = ['player_ball'];
+    let layerInfo = key.split('_')
+    if (layerInfo[1] == 'ball') {
+      const newSprite = ['player_ball']
       for (let i = 2; i < layerInfo.length; i++) {
         newSprite.push(layerInfo[i])
       }
-      layerInfo = newSprite;
+      layerInfo = newSprite
     }
     layerNames.push(layerInfo)
   }
 
   const spritesheet = new Spritesheet(sheetTexture, sheetData)
-  await spritesheet.parse();
+  await spritesheet.parse()
   const textures = spritesheet.textures
   spritesheet.destroy()
 

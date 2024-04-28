@@ -1,7 +1,7 @@
-import AdminRecordsPanel from "@/components/Admin/Records/AdminRecordsPanel";
+import AdminRecordsPanel from '@/components/Admin/Records/AdminRecordsPanel'
 
 const AdminRecordsPage = () => {
-  return (<AdminRecordsPanel />);
-};
+  return <AdminRecordsPanel />
+}
 
 export default AdminRecordsPage

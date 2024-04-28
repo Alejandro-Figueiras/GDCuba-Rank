@@ -1,11 +1,11 @@
 'use server'
 
-import { getRecordByID } from "@/database/db.records";
+import { getRecordByID } from '@/database/db.records'
 
-export const getRecordAction = async({id}) => {
+export const getRecordAction = async ({ id }) => {
   if (id) {
-    const info = {...(await getRecordByID({id}))};
-    return JSON.stringify(info);
+    const info = { ...(await getRecordByID({ id })) }
+    return JSON.stringify(info)
   }
-  return null;
+  return null
 }

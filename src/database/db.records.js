@@ -1,33 +1,36 @@
 'use server'
 import { sql } from '@vercel/postgres'
-import { unstable_noStore as noStore } from 'next/cache';
+import { unstable_noStore as noStore } from 'next/cache'
 
-export const addRecord = async(record = {}) => {
+export const addRecord = async (record = {}) => {
   noStore()
-  let { difficulty: dbDifficulty, difficultyscore } = getDifficultyFromLevel({levelid: record.levelid})
-  if (dbDifficulty != record.difficulty) difficultyscore = 0;
-  if (!record.aval) record.aval=0;
+  let { difficulty: dbDifficulty, difficultyscore } = getDifficultyFromLevel({
+    levelid: record.levelid
+  })
+  if (dbDifficulty != record.difficulty) difficultyscore = 0
+  if (!record.aval) record.aval = 0
 
   /*
   Se pueden dar los siguientes casos
   1. Que el usuario no tenga ningun record en el nivel y este sea el primero
   2. Que el usuario tenga algun record en el nivel, en ese caso se actualizará si es mayor, sino se le notificará
   */
-  const queryResult = await sql`SELECT id,percent FROM records WHERE levelid=${record.levelid} AND accountid=${record.accountid} `
+  const queryResult =
+    await sql`SELECT id,percent FROM records WHERE levelid=${record.levelid} AND accountid=${record.accountid} `
   if (queryResult.rowCount) {
-    console.log("Ya existe")
-    const oldPercent = queryResult.rows[0].percent;
-    const recordID = queryResult.rows[0].id;
+    console.log('Ya existe')
+    const oldPercent = queryResult.rows[0].percent
+    const recordID = queryResult.rows[0].id
     if (record.percent > oldPercent) {
       const result = await sql`UPDATE records SET
       percent=${record.percent},
-      aval=${record.aval?record.aval:-2},
+      aval=${record.aval ? record.aval : -2},
       video=${record.video}
       WHERE id=${recordID}
-      `;
-      return (result.rowCount)?2:-1;
+      `
+      return result.rowCount ? 2 : -1
     }
-    return -2;
+    return -2
   }
 
   const result = await sql`INSERT INTO records(
@@ -55,108 +58,130 @@ export const addRecord = async(record = {}) => {
     ${record.featured},
     ${difficultyscore},
     ${record.cuba},
-    ${record.platformer?1:0}
-  )`;
-  
-  return result.rowCount ? 1 : -1;
+    ${record.platformer ? 1 : 0}
+  )`
+
+  return result.rowCount ? 1 : -1
 }
 
-export const getRecordByID = async({id}) => {
+export const getRecordByID = async ({ id }) => {
   noStore()
-  const result = await sql`SELECT * FROM records WHERE id=${id} LIMIT 1 `;
-  return result.rowCount?result.rows[0]:undefined;
+  const result = await sql`SELECT * FROM records WHERE id=${id} LIMIT 1 `
+  return result.rowCount ? result.rows[0] : undefined
 }
 
-export const getDifficultyFromLevel = async({levelid}) => {
-  noStore();
-  const result = await sql`SELECT difficulty, difficultyscore FROM records WHERE levelid=${levelid} `;
-  return result.rowCount?result.rows[0]:{difficulty: null, difficultyscore: 0};
-}
-
-export const getAllRecords = async() => {
+export const getDifficultyFromLevel = async ({ levelid }) => {
   noStore()
-  const result = await sql`SELECT * FROM records`;
-  return result.rowCount?result.rows:[];
+  const result =
+    await sql`SELECT difficulty, difficultyscore FROM records WHERE levelid=${levelid} `
+  return result.rowCount
+    ? result.rows[0]
+    : { difficulty: null, difficultyscore: 0 }
 }
 
-export const getAllCubanRecords = async() => {
+export const getAllRecords = async () => {
   noStore()
-  const result = await sql`SELECT * FROM records WHERE cuba = 1`;
-  return result.rowCount?result.rows:[];
+  const result = await sql`SELECT * FROM records`
+  return result.rowCount ? result.rows : []
 }
 
-export const getUnverifiedRecords = async() => {
+export const getAllCubanRecords = async () => {
   noStore()
-  const result = await sql`SELECT * FROM records WHERE aval = 0 OR aval = -2`;
-  return result.rowCount?result.rows:[];
+  const result = await sql`SELECT * FROM records WHERE cuba = 1`
+  return result.rowCount ? result.rows : []
 }
 
-export const getAllCubanExtremesVerified = async() => {
-  noStore();
-  const result = await sql`SELECT * FROM records WHERE difficulty = 15 AND percent = 100 AND aval = 1 AND cuba = 1`
-  return (result.rowCount)?result.rows:[];
+export const getUnverifiedRecords = async () => {
+  noStore()
+  const result = await sql`SELECT * FROM records WHERE aval = 0 OR aval = -2`
+  return result.rowCount ? result.rows : []
 }
 
-export const getAllCubanExtremesVerifiedTradicional = async() => {
-  noStore();
-  const result = await sql`SELECT * FROM records WHERE difficulty = 15 AND percent = 100 AND aval = 1 AND cuba = 1 AND platformer = 0`
-  return (result.rowCount)?result.rows:[];
+export const getAllCubanExtremesVerified = async () => {
+  noStore()
+  const result =
+    await sql`SELECT * FROM records WHERE difficulty = 15 AND percent = 100 AND aval = 1 AND cuba = 1`
+  return result.rowCount ? result.rows : []
 }
 
-export const getAllCubanExtremesVerifiedPlatformer = async() => {
-  noStore();
-  const result = await sql`SELECT * FROM records WHERE difficulty = 15 AND percent = 100 AND aval = 1 AND cuba = 1 AND platformer = 1`
-  return (result.rowCount)?result.rows:[];
+export const getAllCubanExtremesVerifiedTradicional = async () => {
+  noStore()
+  const result =
+    await sql`SELECT * FROM records WHERE difficulty = 15 AND percent = 100 AND aval = 1 AND cuba = 1 AND platformer = 0`
+  return result.rowCount ? result.rows : []
 }
 
-export const getAllCubanInsaneDemonsVerified = async() => {
-  noStore();
-  const result = await sql`SELECT * FROM records WHERE difficulty = 14 AND percent = 100 AND aval = 1 AND cuba = 1`
-  return (result.rowCount)?result.rows:[];
+export const getAllCubanExtremesVerifiedPlatformer = async () => {
+  noStore()
+  const result =
+    await sql`SELECT * FROM records WHERE difficulty = 15 AND percent = 100 AND aval = 1 AND cuba = 1 AND platformer = 1`
+  return result.rowCount ? result.rows : []
 }
 
-export const getAllRecordsUser = async(username) => {
-  noStore();
+export const getAllCubanInsaneDemonsVerified = async () => {
+  noStore()
+  const result =
+    await sql`SELECT * FROM records WHERE difficulty = 14 AND percent = 100 AND aval = 1 AND cuba = 1`
+  return result.rowCount ? result.rows : []
+}
+
+export const getAllRecordsUser = async (username) => {
+  noStore()
   const result = await sql`SELECT * FROM records WHERE username = ${username}`
-  return (result.rowCount)?result.rows:[];
+  return result.rowCount ? result.rows : []
 }
 
-export const getAllLevelsByDifficulty = async({difficulty = 15}) => {
-  noStore();
-  const result = await sql`SELECT levelid, levelname, difficulty, difficultyscore, featured, platformer FROM records WHERE difficulty = ${difficulty}`
-  return (result.rowCount)?result.rows:[];
+export const getAllLevelsByDifficulty = async ({ difficulty = 15 }) => {
+  noStore()
+  const result =
+    await sql`SELECT levelid, levelname, difficulty, difficultyscore, featured, platformer FROM records WHERE difficulty = ${difficulty}`
+  return result.rowCount ? result.rows : []
 }
 
-export const getHardestLevels = async(accountid) => {
-  noStore();
-  const result = await sql`SELECT * FROM records WHERE accountid = ${accountid} AND aval = 1 ORDER BY difficulty DESC, percent DESC, difficultyscore DESC LIMIT 6`
-  return (result.rowCount)?result.rows:[];
+export const getHardestLevels = async (accountid) => {
+  noStore()
+  const result =
+    await sql`SELECT * FROM records WHERE accountid = ${accountid} AND aval = 1 ORDER BY difficulty DESC, percent DESC, difficultyscore DESC LIMIT 6`
+  return result.rowCount ? result.rows : []
 }
 
-export const reposicionarNivel = async(levelid, oldScore = 0, newScore = 1, platformer = 0) => {
-  noStore();
+export const reposicionarNivel = async (
+  levelid,
+  oldScore = 0,
+  newScore = 1,
+  platformer = 0
+) => {
+  noStore()
   if (oldScore == 0) {
-    const updateRowsResult = await sql`UPDATE records SET difficultyscore = difficultyscore + 1 WHERE platformer = ${platformer} AND difficultyscore >= ${newScore}`
+    const updateRowsResult =
+      await sql`UPDATE records SET difficultyscore = difficultyscore + 1 WHERE platformer = ${platformer} AND difficultyscore >= ${newScore}`
   } else if (oldScore < newScore) {
-    const updateRowsResult = await sql`UPDATE records SET difficultyscore = difficultyscore - 1 WHERE platformer = ${platformer} AND difficultyscore > ${oldScore} AND difficultyscore <= ${newScore}`
+    const updateRowsResult =
+      await sql`UPDATE records SET difficultyscore = difficultyscore - 1 WHERE platformer = ${platformer} AND difficultyscore > ${oldScore} AND difficultyscore <= ${newScore}`
   } else {
-    const updateRowsResult = await sql`UPDATE records SET difficultyscore = difficultyscore + 1 WHERE platformer = ${platformer} AND difficultyscore < ${oldScore} AND difficultyscore >= ${newScore}`
+    const updateRowsResult =
+      await sql`UPDATE records SET difficultyscore = difficultyscore + 1 WHERE platformer = ${platformer} AND difficultyscore < ${oldScore} AND difficultyscore >= ${newScore}`
   }
-  const updateLevel = await sql`UPDATE records SET difficultyscore = ${newScore} WHERE levelid = ${levelid}`
+  const updateLevel =
+    await sql`UPDATE records SET difficultyscore = ${newScore} WHERE levelid = ${levelid}`
   return updateLevel.rowCount
 }
 
-export const renameUserInRecords = async({accountid, username}) => {
-  noStore();
-  return (await sql`UPDATE records SET username = ${username} WHERE accountid = ${accountid}`).rowCount;
+export const renameUserInRecords = async ({ accountid, username }) => {
+  noStore()
+  return (
+    await sql`UPDATE records SET username = ${username} WHERE accountid = ${accountid}`
+  ).rowCount
 }
 
-export const removeRecordsByUsername = async(username) => {
-  noStore();
-  return (await sql`DELETE FROM records WHERE username = ${username}`).rowCount;
+export const removeRecordsByUsername = async (username) => {
+  noStore()
+  return (await sql`DELETE FROM records WHERE username = ${username}`).rowCount
 }
 
-export const changeCubanInRecords = async(username, cuba = 0) => {
-  noStore();
-  return (await sql`UPDATE records SET cuba = ${cuba} WHERE username = ${username}`).rowCount;
+export const changeCubanInRecords = async (username, cuba = 0) => {
+  noStore()
+  return (
+    await sql`UPDATE records SET cuba = ${cuba} WHERE username = ${username}`
+  ).rowCount
 }

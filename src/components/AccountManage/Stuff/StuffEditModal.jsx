@@ -1,19 +1,16 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import {
-  useState,
-  useEffect
-} from 'react'
-import {
-  Modal, 
-  ModalContent, 
-  ModalHeader, 
-  ModalBody, 
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
   ModalFooter,
   Button
 } from '@nextui-org/react'
 
-const StuffEditModal = ({ 
+const StuffEditModal = ({
   isOpen,
   onOpenChange,
   title,
@@ -23,7 +20,6 @@ const StuffEditModal = ({
   updateListener = () => {},
   submitPreventer = () => {}
 }) => {
-
   const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(true)
   const [itemData, setItemData] = useState(itemDataOld)
@@ -34,8 +30,8 @@ const StuffEditModal = ({
     setItemData(itemData ? itemData : itemDataOld)
   }
 
-  const handleSubmit = async(onClose) => {
-    if (!submitPreventer(itemData)) return;
+  const handleSubmit = async (onClose) => {
+    if (!submitPreventer(itemData)) return
     setLoading(true)
     await handleUpdate(itemData)
 
@@ -43,23 +39,24 @@ const StuffEditModal = ({
     onClose()
   }
 
-  useEffect(() => updateListener(itemData, disabled, setDisabled), [itemData, disabled, updateListener])
+  useEffect(
+    () => updateListener(itemData, disabled, setDisabled),
+    [itemData, disabled, updateListener]
+  )
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement='top-center'>
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1">
-              {title}
-            </ModalHeader>
+            <ModalHeader className='flex flex-col gap-1'>{title}</ModalHeader>
             <ModalBody>
               <Form itemData={itemData} setItemData={setItemData} />
             </ModalBody>
             <ModalFooter>
               <Button
-                color="default"
-                variant="flat"
+                color='default'
+                variant='flat'
                 onPress={() => {
                   clear()
                   onClose()
@@ -68,8 +65,10 @@ const StuffEditModal = ({
                 Cerrar
               </Button>
               <Button
-                color="primary"
-                onPress={() => {handleSubmit(onClose)}}
+                color='primary'
+                onPress={() => {
+                  handleSubmit(onClose)
+                }}
                 isLoading={loading}
                 isDisabled={disabled}
               >
@@ -83,4 +82,4 @@ const StuffEditModal = ({
   )
 }
 
-export default StuffEditModal;
+export default StuffEditModal

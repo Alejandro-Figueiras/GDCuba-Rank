@@ -10,11 +10,11 @@ const LevelsDificulty = () => {
 
   const updateLevels = () => {
     setLoading(true)
-    getAllLevelsByDifficultyAction({difficulty: 15}).then(response => {
+    getAllLevelsByDifficultyAction({ difficulty: 15 }).then((response) => {
       console.log(response)
       const records = JSON.parse(response)
       console.log(records)
-      const newLevels = {};
+      const newLevels = {}
       for (const record of records) {
         const level = {
           levelid: record.levelid,
@@ -27,7 +27,7 @@ const LevelsDificulty = () => {
 
         console.log(level)
         if (newLevels[level.levelid] == undefined) {
-          newLevels[level.levelid] = level;
+          newLevels[level.levelid] = level
         }
       }
 
@@ -38,19 +38,34 @@ const LevelsDificulty = () => {
   }
 
   useEffect(updateLevels, [])
-  
-  return (<div>
-    <TablaHeader title="Extreme Demons Tradicionales" buttons={[{
-      text: "Refresh",
-      handleClick: updateLevels
-    }]}>
-      <TablaNivelesDifficultyScore levels={Object.values(levels).filter(val => val.platformer == 0)} handleRefresh={updateLevels} loading={loading}/>
-    </TablaHeader>
 
-    <TablaHeader title="Extreme Demons Plataforma" buttons={[]}>
-      <TablaNivelesDifficultyScore levels={Object.values(levels).filter(val => val.platformer == 1)} handleRefresh={updateLevels} loading={loading}/>
-    </TablaHeader>
-  </div>)
+  return (
+    <div>
+      <TablaHeader
+        title='Extreme Demons Tradicionales'
+        buttons={[
+          {
+            text: 'Refresh',
+            handleClick: updateLevels
+          }
+        ]}
+      >
+        <TablaNivelesDifficultyScore
+          levels={Object.values(levels).filter((val) => val.platformer == 0)}
+          handleRefresh={updateLevels}
+          loading={loading}
+        />
+      </TablaHeader>
+
+      <TablaHeader title='Extreme Demons Plataforma' buttons={[]}>
+        <TablaNivelesDifficultyScore
+          levels={Object.values(levels).filter((val) => val.platformer == 1)}
+          handleRefresh={updateLevels}
+          loading={loading}
+        />
+      </TablaHeader>
+    </div>
+  )
 }
 
 export default LevelsDificulty

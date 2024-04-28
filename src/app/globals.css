@@ -23,7 +23,11 @@
   top: 0;
   height: 200dvh;
   overflow: visible;
-  background-image: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,0) 100%);
+  background-image: radial-gradient(
+    circle,
+    rgba(63, 94, 251, 1) 0%,
+    rgba(252, 70, 107, 0) 100%
+  );
   background-position: 50% -50dvh;
   background-repeat: no-repeat;
   mask-image: linear-gradient(black 60%, transparent 75%, transparent);

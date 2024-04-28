@@ -1,92 +1,92 @@
-"use client";
+'use client'
 import {
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
   NavbarMenuToggle,
-  NavbarMenu,
-} from "@nextui-org/navbar";
+  NavbarMenu
+} from '@nextui-org/navbar'
 
 // Modals
-import { useSesion } from "@/hooks/useSesion";
-import UserDropdown from "./UserDropdown";
-import { useState } from "react";
-import { NavLink, NavMenuLink } from "./NavbarLinks";
-import NavbarDropdown from "./NavbarDropdown";
-import { ResponsiveNavAccordion } from "./ResponsiveNavAccordion";
+import { useSesion } from '@/hooks/useSesion'
+import UserDropdown from './UserDropdown'
+import { useState } from 'react'
+import { NavLink, NavMenuLink } from './NavbarLinks'
+import NavbarDropdown from './NavbarDropdown'
+import { ResponsiveNavAccordion } from './ResponsiveNavAccordion'
 import './NavBar.css'
 
 const NavBar = () => {
-  const { currentUser, logout, signUp, login, changePassword } = useSesion();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { currentUser, logout, signUp, login, changePassword } = useSesion()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const menuItems = [{ href: "/", label: "Home" }];
+  const menuItems = [{ href: '/', label: 'Home' }]
   const rankItems = {
-    title: "Rankings",
-    responsiveSubtitle: "Presiona para ver los ranking disponibles",
+    title: 'Rankings',
+    responsiveSubtitle: 'Presiona para ver los ranking disponibles',
     startsWith: '/rank',
     items: [
       {
-        key: "estrellas",
+        key: 'estrellas',
         img: '/assets/stats/starsIcon.png',
-        href: "/rank/stars",
-        label: "Estrellas"
+        href: '/rank/stars',
+        label: 'Estrellas'
       },
       {
-        key: "demons",
+        key: 'demons',
         img: '/assets/dificultades/none/hard_demon.png',
-        href: "/rank/demons",
-        label: "Demons"
+        href: '/rank/demons',
+        label: 'Demons'
       },
       {
-        key: "extremes",
+        key: 'extremes',
         img: '/assets/dificultades/none/extreme_demon.png',
-        href: "/rank/extremes",
-        label: "Extreme Demons"
+        href: '/rank/extremes',
+        label: 'Extreme Demons'
       },
       {
-        key: "lunas",
+        key: 'lunas',
         img: '/assets/stats/moonsIcon.png',
-        href: "/rank/moons",
-        label: "Lunas"
+        href: '/rank/moons',
+        label: 'Lunas'
       },
       {
-        key: "usercoins",
+        key: 'usercoins',
         img: '/assets/stats/usercoin.png',
-        href: "/rank/usercoins",
-        label: "User Coins"
+        href: '/rank/usercoins',
+        label: 'User Coins'
       },
       {
-        key: "cps",
+        key: 'cps',
         img: '/assets/stats/creatorpoints.png',
-        href: "/rank/cp",
-        label: "Creator Points"
+        href: '/rank/cp',
+        label: 'Creator Points'
       }
     ]
   }
   const listsItems = {
-    title: "Listas",
-    responsiveSubtitle: "Presiona para ver las listas",
+    title: 'Listas',
+    responsiveSubtitle: 'Presiona para ver las listas',
     startsWith: '/lists',
     items: [
       {
-        key: "hardest-trad",
+        key: 'hardest-trad',
         img: '/assets/ui/extreme_demon_trad.png',
-        href: "/lists/hardest/trad",
-        label: "Hardest Tradicional"
+        href: '/lists/hardest/trad',
+        label: 'Hardest Tradicional'
       },
       {
-        key: "hardest-plat",
+        key: 'hardest-plat',
         img: '/assets/ui/extreme_demon_plat.png',
-        href: "/lists/hardest/plat",
-        label: "Hardest Plataforma"
+        href: '/lists/hardest/plat',
+        label: 'Hardest Plataforma'
       },
       {
-        key: "insane",
+        key: 'insane',
         img: '/assets/dificultades/none/insane_demon.png',
-        href: "/lists/insane",
-        label: "Insane Demons"
+        href: '/lists/insane',
+        label: 'Insane Demons'
       }
     ]
   }
@@ -100,25 +100,33 @@ const NavBar = () => {
       >
         <NavbarContent>
           <NavbarMenuToggle
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            className="md:hidden"
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+            className='md:hidden'
           />
           <NavbarBrand>
-            <img src="/assets/SD_256.png" className={`mr-2 sm:mr-3 navbar__logo ${(currentUser.username ? '' : 'no-acc')}`} alt=""/>
-            <p className={`font-bold text-xl navbar__brand ${(currentUser.username ? '' : 'no-acc')}`}>GD Cuba ΔΔΔ</p>
+            <img
+              src='/assets/SD_256.png'
+              className={`navbar__logo mr-2 sm:mr-3 ${currentUser.username ? '' : 'no-acc'}`}
+              alt=''
+            />
+            <p
+              className={`navbar__brand text-xl font-bold ${currentUser.username ? '' : 'no-acc'}`}
+            >
+              GD Cuba ΔΔΔ
+            </p>
           </NavbarBrand>
         </NavbarContent>
 
-        <NavbarContent className="hidden md:flex gap-4" justify="center">
+        <NavbarContent className='hidden gap-4 md:flex' justify='center'>
           {menuItems.map((m) => (
             <NavLink key={m.label} href={m.href}>
-              <span className="text-lg">{m.label}</span>
+              <span className='text-lg'>{m.label}</span>
             </NavLink>
           ))}
-          <NavbarDropdown info={rankItems}/>
-          <NavbarDropdown info={listsItems}/>
+          <NavbarDropdown info={rankItems} />
+          <NavbarDropdown info={listsItems} />
         </NavbarContent>
-        <NavbarContent justify="end">
+        <NavbarContent justify='end'>
           <NavbarItem>
             <UserDropdown
               currentUser={currentUser}
@@ -139,12 +147,18 @@ const NavBar = () => {
               {m.label}
             </NavMenuLink>
           ))}
-          <ResponsiveNavAccordion onLinkSelected={() => setIsMenuOpen(false)} info={rankItems} />
-          <ResponsiveNavAccordion onLinkSelected={() => setIsMenuOpen(false)} info={listsItems} />
+          <ResponsiveNavAccordion
+            onLinkSelected={() => setIsMenuOpen(false)}
+            info={rankItems}
+          />
+          <ResponsiveNavAccordion
+            onLinkSelected={() => setIsMenuOpen(false)}
+            info={listsItems}
+          />
         </NavbarMenu>
       </Navbar>
     </>
-  );
-};
+  )
+}
 
 export default NavBar

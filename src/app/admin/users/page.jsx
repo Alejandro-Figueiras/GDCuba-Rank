@@ -1,7 +1,7 @@
-import AdminUsuariosPanel from "@/components/Admin/Users/AdminUsuariosPanel";
+import AdminUsuariosPanel from '@/components/Admin/Users/AdminUsuariosPanel'
 
 const AdminUsersPage = () => {
-  return (<AdminUsuariosPanel/>);
-};
+  return <AdminUsuariosPanel />
+}
 
 export default AdminUsersPage

@@ -1,16 +1,16 @@
-import { ModalContext } from "@/app/context/ModalContext";
-import { useContext } from "react";
+import { ModalContext } from '@/app/context/ModalContext'
+import { useContext } from 'react'
 
 export const useUser = () => {
-  const { openUserView: openView } = useContext(ModalContext);
+  const { openUserView: openView } = useContext(ModalContext)
   const getUser = async ({ username }) => {
-    const account = JSON.parse(await getAccountAction({ username }));
-    return account;
-  };
+    const account = JSON.parse(await getAccountAction({ username }))
+    return account
+  }
 
-  const openUserView = async(user) => {
-    openView(user);
-  };
+  const openUserView = async (user) => {
+    openView(user)
+  }
 
-  return { getUser, openUserView };
-};
+  return { getUser, openUserView }
+}

@@ -3,32 +3,39 @@ import {
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter,
-} from "@nextui-org/modal";
-import { Button } from "@nextui-org/button";
-import { useState } from "react";
+  ModalFooter
+} from '@nextui-org/modal'
+import { Button } from '@nextui-org/button'
+import { useState } from 'react'
 
-const ModalTemplate = ({ isOpen, onOpenChange, title, action, desc, submit }) => {
-  const [isLoading, setIsLoading] = useState(false);
+const ModalTemplate = ({
+  isOpen,
+  onOpenChange,
+  title,
+  action,
+  desc,
+  submit
+}) => {
+  const [isLoading, setIsLoading] = useState(false)
 
   const onOpen = (e) => {
-    onOpenChange(e);
-    setIsLoading(false);
-  };
+    onOpenChange(e)
+    setIsLoading(false)
+  }
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpen} placement="top-center">
+    <Modal isOpen={isOpen} onOpenChange={onOpen} placement='top-center'>
       <ModalContent>
         {(onClose) => (
           <>
-            <ModalHeader className="flex flex-col gap-1">
+            <ModalHeader className='flex flex-col gap-1'>
               <h2
                 className={
-                  action != "delete"
-                    ? action != "validate"
-                      ? "text-blue-500"
-                      : "text-green-500"
-                    : "text-red-500"
+                  action != 'delete'
+                    ? action != 'validate'
+                      ? 'text-blue-500'
+                      : 'text-green-500'
+                    : 'text-red-500'
                 }
               >
                 {title}
@@ -39,23 +46,23 @@ const ModalTemplate = ({ isOpen, onOpenChange, title, action, desc, submit }) =>
               <Button
                 isLoading={isLoading}
                 color={
-                  action != "delete"
-                    ? action != "validate"
-                      ? "primary"
-                      : "success"
-                    : "danger"
+                  action != 'delete'
+                    ? action != 'validate'
+                      ? 'primary'
+                      : 'success'
+                    : 'danger'
                 }
                 onPress={async (e) => {
-                  setIsLoading(true);
-                  await submit(e);
+                  setIsLoading(true)
+                  await submit(e)
 
-                  setIsLoading(false);
-                  onClose();
+                  setIsLoading(false)
+                  onClose()
                 }}
               >
-                <span className="text-white">{translate(action)}</span>
+                <span className='text-white'>{translate(action)}</span>
               </Button>
-              <Button color="default" variant="flat" onPress={onClose}>
+              <Button color='default' variant='flat' onPress={onClose}>
                 Cancelar
               </Button>
             </ModalFooter>
@@ -63,18 +70,18 @@ const ModalTemplate = ({ isOpen, onOpenChange, title, action, desc, submit }) =>
         )}
       </ModalContent>
     </Modal>
-  );
-};
+  )
+}
 
 const translate = (action) => {
   switch (action) {
-    case "delete":
-      return "Funar";
-    case "validate":
-      return "Validar";
+    case 'delete':
+      return 'Funar'
+    case 'validate':
+      return 'Validar'
     default:
-      return "Aceptar";
+      return 'Aceptar'
   }
-};
+}
 
 export default ModalTemplate

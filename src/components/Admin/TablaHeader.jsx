@@ -1,16 +1,17 @@
 'use client'
-import { Button } from "@nextui-org/react"
+import { Button } from '@nextui-org/react'
 
-const TablaHeader = ({title, buttons = [], children}) => {
+const TablaHeader = ({ title, buttons = [], children }) => {
   return (
-    <div className="px-8 py-4">
-      <div className="flex items-center flex-col sm:flex-row sm:justify-between pb-4">
-        <h2 className="pb-2 text-2xl text-center sm:text-start">{title}</h2>
-        <div className="flex gap-2">
-          {buttons.map((button, i) => 
-          <Button onClick={button.handleClick} key={i}>
-            {button.text}
-          </Button>)}
+    <div className='px-8 py-4'>
+      <div className='flex flex-col items-center pb-4 sm:flex-row sm:justify-between'>
+        <h2 className='pb-2 text-center text-2xl sm:text-start'>{title}</h2>
+        <div className='flex gap-2'>
+          {buttons.map((button, i) => (
+            <Button onClick={button.handleClick} key={i}>
+              {button.text}
+            </Button>
+          ))}
         </div>
       </div>
       {children}
@@ -18,4 +19,4 @@ const TablaHeader = ({title, buttons = [], children}) => {
   )
 }
 
-export default TablaHeader;
+export default TablaHeader

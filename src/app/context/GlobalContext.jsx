@@ -2,7 +2,7 @@
 
 import React, { createContext, useEffect, useRef, useState } from 'react'
 import { notify, notifyDismiss } from '@/libs/toastNotifications'
-import { authMe } from '@/actions/auth/me.js'
+import { authMe } from '@/actions/auth/me'
 
 export const GlobalContext = createContext()
 

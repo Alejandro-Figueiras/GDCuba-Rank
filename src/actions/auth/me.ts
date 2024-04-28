@@ -6,13 +6,23 @@ import { responseText } from '@/locales/siteText'
 import { getUserByAccountID } from '@/database/db.users'
 import jwt from 'jsonwebtoken'
 import { logout } from '../logout/logout'
+import type CookiePayload from '@/models/CookiePayload'
 
-export const authMe = async ({ forceRevalidate = false } = {}) => {
+export interface AuthMeResult extends CookiePayload {
+  status?: number
+}
+
+export const authMe = async ({
+  forceRevalidate = false
+}: { forceRevalidate?: boolean } = {}) => {
   const cookie = cookies().get(COOKIES_INFO.name)
 
   if (cookie) {
     try {
-      let payload = verify(cookie.value, process.env.JWT_SECRET)
+      let payload = verify(
+        cookie.value,
+        process.env.JWT_SECRET
+      ) as CookiePayload
 
       if (
         Math.floor(Date.now() / 1000) - payload.iat > 24 * 60 * 60 ||
@@ -25,7 +35,7 @@ export const authMe = async ({ forceRevalidate = false } = {}) => {
         if (result == -1) {
           return JSON.stringify({ error: responseText.badRequest, status: 401 })
         }
-        payload = verify(result, process.env.JWT_SECRET)
+        payload = verify(result, process.env.JWT_SECRET) as CookiePayload
       }
       const user = {
         username: payload.username,
@@ -47,7 +57,10 @@ export const authMe = async ({ forceRevalidate = false } = {}) => {
   return JSON.stringify({ error: responseText.badRequest, status: 401 })
 }
 
-const revalidateToken = async (accountid, sessiontoken) => {
+const revalidateToken = async (
+  accountid: number,
+  sessiontoken: string | number
+) => {
   const account = await getUserByAccountID({ accountid: accountid })
   if (
     !account ||

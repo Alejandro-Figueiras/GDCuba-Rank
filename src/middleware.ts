@@ -1,10 +1,11 @@
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 import { COOKIES_INFO } from './models/constants'
 import { jwtVerify } from 'jose'
 // This function can be marked `async` if using `await` inside
 
-export async function middleware(request) {
+export async function middleware(request: NextRequest) {
   const cookie = cookies().get(COOKIES_INFO.name)
   const cookieData = cookie ? cookie.value : undefined
   let access = false

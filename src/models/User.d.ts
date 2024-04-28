@@ -1,9 +1,10 @@
 export interface User {
-  id
-  username
-  accountid
-  phone
-  status
-  role
-  sessiontoken
+  id: number
+  username: string
+  accountid: number
+  phone: string
+  status: string
+  role: string
+  sessiontoken: string | number
+  password?: string
 }

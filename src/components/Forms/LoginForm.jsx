@@ -40,7 +40,7 @@ const LoginForm = ({ isOpen, onOpenChange }) => {
       notify(data.message, 'success')
       setCurrentUser((prev) => ({
         ...prev,
-        ...data
+        ...data.user
       }))
       onClose()
     }

@@ -5,13 +5,20 @@ import { compare } from 'bcryptjs'
 import { responseText } from '@/locales/siteText'
 import { findUser } from '@/database/db.users'
 import { cookies } from 'next/headers'
+import type CookiePayload from '@/models/CookiePayload'
 
 const ERROR_RESPONSE = {
   status: 'error',
   message: responseText.loginError
 }
 
-export const login = async ({ username, password }) => {
+export const login = async ({
+  username,
+  password
+}: {
+  username: string
+  password: string
+}) => {
   username = username.trim()
   password = password.trimEnd()
   const user = await findUser({ user: username, password: true })
@@ -31,35 +38,29 @@ export const login = async ({ username, password }) => {
         })
       }
 
-      const token = createToken(user)
+      const payload: CookiePayload = {
+        username: user.username,
+        accountid: user.accountid,
+        phone: user.phone,
+        role: user.role,
+        sessiontoken: user.sessiontoken
+      }
+
+      const token = jwt.sign(payload, process.env.JWT_SECRET)
 
       cookies().set(COOKIES_INFO.name, token, {
-        httpOnly: true, // esto es algo de privadicad pero no recuerdo que
+        httpOnly: true,
         secure: process.env.NODE_ENV === 'production', // Esto es para solo permitir su uso con protocolo ssl
         sameSite: 'strict', // Permitir solo cuando se genere en un mismo dominio
-        path: '/', // Esto nunca lo entendi xd
+        path: '/',
         maxAge: 60 * 60 * 24 * COOKIES_INFO.exp
       })
-
       return JSON.stringify({
         status: 'ok',
         message: responseText.loginSuccess,
-        ...user
+        user: payload
       })
     }
   }
   return JSON.stringify(ERROR_RESPONSE)
-}
-
-const createToken = (account) => {
-  return jwt.sign(
-    {
-      username: account.username,
-      accountid: account.accountid,
-      phone: account.phone,
-      role: account.role,
-      sessiontoken: account.sessiontoken
-    },
-    process.env.JWT_SECRET
-  )
 }

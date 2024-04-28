@@ -1,13 +1,20 @@
 import { getUser } from '@/database/db.users'
 import { COOKIES_INFO } from '@/models/constants'
-import { verify } from 'jsonwebtoken'
+import { type User } from '@/models/User'
+import { type JwtPayload, verify } from 'jsonwebtoken'
 import { cookies } from 'next/headers'
 
-export const authorize = async ({ owner = false } = {}) => {
+export const authorize = async ({ owner = false } = {}): Promise<{
+  username: string
+  role: string
+  can: boolean
+}> => {
   const cookie = cookies().get(COOKIES_INFO.name)
-  let user = {}
+  let user: User
   try {
-    const data = verify(cookie.value, process.env.JWT_SECRET)
+    const data = verify(cookie.value, process.env.JWT_SECRET) as JwtPayload
+    if (!data.role) throw new Error('unauthorized')
+
     user = await getUser({ user: data.username })
 
     if (
@@ -23,12 +30,12 @@ export const authorize = async ({ owner = false } = {}) => {
       }
     }
     console.log(`${user.username} unathorized`)
+    return {
+      username: user.username,
+      role: user.role,
+      can: false
+    }
   } catch (err) {
     console.log('ERROR AT VALIDATE: ', err)
-  }
-  return {
-    username: user.username,
-    role: user.role,
-    can: false
   }
 }

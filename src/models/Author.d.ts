@@ -1,6 +1,6 @@
 type Author = {
-  playerid: number,
+  playerid: number
   playername: string
   accountid: number
-};
+}
 export default Author

@@ -1,9 +1,9 @@
 export interface RecordLevel {
   levelid: number
   levelname: string
-  difficulty: number,
-  featured: number,
-  difficultyscore: number,
+  difficulty: number
+  featured: number
+  difficultyscore: number
   platformer: number | boolean
 }
 export interface Record extends RecordLevel {

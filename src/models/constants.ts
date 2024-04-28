@@ -19,5 +19,5 @@ export const RECORDS_AVAL_VALUES = {
   '-2': {
     value: 'Pendiente',
     color: 'warning'
-  },
+  }
 }

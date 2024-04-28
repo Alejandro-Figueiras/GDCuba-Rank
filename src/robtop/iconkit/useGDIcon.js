@@ -28,7 +28,7 @@ const getIcon = async ({
   hostURL
 }) => {
   if (username) {
-    const gdacc = await getGDAccount(username)
+    const gdacc = await getGDAccount(username) // TODO mover a server action
     if (gdacc) {
       switch (type) {
         case 'ship':

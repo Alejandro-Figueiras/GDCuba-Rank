@@ -4,7 +4,7 @@ import { getAllCubans } from './db.gdaccounts'
 import { sql } from '@vercel/postgres'
 import { unstable_noStore as noStore } from 'next/cache'
 import { getAllCubanRecords } from './db.records'
-import { Record } from '@/models/Record'
+import { type Record } from '@/models/Record'
 
 type LandingStats = {
   totalStars: number

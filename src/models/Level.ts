@@ -1,6 +1,6 @@
 import { decryptBase64 } from '@/helpers/base64'
 import Song from './Song'
-import Author from './Author'
+import type Author from './Author'
 
 type LevelOptions = {
   author?: Author | undefined

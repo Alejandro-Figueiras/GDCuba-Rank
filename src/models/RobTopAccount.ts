@@ -1,10 +1,11 @@
-export default class RobTopAccount {
+import { type ServerAccount } from './Account'
+
+export default class RobTopAccount implements ServerAccount {
   username: string
   userid: number
   accountid: number
   isregistered: number
   timestamp: number
-
   stars: number
   demons: number
   demonsbreakdown: string
@@ -15,7 +16,6 @@ export default class RobTopAccount {
   moons: number
   creatorpoints: number
   modlevel: number
-
   playercolor: number
   playercolor2: number
   playercolor3: number
@@ -30,12 +30,10 @@ export default class RobTopAccount {
   accglow: number
   accspider: number
   accexplosion: number
-
   friendsrqstate: number
   messagestate: number
   friendstate: number
   commenthistorystate: number
-
   youtube: number
   twitter: number
   twitch: number

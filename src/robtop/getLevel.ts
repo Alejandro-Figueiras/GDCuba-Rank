@@ -2,7 +2,7 @@ import { gdRequest } from '@/helpers/request-helper'
 import responseToObj from '@/helpers/responseToObj'
 import Level from '@/models/Level'
 import Song from '@/models/Song'
-import Author from '@/models/Author'
+import type Author from '@/models/Author'
 
 const parseResponse = (body: string) => {
   const data = body.split('#')

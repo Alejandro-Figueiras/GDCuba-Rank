@@ -5,6 +5,7 @@ import { sql } from '@vercel/postgres'
 import { unstable_noStore as noStore } from 'next/cache'
 import { getAllCubanRecords } from './db.records'
 import { type Record } from '@/models/Record'
+import { type Account } from '@/models/Account'
 
 type LandingStats = {
   totalStars: number
@@ -29,7 +30,7 @@ export const updateLandingStatsAcc = async ({
   accounts,
   oldData
 }: {
-  accounts?: any[] // TODO fix this
+  accounts?: Account[]
   oldData?: LandingStats
 } = {}) => {
   // Nota: las accounts deben ser cuba=1
@@ -65,7 +66,7 @@ export const updateLandingStatsRecords = async ({
   records?: Record[]
 } = {}) => {
   if (!oldData) oldData = await getLandingStats()
-  if (!records) records = (await getAllCubanRecords()) as Record[] // TODO fix this
+  if (!records) records = await getAllCubanRecords()
 
   const info: LandingStats = {
     ...oldData,
@@ -96,7 +97,7 @@ export const updateLandingStatsAll = async ({
   accounts,
   records
 }: {
-  accounts?: any[] // TODO fix this
+  accounts?: Account[]
   records?: Record[]
 } = {}) => {
   const oldData = await getLandingStats()

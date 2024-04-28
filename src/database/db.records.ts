@@ -1,14 +1,30 @@
 'use server'
+import { type Record } from '@/models/Record'
 import { sql } from '@vercel/postgres'
 import { unstable_noStore as noStore } from 'next/cache'
 
-export const addRecord = async (record = {}) => {
+export const addRecord = async (record: {
+  accountid: number
+  username: number
+  levelname: number
+  levelid: number
+  difficulty: number
+  featured: number
+  aval?: number
+  percent: number
+  video?: string
+  cuba: number
+  platformer: boolean
+}) => {
   noStore()
-  let { difficulty: dbDifficulty, difficultyscore } = getDifficultyFromLevel({
-    levelid: record.levelid
-  })
-  if (dbDifficulty != record.difficulty) difficultyscore = 0
+  let { difficulty: dbDifficulty, difficultyscore } =
+    await getDifficultyFromLevel({
+      levelid: record.levelid
+    })
+  if (dbDifficulty != record.difficulty) difficultyscore = 0 //
   if (!record.aval) record.aval = 0
+  if (!record.video) record.video = ''
+  if (!record.cuba) record.cuba = 0
 
   /*
   Se pueden dar los siguientes casos
@@ -64,13 +80,17 @@ export const addRecord = async (record = {}) => {
   return result.rowCount ? 1 : -1
 }
 
-export const getRecordByID = async ({ id }) => {
+export const getRecordByID = async ({ id }: { id: number }) => {
   noStore()
   const result = await sql`SELECT * FROM records WHERE id=${id} LIMIT 1 `
   return result.rowCount ? result.rows[0] : undefined
 }
 
-export const getDifficultyFromLevel = async ({ levelid }) => {
+export const getDifficultyFromLevel = async ({
+  levelid
+}: {
+  levelid: number
+}) => {
   noStore()
   const result =
     await sql`SELECT difficulty, difficultyscore FROM records WHERE levelid=${levelid} `
@@ -82,74 +102,74 @@ export const getDifficultyFromLevel = async ({ levelid }) => {
 export const getAllRecords = async () => {
   noStore()
   const result = await sql`SELECT * FROM records`
-  return result.rowCount ? result.rows : []
+  return result.rowCount ? (result.rows as Record[]) : []
 }
 
 export const getAllCubanRecords = async () => {
   noStore()
   const result = await sql`SELECT * FROM records WHERE cuba = 1`
-  return result.rowCount ? result.rows : []
+  return result.rowCount ? (result.rows as Record[]) : []
 }
 
 export const getUnverifiedRecords = async () => {
   noStore()
   const result = await sql`SELECT * FROM records WHERE aval = 0 OR aval = -2`
-  return result.rowCount ? result.rows : []
+  return result.rowCount ? (result.rows as Record[]) : []
 }
 
 export const getAllCubanExtremesVerified = async () => {
   noStore()
   const result =
     await sql`SELECT * FROM records WHERE difficulty = 15 AND percent = 100 AND aval = 1 AND cuba = 1`
-  return result.rowCount ? result.rows : []
+  return result.rowCount ? (result.rows as Record[]) : []
 }
 
 export const getAllCubanExtremesVerifiedTradicional = async () => {
   noStore()
   const result =
     await sql`SELECT * FROM records WHERE difficulty = 15 AND percent = 100 AND aval = 1 AND cuba = 1 AND platformer = 0`
-  return result.rowCount ? result.rows : []
+  return result.rowCount ? (result.rows as Record[]) : []
 }
 
 export const getAllCubanExtremesVerifiedPlatformer = async () => {
   noStore()
   const result =
     await sql`SELECT * FROM records WHERE difficulty = 15 AND percent = 100 AND aval = 1 AND cuba = 1 AND platformer = 1`
-  return result.rowCount ? result.rows : []
+  return result.rowCount ? (result.rows as Record[]) : []
 }
 
 export const getAllCubanInsaneDemonsVerified = async () => {
   noStore()
   const result =
     await sql`SELECT * FROM records WHERE difficulty = 14 AND percent = 100 AND aval = 1 AND cuba = 1`
-  return result.rowCount ? result.rows : []
+  return result.rowCount ? (result.rows as Record[]) : []
 }
 
-export const getAllRecordsUser = async (username) => {
+export const getAllRecordsUser = async (username: string) => {
   noStore()
   const result = await sql`SELECT * FROM records WHERE username = ${username}`
-  return result.rowCount ? result.rows : []
+  return result.rowCount ? (result.rows as Record[]) : []
 }
 
 export const getAllLevelsByDifficulty = async ({ difficulty = 15 }) => {
   noStore()
   const result =
     await sql`SELECT levelid, levelname, difficulty, difficultyscore, featured, platformer FROM records WHERE difficulty = ${difficulty}`
-  return result.rowCount ? result.rows : []
+  return result.rowCount ? (result.rows as Record[]) : []
 }
 
-export const getHardestLevels = async (accountid) => {
+export const getHardestLevels = async (accountid: number) => {
   noStore()
   const result =
     await sql`SELECT * FROM records WHERE accountid = ${accountid} AND aval = 1 ORDER BY difficulty DESC, percent DESC, difficultyscore DESC LIMIT 6`
-  return result.rowCount ? result.rows : []
+  return result.rowCount ? (result.rows as Record[]) : []
 }
 
 export const reposicionarNivel = async (
-  levelid,
+  levelid = -1,
   oldScore = 0,
   newScore = 1,
-  platformer = 0
+  platformer = false
 ) => {
   noStore()
   if (oldScore == 0) {
@@ -167,19 +187,25 @@ export const reposicionarNivel = async (
   return updateLevel.rowCount
 }
 
-export const renameUserInRecords = async ({ accountid, username }) => {
+export const renameUserInRecords = async ({
+  accountid,
+  username
+}: {
+  accountid: number
+  username: string
+}) => {
   noStore()
   return (
     await sql`UPDATE records SET username = ${username} WHERE accountid = ${accountid}`
   ).rowCount
 }
 
-export const removeRecordsByUsername = async (username) => {
+export const removeRecordsByUsername = async (username: string) => {
   noStore()
   return (await sql`DELETE FROM records WHERE username = ${username}`).rowCount
 }
 
-export const changeCubanInRecords = async (username, cuba = 0) => {
+export const changeCubanInRecords = async (username: string, cuba = 0) => {
   noStore()
   return (
     await sql`UPDATE records SET cuba = ${cuba} WHERE username = ${username}`

@@ -7,8 +7,8 @@ import { unstable_noStore as noStore } from 'next/cache'
 import { updateLandingStatsAcc } from './db.staticInfo'
 import { changeCubanInRecords, removeRecordsByUsername } from './db.records'
 import { eliminarUser } from './db.users'
-import RobTopAccount from '@/models/RobTopAccount'
-import { Account } from '@/models/Account'
+import type RobTopAccount from '@/models/RobTopAccount'
+import { type Account } from '@/models/Account'
 /**
  * Agrega una cuenta de GD a la base de datos, y especifica si es cubano o no.
  */

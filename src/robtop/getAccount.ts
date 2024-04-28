@@ -1,6 +1,6 @@
 import { gdRequest } from '@/helpers/request-helper'
 import responseToObj from '@/helpers/responseToObj'
-import Account from '@/models/Account'
+import RobTopAccount from '@/models/RobTopAccount'
 
 /**
  * Hace una request a los servidores de RobTop usando la id y devuelve un objeto Account con los datos obtenidos
@@ -14,7 +14,7 @@ export const getAccountByID = async (targetAccountID: number) => {
     const body = await gdRequest('getGJUserInfo20', {
       targetAccountID
     })
-    return new Account({
+    return new RobTopAccount({
       timestamp: new Date().getTime(),
       ...responseToObj(body, ':')
     })

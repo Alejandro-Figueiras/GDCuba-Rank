@@ -1,10 +1,10 @@
 'use client'
 
-import React, { createContext, useEffect, useRef, useState } from "react";
-import { notify, notifyDismiss } from "@/libs/toastNotifications.js";
-import { authMe } from "@/actions/auth/me.js";
+import React, { createContext, useEffect, useRef, useState } from 'react'
+import { notify, notifyDismiss } from '@/libs/toastNotifications'
+import { authMe } from '@/actions/auth/me.js'
 
-export const GlobalContext = createContext();
+export const GlobalContext = createContext()
 
 export default function GlobalContextProvider({ children }) {
   const [currentUser, setCurrentUser] = useState({
@@ -12,39 +12,38 @@ export default function GlobalContextProvider({ children }) {
     accountid: undefined,
     phone: undefined,
     role: undefined
-  });
-  const [appliactionLoading, setAppliactionLoading] = useState({ toast: null });
-  const firstAssembly = useRef(false);
+  })
+  const [appliactionLoading, setAppliactionLoading] = useState({ toast: null })
+  const firstAssembly = useRef(false)
 
   useEffect(() => {
     async function auth() {
-      if (firstAssembly.current) return;
-      const data = JSON.parse(await authMe());
-        console.log(data);
+      if (firstAssembly.current) return
+      const data = JSON.parse(await authMe())
+      console.log(data)
       if (!data.error) {
-        if (data)
-          setCurrentUser(data);
+        if (data) setCurrentUser(data)
       }
     }
 
-    auth();
-    firstAssembly.current = true;
-  }, []);
+    auth()
+    firstAssembly.current = true
+  }, [])
 
   const setGlobaLoading = (loading) => {
     if (loading && !appliactionLoading.toast) {
-      const loading = notify("Cargando, espera un momento", "loading");
-      setAppliactionLoading({ toast: loading });
+      const loading = notify('Cargando, espera un momento', 'loading')
+      setAppliactionLoading({ toast: loading })
     }
     if (!loading) {
-      notifyDismiss(appliactionLoading.toast);
-      setAppliactionLoading({ toast: null });
+      notifyDismiss(appliactionLoading.toast)
+      setAppliactionLoading({ toast: null })
     }
-  };
+  }
 
   return (
     <GlobalContext.Provider value={{ currentUser, setCurrentUser }}>
       {children}
     </GlobalContext.Provider>
-  );
+  )
 }

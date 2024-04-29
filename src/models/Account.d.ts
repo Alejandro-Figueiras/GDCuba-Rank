@@ -38,9 +38,9 @@ export interface ServerAccount {
   friendstate: number
   commenthistorystate: number
 
-  youtube: number
-  twitter: number
-  twitch: number
+  youtube: string
+  twitter: string
+  twitch: string
 }
 
 export interface Account extends ServerAccount {

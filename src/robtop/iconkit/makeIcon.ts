@@ -141,7 +141,7 @@ export const makeIcon = ({
       const spriteOffset = spritesInfo[path].spriteOffset
       const sprite = await getLayerSprite({
         texture,
-        info: spritesInfo[path],
+        textureRotated: spritesInfo[path].textureRotated,
         color,
         rotate,
         scaleX,

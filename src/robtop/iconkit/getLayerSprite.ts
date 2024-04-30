@@ -9,14 +9,14 @@ const intToHex = (c: number) => {
 
 export const getLayerSprite = async ({
   texture,
-  info,
+  textureRotated = false,
   color,
   rotate,
   scaleX = 1,
   scaleY = 1
 }: {
   texture: Texture
-  info: any // TODO fix
+  textureRotated: boolean
   color?: {
     r: number
     g: number
@@ -27,9 +27,9 @@ export const getLayerSprite = async ({
   scaleY?: number
 }) => {
   const sprite = new Sprite(texture)
-  sprite.angle = (info.textureRotated ? -90 : 0) + (rotate ? rotate : 0)
+  sprite.angle = (textureRotated ? -90 : 0) + (rotate ? rotate : 0)
 
-  if (info.textureRotated) {
+  if (textureRotated) {
     const temp = scaleX
     scaleX = scaleY
     scaleY = temp

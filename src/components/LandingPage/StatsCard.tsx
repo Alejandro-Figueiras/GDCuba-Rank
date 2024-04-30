@@ -1,4 +1,16 @@
-const StatsCard = ({ id, title, value, subtitle, img }) => {
+const StatsCard = ({
+  id,
+  title,
+  value,
+  subtitle,
+  img
+}: {
+  id: string
+  title: string
+  value: string | number
+  subtitle?: string
+  img: string
+}) => {
   return (
     <div className='w-96 rounded-xl border-1 border-default-500 p-8 [background-color:#00000099]'>
       <div className='flex flex-col items-center'>

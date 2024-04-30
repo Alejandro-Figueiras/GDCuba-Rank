@@ -5,14 +5,18 @@ import { responseText } from '@/locales/siteText'
 import { addUser, findUser } from '@/database/db.users'
 import { addGDAccount, getGDAccount } from '@/database/db.gdaccounts'
 
-export const register = async (data) => {
+export const register = async (data: {
+  username: string
+  password: string
+  phone: string
+}) => {
   let errorMessage = 'La cuenta solicitada no existe en Geometry Dash'
 
   let fields = {
     user: data.username.trim(),
     password: data.password.trimEnd(),
     phone: data.phone.trim(),
-    accountid: null
+    accountid: -1
   }
 
   const accountRegistered = await findUser({ user: fields.user })

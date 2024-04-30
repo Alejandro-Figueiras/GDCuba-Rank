@@ -47,4 +47,5 @@ export interface Account extends ServerAccount {
   cuba: number | boolean
   timestamp: number
   stuff: string
+  verified_extreme_demons?: number
 }

@@ -11,12 +11,23 @@ import {
   Spinner
 } from '@nextui-org/react'
 import UsernameCell from './UsernameCell'
+import React from 'react'
+import { type Account } from '@/models/Account'
+import { type RankingTypes } from './Rankings'
 
-const RankTable = ({ ranking, tipo = 'stars', loading = false }) => {
+const RankTable = ({
+  ranking,
+  tipo = 'stars',
+  loading = false
+}: {
+  ranking: Account[]
+  tipo?: RankingTypes
+  loading?: boolean
+}) => {
   const { openUserView } = useUser()
 
-  const cols = [],
-    cells = []
+  const cols: React.JSX.Element[] = [],
+    cells: ((player: Account, i: number) => React.JSX.Element)[] = []
 
   cols.push(
     <TableColumn width={40} key={'col_pos'}>

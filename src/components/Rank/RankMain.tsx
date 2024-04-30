@@ -2,22 +2,27 @@
 import { getAllCubansAction } from '@/actions/accounts/getAllCubansAction'
 import { getAllCubanExtremesVerifiedAction } from '@/actions/record/getAllExtremeDemons'
 import RankTable from '@/components/Rank/RankTable'
+import { Account } from '@/models/Account'
+import { Record } from '@/models/Record'
 import { useState, useEffect } from 'react'
+import { RankingTypes } from './Rankings'
 
-const RankMain = ({ tipo = 'stars' }) => {
-  const [rank, setRank] = useState([])
+const RankMain = ({ tipo = 'stars' }: { tipo?: RankingTypes }) => {
+  const [rank, setRank] = useState([] as Account[])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     setLoading(true)
-    getAllCubansAction().then(async (players) => {
-      players = JSON.parse(players)
+    getAllCubansAction().then(async (playersData) => {
+      let players = JSON.parse(playersData) as Account[]
       if (tipo == 'extreme_demons') {
-        const records = JSON.parse(await getAllCubanExtremesVerifiedAction())
+        const records = JSON.parse(
+          await getAllCubanExtremesVerifiedAction()
+        ) as Record[]
         const newPlayers = []
         for (const player of players) {
           player.verified_extreme_demons = records.filter(
-            (val, i, array) => val.accountid == player.accountid
+            (val) => val.accountid == player.accountid
           ).length
           if (player.verified_extreme_demons) newPlayers.push(player)
         }
@@ -59,6 +64,8 @@ const RankMain = ({ tipo = 'stars' }) => {
           } else if (tipo == 'usercoins') {
             return b.usercoins - a.usercoins
           } else if (tipo == 'extreme_demons') {
+            if (!a.verified_extreme_demons) a.verified_extreme_demons = 0
+            if (!b.verified_extreme_demons) b.verified_extreme_demons = 0
             return b.verified_extreme_demons - a.verified_extreme_demons
           } else if (tipo == 'cp') {
             return b.creatorpoints - a.creatorpoints

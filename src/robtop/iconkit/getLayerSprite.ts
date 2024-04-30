@@ -1,19 +1,30 @@
 'use client'
 
-import { Sprite } from 'pixi.js'
+import { Sprite, type Texture } from 'pixi.js'
 
-const intToHex = (c) => {
+const intToHex = (c: number) => {
   const hex = c.toString(16)
   return hex.length == 1 ? '0' + hex : hex
 }
 
 export const getLayerSprite = async ({
   texture,
-  info = {},
-  color = null,
-  rotate = null,
+  info,
+  color,
+  rotate,
   scaleX = 1,
   scaleY = 1
+}: {
+  texture: Texture
+  info: any // TODO fix
+  color?: {
+    r: number
+    g: number
+    b: number
+  }
+  rotate?: number
+  scaleX?: number
+  scaleY?: number
 }) => {
   const sprite = new Sprite(texture)
   sprite.angle = (info.textureRotated ? -90 : 0) + (rotate ? rotate : 0)

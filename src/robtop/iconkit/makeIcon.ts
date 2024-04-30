@@ -1,9 +1,23 @@
 import { getIconTextures } from './getIconTextures'
 import { getLayerSprite } from './getLayerSprite'
-import colors from './colors.json'
+import colorsJSON from './colors.json'
 import robotInfo from './robotInfo.json'
 import spiderInfo from './spiderInfo.json'
-import { Application, Container, Texture } from 'pixi.js'
+import { Application, Container, Sprite, Texture } from 'pixi.js'
+import DictionaryObject from '@/helpers/DictionaryObject'
+import { IconTypes } from './Icons'
+
+type ColorType = { r: number; g: number; b: number }
+const colors = colorsJSON as {
+  [key: number]: ColorType
+}
+
+type SpritesToPrint = {
+  path: string
+  sprite: Sprite
+  x: number
+  y: number
+}[]
 
 const icon22 = {
   cube: 484,
@@ -24,9 +38,9 @@ const layerPriority = {
   2: 3,
   '001.png': 4,
   extra: 5
-}
+} as DictionaryObject<number>
 
-const printSprites = async (spritesToPrint) => {
+const printSprites = async (spritesToPrint: SpritesToPrint) => {
   const mainSprite = new Container({})
   for (const { sprite, x, y } of spritesToPrint) {
     mainSprite.addChild(sprite)
@@ -53,7 +67,23 @@ const printSprites = async (spritesToPrint) => {
   return img
 }
 
-export const makeIcon = ({ type, iconNumber, c1, c2, c3, glow, hostURL }) => {
+export const makeIcon = ({
+  type,
+  iconNumber,
+  c1,
+  c2,
+  c3,
+  glow,
+  hostURL
+}: {
+  type: IconTypes
+  iconNumber: number
+  c1: number
+  c2: number
+  c3: number
+  glow: number | boolean
+  hostURL: string
+}): Promise<string> => {
   if (iconNumber > icon22[type]) {
     iconNumber = 1
   }
@@ -74,18 +104,26 @@ export const makeIcon = ({ type, iconNumber, c1, c2, c3, glow, hostURL }) => {
       hostURL
     })
 
-    const spritesToPrint = []
+    const spritesToPrint: SpritesToPrint = []
 
     const makeSprites = async ({
       texture,
       layerName,
-      rotate = null,
+      rotate,
       offsetX = 0,
       offsetY = 0,
       scaleX = 1,
       scaleY = 1
+    }: {
+      texture: Texture
+      layerName: string[]
+      rotate?: number
+      offsetX?: number
+      offsetY?: number
+      scaleX?: number
+      scaleY?: number
     }) => {
-      let color = null
+      let color: ColorType | undefined
 
       const spriteLayer = ['robot', 'spider'].includes(layerName[0])
         ? layerName[3]
@@ -137,8 +175,7 @@ export const makeIcon = ({ type, iconNumber, c1, c2, c3, glow, hostURL }) => {
               offsetX: frame.pos[0] * 4,
               offsetY: frame.pos[1] * 4,
               scaleX: (frame.flipped[0] ? -1 : 1) * frame.scale[1],
-              scaleY: (frame.flipped[1] ? -1 : 1) * frame.scale[0],
-              scale: frame.scale
+              scaleY: (frame.flipped[1] ? -1 : 1) * frame.scale[0]
             })
         }
       }

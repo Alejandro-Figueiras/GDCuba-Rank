@@ -1,5 +1,7 @@
 'use client'
 import { Assets, Spritesheet } from 'pixi.js'
+import { IconTypes } from './Icons'
+import DictionaryObject from '@/helpers/DictionaryObject'
 
 const types = {
   cube: 'player',
@@ -11,9 +13,17 @@ const types = {
   ball: 'player_ball',
   swing: 'swing',
   jetpack: 'jetpack'
-}
+} as DictionaryObject<string>
 
-export const getIconTextures = async ({ type, iconNumber, hostURL }) => {
+export const getIconTextures = async ({
+  type,
+  iconNumber,
+  hostURL
+}: {
+  type: IconTypes
+  iconNumber: number
+  hostURL: string
+}) => {
   const path = `${types[type]}_${iconNumber < 10 ? '0' + iconNumber : iconNumber}`
 
   const padrePath = `${hostURL}/assets/gdicons/${path}-uhd.png`
@@ -22,7 +32,14 @@ export const getIconTextures = async ({ type, iconNumber, hostURL }) => {
   const sheetTexture = await Assets.load(padrePath)
   const plist = await (await fetch(plistPath)).json()
   const sheetData = {
-    frames: {},
+    frames: {} as DictionaryObject<{
+      frame: {
+        x: number
+        y: number
+        w: number
+        h: number
+      }
+    }>,
     meta: {
       scale: 1,
       size: {

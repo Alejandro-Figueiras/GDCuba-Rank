@@ -3,7 +3,7 @@
 import { getAllRecordsUser } from '@/database/db.records'
 import { authMe } from '../auth/me'
 
-export const getAllRecordsUserViewAction = async (username) => {
+export const getAllRecordsUserViewAction = async (username: string) => {
   let records = await getAllRecordsUser(username)
   const auth = JSON.parse(await authMe())
   if (auth.username != username) {

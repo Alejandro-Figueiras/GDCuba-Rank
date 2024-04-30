@@ -5,5 +5,5 @@ import { cookies } from 'next/headers'
 
 export const logout = async () => {
   cookies().delete(COOKIES_INFO.name)
-  return JSON.stringify({ message: responseText.success })
+  return JSON.stringify({ status: 200, message: responseText.success })
 }

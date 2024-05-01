@@ -1,7 +1,14 @@
 import { getLengthName, parseDifficulty } from '@/helpers/levelParser'
-import { Card, CardBody, Image, Button } from '@nextui-org/react'
+import type Level from '@/models/Level'
+import { Card, CardBody, Image } from '@nextui-org/react'
 
-const LevelCard = ({ level, hover = false }) => {
+const LevelCard = ({
+  level,
+  hover = false
+}: {
+  level: Level
+  hover?: boolean
+}) => {
   const dificultad = parseDifficulty(level)
   return (
     <div className='flex justify-center'>

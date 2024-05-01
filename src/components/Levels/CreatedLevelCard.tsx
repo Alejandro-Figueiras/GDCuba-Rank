@@ -1,9 +1,15 @@
 'use client'
 import { Card, CardBody, Image, Link } from '@nextui-org/react'
 import { parseDifficulty } from '@/helpers/levelParser'
-import YouTubeIcon from '../Icons/YouTubeIcon'
+import type Level from '@/models/Level'
 
-const CreatedLevelCard = ({ level, className }) => {
+const CreatedLevelCard = ({
+  level,
+  className = ''
+}: {
+  level: Level
+  className?: string
+}) => {
   if (!level) return null
 
   const difficultyData = parseDifficulty(level)
@@ -19,14 +25,7 @@ const CreatedLevelCard = ({ level, className }) => {
             src={difficultyData.path}
           />
           <div className='flex flex-col justify-center'>
-            <p className='text-md flex gap-2'>
-              {level.levelname}{' '}
-              {level.video && (
-                <Link href={level.video} isExternal>
-                  <YouTubeIcon />
-                </Link>
-              )}
-            </p>
+            <p className='text-md flex gap-2'>{level.levelname} </p>
           </div>
         </div>
       </CardBody>

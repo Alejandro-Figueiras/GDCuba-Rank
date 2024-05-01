@@ -1,7 +1,14 @@
 import { getLengthName, parseDifficulty } from '@/helpers/levelParser'
+import type Level from '@/models/Level'
 import { Card, CardBody, Image } from '@nextui-org/react'
 
-const LevelCardTiny = ({ level, hover = false }) => {
+const LevelCardTiny = ({
+  level,
+  hover = false
+}: {
+  level: Level
+  hover?: boolean
+}) => {
   const dificultad = parseDifficulty(level)
   return (
     <Card

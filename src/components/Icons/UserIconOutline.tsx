@@ -1,11 +1,13 @@
 const UserIconOutline = ({
   fill = 'currentColor',
-  filled,
   size,
   height,
-  width,
-  label,
-  ...props
+  width
+}: {
+  fill?: string
+  size?: number
+  width?: number
+  height?: number
 }) => {
   return (
     <svg
@@ -14,7 +16,6 @@ const UserIconOutline = ({
       viewBox='0 0 24 24'
       width={size || width || 24}
       height={size || height || 24}
-      {...props}
     >
       <g
         fill='none'

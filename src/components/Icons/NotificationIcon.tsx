@@ -1,4 +1,12 @@
-const NotificationIcon = ({ size, height, width, ...props }) => {
+const NotificationIcon = ({
+  size,
+  height,
+  width
+}: {
+  size?: number
+  width?: number
+  height?: number
+}) => {
   return (
     <svg
       fill='none'
@@ -6,7 +14,6 @@ const NotificationIcon = ({ size, height, width, ...props }) => {
       viewBox='0 0 24 24'
       width={size || width || 24}
       xmlns='http://www.w3.org/2000/svg'
-      {...props}
     >
       <path
         clipRule='evenodd'

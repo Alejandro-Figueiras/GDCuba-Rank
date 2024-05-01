@@ -1,4 +1,4 @@
-const EyeSlashFilledIcon = (props) => (
+const EyeSlashFilledIcon = ({ ...props }) => (
   <svg
     aria-hidden='true'
     fill='none'

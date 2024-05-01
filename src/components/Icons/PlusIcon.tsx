@@ -1,4 +1,12 @@
-const PlusIcon = ({ size = 24, width, height, ...props }) => (
+const PlusIcon = ({
+  size = 24,
+  width,
+  height
+}: {
+  size?: number
+  width?: number
+  height?: number
+}) => (
   <svg
     aria-hidden='true'
     fill='none'
@@ -7,7 +15,6 @@ const PlusIcon = ({ size = 24, width, height, ...props }) => (
     role='presentation'
     viewBox='0 0 24 24'
     width={size || width}
-    {...props}
   >
     <g
       fill='none'

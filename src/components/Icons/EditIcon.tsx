@@ -1,4 +1,4 @@
-const EditIcon = (props) => (
+const EditIcon = ({ ...props }) => (
   <svg
     aria-hidden='true'
     fill='none'

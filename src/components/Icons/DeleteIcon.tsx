@@ -1,4 +1,14 @@
-const DeleteIcon = ({ fill, size, height, width, ...props }) => {
+const DeleteIcon = ({
+  fill,
+  size,
+  height,
+  width
+}: {
+  fill?: string
+  size?: number
+  width?: number
+  height?: number
+}) => {
   return (
     <svg
       width={size || width || 24}

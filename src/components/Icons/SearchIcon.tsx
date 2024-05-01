@@ -1,4 +1,4 @@
-const SearchIcon = (props) => (
+const SearchIcon = ({ ...props }) => (
   <svg
     aria-hidden='true'
     fill='none'

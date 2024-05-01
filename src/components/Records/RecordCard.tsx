@@ -5,8 +5,17 @@ import {
   getDifficultyPath
 } from '@/helpers/levelParser'
 import YouTubeIcon from '../Icons/YouTubeIcon'
+import { type Record } from '@/models/Record'
 
-const RecordCard = ({ record, className, mini = false }) => {
+const RecordCard = ({
+  record,
+  className = '',
+  mini = false
+}: {
+  record: Record
+  className?: string
+  mini?: boolean
+}) => {
   if (!record) return null
   return (
     <Card className={`w-[300px] ${className}`}>

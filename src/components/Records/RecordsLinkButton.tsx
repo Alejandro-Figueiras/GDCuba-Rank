@@ -1,7 +1,13 @@
 'use client'
 import { Button } from '@nextui-org/react'
 
-const RecordsLinkButton = ({ username, mini = false }) => {
+const RecordsLinkButton = ({
+  username,
+  mini = false
+}: {
+  username: string
+  mini?: boolean
+}) => {
   return (
     <a href={`/account/${username}/records`}>
       <Button isIconOnly={true} className={mini ? 'sm:hidden' : 'hidden'}>

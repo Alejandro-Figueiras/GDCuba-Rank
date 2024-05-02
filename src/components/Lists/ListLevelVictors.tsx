@@ -15,8 +15,21 @@ import {
 } from '@nextui-org/react'
 import UsernameCell from '../Rank/UsernameCell'
 import YouTubeIcon from '../Icons/YouTubeIcon'
+import { type Record, type RecordLevel } from '@/models/Record'
+import { type Account } from '@/models/Account'
+import DictionaryObject from '@/helpers/DictionaryObject'
 
-const ListLevelVictors = ({ level, records, pos, players }) => {
+const ListLevelVictors = ({
+  level,
+  records,
+  pos,
+  players
+}: {
+  level: RecordLevel
+  records: Record[]
+  pos?: number
+  players: DictionaryObject<Account>
+}) => {
   return (
     <div className='mx-4 sm:mx-6'>
       <Table removeWrapper aria-label={level.levelname} className='mb-8'>

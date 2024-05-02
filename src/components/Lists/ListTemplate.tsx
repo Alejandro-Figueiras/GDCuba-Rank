@@ -8,11 +8,21 @@ import ListLevelVictors from '@/components/Lists/ListLevelVictors'
 import { useState, useEffect } from 'react'
 import { Spinner } from '@nextui-org/react'
 import { getAllCubanInsaneDemonsVerifiedAction } from '@/actions/record/getAllInsaneDemons'
+import { type Account } from '@/models/Account'
+import type DictionaryObject from '@/helpers/DictionaryObject'
+import { type Record, type RecordLevel } from '@/models/Record'
+import { type ListTypes } from './Lists'
 
-const ListTemplate = ({ title, type = 'hardest' }) => {
-  const [players, setPlayers] = useState({})
-  const [levels, setLevels] = useState([])
-  const [records, setRecords] = useState([])
+const ListTemplate = ({
+  title,
+  type = 'hardest'
+}: {
+  title: string
+  type: ListTypes // TODO make types
+}) => {
+  const [players, setPlayers] = useState({} as DictionaryObject<Account>)
+  const [levels, setLevels] = useState([] as RecordLevel[])
+  const [records, setRecords] = useState([] as Record[])
   const [loading, setLoading] = useState(true)
   const [loadingError, setLoadingError] = useState('')
 
@@ -21,8 +31,8 @@ const ListTemplate = ({ title, type = 'hardest' }) => {
     getAllCubansAction()
       .then(async (players) => {
         try {
-          const newPlayers = JSON.parse(players)
-          const playersObject = {}
+          const newPlayers = JSON.parse(players) as Account[]
+          const playersObject: DictionaryObject<Account> = {}
           for (const player of newPlayers) {
             playersObject[player.accountid] = player
           }
@@ -34,8 +44,8 @@ const ListTemplate = ({ title, type = 'hardest' }) => {
                 : type == 'insane'
                   ? await getAllCubanInsaneDemonsVerifiedAction()
                   : '[]'
-          )
-          const newLevels = {}
+          ) as Record[]
+          const newLevels: DictionaryObject<RecordLevel> = {}
           for (const record of records) {
             const level = {
               levelid: record.levelid,
@@ -81,7 +91,7 @@ const ListTemplate = ({ title, type = 'hardest' }) => {
       })
   }, [type])
 
-  const filterRecords = (levelid) => {
+  const filterRecords = (levelid: number) => {
     return records.filter((val) => val.levelid == levelid)
   }
 
@@ -100,7 +110,9 @@ const ListTemplate = ({ title, type = 'hardest' }) => {
           <ListLevelVictors
             key={i}
             pos={
-              type == 'hardest' || type == 'hardest-platformer' ? i + 1 : null
+              type == 'hardest' || type == 'hardest-platformer'
+                ? i + 1
+                : undefined
             }
             level={level}
             players={players}

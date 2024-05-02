@@ -64,10 +64,10 @@ const ListTemplate = ({
             type == 'hardest' || type == 'hardest-platformer'
               ? (a, b) => b.difficultyscore - a.difficultyscore
               : (a, b) => {
-                  if (a.levelname < b.levelname) {
+                  if (a.levelname.toLowerCase() < b.levelname.toLowerCase()) {
                     return -1
                   }
-                  if (b.levelname < a.levelname) {
+                  if (b.levelname.toLowerCase() < a.levelname.toLowerCase()) {
                     return 1
                   }
                   return 0

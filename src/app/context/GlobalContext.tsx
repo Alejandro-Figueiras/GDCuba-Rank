@@ -1,19 +1,21 @@
 'use client'
 
 import React, { createContext, useEffect, useRef, useState } from 'react'
-import { notify, notifyDismiss } from '@/libs/toastNotifications'
 import { authMe } from '@/actions/auth/me'
 
-export const GlobalContext = createContext()
+export const GlobalContext = createContext({})
 
-export default function GlobalContextProvider({ children }) {
+export default function GlobalContextProvider({
+  children
+}: {
+  children: React.JSX.Element[]
+}) {
   const [currentUser, setCurrentUser] = useState({
     username: undefined,
     accountid: undefined,
     phone: undefined,
     role: undefined
   })
-  const [appliactionLoading, setAppliactionLoading] = useState({ toast: null })
   const firstAssembly = useRef(false)
 
   useEffect(() => {
@@ -29,17 +31,6 @@ export default function GlobalContextProvider({ children }) {
     auth()
     firstAssembly.current = true
   }, [])
-
-  const setGlobaLoading = (loading) => {
-    if (loading && !appliactionLoading.toast) {
-      const loading = notify('Cargando, espera un momento', 'loading')
-      setAppliactionLoading({ toast: loading })
-    }
-    if (!loading) {
-      notifyDismiss(appliactionLoading.toast)
-      setAppliactionLoading({ toast: null })
-    }
-  }
 
   return (
     <GlobalContext.Provider value={{ currentUser, setCurrentUser }}>

@@ -1,6 +1,12 @@
 'use client'
 
-import React, { createContext, useEffect, useRef, useState } from 'react'
+import React, {
+  createContext,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState
+} from 'react'
 import { authMe } from '@/actions/auth/me'
 
 export type CurrentUser = {
@@ -23,7 +29,7 @@ export const GlobalContext = createContext({
 export default function GlobalContextProvider({
   children
 }: {
-  children: React.JSX.Element | React.JSX.Element[] | string
+  children: ReactNode
 }) {
   const [currentUser, setCurrentUser] = useState({
     username: undefined,

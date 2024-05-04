@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import { Inter } from 'next/font/google'
 import { updateAccounts } from '@/database/db.gdaccounts'
+import { type ReactNode } from 'react'
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap'
@@ -44,7 +45,7 @@ export const metadata = {
   }
 }
 
-const GlobalLayout = async ({ children }) => {
+const GlobalLayout = async ({ children }: { children: ReactNode }) => {
   updateAccounts({ limit: 5 }) // <- Actualiza los datos de la db
   return (
     <html lang='es'>

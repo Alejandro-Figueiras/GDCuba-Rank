@@ -1,14 +1,14 @@
 import { NavbarItem, NavbarMenuItem } from '@nextui-org/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React from 'react'
+import { type ReactNode } from 'react'
 
 export const NavLink = ({
   href,
   children
 }: {
   href: string
-  children: React.JSX.Element | React.JSX.Element[] | string
+  children: ReactNode
 }) => {
   const rutaActual = usePathname()
 
@@ -29,7 +29,7 @@ export const NavMenuLink = ({
 }: {
   href: string
   fontSize?: string
-  children: React.JSX.Element | React.JSX.Element[] | string
+  children: ReactNode
   onClick?: () => void
 }) => {
   const rutaActual = usePathname()

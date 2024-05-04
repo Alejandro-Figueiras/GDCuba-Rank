@@ -1,8 +1,20 @@
 import { Accordion, AccordionItem } from '@nextui-org/react'
 import { NavMenuLink } from './NavbarLinks'
 import { usePathname } from 'next/navigation'
+import type FrontNavbarItem from './FrontNavbarItem'
 
-export const ResponsiveNavAccordion = ({ onLinkSelected, info }) => {
+export const ResponsiveNavAccordion = ({
+  onLinkSelected,
+  info
+}: {
+  info: {
+    title: string
+    startsWith: string
+    responsiveSubtitle: string
+    items: FrontNavbarItem[]
+  }
+  onLinkSelected: () => void
+}) => {
   const route = usePathname()
 
   return (

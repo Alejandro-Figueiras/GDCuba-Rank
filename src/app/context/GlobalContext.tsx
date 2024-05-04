@@ -3,19 +3,34 @@
 import React, { createContext, useEffect, useRef, useState } from 'react'
 import { authMe } from '@/actions/auth/me'
 
-export const GlobalContext = createContext({})
+export type CurrentUser = {
+  username: string | undefined
+  accountid: number | undefined
+  phone: string | undefined
+  role: string | undefined
+}
+
+export const GlobalContext = createContext({
+  currentUser: {
+    username: undefined,
+    accountid: undefined,
+    phone: undefined,
+    role: undefined
+  } as CurrentUser,
+  setCurrentUser: (() => {}) as (val: CurrentUser) => void
+})
 
 export default function GlobalContextProvider({
   children
 }: {
-  children: React.JSX.Element[]
+  children: React.JSX.Element | React.JSX.Element[] | string
 }) {
   const [currentUser, setCurrentUser] = useState({
     username: undefined,
     accountid: undefined,
     phone: undefined,
     role: undefined
-  })
+  } as CurrentUser)
   const firstAssembly = useRef(false)
 
   useEffect(() => {

@@ -15,9 +15,10 @@ import { useState } from 'react'
 import { NavLink, NavMenuLink } from './NavbarLinks'
 import NavbarDropdown from './NavbarDropdown'
 import { ResponsiveNavAccordion } from './ResponsiveNavAccordion'
-import './NavBar.css'
+import './FrontNavbar.css'
+import type FrontNavbarItem from './FrontNavbarItem'
 
-const NavBar = () => {
+const FrontNavbar = () => {
   const { currentUser, logout, signUp, login, changePassword } = useSesion()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -63,7 +64,7 @@ const NavBar = () => {
         href: '/rank/cp',
         label: 'Creator Points'
       }
-    ]
+    ] as FrontNavbarItem[]
   }
   const listsItems = {
     title: 'Listas',
@@ -88,7 +89,7 @@ const NavBar = () => {
         href: '/lists/insane',
         label: 'Insane Demons'
       }
-    ]
+    ] as FrontNavbarItem[]
   }
 
   return (
@@ -161,4 +162,4 @@ const NavBar = () => {
   )
 }
 
-export default NavBar
+export default FrontNavbar

@@ -8,8 +8,17 @@ import {
 } from '@nextui-org/react'
 import ChevronDownIcon from '../Icons/ChevonDrownIcon'
 import { usePathname } from 'next/navigation'
+import FrontNavbarItem from './FrontNavbarItem'
 
-const NavbarDropdown = ({ info }) => {
+const NavbarDropdown = ({
+  info
+}: {
+  info: {
+    title: string
+    startsWith: string
+    items: FrontNavbarItem[]
+  }
+}) => {
   const rutaActual = usePathname()
   return (
     <Dropdown

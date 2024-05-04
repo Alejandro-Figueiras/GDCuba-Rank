@@ -1,7 +1,18 @@
 import Link from 'next/link'
 import { useSidebarContext } from '@/app/admin/layout-context'
+import { ReactNode } from 'react'
 
-export const SidebarItem = ({ icon, title, isActive, href = '' }) => {
+export const SidebarItem = ({
+  icon,
+  title,
+  isActive,
+  href = ''
+}: {
+  icon: ReactNode
+  title: string
+  isActive: boolean
+  href?: string
+}) => {
   const { collapsed, setCollapsed } = useSidebarContext()
 
   const handleClick = () => {

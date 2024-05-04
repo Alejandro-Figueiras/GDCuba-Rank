@@ -107,12 +107,4 @@ const SidebarMain = () => {
   )
 }
 
-/*
-<CollapseItems
-  // icon={<BalanceIcon />}
-  items={["Banks Accounts", "Credit Cards", "Loans"]}
-  title="Balances"
-/>
-*/
-
 export default SidebarMain

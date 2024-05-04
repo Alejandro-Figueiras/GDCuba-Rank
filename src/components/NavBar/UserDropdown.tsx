@@ -27,10 +27,10 @@ const UserDropdown = ({
   logout
 }: {
   currentUser: CurrentUser
-  onOpenLogin: () => void
-  onOpenChangeSignUp: () => void
-  onOpenChangePassword: () => void
-  logout: () => void
+  onOpenLogin?: () => void
+  onOpenChangeSignUp?: () => void
+  onOpenChangePassword?: () => void
+  logout?: () => void
 }) => {
   const ruta = usePathname()
   const admin = ruta.startsWith('/admin')
@@ -40,7 +40,7 @@ const UserDropdown = ({
   const handleLogout = async () => {
     await logoutAction()
     notify('Sesión cerrada.', 'success')
-    logout()
+    if (logout) logout()
   }
 
   // Icon

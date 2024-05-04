@@ -12,7 +12,7 @@ export const submitRecord = async (
 ) => {
   const difficulty = parseDifficulty(level)
   const auth = JSON.parse(await authMe({ forceRevalidate: true }))
-  if (auth.status == 401) return JSON.stringify(auth)
+  if (auth.status == 401) return -1
   const acc = await getGDAccount(auth.username)
   if (!acc) return -1
   if (!datos.video) datos.video = ''

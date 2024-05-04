@@ -9,28 +9,35 @@ import {
   Slider,
   Select,
   SelectItem,
-  Spinner
+  Spinner,
+  SelectSection
 } from '@nextui-org/react'
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, MutableRefObject } from 'react'
 import SearchLevel from '@/components/NewRecord/SearchLevel'
 import LevelCard from '@/components/Levels/LevelCard'
 import { submitRecord } from '@/actions/record/submitRecord'
 import SubmitResult from './SubmitResult'
 import { submitRecordAdminAction } from '@/actions/admin/submitRecordAdminAction'
 import { getAllAccountsAction } from '@/actions/admin/getAllAccountsAction'
+import { Account } from '@/models/Account'
+import type Level from '@/models/Level'
 
 export default function SubmitRecordModal({
   onOpenChange,
   isOpen,
   admin = false
+}: {
+  onOpenChange: () => void
+  isOpen: boolean
+  admin?: boolean
 }) {
-  const [level, setLevel] = useState(null)
+  const [level, setLevel] = useState(undefined as undefined | Level)
   const [submitResult, setSubmitResult] = useState(0)
-  const [account, setAccount] = useState({}) // Only admin
-  const [accountList, setAccountList] = useState([]) // Only admin
+  const [account, setAccount] = useState(undefined as Account | undefined) // Only admin
+  const [accountList, setAccountList] = useState([] as Account[]) // Only admin
   const [loading, setLoading] = useState(false)
   const sliderValue = useRef(100)
-  const videoRef = useRef(null)
+  const videoRef = useRef() as MutableRefObject<HTMLInputElement>
 
   // Submit
   const handleSubmit = async () => {
@@ -40,25 +47,33 @@ export default function SubmitRecordModal({
     if (!video.includes('youtube.com') && !video.includes('youtu.be'))
       video = ''
 
+    if (!level) return -1
     setLoading(true)
-    const submitResult = admin
-      ? await submitRecordAdminAction(
-          {
-            percent,
-            video,
-            accountid: account.accountid,
-            username: account.username,
-            cuba: account.cuba
-          },
-          level
-        )
-      : await submitRecord(
-          {
-            percent,
-            video
-          },
-          level
-        )
+    let submitResult
+    if (admin) {
+      if (!account) {
+        setSubmitResult(-1)
+        return
+      }
+      submitResult = await submitRecordAdminAction(
+        {
+          percent,
+          video,
+          accountid: account.accountid,
+          username: account.username,
+          cuba: account.cuba
+        },
+        level
+      )
+    } else {
+      submitResult = await submitRecord(
+        {
+          percent,
+          video
+        },
+        level
+      )
+    }
 
     setSubmitResult(submitResult)
     setLoading(false)
@@ -74,15 +89,15 @@ export default function SubmitRecordModal({
   // ----- RESET -----
   useEffect(() => {
     if (isOpen) {
-      setLevel(null)
+      setLevel(undefined)
       setSubmitResult(0)
-      setAccount({})
+      setAccount(undefined)
       if (admin) {
-        setAccount({})
         setLoading(true)
         getAllAccountsAction().then((accounts) => {
-          setAccount({})
-          setAccountList(JSON.parse(accounts))
+          if (!accounts) setSubmitResult(-1)
+          setAccount(undefined)
+          setAccountList(JSON.parse(accounts as string) as Account[])
           setLoading(false)
         })
       }
@@ -115,15 +130,20 @@ export default function SubmitRecordModal({
                       placeholder='Selecciona una cuenta'
                       className='mb-2'
                       onSelectionChange={(keys) => {
-                        const accountid = keys.currentKey
-                        if (accountid == account.accountid) setAccount({})
-                        else {
-                          setAccount(
-                            accountList.find((val) => {
-                              return val.accountid == accountid
-                            })
-                          )
-                        }
+                        if (typeof keys == 'string') return
+
+                        keys.forEach((value) => {
+                          const accountid = parseInt(value as string)
+                          if (accountid == account?.accountid)
+                            setAccount(undefined)
+                          else {
+                            setAccount(
+                              accountList.find((val) => {
+                                return val.accountid == accountid
+                              })
+                            )
+                          }
+                        })
                       }}
                     >
                       {(account) => (
@@ -133,7 +153,7 @@ export default function SubmitRecordModal({
                       )}
                     </Select>
                   )}
-                  <SearchLevel setNewLevel={setLevel} level={level} />
+                  <SearchLevel setNewLevel={setLevel} />
                   {level && (
                     <>
                       <LevelCard level={level} />
@@ -150,7 +170,7 @@ export default function SubmitRecordModal({
                             color='success'
                             step={1}
                             onChange={(value) => {
-                              sliderValue.current = value
+                              sliderValue.current = value as number
                             }}
                             maxValue={100}
                             minValue={0}
@@ -181,7 +201,7 @@ export default function SubmitRecordModal({
                   color='success'
                   variant='flat'
                   onPress={handleSubmit}
-                  isDisabled={!level || (admin && !account.username)}
+                  isDisabled={!level || (admin && !account?.username)}
                 >
                   Enviar Record
                 </Button>

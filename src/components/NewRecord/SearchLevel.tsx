@@ -1,13 +1,20 @@
 'use client'
 
+import type Level from '@/models/Level'
 import LevelCardTiny from '../Levels/LevelCardTiny'
 import SearchLevelPrompt from './SearchLevelPrompt'
-import { useState } from 'react'
+import { type MouseEventHandler, useState } from 'react'
 
-const SearchLevel = ({ setNewLevel = () => {}, level }) => {
-  const [niveles, setNiveles] = useState([])
+const SearchLevel = ({
+  setNewLevel = () => {}
+}: {
+  setNewLevel: (newVal: Level | undefined) => void
+}) => {
+  const [niveles, setNiveles] = useState([] as Level[])
 
-  const handleSelect = (level) => {
+  const handleSelect: (level: Level) => MouseEventHandler<HTMLButtonElement> = (
+    level
+  ) => {
     return (event) => {
       setNewLevel(level)
       setNiveles([])

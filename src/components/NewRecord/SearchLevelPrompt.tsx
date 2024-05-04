@@ -3,18 +3,22 @@ import {
   getLevelsAction
 } from '@/actions/admin/getLevelAction'
 import { isNumeric } from '@/libs/utils'
-import { useRef } from 'react'
+import { MouseEventHandler, MutableRefObject, useRef } from 'react'
 import { Button, Input } from '@nextui-org/react'
 import SearchIcon from '../Icons/SearchIcon'
+import type Level from '@/models/Level'
 
 const SearchLevelPrompt = ({
   setNiveles = () => {},
   setNewLevel = () => {}
+}: {
+  setNiveles: (newVal: Level[]) => void
+  setNewLevel: (newVal: Level | undefined) => void
 }) => {
-  const inputRef = useRef()
+  const inputRef = useRef() as MutableRefObject<HTMLInputElement>
 
-  const handleSearch = async (e) => {
-    setNewLevel(null)
+  const handleSearch: MouseEventHandler<HTMLButtonElement> = async (e) => {
+    setNewLevel(undefined)
     const query = inputRef.current.value
 
     if (isNumeric(query)) {

@@ -6,7 +6,11 @@ import { authorize } from '@/libs/secure'
 import { responseText } from '@/locales/siteText'
 import { hash } from 'bcryptjs'
 
-export const resetPasswordAction = async ({ username }) => {
+export const resetPasswordAction = async ({
+  username
+}: {
+  username: string
+}) => {
   const authResult = await authorize({ owner: true })
   if (!authResult.can || !username) {
     return JSON.stringify({

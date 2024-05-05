@@ -8,7 +8,13 @@ import { RECORDS_AVAL_VALUES } from '@/models/constants'
 
 // IMPORTANTE: Debe tenerse en cuenta la actualización de la landing si ocurre algún cambio en los records
 
-export const changeAval = async ({ id, aval }) => {
+export const changeAval = async ({
+  id,
+  aval
+}: {
+  id: number
+  aval: 0 | 1 | -1 | -2
+}) => {
   const authResult = await authorize()
   if (authResult.can) {
     const result = await sql`UPDATE records SET aval=${aval} WHERE id=${id}`
@@ -23,7 +29,7 @@ export const changeAval = async ({ id, aval }) => {
   return 0
 }
 
-export const removeRecord = async ({ id }) => {
+export const removeRecord = async ({ id }: { id: number }) => {
   const authResult = await authorize()
   if (authResult.can) {
     const result = await sql`DELETE FROM records WHERE id=${id}`

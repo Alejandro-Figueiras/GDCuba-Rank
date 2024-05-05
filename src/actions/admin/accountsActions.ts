@@ -5,7 +5,13 @@ import { updateLandingStatsAcc } from '@/database/db.staticInfo'
 import { getUser } from '@/database/db.users'
 import { authorize } from '@/libs/secure'
 
-export const changeCubanAction = async ({ username, cuba }) => {
+export const changeCubanAction = async ({
+  username,
+  cuba
+}: {
+  username: string
+  cuba: number
+}) => {
   const authResult = await authorize()
   if (authResult.can) {
     const result = await changeCuban(username, cuba)
@@ -15,10 +21,14 @@ export const changeCubanAction = async ({ username, cuba }) => {
     await updateLandingStatsAcc()
     return result
   }
-  return 0
+  return false
 }
 
-export const removeGDAccountAction = async ({ username }) => {
+export const removeGDAccountAction = async ({
+  username
+}: {
+  username: string
+}) => {
   const accInfo = await getUser({ user: username })
   const authResult = await authorize({
     owner: accInfo && accInfo.role != 'user'

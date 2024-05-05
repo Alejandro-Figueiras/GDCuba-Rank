@@ -4,7 +4,13 @@ import { responseText } from '@/locales/siteText'
 import { validateUser } from '@/database/db.users'
 import { addLog } from '@/database/db.auditorylog'
 
-export const validateUserAction = async ({ user, unvalidate }) => {
+export const validateUserAction = async ({
+  user,
+  unvalidate = false
+}: {
+  user: string
+  unvalidate?: boolean
+}) => {
   const authResult = await authorize()
 
   if (!authResult.can) {

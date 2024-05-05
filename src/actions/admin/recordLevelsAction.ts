@@ -19,6 +19,11 @@ export const reposicionarLevelAction = async ({
   oldScore,
   newScore,
   platformer
+}: {
+  levelid: number
+  oldScore: number
+  newScore: number
+  platformer: boolean
 }) => {
   if ((await authorize()).can) {
     const result = await reposicionarNivel(

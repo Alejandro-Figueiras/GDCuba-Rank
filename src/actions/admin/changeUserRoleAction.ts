@@ -5,7 +5,13 @@ import { changeUserRole } from '@/database/db.users'
 import { authorize } from '@/libs/secure'
 import { responseText } from '@/locales/siteText'
 
-export const changeUserRoleAction = async ({ user, role }) => {
+export const changeUserRoleAction = async ({
+  user,
+  role
+}: {
+  user: string
+  role: string
+}) => {
   const authResult = await authorize({ owner: true })
 
   if (!authResult.can) {
@@ -19,7 +25,7 @@ export const changeUserRoleAction = async ({ user, role }) => {
   if (!result) {
     await addLog(`${authResult.username} le otorgó a ${user} el rol de ${role}`)
     return JSON.stringify({
-      message: `Usuario ${params.username} ahora es ${role}`,
+      message: `Usuario ${user} ahora es ${role}`,
       status: 200,
       user: result
     })

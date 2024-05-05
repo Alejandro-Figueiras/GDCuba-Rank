@@ -4,7 +4,7 @@ import { eliminarUser } from '@/database/db.users'
 import { authorize } from '@/libs/secure'
 import { responseText } from '@/locales/siteText'
 
-export const removeUserAction = async ({ username }) => {
+export const removeUserAction = async ({ username }: { username: string }) => {
   const authResult = await authorize()
   if (!authResult.can || !username) {
     return JSON.stringify({

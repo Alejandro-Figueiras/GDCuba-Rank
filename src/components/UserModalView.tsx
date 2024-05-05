@@ -14,18 +14,24 @@ import AccountStatsRow from './Admin/UserModalPanel/AccountStatsRow'
 import AccountIconsRow from './Admin/UserModalPanel/AccountIconsRow'
 import AccountStuff from './AccountManage/AccountStuff'
 import RecordsLinkButton from './Records/RecordsLinkButton'
+import { type UserInView } from '@/app/context/ModalContext'
+import { Account } from '@/models/Account'
 
 const UserModalView = ({
-  user = { account: {}, stuff: [] },
+  user = { account: { username: '' }, stuff: [] },
   isOpen,
   onOpenChange
+}: {
+  user: UserInView | undefined
+  isOpen: boolean
+  onOpenChange: () => void
 }) => {
   const { account, stuff = [] } = user
   const [isLoading, setIsLoading] = useState(false)
   const [stuffLoading, setStuffLoading] = useState(false)
 
   useEffect(() => {
-    setIsLoading(isOpen && user.isLoading)
+    setIsLoading(isOpen && !!user.isLoading)
     if (isOpen && !user.isLoading && user.isStuffLoading) setStuffLoading(true)
     else setStuffLoading(false)
   }, [user, isOpen])
@@ -34,7 +40,7 @@ const UserModalView = ({
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      size={!isLoading ? '3xl' : ''}
+      size={!isLoading ? '3xl' : undefined}
       scrollBehavior='inside'
     >
       <ModalContent>
@@ -50,11 +56,11 @@ const UserModalView = ({
             ) : (
               <>
                 <ModalBody>
-                  <AccountStatsRow user={account} />
-                  <AccountIconsRow user={account} />
-                  {account.stuff != '' && <Divider />}
+                  <AccountStatsRow user={account as Account} />
+                  <AccountIconsRow user={account as Account} />
+                  {(account as Account).stuff != '' && <Divider />}
                   <AccountStuff
-                    account={account}
+                    account={account as Account}
                     stuffItems={stuff}
                     manage={false}
                   />

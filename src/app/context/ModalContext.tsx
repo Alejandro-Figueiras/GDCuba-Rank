@@ -7,20 +7,50 @@ import LoginForm from '@/components/Forms/LoginForm'
 import SignUpForm from '@/components/Forms/SignUpForm'
 import Modal from '@/components/Modal'
 import UserModalView from '@/components/UserModalView'
+import { notify } from '@/libs/toastNotifications'
+import { Account } from '@/models/Account'
 import { useDisclosure } from '@nextui-org/react'
-import React, { createContext, useState } from 'react'
+import React, { createContext, type ReactNode, useState } from 'react'
 
-export const ModalContext = createContext()
+export type UserInView = {
+  account: Account | { username: string }
+  stuff: any[] // TODO stuff fix
+  isLoading?: boolean
+  isStuffLoading?: boolean
+}
 
-export default function ModalProvider({ children }) {
+export const ModalContext = createContext({
+  openModal: ({}: {
+    title: string
+    desc: string
+    onSubmit: () => void
+    action?: string
+  }) => {},
+  openUserView: ({}: {
+    user: Account | { username: string }
+    update?: boolean
+  }) => {},
+  onOpenLogin: () => {},
+  onOpenSignUp: () => {},
+  onOpenPassword: () => {}
+})
+
+export default function ModalProvider({ children }: { children: ReactNode }) {
   const [current, setCurrent] = useState({
     title: undefined,
     desc: undefined,
-    type: 'normal',
+    type: 'normal', // TODO ver esto
     onSubmit: () => {}
+  } as {
+    title: string | undefined
+    desc: string | undefined
+    onSubmit: () => void
+    action?: string
   })
-  const [currentUserInView, setCurrentUetuserInView] = useState(undefined)
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const [currentUserInView, setCurrentUserInView] = useState(
+    undefined as undefined | UserInView
+  )
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
   const {
     isOpen: isOpenUserView,
     onOpen: onOpenUserView,
@@ -42,7 +72,17 @@ export default function ModalProvider({ children }) {
     onOpenChange: onOpenChangePassword
   } = useDisclosure()
 
-  const openModal = ({ title, desc, onSubmit, action = 'none' }) => {
+  const openModal = ({
+    title,
+    desc,
+    onSubmit,
+    action = 'none'
+  }: {
+    title: string
+    desc: string
+    onSubmit: () => void
+    action?: string
+  }) => {
     if (!isOpen) {
       console.log('Opening modal')
       onOpen()
@@ -50,29 +90,50 @@ export default function ModalProvider({ children }) {
     }
   }
 
-  const openUserView = async ({ user, update = false }) => {
-    const shouldLoad = user.stars == null
-    setCurrentUetuserInView({
+  const openUserView = async ({
+    user,
+    update = false
+  }: {
+    user: Account | { username: string }
+    update?: boolean
+  }) => {
+    const shouldLoad = (user as Account).stars == null
+    setCurrentUserInView({
       account: user,
       stuff: [],
       isLoading: shouldLoad,
-      isStuffLoading: user && user.stuff != ''
+      isStuffLoading: user && ((user as Account).stuff ?? '') != ''
     })
     onOpenUserView()
     if (shouldLoad) {
-      user = JSON.parse(await getAccountAction({ username: user.username }))
+      const accInfo = await getAccountAction({ username: user.username })
+      if (!accInfo) {
+        notify('Error al cargar la cuenta', 'error')
+        onClose()
+        return
+      }
+      user = JSON.parse(accInfo) as Account
     }
+
     if (update) {
-      const newData = JSON.parse(
-        await updateAccountAction(user.accountid, user.username)
+      const updateInfo = await updateAccountAction(
+        (user as Account).accountid,
+        user.username
       )
-      user = { ...user, ...newData }
+      if (updateInfo) {
+        const newData = JSON.parse(updateInfo)
+        user = { ...user, ...newData } as Account
+      }
     }
     const stuff =
-      user.stuff != ''
-        ? JSON.parse(await getStuffItemsAction({ accountid: user.accountid }))
+      (user as Account).stuff != ''
+        ? JSON.parse(
+            await getStuffItemsAction({
+              accountid: (user as Account).accountid
+            })
+          )
         : []
-    setCurrentUetuserInView({ account: user, stuff })
+    setCurrentUserInView({ account: user as Account, stuff })
   }
 
   return (

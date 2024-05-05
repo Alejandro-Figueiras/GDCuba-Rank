@@ -1,6 +1,7 @@
 import { decryptBase64 } from '@/helpers/base64'
 import Song from './Song'
 import type Author from './Author'
+import { RobTopDictionary } from '@/helpers/responseToObj'
 
 type LevelOptions = {
   author?: Author | undefined
@@ -55,7 +56,7 @@ export default class Level {
   timestamp: number
 
   constructor(
-    body = {},
+    body: RobTopDictionary = {},
     { author, song, authors = [], songs = [], timestamp = 0 }: LevelOptions
   ) {
     this.gameversion = parseInt(body[13])

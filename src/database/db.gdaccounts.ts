@@ -65,7 +65,7 @@ export const changeCuban = async (username: string, cuba: number) => {
   return rowCount ? true : false
 }
 
-export const removeGDAccount = async (username) => {
+export const removeGDAccount = async (username: string) => {
   noStore()
   const result = await sql`DELETE FROM gdaccounts WHERE username=${username} `
   if (result.rowCount) {

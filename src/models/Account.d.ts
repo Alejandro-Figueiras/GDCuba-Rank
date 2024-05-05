@@ -38,13 +38,14 @@ export interface ServerAccount {
   friendstate: number
   commenthistorystate: number
 
-  youtube: number
-  twitter: number
-  twitch: number
+  youtube: string
+  twitter: string
+  twitch: string
 }
 
 export interface Account extends ServerAccount {
   cuba: number | boolean
   timestamp: number
   stuff: string
+  verified_extreme_demons?: number
 }

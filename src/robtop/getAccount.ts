@@ -14,10 +14,7 @@ export const getAccountByID = async (targetAccountID: number) => {
     const body = await gdRequest('getGJUserInfo20', {
       targetAccountID
     })
-    return new RobTopAccount({
-      timestamp: new Date().getTime(),
-      ...responseToObj(body, ':')
-    })
+    return new RobTopAccount(responseToObj(body, ':'), new Date().getTime())
   } catch (err) {
     return -1
   }

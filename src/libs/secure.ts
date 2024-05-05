@@ -10,12 +10,17 @@ export const authorize = async ({ owner = false } = {}): Promise<{
   can: boolean
 }> => {
   const cookie = cookies().get(COOKIES_INFO.name)
-  let user: User
+  let user: User | undefined
   try {
-    const data = verify(cookie.value, process.env.JWT_SECRET) as JwtPayload
-    if (!data.role) throw new Error('unauthorized')
+    if (cookie) {
+      const data = verify(
+        cookie.value,
+        process.env.JWT_SECRET as string
+      ) as JwtPayload
+      if (!data.role) throw new Error('unauthorized')
 
-    user = await getUser({ user: data.username })
+      user = await getUser({ user: data.username })
+    }
 
     if (
       user != undefined &&
@@ -29,13 +34,17 @@ export const authorize = async ({ owner = false } = {}): Promise<{
         can: true
       }
     }
-    console.log(`${user.username} unathorized`)
+    console.log(`${user?.username} unathorized`)
     return {
-      username: user.username,
-      role: user.role,
+      username: user?.username ?? 'unknown user',
+      role: user?.role ?? 'user',
       can: false
     }
   } catch (err) {
-    console.log('ERROR AT VALIDATE: ', err)
+    return {
+      username: 'unknown user',
+      role: 'user',
+      can: false
+    }
   }
 }

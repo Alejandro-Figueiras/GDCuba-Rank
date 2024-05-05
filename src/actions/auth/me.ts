@@ -21,8 +21,8 @@ export const authMe = async ({
     try {
       let payload = verify(
         cookie.value,
-        process.env.JWT_SECRET
-      ) as CookiePayload
+        process.env.JWT_SECRET as string
+      ) as CookiePayload & { iat: number }
 
       if (
         Math.floor(Date.now() / 1000) - payload.iat > 24 * 60 * 60 ||
@@ -30,12 +30,15 @@ export const authMe = async ({
       ) {
         const result = await revalidateToken(
           payload.accountid,
-          payload.sessiontoken
+          payload.sessiontoken as number | string
         )
         if (result == -1) {
           return JSON.stringify({ error: responseText.badRequest, status: 401 })
         }
-        payload = verify(result, process.env.JWT_SECRET) as CookiePayload
+        payload = verify(
+          result,
+          process.env.JWT_SECRET as string
+        ) as CookiePayload & { iat: number }
       }
       const user = {
         username: payload.username,
@@ -44,7 +47,7 @@ export const authMe = async ({
         role: payload.role,
         sessiontoken: payload.sessiontoken,
         status: 200
-      }
+      } as CookiePayload
 
       if (user.sessiontoken == undefined) user.sessiontoken = 0
 
@@ -78,7 +81,7 @@ const revalidateToken = async (
       role: account.role,
       sessiontoken: account.sessiontoken
     },
-    process.env.JWT_SECRET
+    process.env.JWT_SECRET as string
   )
   cookies().set(COOKIES_INFO.name, token, {
     httpOnly: true, // esto es algo de privadicad pero no recuerdo que

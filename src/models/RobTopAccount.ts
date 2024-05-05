@@ -1,3 +1,4 @@
+import { type RobTopDictionary } from '@/helpers/responseToObj'
 import { type ServerAccount } from './Account'
 
 export default class RobTopAccount implements ServerAccount {
@@ -34,11 +35,11 @@ export default class RobTopAccount implements ServerAccount {
   messagestate: number
   friendstate: number
   commenthistorystate: number
-  youtube: number
-  twitter: number
-  twitch: number
+  youtube: string
+  twitter: string
+  twitch: string
 
-  constructor(body = {}) {
+  constructor(body: RobTopDictionary = {}, timestamp: number) {
     this.username = body[1]
     this.userid = parseInt(body[2])
     this.accountid = parseInt(body[16])
@@ -84,6 +85,6 @@ export default class RobTopAccount implements ServerAccount {
     this.twitter = body[44]
     this.twitch = body[45]
 
-    this.timestamp = body['timestamp']
+    this.timestamp = timestamp
   }
 }

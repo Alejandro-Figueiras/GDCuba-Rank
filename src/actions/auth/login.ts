@@ -24,7 +24,7 @@ export const login = async ({
   const user = await findUser({ user: username, password: true })
 
   if (user) {
-    const passwordMatch = await compare(password, user.password)
+    const passwordMatch = await compare(password, user.password as string)
     if (passwordMatch) {
       if (user.status == 'b') {
         return JSON.stringify({
@@ -46,7 +46,7 @@ export const login = async ({
         sessiontoken: user.sessiontoken
       }
 
-      const token = jwt.sign(payload, process.env.JWT_SECRET)
+      const token = jwt.sign(payload, process.env.JWT_SECRET as string)
 
       cookies().set(COOKIES_INFO.name, token, {
         httpOnly: true,

@@ -1,3 +1,5 @@
+import { RobTopDictionary } from '@/helpers/responseToObj'
+
 export default class Song {
   id: number
   name: string
@@ -8,7 +10,7 @@ export default class Song {
   artistyt: string | undefined
   downloadlink: string | undefined
 
-  constructor(body = {}) {
+  constructor(body: RobTopDictionary = {}) {
     this.id = parseInt(body[1])
     this.name = body[2]
     this.artistid = parseInt(body[3])

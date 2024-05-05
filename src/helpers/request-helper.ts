@@ -1,7 +1,8 @@
 import axios from 'axios'
 import config from '../../config.js'
+import type DictionaryObject from './DictionaryObject.js'
 
-const makeParams = (params = {}) => {
+const makeParams = (params: DictionaryObject<string> = {}) => {
   let res = ''
   for (const key of Object.keys(params)) {
     if (res != '') res += '&'
@@ -21,7 +22,7 @@ export const gdRequest = async (target: string, params: {}) => {
       }
     })
     const body: string = response.data
-    let error: { serverError: boolean; response: string }
+    let error: { serverError: boolean; response: string } | null = null
     if (body == '-1') error = { serverError: true, response: body }
     if (
       !body ||

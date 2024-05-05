@@ -5,11 +5,11 @@ import { unstable_noStore as noStore } from 'next/cache'
 
 export const addRecord = async (record: {
   accountid: number
-  username: number
-  levelname: number
+  username: string
+  levelname: string
   levelid: number
   difficulty: number
-  featured: number
+  featured: string
   aval?: number
   percent: number
   video?: string

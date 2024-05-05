@@ -1,0 +1,11 @@
+export type IconTypes =
+  | 'cube'
+  | 'ship'
+  | 'ball'
+  | 'ufo'
+  | 'wave'
+  | 'robot'
+  | 'spider'
+  | 'swing'
+  | 'jetpack'
+  | 'colors'

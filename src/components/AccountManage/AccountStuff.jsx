@@ -13,10 +13,10 @@ import StuffCreated from './Stuff/StuffCreated'
 
 const AccountStuff = ({
   account,
-  setAccount,
+  setAccount = () => {},
   stuffItems = [],
-  setStuffItems,
-  loadAccount,
+  setStuffItems = () => {},
+  loadAccount = () => {},
   manage = false
 }) => {
   const { stuff, itemTypesLeft } = useStuff({ account, stuffItems })

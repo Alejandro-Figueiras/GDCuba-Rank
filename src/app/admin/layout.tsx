@@ -1,16 +1,14 @@
 'use client'
-import React from 'react'
+import React, { ReactNode } from 'react'
 import SidebarWrapper from '@/components/Admin/Sidebar/Sidebar'
-// import { NavbarWrapper } from "../navbar/navbar";
-
 import { useLockedBody } from './hooks/useBodyLock'
 import { SidebarContext } from './layout-context'
 import AdminNavBar from '@/components/Admin/NavBar/AdminNavBar'
 import AdminProvider from '../context/AdminContext'
 
-const AdminLayout = ({ children }) => {
+const AdminLayout = ({ children }: { children: ReactNode }) => {
   const [sidebarOpen, setSidebarOpen] = React.useState(false)
-  const [_, setLocked] = useLockedBody(false)
+  const { setLocked } = useLockedBody(false)
   const handleToggleSidebar = () => {
     setSidebarOpen(!sidebarOpen)
     setLocked(!sidebarOpen)
@@ -27,7 +25,7 @@ const AdminLayout = ({ children }) => {
         <section className='flex'>
           <SidebarWrapper />
           <div className='relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden'>
-            <AdminNavBar admin={true} />
+            <AdminNavBar />
             {children}
           </div>
         </section>

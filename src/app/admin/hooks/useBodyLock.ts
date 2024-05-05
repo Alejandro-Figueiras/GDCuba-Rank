@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useIsomorphicLayoutEffect } from './useIsomorphicLayoutEffect'
 
 export const useLockedBody = (initialLocked = false) => {
-  const [locked, setLocked] = useState(initialLocked)
+  const [locked, setLocked] = useState(!!initialLocked)
 
   // Do the side effect before render
   useIsomorphicLayoutEffect(() => {
@@ -43,5 +43,5 @@ export const useLockedBody = (initialLocked = false) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialLocked])
 
-  return [locked, setLocked]
+  return { locked, setLocked }
 }

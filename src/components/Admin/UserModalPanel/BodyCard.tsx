@@ -1,6 +1,13 @@
 import { Card, CardHeader, CardBody } from '@nextui-org/react'
+import { type ReactNode } from 'react'
 
-const BodyCard = ({ children, cardTitle }) => {
+const BodyCard = ({
+  children,
+  cardTitle
+}: {
+  children: ReactNode
+  cardTitle: string
+}) => {
   return (
     <Card title='Datos' className='h-full'>
       <CardHeader>

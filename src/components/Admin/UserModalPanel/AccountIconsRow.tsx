@@ -3,9 +3,11 @@ import { Card, CardBody, Spinner } from '@nextui-org/react'
 import { useEffect, useState } from 'react'
 
 import './AccountIcons.css'
+import { type IconTypes } from '@/robtop/iconkit/Icons'
+import { Account } from '@/models/Account'
 
 const AccountIcon = ({
-  type = 'cube',
+  type = 'cube' as IconTypes,
   iconNumber = 1,
   c1 = 0,
   c2 = 5,
@@ -53,7 +55,7 @@ const AccountIcon = ({
   )
 }
 
-const AccountIconsRow = ({ user }) => {
+const AccountIconsRow = ({ user }: { user: Account }) => {
   const [jetpack, setJetpack] = useState(false)
 
   const rowsClassnames = 'flex flex-row justify-evenly gap-6 align-middle'
@@ -62,18 +64,14 @@ const AccountIconsRow = ({ user }) => {
     c1: user.playercolor,
     c2: user.playercolor2,
     c3: user.playercolor3,
-    glow: user.accglow
+    glow: !!user.accglow
   }
 
   return (
     <Card className='w-full max-w-full overflow-visible bg-default-200'>
       <CardBody className='p-4'>
         <div className={rowsClassnames}>
-          <AccountIcon
-            type={'cube'}
-            iconNumber={user.accicon}
-            {...comunProps}
-          />
+          <AccountIcon type='cube' iconNumber={user.accicon} {...comunProps} />
           <a
             href='#'
             onClick={() => setJetpack((v) => !v)}

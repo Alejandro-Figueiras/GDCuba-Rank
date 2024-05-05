@@ -1,6 +1,15 @@
+import { type Account } from '@/models/Account'
 import './AccountStatsRow.css'
 
-const AccountStat = ({ value, icon = null, className }) => {
+const AccountStat = ({
+  value,
+  icon,
+  className = ''
+}: {
+  value: string | number
+  icon: string
+  className?: string
+}) => {
   return (
     <div
       className={`relative flex items-center justify-center gap-1 ${className}`}
@@ -13,7 +22,7 @@ const AccountStat = ({ value, icon = null, className }) => {
   )
 }
 
-const AccountStatsRow = ({ user }) => {
+const AccountStatsRow = ({ user }: { user: Account }) => {
   return (
     <div className='min-h-20 w-full max-w-full min-[721px]:min-h-8'>
       <div className='user__stats-up-row flex justify-evenly gap-4'>

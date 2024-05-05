@@ -1,8 +1,15 @@
 import { resetPasswordAction } from '@/actions/admin/resetPasswordAction'
 import { notify } from '@/libs/toastNotifications'
+import { type User } from '@/models/User'
 import { Card, CardHeader, Button } from '@nextui-org/react'
 
-const AccountInfoColumn = ({ user, canResetPw = false }) => {
+const AccountInfoColumn = ({
+  user,
+  canResetPw = false
+}: {
+  user: User
+  canResetPw?: boolean
+}) => {
   const handleResetPassword = () => {
     resetPasswordAction({ username: user.username }).then((result) => {
       if (result == 1) {

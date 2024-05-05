@@ -16,36 +16,48 @@ import CardSelect from './CardSelect'
 import AccountStatsRow from './AccountStatsRow'
 import AccountIconsRow from './AccountIconsRow'
 import AccountInfoColumn from './AccountInfoColumn'
-import { roles, status } from './selectKeys'
+import { ROLES, STATUS } from './selectKeys'
 import { validateUserAction } from '@/actions/admin/validateUserAction'
 import { banUserAction } from '@/actions/admin/banUserAction'
 import { removeUserAction } from '@/actions/admin/removeUserAction'
 import { useSesion } from '@/hooks/useSesion'
 import { changeUserRoleAction } from '@/actions/admin/changeUserRoleAction'
+import { type UserInCheck } from '@/app/context/AdminContext'
+import { type PressEvent } from '@react-types/shared'
+import { type Account } from '@/models/Account'
+import { type User } from '@/models/User'
 
 export default function UserModalPanel({
-  user,
+  userInfo,
   isOpen,
   onOpenChange,
   isLoading
+}: {
+  userInfo: UserInCheck | undefined
+  isOpen: boolean
+  onOpenChange: () => void
+  isLoading: boolean
 }) {
   const { currentUser } = useSesion()
   const [loadingExtra, setLoadingExtra] = useState(false)
 
   const [oldValues, setOldValues] = useState({
-    role: user.role,
-    status: user.status
+    role: userInfo?.user.role ?? '',
+    status: userInfo?.user.status ?? ''
   })
 
-  const [changes, setChanges] = useState([])
+  const [changes, setChanges] = useState([] as string[])
   const [fields, setFields] = useState({
-    role: new Set([]),
-    status: new Set([])
+    role: new Set([] as string[]),
+    status: new Set([] as string[])
   })
 
   const { openModal } = useContext(ModalContext)
 
-  const handleSelectionChange = (e, whatChange) => {
+  const handleSelectionChange = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    whatChange: 'role' | 'status'
+  ) => {
     if (e.target.value == '') return
 
     const value = new Set([e.target.value])
@@ -64,53 +76,60 @@ export default function UserModalPanel({
   useEffect(() => {
     setLoadingExtra(false)
     setFields({
-      role: new Set([user.role]),
-      status: new Set([user.status]),
-      type: new Set([user.playerType])
+      role: new Set([userInfo?.user.role ?? '']),
+      status: new Set([userInfo?.user.status ?? ''])
     })
     setOldValues({
-      role: user.role,
-      status: user.status,
-      type: user.playerType
+      role: userInfo?.user.role ?? '',
+      status: userInfo?.user.status ?? ''
     })
     setChanges([])
-  }, [user])
+  }, [userInfo])
 
-  const handleDelete = (onClose) => {
+  const handleDelete = (onClose: () => void) => {
     openModal({
-      title: `Eliminar ${user.username}`,
-      desc: `¿Seguro que quieres eliminar a ${user.username}`,
+      title: `Eliminar ${userInfo?.user.username}`,
+      desc: `¿Seguro que quieres eliminar a ${userInfo?.user.username}`,
       onSubmit: async () => {
         const result = JSON.parse(
-          await removeUserAction({ username: user.username })
+          await removeUserAction({ username: userInfo?.user.username })
         )
 
         if (result) {
           const success = notify(
-            `Usuario ${user.username} eliminado`,
+            `Usuario ${userInfo?.user.username} eliminado`,
             'success'
           )
           onClose()
         } else {
-          const error = notify(`Error al eliminar a ${user.username}`, 'error')
+          const error = notify(
+            `Error al eliminar a ${userInfo?.user.username}`,
+            'error'
+          )
           onClose()
         }
 
-        if (user.updateData) user.updateData()
+        if (userInfo?.updateData) userInfo.updateData()
       },
       action: 'delete'
     })
   }
 
-  const handleUpdate = async (e) => {
+  const handleUpdate = async (e: PressEvent) => {
     for (const change of changes) {
       if (change == 'status') {
         if (fields[change].has('b')) {
-          await banUserAction({ user: user.username })
+          await banUserAction({ user: userInfo?.user.username })
         } else if (fields[change].has('v')) {
-          await validateUserAction({ user: user.username })
+          await validateUserAction({
+            user: userInfo?.user.username,
+            unvalidate: false
+          })
         } else {
-          await validateUserAction({ user: user.username, unvalidate: true })
+          await validateUserAction({
+            user: userInfo?.user.username,
+            unvalidate: true
+          })
         }
       } else if (change == 'role' && currentUser.role == 'owner') {
         const role = fields.role.has('owner')
@@ -118,23 +137,23 @@ export default function UserModalPanel({
           : fields.role.has('admin')
             ? 'admin'
             : 'user'
-        await changeUserRoleAction({ user: user.username, role })
+        await changeUserRoleAction({ user: userInfo?.user.username, role })
       }
     }
-    if (user.updateData) user.updateData()
+    if (userInfo?.updateData) userInfo.updateData()
   }
 
   return (
     <Modal
       isOpen={isOpen}
       onOpenChange={onOpenChange}
-      size={!isLoading ? '2xl' : ''}
+      size={!isLoading ? '2xl' : undefined}
     >
       <ModalContent>
         {(onClose) => (
           <>
             <ModalHeader className='flex flex-col gap-1 text-center'>
-              {user.username}
+              {userInfo?.user.username}
             </ModalHeader>
             {isLoading || loadingExtra ? (
               <div className='my-6 flex h-10 w-full flex-col items-center justify-center p-2'>
@@ -143,29 +162,30 @@ export default function UserModalPanel({
             ) : (
               <>
                 <ModalBody>
-                  <AccountStatsRow user={user} />
-                  <AccountIconsRow user={user} />
+                  <AccountStatsRow user={userInfo?.account as Account} />
+                  <AccountIconsRow user={userInfo?.account as Account} />
                   <div className='grid h-[300px] grid-cols-[0.5fr,_1fr] gap-2'>
                     {/* grid grid-cols-[0.5fr,_1fr] gap-2 */}
                     <AccountInfoColumn
-                      user={user}
+                      user={userInfo?.user as User}
                       canResetPw={currentUser.role == 'owner'}
                     />
                     <BodyCard cardTitle={'Datos y Permisos'}>
                       <CardSelect
-                        items={roles}
+                        items={ROLES}
                         label={'Nivel'}
                         selectedKeys={fields.role}
                         onChange={(e) => handleSelectionChange(e, 'role')}
                         isDisabled={currentUser.role != 'owner'}
                       />
                       <CardSelect
-                        items={status}
+                        items={STATUS}
                         label={'Estado'}
                         selectedKeys={fields.status}
                         onChange={(e) => handleSelectionChange(e, 'status')}
                         isDisabled={
-                          user.role != 'user' && currentUser.role != 'owner'
+                          userInfo?.user.role != 'user' &&
+                          currentUser.role != 'owner'
                         }
                       />
                     </BodyCard>
@@ -176,14 +196,15 @@ export default function UserModalPanel({
                     color='primary'
                     onPress={async (e) => {
                       setLoadingExtra(true)
-                      await handleUpdate()
+                      await handleUpdate(e)
                       onClose()
                     }}
                     isDisabled={changes.length == 0}
                   >
                     Actualizar
                   </Button>
-                  {(user.role == 'user' || currentUser.role == 'owner') && (
+                  {(userInfo?.user.role == 'user' ||
+                    currentUser.role == 'owner') && (
                     <Button
                       color='danger'
                       onClick={() => handleDelete(onClose)}

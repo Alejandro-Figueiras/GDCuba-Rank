@@ -1,4 +1,5 @@
 import { Select, SelectItem } from '@nextui-org/react'
+import { ChangeEventHandler } from 'react'
 
 const CardSelect = ({
   items,
@@ -7,6 +8,16 @@ const CardSelect = ({
   onChange,
   selectedKeys,
   isDisabled = false
+}: {
+  items: {
+    key: string
+    label: string
+  }[]
+  placeholder?: string
+  label: string
+  onChange: ChangeEventHandler<HTMLSelectElement>
+  selectedKeys: 'all' | Iterable<string> | undefined
+  isDisabled?: boolean
 }) => {
   return (
     <Select
@@ -18,7 +29,7 @@ const CardSelect = ({
       onChange={onChange}
       isDisabled={isDisabled}
     >
-      {items.map((item, key) => (
+      {items.map((item) => (
         <SelectItem key={item.key} value={item.key}>
           {item.label}
         </SelectItem>

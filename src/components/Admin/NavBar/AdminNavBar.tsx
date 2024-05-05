@@ -4,7 +4,7 @@ import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
 
 import { GlobalContext } from '@/app/context/GlobalContext'
 import { BurguerButton } from './BurgerButton'
-import UserDropdown from '@/components/Navbar/UserDropdown'
+import UserDropdown from '@/components/FrontNavbar/UserDropdown'
 
 const AdminNavBar = () => {
   const { currentUser } = useContext(GlobalContext)

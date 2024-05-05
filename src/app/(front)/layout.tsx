@@ -1,4 +1,4 @@
-import FrontNavbar from '@/components/Navbar/FrontNavbar'
+import FrontNavbar from '@/components/FrontNavbar/FrontNavbar'
 import { type ReactNode } from 'react'
 
 const FrontLayout = ({ children }: { children: ReactNode }) => {

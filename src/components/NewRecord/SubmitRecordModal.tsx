@@ -61,7 +61,7 @@ export default function SubmitRecordModal({
           video,
           accountid: account.accountid,
           username: account.username,
-          cuba: account.cuba
+          cuba: account.cuba ? 1 : 0
         },
         level
       )

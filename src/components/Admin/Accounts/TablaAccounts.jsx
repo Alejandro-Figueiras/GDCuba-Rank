@@ -13,7 +13,7 @@ import { ModalContext } from '@/app/context/ModalContext'
 import { notify } from '@/libs/toastNotifications'
 import UsernameCell from '@/components/Rank/UsernameCell'
 import CubanCheckbox from './CubanCheckbox.jsx'
-import { removeGDAccountAction } from '@/actions/admin/accountsActions.js'
+import { removeGDAccountAction } from '@/actions/admin/accountsActions'
 
 const TablaAccounts = ({ gdaccounts, updateAccounts, loading = false }) => {
   const { openModal } = useContext(ModalContext)

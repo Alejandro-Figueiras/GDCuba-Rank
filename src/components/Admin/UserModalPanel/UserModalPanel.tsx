@@ -87,12 +87,13 @@ export default function UserModalPanel({
   }, [userInfo])
 
   const handleDelete = (onClose: () => void) => {
+    if (!userInfo?.user) return
     openModal({
-      title: `Eliminar ${userInfo?.user.username}`,
-      desc: `¿Seguro que quieres eliminar a ${userInfo?.user.username}`,
+      title: `Eliminar ${userInfo.user.username}`,
+      desc: `¿Seguro que quieres eliminar a ${userInfo.user.username}`,
       onSubmit: async () => {
         const result = JSON.parse(
-          await removeUserAction({ username: userInfo?.user.username })
+          await removeUserAction({ username: userInfo.user.username })
         )
 
         if (result) {
@@ -116,18 +117,19 @@ export default function UserModalPanel({
   }
 
   const handleUpdate = async (e: PressEvent) => {
+    if (!userInfo?.user) return
     for (const change of changes) {
       if (change == 'status') {
         if (fields[change].has('b')) {
-          await banUserAction({ user: userInfo?.user.username })
+          await banUserAction({ user: userInfo.user.username })
         } else if (fields[change].has('v')) {
           await validateUserAction({
-            user: userInfo?.user.username,
+            user: userInfo.user.username,
             unvalidate: false
           })
         } else {
           await validateUserAction({
-            user: userInfo?.user.username,
+            user: userInfo.user.username,
             unvalidate: true
           })
         }
@@ -137,7 +139,7 @@ export default function UserModalPanel({
           : fields.role.has('admin')
             ? 'admin'
             : 'user'
-        await changeUserRoleAction({ user: userInfo?.user.username, role })
+        await changeUserRoleAction({ user: userInfo.user.username, role })
       }
     }
     if (userInfo?.updateData) userInfo.updateData()

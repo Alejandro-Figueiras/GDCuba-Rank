@@ -10,19 +10,31 @@ import {
 import { notify } from '@/libs/toastNotifications'
 import StuffHardest from './Stuff/StuffHardest'
 import StuffCreated from './Stuff/StuffCreated'
+import { type Account } from '@/models/Account'
+import StuffItem from '@/models/StuffItem'
+import StuffHandlers from './Stuff/StuffHandlers'
+import { type Dispatch, type SetStateAction } from 'react'
+import DictionaryObject from '@/helpers/DictionaryObject'
 
 const AccountStuff = ({
   account,
   setAccount = () => {},
   stuffItems = [],
   setStuffItems = () => {},
-  loadAccount = () => {},
+  loadAccount = async () => {},
   manage = false
+}: {
+  account: Account
+  setAccount?: Dispatch<SetStateAction<Account>>
+  stuffItems: StuffItem[]
+  setStuffItems?: Dispatch<SetStateAction<StuffItem[]>>
+  loadAccount?: () => Promise<void>
+  manage?: boolean
 }) => {
   const { stuff, itemTypesLeft } = useStuff({ account, stuffItems })
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: number) => {
     const infoToast = notify('Realizando cambios en la cuenta', 'info')
     const result = await deleteStuffItemAction({
       accountid: account.accountid,
@@ -39,7 +51,7 @@ const AccountStuff = ({
     }
   }
 
-  const handleSort = async (accStuff) => {
+  const handleSort = async (accStuff: string) => {
     const infoToast = notify('Realizando cambios en la cuenta', 'info')
     const result = await updateAccountStuffAction({
       accountid: account.accountid,
@@ -55,7 +67,7 @@ const AccountStuff = ({
     }
   }
 
-  const handlers = manage
+  const handlers: StuffHandlers = manage
     ? {
         handleSort,
         handleDelete,
@@ -68,7 +80,6 @@ const AccountStuff = ({
       <AddStuffModal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        accountStuff={account.stuff}
         account={account}
         setAccount={setAccount}
         stuffItems={stuffItems}
@@ -78,10 +89,8 @@ const AccountStuff = ({
       <div className='flex w-full flex-col gap-2 px-4'>
         {stuff.map((value, i) => {
           if (value == undefined) return
-          let { data, id } = value
-          if (!value.data.type) {
-            data = JSON.parse(data)
-          }
+          let { data: dataStr, id } = value
+          const data = JSON.parse(dataStr) as DictionaryObject<any>
           if (data.type == 'bio') {
             return (
               <StuffBio
@@ -123,7 +132,7 @@ const AccountStuff = ({
         })}
       </div>
       {manage && itemTypesLeft != 0 && (
-        <Button type='priamry' onClick={onOpen}>
+        <Button color='primary' onClick={onOpen}>
           Agregar Item
         </Button>
       )}

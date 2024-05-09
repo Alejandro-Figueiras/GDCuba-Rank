@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, type SetStateAction, type Dispatch } from 'react'
 import {
   Modal,
   ModalContent,
@@ -18,8 +18,12 @@ import {
 } from '@/actions/accounts/stuffActions'
 import { useSesion } from '@/hooks/useSesion'
 import StuffCreatedForm from './Stuff/StuffCreatedForm'
+import { type Account } from '@/models/Account'
+import StuffItem from '@/models/StuffItem'
+import type DictionaryObject from '@/helpers/DictionaryObject'
+import { notify } from '@/libs/toastNotifications'
 
-const ITEM_TYPES = {
+const ITEM_TYPES: DictionaryObject<string> = {
   bio: 'Biografía',
   hardest: 'Hardest Levels',
   created: 'Mis Creaciones / Participaciones'
@@ -32,12 +36,19 @@ const AddStuffModal = ({
   setAccount,
   stuffItems = [],
   setStuffItems
+}: {
+  isOpen: boolean
+  onOpenChange: () => void
+  account: Account
+  setAccount: Dispatch<SetStateAction<Account>>
+  stuffItems: StuffItem[]
+  setStuffItems: Dispatch<SetStateAction<StuffItem[]>>
 }) => {
   const { currentUser } = useSesion()
   const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(true)
   const [itemType, setItemType] = useState('none')
-  const [itemData, setItemData] = useState({})
+  const [itemData, setItemData] = useState({} as DictionaryObject<any>)
 
   const clear = () => {
     setLoading(false)
@@ -46,19 +57,25 @@ const AddStuffModal = ({
     setItemData({})
   }
 
-  const handleSubmit = async (onClose) => {
+  const handleSubmit = async (onClose: () => void) => {
     if (itemType == 'bio' || itemType == 'hardest' || itemType == 'created') {
       if (itemType == 'bio' && itemData.text == '') return
       if (itemType == 'created' && itemData.levels.length == 0) return
       if (itemType == 'hardest') itemData.accountid = currentUser.accountid
       setLoading(true)
+
+      if (!currentUser.accountid || !currentUser.username) return
       const item = {
         accountid: currentUser.accountid,
         username: currentUser.username,
-        data: itemData
+        data: JSON.stringify(itemData)
       }
-      const { id } = await submitStuffItemAction(item)
-
+      const submitResult = await submitStuffItemAction(item)
+      if (submitResult == -1 || !submitResult) {
+        notify('Error al enviar el record. Inténtelo de nuevo', 'error')
+        return
+      }
+      const { id } = submitResult
       let newOrder = account.stuff
       newOrder += `${newOrder == '' ? '' : ','}${id}`
       const updateResult = await updateAccountStuffAction({
@@ -71,8 +88,11 @@ const AddStuffModal = ({
       if (!id || !updateResult) return
       const newAcc = { ...account }
       newAcc.stuff = newOrder
-      item.id = id
-      setStuffItems((items) => [...items, item])
+      const newItem: StuffItem = {
+        id,
+        ...item
+      }
+      setStuffItems((items) => [...items, newItem])
       console.log(newAcc)
       console.log(newAcc)
       setAccount(newAcc)
@@ -121,7 +141,7 @@ const AddStuffModal = ({
                   setItemType(target.value == '' ? 'none' : target.value)
                   const data = {
                     type: target.value
-                  }
+                  } as DictionaryObject<any>
 
                   // DEFAULT VALUES OF ITEM DATA
                   if (target.value == 'bio') data.text = ''
@@ -138,7 +158,7 @@ const AddStuffModal = ({
                         if (!account.stuff.split(',').includes(`${item.id}`))
                           continue
                         const { type } =
-                          typeof item.data == String
+                          typeof item.data == 'string'
                             ? JSON.parse(item.data)
                             : item.data
                         if (type == val) return false

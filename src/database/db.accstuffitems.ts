@@ -38,7 +38,7 @@ export const addStuffItem = async (item: {
   if (result.rowCount) {
     const result =
       await sql`SELECT id FROM accstuffitems WHERE accountid = ${item.accountid} ORDER BY id DESC LIMIT 1`
-    return result.rows[0]
+    return result.rows[0] as { id: number }
   }
   return -1
 }

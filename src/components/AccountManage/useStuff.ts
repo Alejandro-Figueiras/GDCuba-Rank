@@ -1,17 +1,25 @@
+import { type Account } from '@/models/Account'
+import type StuffItem from '@/models/StuffItem'
 import { useState, useEffect } from 'react'
-export const useStuff = ({ account, stuffItems }) => {
+export const useStuff = ({
+  account,
+  stuffItems
+}: {
+  account: Account
+  stuffItems: StuffItem[]
+}) => {
   const [itemTypesLeft, setItemTypesLeft] = useState(0)
-  const [stuff, setStuff] = useState([])
+  const [stuff, setStuff] = useState([] as (StuffItem | undefined)[])
 
   useEffect(() => {
-    const newItemTypes = []
-    const stuffOrder = account.stuff
+    const newItemTypes: string[] = []
+    const stuffOrder = (account.stuff ?? '')
       .split(',')
       .map((id) => parseInt(id))
       .map((id) =>
-        stuffItems.find((value, i, obj) => {
+        stuffItems.find((value) => {
           if (value.id == id) {
-            const data = value.data.type ? value.data : JSON.parse(value.data)
+            const data = JSON.parse(value.data)
             newItemTypes.push(data.type)
             return true
           }

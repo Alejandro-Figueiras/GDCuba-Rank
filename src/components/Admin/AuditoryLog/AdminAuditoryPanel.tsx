@@ -3,15 +3,16 @@ import { getLatestAction } from '@/actions/admin/auditorylogActions'
 import TablaHeader from '@/components/Admin/TablaHeader'
 import { useEffect, useState } from 'react'
 import { Spinner } from '@nextui-org/react'
+import type LogMessage from '@/models/LogMessage'
 
 const AdminAuditoryPanel = ({ home = false }) => {
-  const [data, setData] = useState([])
+  const [data, setData] = useState([] as LogMessage[])
   const [loading, setLoading] = useState(true)
 
   const updateData = () => {
     setLoading(true)
     getLatestAction().then((response) => {
-      const datos = JSON.parse(response)
+      const datos = JSON.parse(response) as LogMessage[]
       setData(datos)
       setLoading(false)
     })

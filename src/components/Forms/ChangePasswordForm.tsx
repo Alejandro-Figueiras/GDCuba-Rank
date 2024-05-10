@@ -16,7 +16,13 @@ import { notify } from '@/libs/toastNotifications'
 import { useSesion } from '@/hooks/useSesion'
 import { changePasswordAction } from '@/actions/auth/changePassword'
 
-const ChangePasswordForm = ({ isOpen, onOpenChange }) => {
+const ChangePasswordForm = ({
+  isOpen,
+  onOpenChange
+}: {
+  isOpen: boolean
+  onOpenChange: () => void
+}) => {
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [newPassword2, setNewPassword2] = useState('')
@@ -25,8 +31,11 @@ const ChangePasswordForm = ({ isOpen, onOpenChange }) => {
   const [loading, setLoading] = useState(false)
   const { currentUser } = useSesion()
 
-  const handleSubmitButton = async (action, onClose) => {
+  const handleSubmitButton = async (action: string, onClose: () => void) => {
     if (action == 'submit') {
+      if (!currentUser.username) {
+        return
+      }
       const formData = {
         username: currentUser.username,
         oldPassword,

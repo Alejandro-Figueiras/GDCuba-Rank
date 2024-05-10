@@ -1,5 +1,5 @@
 'use client'
-import React, { useRef, useState } from 'react'
+import React, { type MutableRefObject, useRef, useState } from 'react'
 
 import { Button } from '@nextui-org/button'
 import { Input } from '@nextui-org/input'
@@ -15,19 +15,26 @@ import {
 import { notify } from '@/libs/toastNotifications'
 import { register } from '@/actions/register/register'
 
-const SignUpForm = ({ isOpen, onOpenChange }) => {
+const SignUpForm = ({
+  isOpen,
+  onOpenChange
+}: {
+  isOpen: boolean
+  onOpenChange: () => void
+}) => {
   const [fieldsError, setFieldsError] = useState({
     userField: false,
-    notMatchPassword: false
+    notMatchPassword: false,
+    phoneInvalid: false
   })
 
   const [canSubmit, setCanSubmit] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  const phoneRef = useRef()
-  const userRef = useRef()
-  const passwordRef = useRef()
-  const passwordSecureRef = useRef()
+  const phoneRef = useRef() as MutableRefObject<HTMLInputElement>
+  const userRef = useRef() as MutableRefObject<HTMLInputElement>
+  const passwordRef = useRef() as MutableRefObject<HTMLInputElement>
+  const passwordSecureRef = useRef() as MutableRefObject<HTMLInputElement>
   const phoneRegex = /^\+[0-9\s]+$/
 
   const updateCanSubmit = () => {
@@ -66,7 +73,7 @@ const SignUpForm = ({ isOpen, onOpenChange }) => {
       }))
   }
 
-  const handleSubmit = async (onClose) => {
+  const handleSubmit = async (onClose: () => void) => {
     setCanSubmit(false)
     setIsLoading(true)
     const formData = {

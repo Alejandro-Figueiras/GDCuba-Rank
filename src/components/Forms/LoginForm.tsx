@@ -1,5 +1,10 @@
 'use client'
-import React, { useContext, useRef, useState } from 'react'
+import React, {
+  type MutableRefObject,
+  useContext,
+  useRef,
+  useState
+} from 'react'
 
 import { Button } from '@nextui-org/button'
 
@@ -16,13 +21,19 @@ import { GlobalContext } from '@/app/context/GlobalContext'
 import { notify } from '@/libs/toastNotifications'
 import { login } from '@/actions/auth/login'
 
-const LoginForm = ({ isOpen, onOpenChange }) => {
-  const userRef = useRef()
-  const passwordRef = useRef()
+const LoginForm = ({
+  isOpen,
+  onOpenChange
+}: {
+  isOpen: boolean
+  onOpenChange: () => void
+}) => {
+  const userRef = useRef() as MutableRefObject<HTMLInputElement>
+  const passwordRef = useRef() as MutableRefObject<HTMLInputElement>
   const [loading, setLoading] = useState(false)
   const { setCurrentUser } = useContext(GlobalContext)
 
-  const handleSubmitButton = async (action, onClose) => {
+  const handleSubmitButton = async (action: string, onClose: () => void) => {
     if (action == 'submit') {
       const formData = {
         username: userRef.current.value,
@@ -40,7 +51,13 @@ const LoginForm = ({ isOpen, onOpenChange }) => {
       notify(data.message, 'success')
       setCurrentUser((prev) => ({
         ...prev,
-        ...data.user
+        ...(data.user as {
+          username: string
+          role: string
+          accountid: number
+          phone: string
+          sessionToken: string | number
+        })
       }))
       onClose()
     }

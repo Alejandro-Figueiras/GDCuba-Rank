@@ -2,7 +2,9 @@
 
 import React, {
   createContext,
+  type Dispatch,
   type ReactNode,
+  type SetStateAction,
   useEffect,
   useRef,
   useState
@@ -23,7 +25,7 @@ export const GlobalContext = createContext({
     phone: undefined,
     role: undefined
   } as CurrentUser,
-  setCurrentUser: (() => {}) as (val: CurrentUser) => void
+  setCurrentUser: (() => {}) as Dispatch<SetStateAction<CurrentUser>>
 })
 
 export default function GlobalContextProvider({

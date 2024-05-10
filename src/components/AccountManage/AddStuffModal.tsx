@@ -19,7 +19,7 @@ import {
 import { useSesion } from '@/hooks/useSesion'
 import StuffCreatedForm from './Stuff/StuffCreatedForm'
 import { type Account } from '@/models/Account'
-import StuffItem from '@/models/StuffItem'
+import type StuffItem from '@/models/StuffItem'
 import type DictionaryObject from '@/helpers/DictionaryObject'
 import { notify } from '@/libs/toastNotifications'
 

@@ -1,6 +1,12 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import React, {
+  useState,
+  useEffect,
+  type ReactNode,
+  type Dispatch,
+  type SetStateAction
+} from 'react'
 import {
   Modal,
   ModalContent,
@@ -9,6 +15,7 @@ import {
   ModalFooter,
   Button
 } from '@nextui-org/react'
+import type DictionaryObject from '@/helpers/DictionaryObject'
 
 const StuffEditModal = ({
   isOpen,
@@ -18,19 +25,35 @@ const StuffEditModal = ({
   Form,
   handleUpdate,
   updateListener = () => {},
-  submitPreventer = () => {}
+  submitPreventer = () => true
+}: {
+  isOpen: boolean
+  onOpenChange: () => void
+  title: string
+  itemDataOld: DictionaryObject<any>
+  Form: (props: {
+    itemData: DictionaryObject<any>
+    setItemData: Dispatch<SetStateAction<DictionaryObject<any>>>
+  }) => ReactNode
+  handleUpdate: (itemData: DictionaryObject<any>) => Promise<void>
+  updateListener: (
+    itemData: DictionaryObject<any>,
+    disabled: boolean,
+    setDisabled: Dispatch<SetStateAction<boolean>>
+  ) => void
+  submitPreventer: (itemData: DictionaryObject<any>) => boolean
 }) => {
   const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(true)
   const [itemData, setItemData] = useState(itemDataOld)
 
-  const clear = (itemData) => {
+  const clear = (itemData?: DictionaryObject<any>) => {
     setLoading(false)
     setDisabled(true)
     setItemData(itemData ? itemData : itemDataOld)
   }
 
-  const handleSubmit = async (onClose) => {
+  const handleSubmit = async (onClose: () => void) => {
     if (!submitPreventer(itemData)) return
     setLoading(true)
     await handleUpdate(itemData)

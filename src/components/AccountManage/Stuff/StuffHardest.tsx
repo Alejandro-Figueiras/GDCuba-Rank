@@ -6,8 +6,22 @@ import { useEffect, useState } from 'react'
 import RecordCard from '@/components/Records/RecordCard'
 import { Spinner } from '@nextui-org/react'
 import './StuffHardest.css'
+import type DictionaryObject from '@/helpers/DictionaryObject'
+import type StuffHandlers from './StuffHandlers'
 
-const StuffHardest = ({ itemData, id, handlers, manage = false, accStuff }) => {
+const StuffHardest = ({
+  itemData,
+  id,
+  handlers,
+  manage = false,
+  accStuff
+}: {
+  itemData: DictionaryObject<any>
+  id: number
+  handlers?: StuffHandlers
+  manage?: boolean
+  accStuff: string
+}) => {
   const [levels, setLevels] = useState([])
   const [loading, setLoading] = useState(true)
   const [loadingError, setLoadingError] = useState('')

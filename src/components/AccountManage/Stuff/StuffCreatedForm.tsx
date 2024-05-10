@@ -1,23 +1,40 @@
 'use client'
 import { getLevelsFromGD } from '@/actions/levels/levels'
+import type DictionaryObject from '@/helpers/DictionaryObject'
 import { parseDifficulty } from '@/helpers/levelParser'
+import type Level from '@/models/Level'
 import { Button, Input } from '@nextui-org/react'
 
-import { useRef, useState, useEffect } from 'react'
+import {
+  useRef,
+  useState,
+  useEffect,
+  type Dispatch,
+  type SetStateAction,
+  type MutableRefObject
+} from 'react'
 
-const StuffCreatedForm = ({ itemData, setItemData }) => {
-  const inputRef = useRef(null)
-  const [selectedLevels, setSelectedLevels] = useState(itemData.levels)
-  const [searchResult, setSearchResult] = useState([])
+const StuffCreatedForm = ({
+  itemData,
+  setItemData
+}: {
+  itemData: DictionaryObject<any>
+  setItemData: Dispatch<SetStateAction<DictionaryObject<any>>>
+}) => {
+  const inputRef = useRef() as MutableRefObject<HTMLInputElement>
+  const [selectedLevels, setSelectedLevels] = useState(
+    itemData.levels as Level[]
+  )
+  const [searchResult, setSearchResult] = useState([] as Level[])
 
   const handleSearch = async () => {
-    const value = inputRef.current.value
-    const result = JSON.parse(await getLevelsFromGD({ data: value }))
+    const value = inputRef.current?.value ?? ''
+    const result = JSON.parse(await getLevelsFromGD({ data: value })) as Level[]
     console.log(result)
     setSearchResult(result)
   }
 
-  const handleSelect = (level) => {
+  const handleSelect = (level: Level) => {
     if (
       selectedLevels.length < 6 &&
       !selectedLevels.find((val) => val.id == level.id)
@@ -26,7 +43,7 @@ const StuffCreatedForm = ({ itemData, setItemData }) => {
     }
   }
 
-  const handleUnselect = (level) => {
+  const handleUnselect = (level: Level) => {
     setSelectedLevels((levels) => levels.filter((val) => val.id != level.id))
   }
 
@@ -94,6 +111,12 @@ const LevelName = ({
   green,
   hoverGreen,
   hoverRed
+}: {
+  level: Level
+  handleSelect: (level: Level) => void
+  green?: boolean
+  hoverGreen?: boolean
+  hoverRed?: boolean
 }) => {
   const classNames = [
     'w-full flex gap-1 hover:underline hover:cursor-pointer',

@@ -11,10 +11,10 @@ import { notify } from '@/libs/toastNotifications'
 import StuffHardest from './Stuff/StuffHardest'
 import StuffCreated from './Stuff/StuffCreated'
 import { type Account } from '@/models/Account'
-import StuffItem from '@/models/StuffItem'
+import type StuffItem from '@/models/StuffItem'
 import StuffHandlers from './Stuff/StuffHandlers'
 import { type Dispatch, type SetStateAction } from 'react'
-import DictionaryObject from '@/helpers/DictionaryObject'
+import type DictionaryObject from '@/helpers/DictionaryObject'
 
 const AccountStuff = ({
   account,

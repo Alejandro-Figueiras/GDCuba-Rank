@@ -244,10 +244,7 @@ const RankTable = ({
           emptyContent={loading ? null : 'No hay usuarios para mostrar'}
         >
           {ranking.map((player, i) => (
-            <TableRow
-              key={i + 1}
-              onClick={() => openUserView({ user: player, update: true })}
-            >
+            <TableRow key={i + 1} onClick={() => openUserView(player, true)}>
               {cells.map((cell) => cell(player, i))}
             </TableRow>
           ))}

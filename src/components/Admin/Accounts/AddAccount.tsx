@@ -12,29 +12,42 @@ import {
   ModalBody,
   ModalFooter
 } from '@nextui-org/react'
-import { useRef, useState } from 'react'
+import { type MutableRefObject, useRef, useState } from 'react'
 import AccountCard from './AccountCard'
 import { notify } from '@/libs/toastNotifications'
 import { addNewAccountAction } from '@/actions/admin/addNewAccountAction'
 import { changeCubanAction } from '@/actions/admin/accountsActions'
+import { type Account } from '@/models/Account'
 
-const AddAccount = ({ isOpen, onOpen, onOpenChange, onClose }) => {
-  const inputRef = useRef()
-  const [account, setAccount] = useState({})
+const AddAccount = ({
+  isOpen,
+  onClose
+}: {
+  isOpen: boolean
+  onClose: () => void
+}) => {
+  const inputRef = useRef() as MutableRefObject<HTMLInputElement>
+  const [account, setAccount] = useState(undefined as Account | undefined)
 
-  const handleSearch = async (e) => {
-    const user = inputRef.current.value
+  const handleSearch = async () => {
+    const user = inputRef.current.value as string
     const newAccount = JSON.parse(
       await getAccountFromRobTopAction({ username: user })
-    )
+    ) as Account
     console.log(newAccount)
     setAccount(newAccount)
   }
 
-  const submitAccount = async ({ account, cuba = false }) => {
-    let local = await getAccountAction({ username: account.username })
-    if (local) {
-      local = JSON.parse(local)
+  const submitAccount = async ({
+    account,
+    cuba = false
+  }: {
+    account: Account
+    cuba?: boolean
+  }) => {
+    const localStr = await getAccountAction({ username: account.username })
+    if (localStr && localStr != undefined && localStr != '-1') {
+      const local = JSON.parse(localStr) as Account
       if (local.cuba == 0 && cuba) {
         changeCubanAction({ username: account.username, cuba: cuba ? 1 : 0 })
           .then(() =>
@@ -43,7 +56,7 @@ const AddAccount = ({ isOpen, onOpen, onOpenChange, onClose }) => {
               'success'
             )
           )
-          .error(() =>
+          .catch(() =>
             notify(
               'La cuenta ya exise, pero hubo un error al cambiarla de nacionalidad',
               'error'
@@ -56,7 +69,7 @@ const AddAccount = ({ isOpen, onOpen, onOpenChange, onClose }) => {
       await addNewAccountAction({ account, cuba: cuba ? 1 : 0 })
       notify('La cuenta fue agregada exitosamente', 'success')
     }
-    setAccount({})
+    setAccount(undefined)
     inputRef.current.value = ''
   }
 
@@ -87,14 +100,14 @@ const AddAccount = ({ isOpen, onOpen, onOpenChange, onClose }) => {
                   </Button>
                 </div>
                 <div className='w-100 mt-6'>
-                  {account.username ? (
+                  {account?.username ? (
                     <AccountCard
                       account={account}
                       submitAccount={submitAccount}
                     />
                   ) : (
                     <p className='text-center'>
-                      {account == -1 ? 'No existe esta cuenta' : 'Vacío.'}
+                      {!account ? 'No existe esta cuenta' : 'Vacío.'}
                     </p>
                   )}
                 </div>

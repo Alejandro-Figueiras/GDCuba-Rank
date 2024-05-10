@@ -44,6 +44,7 @@ export interface ServerAccount {
 }
 
 export interface Account extends ServerAccount {
+  id: number
   cuba: number | boolean
   timestamp: number
   stuff: string

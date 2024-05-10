@@ -12,29 +12,32 @@ import { useContext } from 'react'
 import { ModalContext } from '@/app/context/ModalContext'
 import { notify } from '@/libs/toastNotifications'
 import UsernameCell from '@/components/Rank/UsernameCell'
-import CubanCheckbox from './CubanCheckbox.jsx'
+import CubanCheckbox from './CubanCheckbox'
 import { removeGDAccountAction } from '@/actions/admin/accountsActions'
+import { type Account } from '@/models/Account'
 
-const TablaAccounts = ({ gdaccounts, updateAccounts, loading = false }) => {
+const TablaAccounts = ({
+  gdaccounts,
+  updateAccounts,
+  loading = false
+}: {
+  gdaccounts: Account[]
+  updateAccounts: () => void
+  loading?: boolean
+}) => {
   const { openModal } = useContext(ModalContext)
 
-  const handleDelete = async (acc) => {
+  const handleDelete = async (acc: Account) => {
     openModal({
       title: `Eliminar Cuenta ${acc.username}`,
       desc: `¿Seguro que quieres eliminar esta cuenta?`,
       action: 'delete',
       onSubmit: async () => {
-        const result = JSON.parse(
-          await removeGDAccountAction({ username: acc.username })
-        )
-
+        const result = await removeGDAccountAction({ username: acc.username })
         if (result == 1) {
-          const success = notify(`Cuenta ${acc.username} eliminada`, 'success')
+          notify(`Cuenta ${acc.username} eliminada`, 'success')
         } else {
-          const error = notify(
-            `Error al eliminar la cuenta ${acc.username}`,
-            'error'
-          )
+          notify(`Error al eliminar la cuenta ${acc.username}`, 'error')
         }
         updateAccounts()
       }

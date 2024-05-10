@@ -1,5 +1,6 @@
 import AccountIconsRow from '@/components/Admin/UserModalPanel/AccountIconsRow'
 import AccountStatsRow from '@/components/Admin/UserModalPanel/AccountStatsRow'
+import { type Account } from '@/models/Account'
 import { useGDIcon } from '@/robtop/iconkit/useGDIcon'
 import {
   Card,
@@ -12,7 +13,13 @@ import {
 } from '@nextui-org/react'
 import { useRef } from 'react'
 
-const AccountCard = ({ account, submitAccount }) => {
+const AccountCard = ({
+  account,
+  submitAccount
+}: {
+  account: Account
+  submitAccount: (props: { account: Account; cuba: boolean }) => void
+}) => {
   const cubanCheck = useRef(true)
 
   const { icon } = useGDIcon({
@@ -24,7 +31,7 @@ const AccountCard = ({ account, submitAccount }) => {
     glow: account.accglow
   })
 
-  const handleSubmit = (e) => {
+  const handleSubmit = () => {
     submitAccount({
       account,
       cuba: cubanCheck.current

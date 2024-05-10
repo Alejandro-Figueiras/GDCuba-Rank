@@ -11,15 +11,22 @@ import { useState } from 'react'
 const ModalTemplate = ({
   isOpen,
   onOpenChange,
-  title,
+  title = '',
   action,
-  desc,
-  submit
+  desc = '',
+  submit = () => {}
+}: {
+  isOpen: boolean
+  onOpenChange: () => void
+  title?: string
+  action?: 'delete' | 'validate' | string
+  desc?: string
+  submit: () => Promise<void> | void
 }) => {
   const [isLoading, setIsLoading] = useState(false)
 
-  const onOpen = (e) => {
-    onOpenChange(e)
+  const onOpen = () => {
+    onOpenChange()
     setIsLoading(false)
   }
 
@@ -54,7 +61,7 @@ const ModalTemplate = ({
                 }
                 onPress={async (e) => {
                   setIsLoading(true)
-                  await submit(e)
+                  await submit()
 
                   setIsLoading(false)
                   onClose()
@@ -73,7 +80,7 @@ const ModalTemplate = ({
   )
 }
 
-const translate = (action) => {
+const translate = (action: string | undefined) => {
   switch (action) {
     case 'delete':
       return 'Funar'

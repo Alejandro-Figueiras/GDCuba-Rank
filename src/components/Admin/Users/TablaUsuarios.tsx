@@ -1,5 +1,6 @@
 'use client'
 import { AdminContext } from '@/app/context/AdminContext'
+import { type User } from '@/models/User'
 import { Chip } from '@nextui-org/chip'
 import {
   Table,
@@ -13,8 +14,15 @@ import {
 } from '@nextui-org/react'
 import { useContext } from 'react'
 
-const renderRoleOrStatus = (arg) => {
-  let color, texto
+const renderRoleOrStatus = (arg: string) => {
+  let color:
+      | 'default'
+      | 'success'
+      | 'secondary'
+      | 'warning'
+      | 'danger'
+      | undefined,
+    texto: string | undefined
   switch (arg) {
     case 'user':
       color = 'default'
@@ -44,16 +52,24 @@ const renderRoleOrStatus = (arg) => {
 
   return (
     <Chip size='sm' variant='flat' color={color}>
-      <span className='text-xs capitalize'>{texto}</span>
+      <span className='text-xs capitalize'>{texto ?? 'Desconocido'}</span>
     </Chip>
   )
 }
 
-export const getWhatsAppURL = (phone) => {
+export const getWhatsAppURL = (phone: string) => {
   return `http://wa.me/${phone}`
 }
 
-const TablaUsuarios = ({ usuarios, updateData, loading = false }) => {
+const TablaUsuarios = ({
+  usuarios,
+  updateData,
+  loading = false
+}: {
+  usuarios: User[]
+  updateData: () => void
+  loading?: boolean
+}) => {
   const { openUserGestorFor } = useContext(AdminContext)
   return (
     <>

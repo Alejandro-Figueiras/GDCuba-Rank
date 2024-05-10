@@ -3,9 +3,10 @@ import { getAllRecordsUserViewAction } from '@/actions/record/getAllRecordsUser'
 import RecordCard from '@/components/Records/RecordCard'
 import { useGDIcon } from '@/robtop/iconkit/useGDIcon'
 import { useState, useEffect } from 'react'
-import { Image, Divider } from '@nextui-org/react'
+import { Image } from '@nextui-org/react'
+import { type Record } from '@/models/Record'
 
-const sortAvalsPredicate = (a, b) => {
+const sortAvalsPredicate = (a: Record, b: Record) => {
   if (a.aval == -2 && b.aval != -2) return -1
   if (b.aval == -2 && a.aval != -2) return 1
   if (a.aval == 0 && b.aval != 0) return -1
@@ -15,7 +16,13 @@ const sortAvalsPredicate = (a, b) => {
   return 0
 }
 
-const DifficultySection = ({ title, records }) => {
+const DifficultySection = ({
+  title,
+  records
+}: {
+  title: string
+  records: Record[]
+}) => {
   return (
     <div className='mx-auto max-w-[1200px] text-center'>
       <h2 className='mt-4 text-xl'>{title}</h2>
@@ -28,8 +35,8 @@ const DifficultySection = ({ title, records }) => {
   )
 }
 
-const AccountRecordsPage = ({ params }) => {
-  const [records, setRecords] = useState([])
+const AccountRecordsPage = ({ params }: { params: { username: string } }) => {
+  const [records, setRecords] = useState([] as Record[])
   const [loading, setLoading] = useState(true)
   const { icon: iconAvatar } = useGDIcon({
     type: 'cube',
@@ -38,9 +45,9 @@ const AccountRecordsPage = ({ params }) => {
 
   useEffect(() => {
     setLoading(true)
-    getAllRecordsUserViewAction(params.username).then((records) => {
+    getAllRecordsUserViewAction(params.username).then((recordsStr) => {
       setLoading(false)
-      records = JSON.parse(records)
+      const records = JSON.parse(recordsStr) as Record[]
       console.log(records)
       setRecords(records)
     })

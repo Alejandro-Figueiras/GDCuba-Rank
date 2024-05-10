@@ -3,7 +3,7 @@
 import AccountView from '@/components/AccountManage/AccountView'
 import { useSesion } from '@/hooks/useSesion'
 
-const AccountPage = ({ params }) => {
+const AccountPage = ({ params }: { params: { username: string } }) => {
   const { currentUser } = useSesion()
 
   return (

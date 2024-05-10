@@ -1,7 +1,16 @@
 'use client'
 import { Button } from '@nextui-org/react'
+import { type ReactNode } from 'react'
 
-const TablaHeader = ({ title, buttons = [], children }) => {
+const TablaHeader = ({
+  title,
+  buttons = [],
+  children
+}: {
+  title: string
+  buttons?: { handleClick: () => void; text: string }[]
+  children?: ReactNode
+}) => {
   return (
     <div className='px-8 py-4'>
       <div className='flex flex-col items-center pb-4 sm:flex-row sm:justify-between'>

@@ -10,10 +10,10 @@ import {
   Button,
   Input
 } from '@nextui-org/react'
-import RescoreTable from './ReescoreTable'
 import { reposicionarLevelAction } from '@/actions/admin/recordLevelsAction'
 import { notify } from '@/libs/toastNotifications'
 import RecordCard from '@/components/Records/RecordCard'
+import { type RecordLevel } from '@/models/Record'
 
 const NivelesRescoreModal = ({
   isOpen,
@@ -21,6 +21,12 @@ const NivelesRescoreModal = ({
   level,
   levels,
   handleRefresh
+}: {
+  isOpen: boolean
+  onOpenChange: () => void
+  level: RecordLevel
+  levels: RecordLevel[]
+  handleRefresh?: () => void
 }) => {
   const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(true)
@@ -33,18 +39,18 @@ const NivelesRescoreModal = ({
   }
   useEffect(clear, [isOpen, level.difficultyscore])
 
-  const getMaxDifficultyScore = (levels) => {
+  const getMaxDifficultyScore = (levels: RecordLevel[]) => {
     return Math.max(...levels.map((level) => level.difficultyscore))
   }
 
-  const handleSubmit = async (onClose) => {
+  const handleSubmit = async (onClose: () => void) => {
     setLoading(true)
 
     const result = await reposicionarLevelAction({
       levelid: level.levelid,
       oldScore: level.difficultyscore,
       newScore: scoreRequested,
-      platformer: level.platformer
+      platformer: !!level.platformer
     })
     if (result > 0) {
       notify(`Nivel reposicionado correctamente.`, 'success')
@@ -63,7 +69,7 @@ const NivelesRescoreModal = ({
       scoreRequested == level.difficultyscore ||
       scoreRequested >
         getMaxDifficultyScore(levels) + (level.difficultyscore == 0 ? 1 : 0) ||
-      !Number.isInteger(parseFloat(scoreRequested))
+      !Number.isInteger(scoreRequested)
     ) {
       setDisabled(true)
     }
@@ -72,7 +78,7 @@ const NivelesRescoreModal = ({
       scoreRequested != level.difficultyscore &&
       scoreRequested <=
         getMaxDifficultyScore(levels) + (level.difficultyscore == 0 ? 1 : 0) &&
-      Number.isInteger(parseFloat(scoreRequested))
+      Number.isInteger(scoreRequested)
     ) {
       setDisabled(false)
     }
@@ -94,8 +100,8 @@ const NivelesRescoreModal = ({
                 size='sm'
                 min={1}
                 max={getMaxDifficultyScore(levels) + 1}
-                defaultValue={level.difficultyscore}
-                onValueChange={(value) => setScoreRequested(value)}
+                defaultValue={level.difficultyscore.toString()}
+                onValueChange={(value) => setScoreRequested(parseFloat(value))}
                 label='Score'
               />
               <div className='flex flex-row justify-center'>

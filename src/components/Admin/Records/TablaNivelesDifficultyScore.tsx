@@ -17,14 +17,19 @@ import {
 } from '@nextui-org/react'
 import { useState } from 'react'
 import NivelesRescoreModal from './NivelesRescoreModal'
+import { type RecordLevel } from '@/models/Record'
 
 const TablaNivelesDifficultyScore = ({
   levels: unsortedLevels,
   handleRefresh,
   loading = false
+}: {
+  levels: RecordLevel[]
+  handleRefresh?: () => void
+  loading?: boolean
 }) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
-  const [selectedLevel, setSelectedLevel] = useState({})
+  const [selectedLevel, setSelectedLevel] = useState({} as RecordLevel)
 
   const levels = [...unsortedLevels].sort((a, b) => {
     if (a.difficultyscore == b.difficultyscore) return 0
@@ -33,7 +38,7 @@ const TablaNivelesDifficultyScore = ({
     return b.difficultyscore - a.difficultyscore
   })
 
-  const handleRescore = (level) => {
+  const handleRescore = (level: RecordLevel) => {
     setSelectedLevel(level)
     onOpen()
   }
@@ -44,7 +49,6 @@ const TablaNivelesDifficultyScore = ({
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         level={selectedLevel}
-        setLevel={setSelectedLevel}
         levels={levels}
         handleRefresh={handleRefresh}
       />

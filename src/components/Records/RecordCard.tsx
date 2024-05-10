@@ -5,14 +5,16 @@ import {
   getDifficultyPath
 } from '@/helpers/levelParser'
 import YouTubeIcon from '../Icons/YouTubeIcon'
-import { type Record } from '@/models/Record'
+import { RecordLevel, type Record } from '@/models/Record'
 
 const RecordCard = ({
   record,
   className = '',
   mini = false
 }: {
-  record: Record
+  record:
+    | Record
+    | (RecordLevel & { aval: number; video?: string; percent?: number })
   className?: string
   mini?: boolean
 }) => {

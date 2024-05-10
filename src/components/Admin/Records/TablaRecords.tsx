@@ -19,11 +19,20 @@ import { removeRecord } from '@/actions/admin/changeRecord'
 import { useContext } from 'react'
 import { ModalContext } from '@/app/context/ModalContext'
 import { notify } from '@/libs/toastNotifications'
+import { type Record } from '@/models/Record'
 
-const TablaRecords = ({ records, updateRecords, loading = false }) => {
+const TablaRecords = ({
+  records,
+  updateRecords,
+  loading = false
+}: {
+  records: Record[]
+  updateRecords: () => void
+  loading?: boolean
+}) => {
   const { openModal } = useContext(ModalContext)
 
-  const handleDelete = async (record) => {
+  const handleDelete = async (record: Record) => {
     openModal({
       title: `Eliminar Record #${record.id}`,
       desc: `¿Seguro que quieres eliminar este Record`,

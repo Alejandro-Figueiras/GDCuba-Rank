@@ -25,9 +25,9 @@ const AccountStuff = ({
   manage = false
 }: {
   account: Account
-  setAccount?: Dispatch<SetStateAction<Account>>
-  stuffItems: StuffItem[]
-  setStuffItems?: Dispatch<SetStateAction<StuffItem[]>>
+  setAccount?: Dispatch<SetStateAction<Account | undefined>>
+  stuffItems?: StuffItem[]
+  setStuffItems?: Dispatch<SetStateAction<StuffItem[] | undefined>>
   loadAccount?: () => Promise<void>
   manage?: boolean
 }) => {

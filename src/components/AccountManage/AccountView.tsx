@@ -16,22 +16,37 @@ import AccountStuff from './AccountStuff'
 import { getStuffItemsAction } from '@/actions/accounts/stuffActions'
 import RecordsLinkButton from '../Records/RecordsLinkButton'
 import { useRouter } from 'next/navigation'
-export default function AccountView({ manage = false, username }) {
+import { type Account } from '@/models/Account'
+import StuffItem from '@/models/StuffItem'
+export default function AccountView({
+  manage = false,
+  username
+}: {
+  manage?: boolean
+  username: string
+}) {
   const { icon: iconAvatar } = useGDIcon({
     type: 'cube',
     username: username
   })
 
-  const [account, setAccount] = useState(undefined)
-  const [accountStuff, setAccountStuff] = useState(undefined)
+  const [account, setAccount] = useState(undefined as undefined | Account)
+  const [accountStuff, setAccountStuff] = useState(
+    undefined as undefined | StuffItem[]
+  )
   const router = useRouter()
 
   const loadAccount = useCallback(async () => {
     try {
-      const account = JSON.parse(await getAccountAction({ username: username }))
+      const accountResponse = await getAccountAction({ username: username })
+      if (!accountResponse) {
+        router.push('/')
+        return
+      }
+      const account: Account = JSON.parse(accountResponse) as Account
       const stuff = JSON.parse(
         await getStuffItemsAction({ accountid: account.accountid })
-      )
+      ) as StuffItem[]
       setAccount(account)
       setAccountStuff(stuff)
     } catch {

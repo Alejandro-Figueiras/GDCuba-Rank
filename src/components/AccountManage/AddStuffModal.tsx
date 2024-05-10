@@ -40,9 +40,9 @@ const AddStuffModal = ({
   isOpen: boolean
   onOpenChange: () => void
   account: Account
-  setAccount: Dispatch<SetStateAction<Account>>
+  setAccount: Dispatch<SetStateAction<Account | undefined>>
   stuffItems: StuffItem[]
-  setStuffItems: Dispatch<SetStateAction<StuffItem[]>>
+  setStuffItems: Dispatch<SetStateAction<StuffItem[] | undefined>>
 }) => {
   const { currentUser } = useSesion()
   const [loading, setLoading] = useState(false)
@@ -92,7 +92,7 @@ const AddStuffModal = ({
         id,
         ...item
       }
-      setStuffItems((items) => [...items, newItem])
+      setStuffItems((items) => [...(items ?? []), newItem])
       console.log(newAcc)
       console.log(newAcc)
       setAccount(newAcc)

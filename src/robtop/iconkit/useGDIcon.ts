@@ -136,7 +136,7 @@ export const useGDIconRef = ({
       }
       setLoading(false)
     }
-    queueMicrotask(logic)
+    setTimeout(logic)
   }, [c1, c2, c3, glow, iconNumber, type, username])
 
   return { icon: finalImage, loading }
@@ -175,9 +175,10 @@ export const useGDIcon = ({
         hostURL,
         username
       })
+      console.log(img)
       if (img) setIcon(img)
     }
-    queueMicrotask(logic)
+    setTimeout(logic)
   }, [type, iconNumber, c1, c2, c3, glow, username])
 
   return { icon: iconSrc }

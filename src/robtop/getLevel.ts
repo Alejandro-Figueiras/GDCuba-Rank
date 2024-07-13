@@ -55,7 +55,7 @@ export const getLevelByID = async (id: number) => {
 /**
  * Hace una request a los servidores de robtop buscando la query, y devuelve un objeto (consultar [documentación web](http://localhost:9508/#/robtop/getLevel)) con los resultados
  *
- * Si no hay resultados, devuelve -1
+ * Si no hay resultados, devuelve []
  */
 export const getLevels = async (query: string) => {
   try {
@@ -64,10 +64,12 @@ export const getLevels = async (query: string) => {
       gdw: '0',
       str: query
     })
+    if (body == '-1') return []
     const response = parseResponse(body)
+
     return response
   } catch (err) {
     console.log(err)
-    return -1
+    return []
   }
 }

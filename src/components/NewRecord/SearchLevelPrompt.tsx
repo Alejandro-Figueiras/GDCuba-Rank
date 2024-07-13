@@ -10,10 +10,12 @@ import type Level from '@/models/Level'
 
 const SearchLevelPrompt = ({
   setNiveles = () => {},
-  setNewLevel = () => {}
+  setNewLevel = () => {},
+  setEmpty = () => {}
 }: {
   setNiveles: (newVal: Level[]) => void
   setNewLevel: (newVal: Level | undefined) => void
+  setEmpty: (newVal: boolean) => void
 }) => {
   const inputRef = useRef() as MutableRefObject<HTMLInputElement>
 
@@ -24,10 +26,12 @@ const SearchLevelPrompt = ({
     if (isNumeric(query)) {
       const newLevel = JSON.parse(
         await getLevelByIDAction({ id: parseInt(query) })
-      )
-      setNiveles([newLevel])
+      ) as Level | -1
+      setEmpty(newLevel == -1)
+      setNiveles(newLevel != -1 ? [newLevel as Level] : [])
     } else {
-      const levels = JSON.parse(await getLevelsAction({ query }))
+      const levels = JSON.parse(await getLevelsAction({ query })) as Level[]
+      setEmpty(!levels.length)
       setNiveles(levels)
     }
   }

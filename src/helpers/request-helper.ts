@@ -21,10 +21,11 @@ export const gdRequest = async (target: string, params: {}) => {
         'User-Agent': ''
       }
     })
-    const body: string = response.data
+    const body: string | -1 = response.data
     let error: { serverError: boolean; response: string } | null = null
-    if (body == '-1') error = { serverError: true, response: body }
-    if (
+    if (body == '-1' || body == -1)
+      error = { serverError: true, response: body.toString() }
+    else if (
       !body ||
       body.match(/^-\d$/) ||
       body.startsWith('error') ||
@@ -37,7 +38,7 @@ export const gdRequest = async (target: string, params: {}) => {
       console.log(error)
       throw error
     }
-    return body
+    return body.toString()
   } catch (error) {
     console.log(error)
     throw error

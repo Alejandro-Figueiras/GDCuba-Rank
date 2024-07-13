@@ -3,20 +3,23 @@ import { getAllLevelsByDifficultyAction } from '@/actions/admin/recordLevelsActi
 import { useEffect, useState } from 'react'
 import TablaNivelesDifficultyScore from '@/components/Admin/Records/TablaNivelesDifficultyScore'
 import TablaHeader from '@/components/Admin/TablaHeader'
+import { RecordLevel, type Record } from '@/models/Record'
+import DictionaryObject from '@/helpers/DictionaryObject'
 
 const LevelsDificulty = () => {
-  const [levels, setLevels] = useState({})
+  const [levels, setLevels] = useState({} as DictionaryObject<RecordLevel>)
   const [loading, setLoading] = useState(true)
 
   const updateLevels = () => {
     setLoading(true)
     getAllLevelsByDifficultyAction({ difficulty: 15 }).then((response) => {
       console.log(response)
-      const records = JSON.parse(response)
+      if (!response) return updateLevels()
+      const records = JSON.parse(response) as Record[]
       console.log(records)
-      const newLevels = {}
+      const newLevels = {} as DictionaryObject<RecordLevel>
       for (const record of records) {
-        const level = {
+        const level: RecordLevel = {
           levelid: record.levelid,
           levelname: record.levelname,
           featured: record.featured,

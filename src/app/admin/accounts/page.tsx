@@ -5,16 +5,18 @@ import { useEffect, useState } from 'react'
 import { useDisclosure } from '@nextui-org/react'
 import AddAccount from '../../../components/Admin/Accounts/AddAccount'
 import TablaHeader from '@/components/Admin/TablaHeader'
+import { type Account } from '@/models/Account'
 
 const AdminAccountsPage = () => {
-  const [accounts, setAccounts] = useState([])
+  const [accounts, setAccounts] = useState([] as Account[])
   const [loading, setLoading] = useState(true)
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
 
   const updateAccounts = () => {
     setLoading(true)
-    getAllAccountsAction().then((response) => {
-      const newData = JSON.parse(response)
+    getAllAccountsAction().then((response: string | undefined) => {
+      if (!response) return updateAccounts()
+      const newData = JSON.parse(response) as Account[]
       newData.sort((a, b) => b.id - a.id)
       console.log(newData)
       setAccounts(newData)
@@ -48,12 +50,7 @@ const AdminAccountsPage = () => {
           loading={loading}
         />
       </TablaHeader>
-      <AddAccount
-        isOpen={isOpen}
-        onOpen={onOpen}
-        onOpenChange={onOpenChange}
-        onClose={onClose}
-      />
+      <AddAccount isOpen={isOpen} onClose={onClose} />
     </>
   )
 }

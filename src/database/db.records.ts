@@ -174,13 +174,13 @@ export const reposicionarNivel = async (
   noStore()
   if (oldScore == 0) {
     const updateRowsResult =
-      await sql`UPDATE records SET difficultyscore = difficultyscore + 1 WHERE platformer = ${platformer} AND difficultyscore >= ${newScore}`
+      await sql`UPDATE records SET difficultyscore = difficultyscore + 1 WHERE platformer = ${platformer ? 1 : 0} AND difficultyscore >= ${newScore}`
   } else if (oldScore < newScore) {
     const updateRowsResult =
-      await sql`UPDATE records SET difficultyscore = difficultyscore - 1 WHERE platformer = ${platformer} AND difficultyscore > ${oldScore} AND difficultyscore <= ${newScore}`
+      await sql`UPDATE records SET difficultyscore = difficultyscore - 1 WHERE platformer = ${platformer ? 1 : 0} AND difficultyscore > ${oldScore} AND difficultyscore <= ${newScore}`
   } else {
     const updateRowsResult =
-      await sql`UPDATE records SET difficultyscore = difficultyscore + 1 WHERE platformer = ${platformer} AND difficultyscore < ${oldScore} AND difficultyscore >= ${newScore}`
+      await sql`UPDATE records SET difficultyscore = difficultyscore + 1 WHERE platformer = ${platformer ? 1 : 0} AND difficultyscore < ${oldScore} AND difficultyscore >= ${newScore}`
   }
   const updateLevel =
     await sql`UPDATE records SET difficultyscore = ${newScore} WHERE levelid = ${levelid}`

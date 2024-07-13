@@ -11,6 +11,7 @@ const SearchLevel = ({
   setNewLevel: (newVal: Level | undefined) => void
 }) => {
   const [niveles, setNiveles] = useState([] as Level[])
+  const [empty, setEmpty] = useState(false)
 
   const handleSelect: (level: Level) => MouseEventHandler<HTMLButtonElement> = (
     level
@@ -24,13 +25,18 @@ const SearchLevel = ({
   return (
     <>
       <div className='w-100'>
-        <SearchLevelPrompt setNiveles={setNiveles} setNewLevel={setNewLevel} />
+        <SearchLevelPrompt
+          setNiveles={setNiveles}
+          setNewLevel={setNewLevel}
+          setEmpty={setEmpty}
+        />
         <div className='mx-auto mt-6 grid grid-cols-1 justify-items-center gap-2'>
           {niveles.slice(0, 5).map((level, i) => (
             <button onClick={handleSelect(level)} key={i} className={`w-full`}>
               <LevelCardTiny level={level} hover={true} />
             </button>
           ))}
+          {empty && 'No se encontraron resultados'}
         </div>
       </div>
     </>

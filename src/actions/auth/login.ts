@@ -47,8 +47,8 @@ export const login = async ({
       }
 
       const token = jwt.sign(payload, process.env.JWT_SECRET as string)
-
-      cookies().set(COOKIES_INFO.name, token, {
+      const cookieStore = await cookies()
+      cookieStore.set(COOKIES_INFO.name, token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production', // Esto es para solo permitir su uso con protocolo ssl
         sameSite: 'strict', // Permitir solo cuando se genere en un mismo dominio

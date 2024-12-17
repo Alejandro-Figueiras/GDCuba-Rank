@@ -6,7 +6,8 @@ import { jwtVerify } from 'jose'
 // This function can be marked `async` if using `await` inside
 
 export async function middleware(request: NextRequest) {
-  const cookie = cookies().get(COOKIES_INFO.name)
+  const cookieStore = await cookies()
+  const cookie = cookieStore.get(COOKIES_INFO.name)
   const cookieData = cookie ? cookie.value : undefined
   let access = false
   try {

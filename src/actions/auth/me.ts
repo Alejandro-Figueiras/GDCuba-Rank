@@ -15,7 +15,8 @@ export interface AuthMeResult extends CookiePayload {
 export const authMe = async ({
   forceRevalidate = false
 }: { forceRevalidate?: boolean } = {}) => {
-  const cookie = cookies().get(COOKIES_INFO.name)
+  const cookieStore = await cookies()
+  const cookie = cookieStore.get(COOKIES_INFO.name)
 
   if (cookie) {
     try {
@@ -83,7 +84,8 @@ const revalidateToken = async (
     },
     process.env.JWT_SECRET as string
   )
-  cookies().set(COOKIES_INFO.name, token, {
+  const cookieStore = await cookies()
+  cookieStore.set(COOKIES_INFO.name, token, {
     httpOnly: true, // esto es algo de privadicad pero no recuerdo que
     secure: process.env.NODE_ENV === 'production', // Esto es para solo permitir su uso con protocolo ssl
     sameSite: 'strict', // Permitir solo cuando se genere en un mismo dominio

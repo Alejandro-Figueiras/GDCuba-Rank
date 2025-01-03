@@ -1,5 +1,5 @@
 'use client'
-import { Card, CardBody, Image, Link } from '@nextui-org/react'
+import { Card, CardBody, Image } from '@nextui-org/react'
 import { parseDifficulty } from '@/helpers/levelParser'
 import type Level from '@/models/Level'
 

@@ -66,12 +66,14 @@ const StuffItemTitle = ({
     )
   }
   if (!accStuff.endsWith(id.toString())) {
-    ;<DropdownItem
-      key={`stuff_${id}_moveDownDropdownItem`}
-      onPress={() => handleMove(true)}
-    >
-      Bajar
-    </DropdownItem>
+    dynamicItems.push(
+      <DropdownItem
+        key={`stuff_${id}_moveDownDropdownItem`}
+        onPress={() => handleMove(true)}
+      >
+        Bajar
+      </DropdownItem>
+    )
   }
   dynamicItems.push(
     <DropdownItem
@@ -80,6 +82,7 @@ const StuffItemTitle = ({
       onPress={() => {
         if (handlers?.handleDelete) handlers.handleDelete(id)
       }}
+      key={`stuff_${id}_deleteDropdownItem`}
     >
       Eliminar
     </DropdownItem>

@@ -41,9 +41,9 @@ const TablaRecords = ({
         const result = await removeRecord({ id: record.id })
 
         if (result) {
-          const success = notify(`Record #${record.id} eliminado`, 'success')
+          notify(`Record #${record.id} eliminado`, 'success')
         } else {
-          const error = notify(`Error al eliminar a ${record.id}`, 'error')
+          notify(`Error al eliminar a ${record.id}`, 'error')
         }
         updateRecords()
       }
@@ -112,7 +112,7 @@ const TablaRecords = ({
                   <Button
                     size='sm'
                     color='danger'
-                    onClick={(e) => handleDelete(record)}
+                    onPress={() => handleDelete(record)}
                   >
                     Eliminar
                   </Button>

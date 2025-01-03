@@ -23,7 +23,6 @@ import { removeUserAction } from '@/actions/admin/removeUserAction'
 import { useSesion } from '@/hooks/useSesion'
 import { changeUserRoleAction } from '@/actions/admin/changeUserRoleAction'
 import { type UserInCheck } from '@/app/context/AdminContext'
-import { type PressEvent } from '@react-types/shared'
 import { type Account } from '@/models/Account'
 import { type User } from '@/models/User'
 
@@ -97,16 +96,10 @@ export default function UserModalPanel({
         )
 
         if (result) {
-          const success = notify(
-            `Usuario ${userInfo?.user.username} eliminado`,
-            'success'
-          )
+          notify(`Usuario ${userInfo?.user.username} eliminado`, 'success')
           onClose()
         } else {
-          const error = notify(
-            `Error al eliminar a ${userInfo?.user.username}`,
-            'error'
-          )
+          notify(`Error al eliminar a ${userInfo?.user.username}`, 'error')
           onClose()
         }
 
@@ -116,7 +109,7 @@ export default function UserModalPanel({
     })
   }
 
-  const handleUpdate = async (e: PressEvent) => {
+  const handleUpdate = async () => {
     if (!userInfo?.user) return
     for (const change of changes) {
       if (change == 'status') {
@@ -196,9 +189,9 @@ export default function UserModalPanel({
                 <ModalFooter>
                   <Button
                     color='primary'
-                    onPress={async (e) => {
+                    onPress={async () => {
                       setLoadingExtra(true)
-                      await handleUpdate(e)
+                      await handleUpdate()
                       onClose()
                     }}
                     isDisabled={changes.length == 0}

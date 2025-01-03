@@ -105,7 +105,7 @@ export const updateAccountCloud = async (id: number, username: string) => {
     console.log('ERROR en updateAccount, getAccountByID devuelve -1')
     return
   }
-  const result = await sql`UPDATE gdaccounts SET
+  await sql`UPDATE gdaccounts SET
     username = ${account.username},
     userid = ${account.userid},
 

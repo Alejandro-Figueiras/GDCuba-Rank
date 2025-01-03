@@ -79,7 +79,7 @@ const TablaAccounts = ({
                   <Button
                     size='sm'
                     color='danger'
-                    onClick={(e) => handleDelete(acc)}
+                    onPress={() => handleDelete(acc)}
                   >
                     Eliminar
                   </Button>

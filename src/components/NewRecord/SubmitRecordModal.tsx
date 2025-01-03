@@ -9,8 +9,7 @@ import {
   Slider,
   Select,
   SelectItem,
-  Spinner,
-  SelectSection
+  Spinner
 } from '@nextui-org/react'
 import React, { useEffect, useState, useRef, MutableRefObject } from 'react'
 import SearchLevel from '@/components/NewRecord/SearchLevel'

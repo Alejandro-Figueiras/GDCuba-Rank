@@ -23,7 +23,7 @@ export default function AccountView({
   username
 }: {
   manage?: boolean
-  username: string
+  username: string | undefined
 }) {
   const { icon: iconAvatar } = useGDIcon({
     type: 'cube',
@@ -38,6 +38,7 @@ export default function AccountView({
 
   const loadAccount = useCallback(async () => {
     try {
+      if (!username) return
       const accountResponse = await getAccountAction({ username: username })
       if (!accountResponse) {
         router.push('/')
@@ -63,14 +64,14 @@ export default function AccountView({
     <>
       <Card className='w-[800px] max-w-[1000px]'>
         <CardHeader className='flex justify-between'>
-          <div className='flex flex-row gap-3 '>
+          <div className='flex flex-row gap-3'>
             <Image alt='Cube' radius='none' src={iconAvatar} width={40} />
             <div className='flex flex-col justify-center'>
               <p className='text-2xl'>{username}</p>
             </div>
           </div>
           <div className='flex'>
-            <RecordsLinkButton username={username} mini={true} />
+            {username && <RecordsLinkButton username={username} mini={true} />}
           </div>
         </CardHeader>
         <Divider />

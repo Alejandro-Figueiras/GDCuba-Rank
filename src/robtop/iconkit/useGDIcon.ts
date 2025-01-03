@@ -159,7 +159,7 @@ export const useGDIcon = ({
   glow?: boolean | number
   username?: string | null
 }) => {
-  const [iconSrc, setIcon] = useState('')
+  const [iconSrc, setIcon] = useState<string | undefined>(undefined)
 
   useEffect(() => {
     const currentUrl = window.location.href

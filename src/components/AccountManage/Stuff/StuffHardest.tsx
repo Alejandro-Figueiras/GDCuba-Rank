@@ -33,6 +33,7 @@ const StuffHardest = ({
         setLevels(JSON.parse(response))
       })
       .catch((err) => {
+        console.log(err)
         setLoadingError('Error al cargar los hardest')
       })
       .finally(() => {

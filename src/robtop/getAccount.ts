@@ -16,6 +16,7 @@ export const getAccountByID = async (targetAccountID: number) => {
     })
     return new RobTopAccount(responseToObj(body, ':'), new Date().getTime())
   } catch (err) {
+    console.log(err)
     return -1
   }
 }
@@ -30,9 +31,10 @@ export const getAccountByID = async (targetAccountID: number) => {
 export const getAccount = async (target: string) => {
   try {
     const body = await gdRequest('getGJUsers20', { str: target })
-    let accountid = parseInt(responseToObj(body, ':')[16]) // AccountID
+    const accountid = parseInt(responseToObj(body, ':')[16]) // AccountID
     return await getAccountByID(accountid)
   } catch (err) {
+    console.log(err)
     return -1
   }
 }

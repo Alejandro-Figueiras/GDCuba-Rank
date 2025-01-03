@@ -11,7 +11,7 @@ const makeParams = (params: DictionaryObject<string> = {}) => {
   return res
 }
 
-export const gdRequest = async (target: string, params: {}) => {
+export const gdRequest = async (target: string, params: any) => {
   try {
     const response = await axios({
       url: `${config.endpoint + target}.php`,

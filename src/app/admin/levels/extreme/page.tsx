@@ -40,6 +40,7 @@ const LevelsDificulty = () => {
     })
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(updateLevels, [])
 
   return (

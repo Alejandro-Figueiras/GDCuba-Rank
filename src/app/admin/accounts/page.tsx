@@ -10,7 +10,7 @@ import { type Account } from '@/models/Account'
 const AdminAccountsPage = () => {
   const [accounts, setAccounts] = useState([] as Account[])
   const [loading, setLoading] = useState(true)
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   const updateAccounts = () => {
     setLoading(true)
@@ -28,6 +28,7 @@ const AdminAccountsPage = () => {
     onOpen()
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(updateAccounts, [])
   return (
     <>

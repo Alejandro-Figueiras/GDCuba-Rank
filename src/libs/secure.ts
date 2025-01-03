@@ -9,7 +9,7 @@ export const authorize = async ({ owner = false } = {}): Promise<{
   role: string
   can: boolean
 }> => {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const cookie = cookieStore.get(COOKIES_INFO.name)
   let user: User | undefined
   try {

@@ -28,6 +28,7 @@ const AdminAccountsPage = () => {
     onOpen()
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(updateAccounts, [])
   return (
     <>

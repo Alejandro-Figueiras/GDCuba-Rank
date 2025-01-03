@@ -35,23 +35,32 @@ const DifficultySection = ({
   )
 }
 
-const AccountRecordsPage = ({ params }: { params: { username: string } }) => {
+const AccountRecordsPage = ({
+  params
+}: {
+  params: Promise<{ username: string }>
+}) => {
   const [records, setRecords] = useState([] as Record[])
   const [loading, setLoading] = useState(true)
+  const [username, setUsername] = useState<string | undefined>(undefined)
   const { icon: iconAvatar } = useGDIcon({
     type: 'cube',
-    username: params.username
+    username: username
   })
 
   useEffect(() => {
+    params.then((params) => setUsername(params.username))
+  }, [params])
+  useEffect(() => {
     setLoading(true)
-    getAllRecordsUserViewAction(params.username).then((recordsStr) => {
-      setLoading(false)
-      const records = JSON.parse(recordsStr) as Record[]
-      console.log(records)
-      setRecords(records)
-    })
-  }, [params.username])
+    if (username)
+      getAllRecordsUserViewAction(username).then((recordsStr) => {
+        setLoading(false)
+        const records = JSON.parse(recordsStr) as Record[]
+        console.log(records)
+        setRecords(records)
+      })
+  }, [username])
 
   const extremes = records
     .filter((val) => val.difficulty == 15)
@@ -85,12 +94,12 @@ const AccountRecordsPage = ({ params }: { params: { username: string } }) => {
     <div className='container mx-auto'>
       <div className='my-6 flex flex-row justify-center'>
         <a
-          href={`/account/${params.username}`}
+          href={`/account/${username}`}
           className='flex gap-3 hover:text-default-700'
         >
           <Image alt='Cube' radius='none' src={iconAvatar} width={40} />
           <div className='flex flex-col justify-center'>
-            <p className='text-2xl'>{params.username}</p>
+            <p className='text-2xl'>{username}</p>
           </div>
         </a>
       </div>

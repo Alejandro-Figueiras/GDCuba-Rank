@@ -50,11 +50,8 @@ const UserDropdown = ({
   })
 
   // Submit Record
-  const {
-    isOpen: isOpenSubmitRecord,
-    onOpenChange: onOpenChangeSubmitRecord,
-    onOpen: onOpenSubmitRecord
-  } = useDisclosure()
+  const { isOpen: isOpenSubmitRecord, onOpenChange: onOpenChangeSubmitRecord } =
+    useDisclosure()
 
   // #region Items
   const items = [

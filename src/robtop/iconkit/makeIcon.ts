@@ -60,7 +60,7 @@ const printSprites = async (spritesToPrint: SpritesToPrint) => {
     height: Math.ceil(mainSprite.height)
   })
   app.renderer.render(mainSprite)
-  let data = app.canvas.toDataURL()
+  const data = app.canvas.toDataURL()
   const img = (' ' + data).slice(1)
   app.destroy(true, true)
   mainSprite.destroy()
@@ -97,7 +97,7 @@ export const makeIcon = ({
     c3 = 12
   }
 
-  return new Promise(async (resolve, reject) => {
+  return new Promise(async (resolve) => {
     const { textures, spritesInfo, layerNames } = await getIconTextures({
       type,
       iconNumber,

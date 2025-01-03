@@ -19,7 +19,7 @@ const SearchLevelPrompt = ({
 }) => {
   const inputRef = useRef() as MutableRefObject<HTMLInputElement>
 
-  const handleSearch: MouseEventHandler<HTMLButtonElement> = async (e) => {
+  const handleSearch: MouseEventHandler<HTMLButtonElement> = async () => {
     setNewLevel(undefined)
     const query = inputRef.current.value
 

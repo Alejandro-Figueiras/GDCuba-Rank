@@ -33,16 +33,13 @@ const CubanCheckbox = ({
         })
 
         if (result) {
-          const success = notify(
+          notify(
             `Cambiado ${acc.username}: Cubano ${value ? 'checked' : 'unchecked'}`,
             'success'
           )
           setValue(value)
         } else {
-          const error = notify(
-            `Error al cambiar la nacionalidad de ${acc.username}`,
-            'error'
-          )
+          notify(`Error al cambiar la nacionalidad de ${acc.username}`, 'error')
         }
 
         updateData()

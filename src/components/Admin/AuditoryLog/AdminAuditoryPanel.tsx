@@ -1,7 +1,7 @@
 'use client'
 import { getLogsAction } from '@/actions/admin/auditorylogActions'
 import TablaHeader from '@/components/Admin/TablaHeader'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Spinner, Pagination } from '@nextui-org/react'
 import type LogMessage from '@/models/LogMessage'
 

@@ -91,7 +91,7 @@ const TablaUsuarios = ({
           emptyContent={loading ? null : 'No hay usuarios para mostrar'}
         >
           {usuarios &&
-            usuarios.map((user, i) => (
+            usuarios.map((user) => (
               <TableRow
                 key={user.id}
                 className='cursor-pointer duration-75 hover:bg-zinc-700'

@@ -4,15 +4,17 @@ import { SidebarMenu } from './SidebarMenu'
 import { SidebarItem } from './SidebarItem'
 import HomeIcon from '@/components/Icons/HomeIcon'
 import AccountsIcon from '@/components/Icons/AccountsIcon'
-import ReportsIcon from '@/components/Icons/ReportsIcon'
 import SettingsIcon from '@/components/Icons/SettingsIcon'
-import ChangelogIcon from '@/components/Icons/ChangelogIcon'
 import { usePathname } from 'next/navigation'
-import DatabaseIcon from '@/components/Icons/DatabaseIcon'
-import NewIcon from '@/components/Icons/NewIcon'
-import TestTubeIcon from '@/components/Icons/TestTubeIcon'
 import CheckIcon from '@/components/Icons/CheckIcon'
 import LevelSliderIcon from '@/components/Icons/LevelSliderIcon'
+
+// ---- ICONOS PARA POSIBLES USOS -----
+// import ReportsIcon from '@/components/Icons/ReportsIcon'
+// import ChangelogIcon from '@/components/Icons/ChangelogIcon'
+// import DatabaseIcon from '@/components/Icons/DatabaseIcon'
+// import NewIcon from '@/components/Icons/NewIcon'
+// import TestTubeIcon from '@/components/Icons/TestTubeIcon'
 
 const SidebarMain = () => {
   const { collapsed, setCollapsed } = useSidebarContext()

@@ -13,7 +13,7 @@ export const SidebarItem = ({
   isActive: boolean
   href?: string
 }) => {
-  const { collapsed, setCollapsed } = useSidebarContext()
+  const { setCollapsed } = useSidebarContext()
 
   const handleClick = () => {
     if (window.innerWidth < 768) {

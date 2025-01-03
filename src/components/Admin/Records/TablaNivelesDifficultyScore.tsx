@@ -100,7 +100,7 @@ const TablaNivelesDifficultyScore = ({
                   <Button
                     size='sm'
                     color='default'
-                    onClick={(e) => handleRescore(level)}
+                    onPress={() => handleRescore(level)}
                   >
                     Reposicionar
                   </Button>

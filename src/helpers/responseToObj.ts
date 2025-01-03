@@ -5,7 +5,7 @@ export interface RobTopDictionary {
 const responseToObj = (str = '', separador = ':') => {
   const data = str.split('#')[0].split(separador)
 
-  let res: RobTopDictionary = {}
+  const res: RobTopDictionary = {}
   for (let i = 0; i < data.length; i += 2) {
     res[data[i]] = data[i + 1]
   }

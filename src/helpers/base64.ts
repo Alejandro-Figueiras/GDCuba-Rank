@@ -4,16 +4,16 @@ const characters =
 export const decryptBase64 = (input: string) => {
   let output = ''
 
-  var i = 0
+  let i = 0
   do {
-    let b1 = characters.indexOf(input.charAt(i++))
-    let b2 = characters.indexOf(input.charAt(i++))
-    let b3 = characters.indexOf(input.charAt(i++))
-    let b4 = characters.indexOf(input.charAt(i++))
+    const b1 = characters.indexOf(input.charAt(i++))
+    const b2 = characters.indexOf(input.charAt(i++))
+    const b3 = characters.indexOf(input.charAt(i++))
+    const b4 = characters.indexOf(input.charAt(i++))
 
-    let a = ((b1 & 0x3f) << 2) | ((b2 >> 4) & 0x3)
-    let b = ((b2 & 0xf) << 4) | ((b3 >> 2) & 0xf)
-    let c = ((b3 & 0x3) << 6) | (b4 & 0x3f)
+    const a = ((b1 & 0x3f) << 2) | ((b2 >> 4) & 0x3)
+    const b = ((b2 & 0xf) << 4) | ((b3 >> 2) & 0xf)
+    const c = ((b3 & 0x3) << 6) | (b4 & 0x3f)
 
     output +=
       String.fromCharCode(a) +
@@ -37,8 +37,8 @@ export const cryptBase64 = (input: string) => {
     b = b ? b : 0
     c = c ? c : 0
 
-    let b1 = (a >> 2) & 0x3f
-    let b2 = ((a & 0x3) << 4) | ((b >> 4) & 0xf)
+    const b1 = (a >> 2) & 0x3f
+    const b2 = ((a & 0x3) << 4) | ((b >> 4) & 0xf)
     let b3 = ((b & 0xf) << 2) | ((c >> 6) & 0x3)
     let b4 = c & 0x3f
 

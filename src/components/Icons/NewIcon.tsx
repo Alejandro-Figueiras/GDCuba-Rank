@@ -1,5 +1,4 @@
 const NewIcon = ({
-  fill,
   size,
   height,
   width

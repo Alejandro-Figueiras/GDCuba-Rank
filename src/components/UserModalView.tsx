@@ -75,7 +75,7 @@ const UserModalView = ({
                   <RecordsLinkButton username={account.username} />
                   <Button
                     color='primary'
-                    onPress={async (e) => {
+                    onPress={async () => {
                       onClose()
                     }}
                   >

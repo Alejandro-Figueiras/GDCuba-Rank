@@ -59,7 +59,7 @@ const ModalTemplate = ({
                       : 'success'
                     : 'danger'
                 }
-                onPress={async (e) => {
+                onPress={async () => {
                   setIsLoading(true)
                   await submit()
 

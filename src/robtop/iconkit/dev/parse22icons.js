@@ -8,6 +8,7 @@ const parseWeirdArray = (data) => {
     .map((x) => +x)
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const logic = async () => {
   const folder = fs.readdirSync('./icons')
   // filtrar iconos
@@ -65,12 +66,13 @@ const logic = async () => {
   }
 }
 
-logic()
+// logic()
 
 // let iconData = {
 //     gameSheet: {}
 // }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const parsePlist = () => {
   let iconFrames = obj.frames
   let positionData = {}

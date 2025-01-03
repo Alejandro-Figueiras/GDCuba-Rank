@@ -35,7 +35,7 @@ const AccountStuff = ({
   const { isOpen, onOpen, onOpenChange } = useDisclosure()
 
   const handleDelete = async (id: number) => {
-    const infoToast = notify('Realizando cambios en la cuenta', 'info')
+    notify('Realizando cambios en la cuenta', 'info')
     const result = await deleteStuffItemAction({
       accountid: account.accountid,
       username: account.username,
@@ -52,7 +52,7 @@ const AccountStuff = ({
   }
 
   const handleSort = async (accStuff: string) => {
-    const infoToast = notify('Realizando cambios en la cuenta', 'info')
+    notify('Realizando cambios en la cuenta', 'info')
     const result = await updateAccountStuffAction({
       accountid: account.accountid,
       username: account.username,
@@ -89,7 +89,7 @@ const AccountStuff = ({
       <div className='flex w-full flex-col gap-2 px-4'>
         {stuff.map((value, i) => {
           if (value == undefined) return
-          let { data: dataStr, id } = value
+          const { data: dataStr, id } = value
           const data = JSON.parse(dataStr) as DictionaryObject<any>
           if (data.type == 'bio') {
             return (

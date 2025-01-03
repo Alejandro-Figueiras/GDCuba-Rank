@@ -1,5 +1,3 @@
-import RobTopAccount from './RobTopAccount'
-
 export interface ServerAccount {
   username: string
   userid: number

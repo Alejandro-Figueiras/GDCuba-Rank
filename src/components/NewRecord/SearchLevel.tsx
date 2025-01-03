@@ -16,7 +16,7 @@ const SearchLevel = ({
   const handleSelect: (level: Level) => MouseEventHandler<HTMLButtonElement> = (
     level
   ) => {
-    return (event) => {
+    return () => {
       setNewLevel(level)
       setNiveles([])
     }

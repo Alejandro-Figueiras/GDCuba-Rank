@@ -42,6 +42,7 @@ export const authorize = async ({ owner = false } = {}): Promise<{
       can: false
     }
   } catch (err) {
+    console.log(err)
     return {
       username: 'unknown user',
       role: 'user',

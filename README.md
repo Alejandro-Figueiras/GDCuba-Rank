@@ -13,8 +13,8 @@ Ranking, Cuentas y Records.
 
 ## Dependencias Principales
 
-- React 18.2
-- Next.js 14
+- React 19
+- Next.js 15
 - TailwindCSS
 - PostgreSQL
 - Vercel KV (Redis)

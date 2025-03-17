@@ -38,7 +38,7 @@
     "bcryptjs": "^2.4.3",
     "cookie": "^1.0.2",
     "dotenv": "^16.4.5",
-    "framer-motion": "^11.0.12",
+    "framer-motion": "^12.5.0",
     "jose": "^5.2.3",
     "jsonwebtoken": "^9.0.2",
     "next": "15",

@@ -22,8 +22,8 @@ Ranking, Cuentas y Records.
 ## Documentación Extra
 
 ```bash
-yarn
-yarn run docs
+pnpm
+pnpm run docs
 ```
 
 ## Créditos

@@ -10,7 +10,7 @@ import {
   Select,
   SelectItem,
   Button
-} from '@nextui-org/react'
+} from '@heroui/react'
 import StuffBioForm from './Stuff/StuffBioForm'
 import {
   submitStuffItemAction,
@@ -61,14 +61,15 @@ const AddStuffModal = ({
     if (itemType == 'bio' || itemType == 'hardest' || itemType == 'created') {
       if (itemType == 'bio' && itemData.text == '') return
       if (itemType == 'created' && itemData.levels.length == 0) return
-      if (itemType == 'hardest') itemData.accountid = currentUser.accountid
+      const newItemData: DictionaryObject<any> = { ...itemData, type: itemType }
+      if (itemType == 'hardest') newItemData.accountid = currentUser.accountid
       setLoading(true)
 
       if (!currentUser.accountid || !currentUser.username) return
       const item = {
         accountid: currentUser.accountid,
         username: currentUser.username,
-        data: JSON.stringify(itemData)
+        data: JSON.stringify(newItemData)
       }
       const submitResult = await submitStuffItemAction(item)
       if (submitResult == -1 || !submitResult) {
@@ -167,9 +168,7 @@ const AddStuffModal = ({
                     return true
                   })
                   .map((key) => (
-                    <SelectItem key={key} value={key}>
-                      {ITEM_TYPES[key]}
-                    </SelectItem>
+                    <SelectItem key={key}>{ITEM_TYPES[key]}</SelectItem>
                   ))}
               </Select>
               {itemType == 'bio' && (

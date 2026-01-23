@@ -6,7 +6,7 @@ import {
 import TablaRecords from '@/components/Admin/Records/TablaRecords'
 import { useEffect, useState } from 'react'
 import TablaHeader from '@/components/Admin/TablaHeader'
-import { useDisclosure } from '@nextui-org/react'
+import { useDisclosure } from '@heroui/react'
 import SubmitRecordModal from '@/components/NewRecord/SubmitRecordModal'
 import { type Record } from '@/models/Record'
 import { notify } from '@/libs/toastNotifications'

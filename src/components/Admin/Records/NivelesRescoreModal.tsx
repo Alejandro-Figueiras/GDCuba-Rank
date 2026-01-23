@@ -9,7 +9,7 @@ import {
   ModalFooter,
   Button,
   Input
-} from '@nextui-org/react'
+} from '@heroui/react'
 import { reposicionarLevelAction } from '@/actions/admin/recordLevelsAction'
 import { notify } from '@/libs/toastNotifications'
 import RecordCard from '@/components/Records/RecordCard'
@@ -107,7 +107,7 @@ const NivelesRescoreModal = ({
               <div className='flex flex-row justify-center'>
                 <RecordCard
                   record={{ ...level, aval: 1 }}
-                  className='border-1 border-default-200'
+                  className='border-default-200 border'
                 />
               </div>
             </ModalBody>

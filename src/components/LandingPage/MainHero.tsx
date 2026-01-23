@@ -1,14 +1,21 @@
-import './MainHero.css'
 const MainHero = () => {
   return (
-    <div className='global-full-height container relative mx-auto flex flex-row items-center justify-center'>
-      <div className=' my-16 flex flex-col items-center py-8'>
-        <img
-          src='/assets/HD_512.png'
-          className='mb-4 w-40 min-[480px]:w-48 md:w-56'
-          alt=''
+    <div className='global-full-height relative container mx-auto flex flex-row items-center justify-center'>
+      <div className='my-16 flex flex-col items-center py-8'>
+        <div
+          className='mb-4 w-40 bg-contain bg-center bg-no-repeat min-[480px]:w-48 md:w-56'
+          style={{
+            backgroundImage: "url('/assets/HD_512.png')",
+            aspectRatio: '1/1'
+          }}
+          aria-label='Logo GD Cuba'
         />
-        <h1 className='gdcuba-main-text mb-4 text-4xl font-extrabold min-[480px]:text-5xl md:text-7xl'>
+        <h1
+          className='mb-4 bg-clip-text text-4xl font-extrabold text-transparent min-[480px]:text-5xl md:text-7xl'
+          style={{
+            backgroundImage: 'linear-gradient(120deg, #029ffe 30%, #029ffe)'
+          }}
+        >
           GD Cuba ΔΔΔ
         </h1>
         <h2 className='mb-2 text-xl font-extrabold min-[480px]:text-3xl md:mb-4 md:text-5xl'>

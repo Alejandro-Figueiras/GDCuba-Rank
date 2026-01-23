@@ -1,22 +1,20 @@
 import {
+  User,
+  Button,
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownSection,
   DropdownItem,
   useDisclosure
-} from '@nextui-org/react'
+} from '@heroui/react'
 import { ModalContext } from '@/app/context/ModalContext'
-
-import { User } from '@nextui-org/user'
-import { Button } from '@nextui-org/button'
 import { useGDIcon } from '@/robtop/iconkit/useGDIcon'
 import { useContext } from 'react'
 import { usePathname } from 'next/navigation'
 import { logout as logoutAction } from '@/actions/logout/logout'
 import { notify } from '@/libs/toastNotifications'
 import SubmitRecordModal from '../NewRecord/SubmitRecordModal'
-import './UserDropdown.css'
 import { CurrentUser } from '@/app/context/GlobalContext'
 
 const UserDropdown = ({
@@ -165,7 +163,11 @@ const UserDropdown = ({
           <Button
             color='default'
             variant='flat'
-            className={currentUser.username ? `user-dropdown__button` : ''}
+            className={
+              currentUser.username
+                ? 'max-[470px]:h-10 max-[470px]:w-10 max-[470px]:min-w-10 max-[470px]:gap-0 max-[470px]:p-0'
+                : ''
+            }
           >
             {currentUser.username && (
               <>
@@ -174,12 +176,12 @@ const UserDropdown = ({
                   alt={currentUser.username}
                   className='h-7'
                 />
-                <span className='user-dropdown__username'>
+                <span className='hidden min-[470px]:inline'>
                   {currentUser.username}
                 </span>
               </>
             )}
-            <span className='user-dropdown__sin-cuenta'>
+            <span className='max-[360px]:text-xs'>
               {!currentUser.username && 'Sin cuenta'}
             </span>
           </Button>

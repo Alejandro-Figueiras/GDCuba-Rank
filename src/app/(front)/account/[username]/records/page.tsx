@@ -3,7 +3,7 @@ import { getAllRecordsUserViewAction } from '@/actions/record/getAllRecordsUser'
 import RecordCard from '@/components/Records/RecordCard'
 import { useGDIcon } from '@/robtop/iconkit/useGDIcon'
 import { useState, useEffect } from 'react'
-import { Image } from '@nextui-org/react'
+import { Image } from '@heroui/react'
 import { type Record } from '@/models/Record'
 
 const sortAvalsPredicate = (a: Record, b: Record) => {
@@ -95,7 +95,7 @@ const AccountRecordsPage = ({
       <div className='my-6 flex flex-row justify-center'>
         <a
           href={`/account/${username}`}
-          className='flex gap-3 hover:text-default-700'
+          className='hover:text-default-700 flex gap-3'
         >
           <Image alt='Cube' radius='none' src={iconAvatar} width={40} />
           <div className='flex flex-col justify-center'>

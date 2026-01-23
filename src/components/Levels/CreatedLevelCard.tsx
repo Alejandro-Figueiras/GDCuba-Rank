@@ -1,5 +1,5 @@
 'use client'
-import { Card, CardBody, Image } from '@nextui-org/react'
+import { Card, CardBody, Image } from '@heroui/react'
 import { parseDifficulty } from '@/helpers/levelParser'
 import type Level from '@/models/Level'
 
@@ -14,7 +14,7 @@ const CreatedLevelCard = ({
 
   const difficultyData = parseDifficulty(level)
   return (
-    <Card className={`w-[300px] ${className}`}>
+    <Card className={`w-75 ${className}`}>
       <CardBody className='flex flex-row justify-between'>
         <div className='flex flex-row justify-between gap-3'>
           <Image

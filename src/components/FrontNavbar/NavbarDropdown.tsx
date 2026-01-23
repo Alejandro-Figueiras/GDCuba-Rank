@@ -5,7 +5,7 @@ import {
   DropdownTrigger,
   Button,
   NavbarItem
-} from '@nextui-org/react'
+} from '@heroui/react'
 import ChevronDownIcon from '../Icons/ChevonDrownIcon'
 import { usePathname } from 'next/navigation'
 import FrontNavbarItem from './FrontNavbarItem'

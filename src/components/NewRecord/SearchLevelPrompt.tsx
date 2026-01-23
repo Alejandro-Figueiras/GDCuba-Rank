@@ -3,8 +3,8 @@ import {
   getLevelsAction
 } from '@/actions/admin/getLevelAction'
 import { isNumeric } from '@/libs/utils'
-import { MouseEventHandler, MutableRefObject, useRef } from 'react'
-import { Button, Input } from '@nextui-org/react'
+import { MutableRefObject, useRef } from 'react'
+import { Button, Input } from '@heroui/react'
 import SearchIcon from '../Icons/SearchIcon'
 import type Level from '@/models/Level'
 
@@ -17,9 +17,11 @@ const SearchLevelPrompt = ({
   setNewLevel: (newVal: Level | undefined) => void
   setEmpty: (newVal: boolean) => void
 }) => {
-  const inputRef = useRef() as MutableRefObject<HTMLInputElement>
+  const inputRef = useRef(
+    new HTMLInputElement()
+  ) as MutableRefObject<HTMLInputElement>
 
-  const handleSearch: MouseEventHandler<HTMLButtonElement> = async () => {
+  const handleSearch = async () => {
     setNewLevel(undefined)
     const query = inputRef.current.value
 
@@ -46,7 +48,7 @@ const SearchLevelPrompt = ({
         ref={inputRef}
         startContent={<SearchIcon />}
       />
-      <Button onClick={handleSearch} size='lg' radius='sm'>
+      <Button onPress={handleSearch} size='lg' radius='sm'>
         Buscar
       </Button>
     </div>

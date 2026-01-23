@@ -1,6 +1,6 @@
 'use client'
 import type DictionaryObject from '@/helpers/DictionaryObject'
-import { Textarea } from '@nextui-org/react'
+import { Textarea } from '@heroui/react'
 import { type Dispatch, type SetStateAction } from 'react'
 
 const StuffBioForm = ({

@@ -11,7 +11,7 @@ import {
   ModalHeader,
   ModalBody,
   ModalFooter
-} from '@nextui-org/react'
+} from '@heroui/react'
 import { type MutableRefObject, useRef, useState } from 'react'
 import AccountCard from './AccountCard'
 import { notify } from '@/libs/toastNotifications'
@@ -26,7 +26,9 @@ const AddAccount = ({
   isOpen: boolean
   onClose: () => void
 }) => {
-  const inputRef = useRef() as MutableRefObject<HTMLInputElement>
+  const inputRef = useRef(
+    new HTMLInputElement()
+  ) as MutableRefObject<HTMLInputElement>
   const [account, setAccount] = useState(undefined as Account | undefined)
 
   const handleSearch = async () => {
@@ -82,7 +84,7 @@ const AddAccount = ({
               Agregar cuenta
             </ModalHeader>
             <ModalBody>
-              <div className='w-100 m-4'>
+              <div className='m-4 w-100'>
                 <div className='flex flex-row justify-center gap-2 align-middle'>
                   <Input
                     size='sm'
@@ -99,7 +101,7 @@ const AddAccount = ({
                     Buscar
                   </Button>
                 </div>
-                <div className='w-100 mt-6'>
+                <div className='mt-6 w-100'>
                   {account?.username ? (
                     <AccountCard
                       account={account}

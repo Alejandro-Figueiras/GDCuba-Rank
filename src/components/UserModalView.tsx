@@ -7,7 +7,7 @@ import {
   Button,
   Divider,
   Spinner
-} from '@nextui-org/react'
+} from '@heroui/react'
 import React, { useEffect, useState } from 'react'
 
 import AccountStatsRow from './Admin/UserModalPanel/AccountStatsRow'

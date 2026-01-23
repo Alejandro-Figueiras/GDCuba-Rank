@@ -112,7 +112,9 @@ export const useGDIconRef = ({
   glow?: boolean | number
   username?: string | null
 }) => {
-  const finalImage = useRef() as MutableRefObject<HTMLImageElement>
+  const finalImage = useRef(
+    new HTMLImageElement()
+  ) as MutableRefObject<HTMLImageElement>
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {

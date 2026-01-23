@@ -14,7 +14,7 @@ import {
   ModalBody,
   ModalFooter,
   Button
-} from '@nextui-org/react'
+} from '@heroui/react'
 import type DictionaryObject from '@/helpers/DictionaryObject'
 
 const StuffEditModal = ({

@@ -9,7 +9,7 @@ import Modal from '@/components/ModalTemplate'
 import UserModalView from '@/components/UserModalView'
 import { notify } from '@/libs/toastNotifications'
 import { Account } from '@/models/Account'
-import { useDisclosure } from '@nextui-org/react'
+import { useDisclosure } from '@heroui/react'
 import React, { createContext, type ReactNode, useState } from 'react'
 
 export type UserInView = {

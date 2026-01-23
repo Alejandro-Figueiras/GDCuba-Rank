@@ -6,7 +6,7 @@ import {
   NavbarItem,
   NavbarMenuToggle,
   NavbarMenu
-} from '@nextui-org/navbar'
+} from '@heroui/react'
 
 // Modals
 import { useSesion } from '@/hooks/useSesion'
@@ -15,7 +15,6 @@ import { useState } from 'react'
 import { NavLink, NavMenuLink } from './NavbarLinks'
 import NavbarDropdown from './NavbarDropdown'
 import { ResponsiveNavAccordion } from './ResponsiveNavAccordion'
-import './FrontNavbar.css'
 import type FrontNavbarItem from './FrontNavbarItem'
 
 const FrontNavbar = () => {
@@ -107,11 +106,19 @@ const FrontNavbar = () => {
           <NavbarBrand>
             <img
               src='/assets/SD_256.png'
-              className={`navbar__logo mr-2 sm:mr-3 ${currentUser.username ? '' : 'no-acc'}`}
+              className={
+                currentUser.username
+                  ? 'mr-2 w-12.5 sm:mr-3'
+                  : 'mr-2 w-12.5 max-[420px]:w-11.5 max-[400px]:w-9 max-[340px]:w-8 sm:mr-3'
+              }
               alt=''
             />
             <p
-              className={`navbar__brand text-xl font-bold ${currentUser.username ? '' : 'no-acc'}`}
+              className={
+                currentUser.username
+                  ? 'text-xl font-bold max-[420px]:text-lg'
+                  : 'text-xl font-bold max-[420px]:text-lg max-[400px]:text-base max-[340px]:text-sm'
+              }
             >
               GD Cuba ΔΔΔ
             </p>

@@ -1,7 +1,6 @@
 'use client'
 
 import StuffItemTitle from './StuffItemTitle'
-import './StuffHardest.css'
 import CreatedLevelCard from '@/components/Levels/CreatedLevelCard'
 import { useEditStuffItem } from './useEditStuffItem'
 import StuffCreatedForm from './StuffCreatedForm'
@@ -61,12 +60,12 @@ const StuffCreated = ({
         manage={manage}
         accStuff={accStuff}
       />
-      <div className='hardest-levels__sm-row mt-2 flex flex-row flex-wrap justify-between gap-2'>
+      <div className='mt-2 flex flex-row flex-wrap justify-between gap-2 max-[720px]:justify-center'>
         {(itemData.levels as Level[]).map((level, i) => (
           <CreatedLevelCard
             key={i}
             level={level}
-            className='record-card__mini border-2 border-default'
+            className='border-default border-2 max-[720px]:w-100'
           />
         ))}
       </div>

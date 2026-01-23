@@ -5,7 +5,7 @@ import {
   DropdownMenu,
   DropdownItem,
   Button
-} from '@nextui-org/react'
+} from '@heroui/react'
 import { type Key, useState } from 'react'
 import { RECORDS_AVAL_VALUES } from '@/models/constants'
 import { changeAval } from '@/actions/admin/changeRecord'

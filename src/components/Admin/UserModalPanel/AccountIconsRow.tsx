@@ -1,8 +1,7 @@
 import { useGDIconRef } from '@/robtop/iconkit/useGDIcon'
-import { Card, CardBody, Spinner } from '@nextui-org/react'
+import { Card, CardBody, Spinner } from '@heroui/react'
 import { useEffect, useState } from 'react'
 
-import './AccountIcons.css'
 import { type IconTypes } from '@/robtop/iconkit/Icons'
 import { Account } from '@/models/Account'
 
@@ -68,26 +67,26 @@ const AccountIconsRow = ({ user }: { user: Account }) => {
   }
 
   return (
-    <Card className='w-full max-w-full overflow-visible bg-default-200'>
+    <Card className='bg-default-200 w-full max-w-full overflow-visible'>
       <CardBody className='p-4'>
         <div className={rowsClassnames}>
           <AccountIcon type='cube' iconNumber={user.accicon} {...comunProps} />
           <a
             href='#'
             onClick={() => setJetpack((v) => !v)}
-            className='icons__ship flex min-w-11 flex-row justify-center'
+            className='flex min-w-11 flex-row justify-center duration-75 active:scale-125'
           >
             <AccountIcon
               type={'jetpack'}
               iconNumber={user.accjetpack}
               {...comunProps}
-              className={!jetpack ? 'hidden' : ''}
+              className={!jetpack ? '' : 'hidden'}
             />
             <AccountIcon
               type={'ship'}
               iconNumber={user.accship}
               {...comunProps}
-              className={jetpack ? 'hidden' : ''}
+              className={jetpack ? '' : 'hidden'}
             />
           </a>
           <AccountIcon
@@ -100,36 +99,36 @@ const AccountIconsRow = ({ user }: { user: Account }) => {
             type={'wave'}
             iconNumber={user.accwave}
             {...comunProps}
-            className='icons__4down-hide'
+            className='max-[450px]:hidden'
           />
           <AccountIcon
             type={'robot'}
             iconNumber={user.accrobot}
             {...comunProps}
-            className='icons__3down-hide'
+            className='max-[710px]:hidden'
           />
           <AccountIcon
             type={'spider'}
             iconNumber={user.accspider}
             {...comunProps}
-            className='icons__3down-hide'
+            className='max-[710px]:hidden'
           />
           <AccountIcon
             type={'swing'}
             iconNumber={user.accswing}
             {...comunProps}
-            className='icons__3down-hide'
+            className='max-[710px]:hidden'
           />
         </div>
 
         <div
-          className={`${rowsClassnames} icons_down-row justify-center gap-6`}
+          className={`${rowsClassnames} mt-4 hidden justify-center gap-6 max-[710px]:flex`}
         >
           <AccountIcon
             type={'wave'}
             iconNumber={user.accwave}
             {...comunProps}
-            className='icons__4down-show'
+            className='hidden max-[450px]:block'
           />
           <AccountIcon
             type={'robot'}

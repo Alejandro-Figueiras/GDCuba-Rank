@@ -1,68 +1,78 @@
 {
-  "name": "gd-cuba-rank",
-  "version": "1.0.0",
-  "description": "A Ranking for Geometry Dash Cuban Players",
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "docs": "docsify serve ./docs --port 9508",
-    "docs-init": "docsify init ./docs",
-    "format": "prettier --check --ignore-path .gitignore .",
-    "format:fix": "prettier --write --ignore-path .gitignore .",
-    "prepare": "husky"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Alejandro-Figueiras/gdcubarank.git"
-  },
-  "keywords": [
-    "ranking",
-    "geometrydash",
-    "gd",
-    "cuba"
-  ],
-  "author": "Alejandro",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Alejandro-Figueiras/gdcubarank/issues"
-  },
-  "homepage": "https://github.com/Alejandro-Figueiras/gdcubarank#readme",
-  "dependencies": {
-    "@nextui-org/react": "^2.2.10",
-    "@vercel/kv": "^2.0.0",
-    "@vercel/postgres": "^0.8.0",
-    "autoprefixer": "^10.4.18",
-    "axios": "^1.6.7",
-    "bcryptjs": "^2.4.3",
-    "cookie": "^1.0.2",
-    "dotenv": "^16.4.5",
-    "framer-motion": "^11.0.12",
-    "jose": "^5.2.3",
-    "jsonwebtoken": "^9.0.2",
-    "next": "15",
-    "pixi.js": "^8.0.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-toastify": "^10.0.4"
-  },
-  "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
-    "@types/jsonwebtoken": "^9.0.6",
-    "@types/node": "^22",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "docsify-cli": "^4.4.4",
-    "eslint": "^9.8.0",
-    "eslint-config-next": "^15.0.1",
-    "eslint-config-prettier": "^9.1.0",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.2",
-    "postcss": "^8.4.35",
-    "prettier": "^3.2.5",
-    "prettier-plugin-tailwindcss": "^0.6.1",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5.3.0"
-  }
+   "name": "gd-cuba-rank",
+   "version": "1.0.0",
+   "description": "A Ranking for Geometry Dash Cuban Players",
+   "scripts": {
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start",
+      "lint": "eslint .",
+      "docs": "docsify serve ./docs --port 9508",
+      "docs-init": "docsify init ./docs",
+      "format": "prettier --check --ignore-path .gitignore .",
+      "format:fix": "prettier --write --ignore-path .gitignore .",
+      "prepare": "husky"
+   },
+   "repository": {
+      "type": "git",
+      "url": "git+https://github.com/Alejandro-Figueiras/gdcubarank.git"
+   },
+   "keywords": [
+      "ranking",
+      "geometrydash",
+      "gd",
+      "cuba"
+   ],
+   "author": "Alejandro",
+   "license": "ISC",
+   "bugs": {
+      "url": "https://github.com/Alejandro-Figueiras/gdcubarank/issues"
+   },
+   "homepage": "https://github.com/Alejandro-Figueiras/gdcubarank#readme",
+   "dependencies": {
+      "@heroui/react": "2.8.7",
+      "@vercel/kv": "^2.0.0",
+      "@vercel/postgres": "^0.8.0",
+      "axios": "^1.6.7",
+      "bcryptjs": "^2.4.3",
+      "cookie": "^1.0.2",
+      "dotenv": "^16.4.5",
+      "framer-motion": "^11.0.12",
+      "jose": "^5.2.3",
+      "jsonwebtoken": "^9.0.2",
+      "next": "16.1.4",
+      "pixi.js": "^8.0.4",
+      "react": "19.2.3",
+      "react-dom": "19.2.3",
+      "react-toastify": "^10.0.4"
+   },
+   "devDependencies": {
+      "@eslint/eslintrc": "^3.3.3",
+      "@tailwindcss/postcss": "^4.1.18",
+      "@types/bcryptjs": "^2.4.6",
+      "@types/jsonwebtoken": "^9.0.6",
+      "@types/node": "^22",
+      "@types/react": "19.2.9",
+      "@types/react-dom": "19.2.3",
+      "docsify-cli": "^4.4.4",
+      "eslint": "^9.8.0",
+      "eslint-config-next": "16.1.4",
+      "eslint-config-prettier": "^9.1.0",
+      "husky": "^9.0.11",
+      "lint-staged": "^15.2.2",
+      "postcss": "^8.4.35",
+      "prettier": "^3.2.5",
+      "prettier-plugin-tailwindcss": "^0.7.2",
+      "tailwindcss": "^4.1.18",
+      "typescript": "^5.3.0"
+   },
+   "pnpm": {
+      "overrides": {
+         "@types/react": "19.2.9",
+         "@types/react-dom": "19.2.3"
+      },
+      "ignoredBuiltDependencies": [
+         "@heroui/shared-utils"
+      ]
+   }
 }

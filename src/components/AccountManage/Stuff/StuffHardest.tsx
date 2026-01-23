@@ -4,8 +4,7 @@ import { getHardestLevelsAction } from '@/actions/accounts/getHardestLevelsActio
 import StuffItemTitle from './StuffItemTitle'
 import { useEffect, useState } from 'react'
 import RecordCard from '@/components/Records/RecordCard'
-import { Spinner } from '@nextui-org/react'
-import './StuffHardest.css'
+import { Spinner } from '@heroui/react'
 import type DictionaryObject from '@/helpers/DictionaryObject'
 import type StuffHandlers from './StuffHandlers'
 
@@ -50,13 +49,12 @@ const StuffHardest = ({
         manage={manage}
         accStuff={accStuff}
       />
-      <div className='hardest-levels__sm-row mt-2 flex flex-row flex-wrap justify-between gap-2'>
+      <div className='mt-2 flex flex-row flex-wrap justify-between gap-2 max-[720px]:justify-center'>
         {levels.map((level, i) => (
           <RecordCard
             key={i}
             record={level}
-            className='record-card__mini border-2 border-default'
-            mini={true}
+            className='border-default mini={true} border-2 max-[720px]:w-100'
           />
         ))}
       </div>

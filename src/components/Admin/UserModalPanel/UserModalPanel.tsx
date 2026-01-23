@@ -8,7 +8,7 @@ import {
   ModalFooter,
   Button,
   Spinner
-} from '@nextui-org/react'
+} from '@heroui/react'
 import React, { useContext, useEffect, useState } from 'react'
 
 import BodyCard from './BodyCard'
@@ -159,8 +159,8 @@ export default function UserModalPanel({
                 <ModalBody>
                   <AccountStatsRow user={userInfo?.account as Account} />
                   <AccountIconsRow user={userInfo?.account as Account} />
-                  <div className='grid h-[300px] grid-cols-[0.5fr,_1fr] gap-2'>
-                    {/* grid grid-cols-[0.5fr,_1fr] gap-2 */}
+                  <div className='grid h-75 grid-cols-[0.5fr_1fr] gap-2'>
+                    {/* grid grid-cols-[0.5fr_1fr] gap-2 */}
                     <AccountInfoColumn
                       user={userInfo?.user as User}
                       canResetPw={currentUser.role == 'owner'}

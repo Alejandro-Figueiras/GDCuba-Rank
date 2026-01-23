@@ -9,7 +9,7 @@ import {
   TableRow,
   TableCell,
   Spinner
-} from '@nextui-org/react'
+} from '@heroui/react'
 import UsernameCell from './UsernameCell'
 import React from 'react'
 import { type Account } from '@/models/Account'

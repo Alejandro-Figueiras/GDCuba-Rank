@@ -1,4 +1,4 @@
-import { Select, SelectItem } from '@nextui-org/react'
+import { Select, SelectItem } from '@heroui/react'
 import { ChangeEventHandler } from 'react'
 
 const CardSelect = ({
@@ -30,9 +30,7 @@ const CardSelect = ({
       isDisabled={isDisabled}
     >
       {items.map((item) => (
-        <SelectItem key={item.key} value={item.key}>
-          {item.label}
-        </SelectItem>
+        <SelectItem key={item.key}>{item.label}</SelectItem>
       ))}
     </Select>
   )

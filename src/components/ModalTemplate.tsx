@@ -1,11 +1,11 @@
 import {
+  Button,
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter
-} from '@nextui-org/modal'
-import { Button } from '@nextui-org/button'
+} from '@heroui/react'
 import { useState } from 'react'
 
 const ModalTemplate = ({

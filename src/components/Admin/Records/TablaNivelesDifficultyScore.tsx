@@ -14,7 +14,7 @@ import {
   Chip,
   Spinner,
   useDisclosure
-} from '@nextui-org/react'
+} from '@heroui/react'
 import { useState } from 'react'
 import NivelesRescoreModal from './NivelesRescoreModal'
 import { type RecordLevel } from '@/models/Record'

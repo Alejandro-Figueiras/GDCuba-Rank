@@ -1,7 +1,7 @@
 'use client'
 import { AdminContext } from '@/app/context/AdminContext'
 import { type User } from '@/models/User'
-import { Chip } from '@nextui-org/chip'
+import { Chip } from '@heroui/react'
 import {
   Table,
   TableHeader,
@@ -11,7 +11,7 @@ import {
   TableCell,
   Link,
   Spinner
-} from '@nextui-org/react'
+} from '@heroui/react'
 import { useContext } from 'react'
 
 const renderRoleOrStatus = (arg: string) => {

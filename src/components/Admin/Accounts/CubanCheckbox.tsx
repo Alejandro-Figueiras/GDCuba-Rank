@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Checkbox } from '@nextui-org/react'
+import { Checkbox } from '@heroui/react'
 import { changeCubanAction } from '@/actions/admin/accountsActions'
 import { notify } from '@/libs/toastNotifications'
 import { type Account } from '@/models/Account'

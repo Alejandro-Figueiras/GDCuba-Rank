@@ -6,7 +6,7 @@ import {
 } from '@/actions/record/getAllExtremeDemons'
 import ListLevelVictors from '@/components/Lists/ListLevelVictors'
 import { useState, useEffect } from 'react'
-import { Spinner } from '@nextui-org/react'
+import { Spinner } from '@heroui/react'
 import { getAllCubanInsaneDemonsVerifiedAction } from '@/actions/record/getAllInsaneDemons'
 import { type Account } from '@/models/Account'
 import type DictionaryObject from '@/helpers/DictionaryObject'
@@ -121,7 +121,7 @@ const ListTemplate = ({
         ))
       )}
       {!loading && !loadingError && levels.length == 0 && (
-        <p className='mt-2 text-center text-medium'>
+        <p className='text-medium mt-2 text-center'>
           No hay datos para mostrar
         </p>
       )}

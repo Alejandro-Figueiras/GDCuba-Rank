@@ -2,7 +2,7 @@
 import { getAllAccountsAction } from '@/actions/admin/getAllAccountsAction'
 import TablaAccounts from '@/components/Admin/Accounts/TablaAccounts'
 import { useEffect, useState } from 'react'
-import { useDisclosure } from '@nextui-org/react'
+import { useDisclosure } from '@heroui/react'
 import AddAccount from '../../../components/Admin/Accounts/AddAccount'
 import TablaHeader from '@/components/Admin/TablaHeader'
 import { type Account } from '@/models/Account'

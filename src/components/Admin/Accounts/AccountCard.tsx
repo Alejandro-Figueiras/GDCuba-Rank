@@ -10,7 +10,7 @@ import {
   Divider,
   Checkbox,
   Button
-} from '@nextui-org/react'
+} from '@heroui/react'
 import { useRef } from 'react'
 
 const AccountCard = ({
@@ -39,7 +39,7 @@ const AccountCard = ({
   }
 
   return (
-    <Card className='mx-auto max-w-[800px]'>
+    <Card className='mx-auto max-w-200'>
       <CardHeader className='flex gap-3'>
         <img src={icon} width={40} height={40} alt='' />
         <div className='flex flex-col'>

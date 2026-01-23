@@ -4,8 +4,10 @@ import {
   DropdownTrigger,
   DropdownMenu,
   DropdownItem
-} from '@nextui-org/react'
+} from '@heroui/react'
 import type StuffHandlers from './StuffHandlers'
+
+import type { JSX } from 'react'
 
 const StuffItemTitle = ({
   title,
@@ -39,7 +41,7 @@ const StuffItemTitle = ({
   }
 
   const titleSpan = (
-    <span className='text-xs font-medium text-default-500'>{title}</span>
+    <span className='text-default-500 text-xs font-medium'>{title}</span>
   )
 
   const dynamicItems: JSX.Element[] = []

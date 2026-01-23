@@ -1,12 +1,12 @@
 const MainInfo = () => {
   return (
-    <div className='container mx-auto mt-28 flex max-w-[1280px] flex-col items-center gap-12 px-6'>
+    <div className='container mx-auto mt-28 flex max-w-7xl flex-col items-center gap-12 px-6'>
       <div className='flex flex-col items-center gap-4 md:flex-row md:gap-10'>
         <div>
           <img
             src='/assets/gd_icon.webp'
             alt='Geometry Dash Icon'
-            className='mb-4 w-40 rounded-3xl min-[480px]:w-48 md:min-w-56 md:max-w-56'
+            className='mb-4 w-40 rounded-3xl min-[480px]:w-48 md:max-w-56 md:min-w-56'
           />
         </div>
         <div>
@@ -34,7 +34,7 @@ const MainInfo = () => {
           <img
             src='/assets/community_icon.webp'
             alt='Geometry Dash Icon'
-            className='mb-4 w-40 rounded-3xl min-[480px]:w-48 md:min-w-56 md:max-w-56'
+            className='mb-4 w-40 rounded-3xl min-[480px]:w-48 md:max-w-56 md:min-w-56'
           />
         </div>
         <div>

@@ -1,7 +1,7 @@
 import { resetPasswordAction } from '@/actions/admin/resetPasswordAction'
 import { notify } from '@/libs/toastNotifications'
 import { type User } from '@/models/User'
-import { Card, CardHeader, Button } from '@nextui-org/react'
+import { Card, CardHeader, Button } from '@heroui/react'
 
 const AccountInfoColumn = ({
   user,
@@ -23,14 +23,14 @@ const AccountInfoColumn = ({
   return (
     <div>
       <Card classNames={{ base: 'mb-2' }}>
-        <CardHeader className='justify-between text-small'>
+        <CardHeader className='text-small justify-between'>
           <b>ID</b>
           <p>{user.accountid}</p>
         </CardHeader>
       </Card>
 
       <Card classNames={{ base: 'mb-2' }}>
-        <CardHeader className='justify-between text-small'>
+        <CardHeader className='text-small justify-between'>
           <b>Teléfono</b>
           <p>{user.phone}</p>
         </CardHeader>

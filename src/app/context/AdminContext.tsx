@@ -1,5 +1,5 @@
 import UserModalPanel from '@/components/Admin/UserModalPanel/UserModalPanel'
-import { useDisclosure } from '@nextui-org/react'
+import { useDisclosure } from '@heroui/react'
 import React, { createContext, type ReactNode, useState } from 'react'
 import { notify } from '@/libs/toastNotifications'
 import { responseText } from '@/locales/siteText'

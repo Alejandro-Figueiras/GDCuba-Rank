@@ -1,5 +1,5 @@
 'use client'
-import { Card, CardBody, Image, Link } from '@nextui-org/react'
+import { Card, CardBody, Image, Link } from '@heroui/react'
 import {
   getDifficultyNameByNumber,
   getDifficultyPath
@@ -20,7 +20,7 @@ const RecordCard = ({
 }) => {
   if (!record) return null
   return (
-    <Card className={`w-[300px] ${className}`}>
+    <Card className={`w-75 ${className}`}>
       <CardBody className='flex flex-row justify-between'>
         <div className='flex flex-row justify-between gap-3'>
           <Image

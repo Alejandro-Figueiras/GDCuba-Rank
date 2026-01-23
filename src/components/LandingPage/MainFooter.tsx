@@ -1,6 +1,6 @@
 const MainFooter = () => {
   return (
-    <div className='container mx-auto mt-10 flex flex-row items-center justify-between gap-4 border-t-1 border-default-200 p-4'>
+    <div className='border-default-200 container mx-auto mt-10 flex flex-row items-center justify-between gap-4 border-t p-4'>
       <div className=''>
         ©{' '}
         <a

@@ -1,6 +1,6 @@
 import { getLengthName, parseDifficulty } from '@/helpers/levelParser'
 import type Level from '@/models/Level'
-import { Card, CardBody, Image } from '@nextui-org/react'
+import { Card, CardBody, Image } from '@heroui/react'
 
 const LevelCard = ({
   level,
@@ -14,10 +14,7 @@ const LevelCard = ({
     <div className='flex justify-center'>
       <Card
         isBlurred
-        className={`
-      w-[400px] overflow-hidden border-3 border-solid border-divider 
-      bg-background/60 dark:bg-default-100/50
-      ${hover ? 'hover:bg-primary-50' : ''}`}
+        className={`border-divider bg-background/60 dark:bg-default-100/50 w-100 overflow-hidden border-3 border-solid ${hover ? 'hover:bg-primary-50' : ''}`}
         shadow='sm'
       >
         <CardBody>
@@ -37,10 +34,10 @@ const LevelCard = ({
                   <h1 className='mt-2 text-xl font-medium'>
                     {level.levelname}
                   </h1>
-                  <h3 className='font-medium text-foreground/90'>
+                  <h3 className='text-foreground/90 font-medium'>
                     <span>{level.author}</span>
                   </h3>
-                  <p className='flex flex-wrap text-small text-foreground/80'>
+                  <p className='text-small text-foreground/80 flex flex-wrap'>
                     <span className='mr-2 flex'>
                       <img
                         src={`/assets/stats/${level.platformer ? 'moons' : 'stars'}Icon${level.stars ? '' : 'BN'}.png`}

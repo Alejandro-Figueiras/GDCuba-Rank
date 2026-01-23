@@ -1,7 +1,7 @@
 import { updateStuffItemDataAction } from '@/actions/accounts/stuffActions'
 import { useSesion } from '@/hooks/useSesion'
 import { notify } from '@/libs/toastNotifications'
-import { useDisclosure } from '@nextui-org/react'
+import { useDisclosure } from '@heroui/react'
 import type StuffHandlers from './StuffHandlers'
 import type DictionaryObject from '@/helpers/DictionaryObject'
 import type StuffItem from '@/models/StuffItem'

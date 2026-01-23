@@ -13,7 +13,7 @@ import {
   Button,
   Link,
   Spinner
-} from '@nextui-org/react'
+} from '@heroui/react'
 import RecordAvalDropdown from './RecordAvalDropdown'
 import { removeRecord } from '@/actions/admin/changeRecord'
 import { useContext } from 'react'

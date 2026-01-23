@@ -1,6 +1,6 @@
 'use client'
 
-import { NextUIProvider } from '@nextui-org/react'
+import { HeroUIProvider } from '@heroui/react'
 import GlobalContextProvider from './context/GlobalContext'
 import ModalProvider from './context/ModalContext'
 import { type ReactNode } from 'react'
@@ -9,7 +9,7 @@ export function Providers({ children }: { children: ReactNode }) {
   return (
     <GlobalContextProvider>
       <ModalProvider>
-        <NextUIProvider>{children}</NextUIProvider>
+        <HeroUIProvider>{children}</HeroUIProvider>
       </ModalProvider>
     </GlobalContextProvider>
   )

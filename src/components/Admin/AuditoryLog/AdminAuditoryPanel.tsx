@@ -2,7 +2,7 @@
 import { getLogsAction } from '@/actions/admin/auditorylogActions'
 import TablaHeader from '@/components/Admin/TablaHeader'
 import { useEffect, useState } from 'react'
-import { Spinner, Pagination } from '@nextui-org/react'
+import { Spinner, Pagination } from '@heroui/react'
 import type LogMessage from '@/models/LogMessage'
 
 const AdminAuditoryPanel = ({ home = false }) => {
@@ -43,7 +43,7 @@ const AdminAuditoryPanel = ({ home = false }) => {
       ) : (
         data.map((log, i) => (
           <p className='mt-1' key={i}>
-            <span className='font-bold text-danger'>#{log.id}: </span>
+            <span className='text-danger font-bold'>#{log.id}: </span>
             {log.message}
           </p>
         ))

@@ -1,4 +1,4 @@
-import { NavbarItem, NavbarMenuItem } from '@nextui-org/react'
+import { NavbarItem, NavbarMenuItem } from '@heroui/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { type ReactNode } from 'react'

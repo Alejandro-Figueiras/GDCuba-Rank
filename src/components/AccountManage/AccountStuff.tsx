@@ -1,5 +1,5 @@
 'use client'
-import { Button, useDisclosure } from '@nextui-org/react'
+import { Button, useDisclosure } from '@heroui/react'
 import AddStuffModal from './AddStuffModal'
 import StuffBio from './Stuff/StuffBio'
 import { useStuff } from './useStuff'

@@ -7,7 +7,7 @@ import {
   TableCell,
   Button,
   Spinner
-} from '@nextui-org/react'
+} from '@heroui/react'
 import { useContext } from 'react'
 import { ModalContext } from '@/app/context/ModalContext'
 import { notify } from '@/libs/toastNotifications'

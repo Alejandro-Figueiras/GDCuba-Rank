@@ -1,17 +1,16 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 
-import { Button } from '@nextui-org/button'
-
 // Modals
 import {
+  Button,
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
-  ModalFooter
-} from '@nextui-org/modal'
-import { Input } from '@nextui-org/input'
+  ModalFooter,
+  Input
+} from '@heroui/react'
 import { notify } from '@/libs/toastNotifications'
 import { useSesion } from '@/hooks/useSesion'
 import { changePasswordAction } from '@/actions/auth/changePassword'

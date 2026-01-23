@@ -1,9 +1,9 @@
 module.exports = {
 	"src/**/*.{ts,js,tsx,jsx}": [
 			(filenames) => {
-				let command = `next lint`
+				let command = `eslint`
 				for (const file of filenames) {
-					command+=` --file "${file}"`
+					command+=` "${file}"`
 				}
 				return command
 			},

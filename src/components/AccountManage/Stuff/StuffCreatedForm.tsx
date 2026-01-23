@@ -3,7 +3,7 @@ import { getLevelsFromGD } from '@/actions/levels/levels'
 import type DictionaryObject from '@/helpers/DictionaryObject'
 import { parseDifficulty } from '@/helpers/levelParser'
 import type Level from '@/models/Level'
-import { Button, Input } from '@nextui-org/react'
+import { Button, Input } from '@heroui/react'
 
 import {
   useRef,
@@ -21,7 +21,9 @@ const StuffCreatedForm = ({
   itemData: DictionaryObject<any>
   setItemData: Dispatch<SetStateAction<DictionaryObject<any>>>
 }) => {
-  const inputRef = useRef() as MutableRefObject<HTMLInputElement>
+  const inputRef = useRef(
+    new HTMLInputElement()
+  ) as MutableRefObject<HTMLInputElement>
   const [selectedLevels, setSelectedLevels] = useState(
     itemData.levels as Level[]
   )
@@ -71,7 +73,7 @@ const StuffCreatedForm = ({
       </div>
       <div className='grid grid-cols-1 gap-2 sm:grid-cols-2'>
         <div className='flex flex-col'>
-          <h2 className='text-sm text-default-500'>Busqueda</h2>
+          <h2 className='text-default-500 text-sm'>Busqueda</h2>
           {searchResult.map((level, i) => {
             const encontrado = !!selectedLevels.find(
               (val) => val.id == level.id
@@ -89,7 +91,7 @@ const StuffCreatedForm = ({
           })}
         </div>
         <div className='flex flex-col'>
-          <h2 className='text-sm text-default-500'>Niveles Seleccionados</h2>
+          <h2 className='text-default-500 text-sm'>Niveles Seleccionados</h2>
           {selectedLevels.map((level, i) => (
             <LevelName
               level={level}

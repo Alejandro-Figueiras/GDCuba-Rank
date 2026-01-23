@@ -7,7 +7,7 @@ import {
   Divider,
   Image,
   Spinner
-} from '@nextui-org/react'
+} from '@heroui/react'
 import { useGDIcon } from '@/robtop/iconkit/useGDIcon'
 import { getAccountAction } from '@/actions/accounts/getAccountAction'
 import AccountStatsRow from '../Admin/UserModalPanel/AccountStatsRow'
@@ -62,7 +62,7 @@ export default function AccountView({
 
   return (
     <>
-      <Card className='w-[800px] max-w-[1000px]'>
+      <Card className='w-200 max-w-250'>
         <CardHeader className='flex justify-between'>
           <div className='flex flex-row gap-3'>
             <Image alt='Cube' radius='none' src={iconAvatar} width={40} />
@@ -91,7 +91,7 @@ export default function AccountView({
               />
             </>
           ) : (
-            <div className='flex h-[300px] flex-col items-center justify-center'>
+            <div className='flex h-75 flex-col items-center justify-center'>
               <Spinner />
               <p className='text-medium'>Descargando cuenta</p>
             </div>

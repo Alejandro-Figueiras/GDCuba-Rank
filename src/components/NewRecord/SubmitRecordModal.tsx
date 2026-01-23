@@ -10,7 +10,7 @@ import {
   Select,
   SelectItem,
   Spinner
-} from '@nextui-org/react'
+} from '@heroui/react'
 import React, { useEffect, useState, useRef, MutableRefObject } from 'react'
 import SearchLevel from '@/components/NewRecord/SearchLevel'
 import LevelCard from '@/components/Levels/LevelCard'
@@ -36,7 +36,9 @@ export default function SubmitRecordModal({
   const [accountList, setAccountList] = useState([] as Account[]) // Only admin
   const [loading, setLoading] = useState(false)
   const sliderValue = useRef(100)
-  const videoRef = useRef() as MutableRefObject<HTMLInputElement>
+  const videoRef = useRef(
+    new HTMLInputElement()
+  ) as MutableRefObject<HTMLInputElement>
 
   // Submit
   const handleSubmit = async () => {
@@ -118,7 +120,7 @@ export default function SubmitRecordModal({
               {loading ? (
                 <div className='flex flex-col justify-center gap-4'>
                   <Spinner />
-                  <p className='text text-center text-medium'>Cargando...</p>
+                  <p className='text text-medium text-center'>Cargando...</p>
                 </div>
               ) : submitResult == 0 ? (
                 <div className=''>

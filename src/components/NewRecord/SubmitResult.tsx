@@ -16,11 +16,11 @@ const SubmitResult = ({ submitResult = 0 }) => {
   return (
     <div className='flex justify-center'>
       <div className='flex flex-col justify-center'>
-        <div className='flex flex-col rounded p-4'>
+        <div className='flex flex-col rounded-sm p-4'>
           <div className='flex justify-center'>
             <img src={img} alt='Info Image' />
           </div>
-          <p className=' text-md mt-4 text-wrap text-center'>{message}</p>
+          <p className='text-md mt-4 text-center text-wrap'>{message}</p>
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardBody } from '@nextui-org/react'
+import { Card, CardHeader, CardBody } from '@heroui/react'
 import { type ReactNode } from 'react'
 
 const BodyCard = ({

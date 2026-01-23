@@ -1,4 +1,4 @@
-import { Accordion, AccordionItem } from '@nextui-org/react'
+import { Accordion, AccordionItem } from '@heroui/react'
 import { NavMenuLink } from './NavbarLinks'
 import { usePathname } from 'next/navigation'
 import type FrontNavbarItem from './FrontNavbarItem'

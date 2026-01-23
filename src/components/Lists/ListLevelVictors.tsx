@@ -12,7 +12,7 @@ import {
   TableRow,
   TableCell,
   Link
-} from '@nextui-org/react'
+} from '@heroui/react'
 import UsernameCell from '../Rank/UsernameCell'
 import YouTubeIcon from '../Icons/YouTubeIcon'
 import { type Record, type RecordLevel } from '@/models/Record'

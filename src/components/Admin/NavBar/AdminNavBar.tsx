@@ -1,6 +1,6 @@
 'use client'
 import React, { useContext } from 'react'
-import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
+import { Navbar, NavbarContent, NavbarItem } from '@heroui/react'
 
 import { GlobalContext } from '@/app/context/GlobalContext'
 import { BurguerButton } from './BurgerButton'

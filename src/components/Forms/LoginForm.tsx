@@ -6,17 +6,16 @@ import React, {
   useState
 } from 'react'
 
-import { Button } from '@nextui-org/button'
-
 // Modals
 import {
+  Button,
+  Input,
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter
-} from '@nextui-org/modal'
-import { Input } from '@nextui-org/input'
+} from '@heroui/react'
 import { GlobalContext } from '@/app/context/GlobalContext'
 import { notify } from '@/libs/toastNotifications'
 import { login } from '@/actions/auth/login'
@@ -28,8 +27,12 @@ const LoginForm = ({
   isOpen: boolean
   onOpenChange: () => void
 }) => {
-  const userRef = useRef() as MutableRefObject<HTMLInputElement>
-  const passwordRef = useRef() as MutableRefObject<HTMLInputElement>
+  const userRef = useRef(
+    new HTMLInputElement()
+  ) as MutableRefObject<HTMLInputElement>
+  const passwordRef = useRef(
+    new HTMLInputElement()
+  ) as MutableRefObject<HTMLInputElement>
   const [loading, setLoading] = useState(false)
   const { setCurrentUser } = useContext(GlobalContext)
 

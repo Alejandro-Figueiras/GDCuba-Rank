@@ -1,17 +1,15 @@
 'use client'
 import React, { type MutableRefObject, useRef, useState } from 'react'
 
-import { Button } from '@nextui-org/button'
-import { Input } from '@nextui-org/input'
-
-// Modals
 import {
+  Button,
+  Input,
   Modal,
   ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter
-} from '@nextui-org/modal'
+} from '@heroui/react'
 import { notify } from '@/libs/toastNotifications'
 import { register } from '@/actions/register/register'
 
@@ -31,10 +29,18 @@ const SignUpForm = ({
   const [canSubmit, setCanSubmit] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
-  const phoneRef = useRef() as MutableRefObject<HTMLInputElement>
-  const userRef = useRef() as MutableRefObject<HTMLInputElement>
-  const passwordRef = useRef() as MutableRefObject<HTMLInputElement>
-  const passwordSecureRef = useRef() as MutableRefObject<HTMLInputElement>
+  const phoneRef = useRef(
+    new HTMLInputElement()
+  ) as MutableRefObject<HTMLInputElement>
+  const userRef = useRef(
+    new HTMLInputElement()
+  ) as MutableRefObject<HTMLInputElement>
+  const passwordRef = useRef(
+    new HTMLInputElement()
+  ) as MutableRefObject<HTMLInputElement>
+  const passwordSecureRef = useRef(
+    new HTMLInputElement()
+  ) as MutableRefObject<HTMLInputElement>
   const phoneRegex = /^\+[0-9\s]+$/
 
   const updateCanSubmit = () => {

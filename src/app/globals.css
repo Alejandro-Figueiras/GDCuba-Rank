@@ -1,6 +1,5 @@
-@import "tailwindcss";
-@import "@heroui/styles"; 
-@custom-variant dark (&:is(.dark *));
+@import 'tailwindcss';
+@import '@heroui/styles';
 
 .global-full-height {
   min-height: calc(100dvh - 65px);
@@ -31,4 +30,17 @@
   background-position: 50% -50dvh;
   background-repeat: no-repeat;
   mask-image: linear-gradient(black 60%, transparent 75%, transparent);
+}
+
+/* HeroUI components */
+.button {
+  @apply rounded-xl;
+}
+
+.dropdown__popover {
+  @apply rounded-xl border-foreground/20;
+}
+
+.menu-item {
+  @apply rounded-xl;
 }

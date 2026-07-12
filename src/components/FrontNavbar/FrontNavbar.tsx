@@ -146,13 +146,13 @@ const FrontNavbar = () => {
             <NavbarDropdown info={listsItems} />
           </ul>
           <div className='flex items-center justify-end'>
-            {/* <UserDropdown
+            <UserDropdown
               currentUser={currentUser}
               logout={logout}
               onOpenLogin={login}
               onOpenChangeSignUp={signUp}
               onOpenChangePassword={changePassword}
-            /> */}
+            />
           </div>
         </header>
         {isMenuOpen && (

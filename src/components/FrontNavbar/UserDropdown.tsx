@@ -1,15 +1,11 @@
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownSection,
-  DropdownItem,
-  useDisclosure
-} from '@nextui-org/react'
 import { ModalContext } from '@/app/context/ModalContext'
-
-import { User } from '@nextui-org/user'
-import { Button } from '@nextui-org/button'
+import {
+  Avatar,
+  Dropdown,
+  useOverlayState,
+  Button,
+  Header
+} from '@heroui/react'
 import { useGDIcon } from '@/robtop/iconkit/useGDIcon'
 import { useContext } from 'react'
 import { usePathname } from 'next/navigation'
@@ -50,91 +46,67 @@ const UserDropdown = ({
   })
 
   // Submit Record
-  const { isOpen: isOpenSubmitRecord, onOpenChange: onOpenChangeSubmitRecord } =
-    useDisclosure()
+  const { isOpen: isOpenSubmitRecord, setOpen: setChangeSubmitRecordOpen } =
+    useOverlayState()
 
   // #region Items
-  const items = [
-    <DropdownItem
-      key='profile'
-      className='h-14 gap-2 opacity-100'
-      textValue='User'
-    >
-      <User
-        name={
-          currentUser.username == undefined ? 'Invitado' : currentUser.username
-        }
-        description={
-          currentUser.username == undefined ? 'none' : currentUser.phone
-        }
-        classNames={{
-          name: 'text-default-600',
-          description: 'text-default-500'
-        }}
-        avatarProps={{
-          size: 'sm',
-          radius: 'none',
-          src: iconAvatar
-        }}
-      />
-    </DropdownItem>
-  ]
+  const items = []
 
   if (!logged) {
     items.push(
-      <DropdownItem key='login-btn' onPress={onOpenLogin}>
+      <Dropdown.Item key='login-btn' onPress={onOpenLogin}>
         Iniciar Sesión
-      </DropdownItem>,
-      <DropdownItem key='signup-btn' onPress={onOpenChangeSignUp}>
+      </Dropdown.Item>,
+      <Dropdown.Item key='signup-btn' onPress={onOpenChangeSignUp}>
         Registrarse
-      </DropdownItem>
+      </Dropdown.Item>
     )
   } else {
     items.push(
-      <DropdownItem
+      <Dropdown.Item
         key='me-account-btn'
         href={`/account/${currentUser.username}`}
       >
         Mi cuenta
-      </DropdownItem>,
-      <DropdownItem
+      </Dropdown.Item>,
+      <Dropdown.Item
         key='new-record-btn'
         onClick={() => {
-          onOpenChangeSubmitRecord()
+          setChangeSubmitRecordOpen(true)
         }}
       >
         Nuevo Record
-      </DropdownItem>,
-      <DropdownItem key='changePass-btn' onPress={onOpenChangePassword}>
+      </Dropdown.Item>,
+      <Dropdown.Item key='changePass-btn' onPress={onOpenChangePassword}>
         Cambiar contraseña
-      </DropdownItem>
+      </Dropdown.Item>
     )
   }
 
   // Admin Link
   if (!admin && logged && ['admin', 'owner'].includes(currentUser.role ?? '')) {
     items.push(
-      <DropdownItem key='admin-link' href='/admin'>
+      <Dropdown.Item key='admin-link' href='/admin'>
         Admin Dashboard
-      </DropdownItem>
+      </Dropdown.Item>
     )
   }
 
   // Only admin path
   if (admin) {
     items.push(
-      <DropdownItem key='admin-return-link' href='/'>
+      <Dropdown.Item key='admin-return-link' href='/'>
         Volver al Inicio
-      </DropdownItem>
+      </Dropdown.Item>
     )
   }
 
   // Exclude Admin Path
   if (logged && !admin) {
     items.push(
-      <DropdownItem
+      <Dropdown.Item
         className='text-danger'
-        color='danger'
+        // TODO color='danger'
         key='logout-btn'
         onPress={() => {
           openModal({
@@ -146,7 +118,7 @@ const UserDropdown = ({
         }}
       >
         Cerrar Sesión
-      </DropdownItem>
+      </Dropdown.Item>
     )
   }
   //#endregion Items
@@ -155,17 +127,16 @@ const UserDropdown = ({
   return (
     <>
       <Dropdown
-        placement='bottom-end'
-        classNames={{
-          base: 'before:bg-default-200', // change arrow background
-          content: 'py-1 px-1 border border-default-200 bg-background/90'
-        }}
+      // classNames={{
+      //   base: 'before:bg-default-200', // change arrow background
+      //   content: 'py-1 px-1 border border-default-200 bg-background/90'
+      // }}
       >
-        <DropdownTrigger>
+        <Dropdown.Trigger>
           <Button
-            color='default'
-            variant='flat'
-            className={currentUser.username ? `user-dropdown__button` : ''}
+            // color='default'
+            variant='tertiary'
+            className={`py-4 ${currentUser.username ? `user-dropdown__button` : ''}`}
           >
             {currentUser.username && (
               <>
@@ -183,31 +154,59 @@ const UserDropdown = ({
               {!currentUser.username && 'Sin cuenta'}
             </span>
           </Button>
-        </DropdownTrigger>
-        <DropdownMenu
-          aria-label='Profile menu'
-          disabledKeys={['profile']}
-          className='p-3'
-          itemClasses={{
-            base: [
-              'rounded-md',
-              'transition-opacity',
-              'data-[hover=true]:text-foreground',
-              'data-[hover=true]:bg-[#FFFFFF22]',
-              'dark:data-[hover=true]:bg-[#FFFFFF33]',
-              'data-[selectable=true]:focus:bg-[#FFFFFF33]',
-              'data-[pressed=true]:opacity-70',
-              'data-[focus-visible=true]:ring-default-500'
-            ]
-          }}
+        </Dropdown.Trigger>
+
+        <Dropdown.Popover
+          placement='bottom end'
+          className='border-default-200 bg-background/90 border p-1'
         >
-          <DropdownSection aria-label='User'>{items}</DropdownSection>
-        </DropdownMenu>
+          <Dropdown.Menu
+            aria-label='Profile menu'
+            disabledKeys={['profile']}
+            className='p-3'
+            // itemClasses={{
+            //   base: [
+            //     'rounded-md',
+            //     'transition-opacity',
+            //     'data-[hover=true]:text-foreground',
+            //     'data-[hover=true]:bg-[#FFFFFF22]',
+            //     'dark:data-[hover=true]:bg-[#FFFFFF33]',
+            //     'data-[selectable=true]:focus:bg-[#FFFFFF33]',
+            //     'data-[pressed=true]:opacity-70',
+            //     'data-[focus-visible=true]:ring-default-500'
+            //   ]
+            // }}
+          >
+            <Dropdown.Section aria-label='User'>
+              <Header>
+                <div className='text-foreground inline-flex items-center gap-2 font-light'>
+                  <Avatar className='rounded-none'>
+                    <Avatar.Image src={iconAvatar} className='rounded-none' />
+                  </Avatar>
+                  <div className='flex flex-col items-start'>
+                    <span className='text-sm'>
+                      {currentUser.username == undefined
+                        ? 'Invitado'
+                        : currentUser.username}
+                    </span>
+                    <span className='text-muted text-xs'>
+                      {currentUser.username == undefined
+                        ? 'none'
+                        : currentUser.phone}
+                    </span>
+                  </div>
+                </div>
+              </Header>
+              {items}
+            </Dropdown.Section>
+          </Dropdown.Menu>
+        </Dropdown.Popover>
       </Dropdown>
-      <SubmitRecordModal
+      {/* TODO fix modal */}
+      {/* <SubmitRecordModal
         isOpen={isOpenSubmitRecord}
-        onOpenChange={onOpenChangeSubmitRecord}
-      />
+        onOpenChange={setChangeSubmitRecordOpen}
+      /> */}
     </>
   )
   //#endregion

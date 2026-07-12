@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "@heroui/styles"; 
+@custom-variant dark (&:is(.dark *));
 
 .global-full-height {
   min-height: calc(100dvh - 65px);

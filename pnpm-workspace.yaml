@@ -1,0 +1,5 @@
+onlyBuiltDependencies:
+  - bufferutil
+  - docsify
+  - sharp
+  - unrs-resolver

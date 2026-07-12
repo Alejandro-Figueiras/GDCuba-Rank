@@ -5,7 +5,7 @@ const FrontLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <FrontNavbar />
-      {children}
+      <div className='pt-16'>{children}</div>
     </>
   )
 }

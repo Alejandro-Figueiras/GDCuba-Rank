@@ -126,35 +126,28 @@ const UserDropdown = ({
   //#region Dropdown
   return (
     <>
-      <Dropdown
-      // classNames={{
-      //   base: 'before:bg-default-200', // change arrow background
-      //   content: 'py-1 px-1 border border-default-200 bg-background/90'
-      // }}
-      >
-        <Dropdown.Trigger>
-          <Button
-            // color='default'
-            variant='tertiary'
-            className={`py-4 ${currentUser.username ? `user-dropdown__button` : ''}`}
-          >
-            {currentUser.username && (
-              <>
-                <img
-                  src={iconAvatar}
-                  alt={currentUser.username}
-                  className='h-7'
-                />
-                <span className='user-dropdown__username'>
-                  {currentUser.username}
-                </span>
-              </>
-            )}
-            <span className='user-dropdown__sin-cuenta'>
-              {!currentUser.username && 'Sin cuenta'}
-            </span>
-          </Button>
-        </Dropdown.Trigger>
+      <Dropdown>
+        <Button
+          variant='tertiary'
+          // TODO revisar cuando halla cuenta
+          className={`py-4 ${currentUser.username ? `user-dropdown__button` : ''}`}
+        >
+          {currentUser.username && (
+            <>
+              <img
+                src={iconAvatar}
+                alt={currentUser.username}
+                className='h-7'
+              />
+              <span className='user-dropdown__username'>
+                {currentUser.username}
+              </span>
+            </>
+          )}
+          <span className='user-dropdown__sin-cuenta'>
+            {!currentUser.username && 'Sin cuenta'}
+          </span>
+        </Button>
 
         <Dropdown.Popover
           placement='bottom end'
@@ -164,18 +157,6 @@ const UserDropdown = ({
             aria-label='Profile menu'
             disabledKeys={['profile']}
             className='p-3'
-            // itemClasses={{
-            //   base: [
-            //     'rounded-md',
-            //     'transition-opacity',
-            //     'data-[hover=true]:text-foreground',
-            //     'data-[hover=true]:bg-[#FFFFFF22]',
-            //     'dark:data-[hover=true]:bg-[#FFFFFF33]',
-            //     'data-[selectable=true]:focus:bg-[#FFFFFF33]',
-            //     'data-[pressed=true]:opacity-70',
-            //     'data-[focus-visible=true]:ring-default-500'
-            //   ]
-            // }}
           >
             <Dropdown.Section aria-label='User'>
               <Header>

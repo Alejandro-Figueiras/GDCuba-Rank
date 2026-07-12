@@ -49,7 +49,7 @@ const GlobalLayout = async ({ children }: { children: ReactNode }) => {
   updateAccounts({ limit: 5 }) // <- Actualiza los datos de la db
   return (
     <html lang='es' className='dark' data-theme='dark'>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-background text-foreground`}>
         <Providers>
           {children}
           <ToastContainer transition={Flip} />

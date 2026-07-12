@@ -1,6 +1,10 @@
+import { useMemo } from 'react'
+
 const MainFooter = () => {
+  const year = useMemo(() => new Date().getFullYear(), [])
+
   return (
-    <div className='container mx-auto mt-10 flex flex-row items-center justify-between gap-4 border-t-1 border-default-200 p-4'>
+    <div className='border-default-200 container mx-auto mt-10 flex flex-row items-center justify-between gap-4 border-t p-4'>
       <div className=''>
         ©{' '}
         <a
@@ -11,7 +15,7 @@ const MainFooter = () => {
         >
           Alejandro Figueiras
         </a>
-        , GD Cuba Community. 2024 All Rights Reserved.
+        , GD Cuba Community. {year} All Rights Reserved.
       </div>
       <div className='flex min-w-10 flex-row gap-4'>
         <a

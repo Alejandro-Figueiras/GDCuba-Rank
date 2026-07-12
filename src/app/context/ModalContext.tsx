@@ -9,7 +9,7 @@ import Modal from '@/components/ModalTemplate'
 import UserModalView from '@/components/UserModalView'
 import { notify } from '@/libs/toastNotifications'
 import { Account } from '@/models/Account'
-import { useDisclosure } from '@nextui-org/react'
+// import { useDisclosure } from '@nextui-org/react'
 import React, { createContext, type ReactNode, useState } from 'react'
 
 export type UserInView = {
@@ -50,27 +50,27 @@ export default function ModalProvider({ children }: { children: ReactNode }) {
   const [currentUserInView, setCurrentUserInView] = useState(
     undefined as undefined | UserInView
   )
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
-  const {
-    isOpen: isOpenUserView,
-    onOpen: onOpenUserView,
-    onOpenChange: onOpenChangeUserView
-  } = useDisclosure()
-  const {
-    isOpen: isOpenLogin,
-    onOpen: onOpenLogin,
-    onOpenChange: onOpenChangeLogin
-  } = useDisclosure()
-  const {
-    isOpen: isOpenSignUp,
-    onOpen: onOpenSignUp,
-    onOpenChange: onOpenChangeSignUp
-  } = useDisclosure()
-  const {
-    isOpen: isOpenPassword,
-    onOpen: onOpenPassword,
-    onOpenChange: onOpenChangePassword
-  } = useDisclosure()
+  // const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
+  // const {
+  //   isOpen: isOpenUserView,
+  //   onOpen: onOpenUserView,
+  //   onOpenChange: onOpenChangeUserView
+  // } = useDisclosure()
+  // const {
+  //   isOpen: isOpenLogin,
+  //   onOpen: onOpenLogin,
+  //   onOpenChange: onOpenChangeLogin
+  // } = useDisclosure()
+  // const {
+  //   isOpen: isOpenSignUp,
+  //   onOpen: onOpenSignUp,
+  //   onOpenChange: onOpenChangeSignUp
+  // } = useDisclosure()
+  // const {
+  //   isOpen: isOpenPassword,
+  //   onOpen: onOpenPassword,
+  //   onOpenChange: onOpenChangePassword
+  // } = useDisclosure()
 
   const openModal = ({
     title,
@@ -83,11 +83,11 @@ export default function ModalProvider({ children }: { children: ReactNode }) {
     onSubmit: () => void
     action?: string
   }) => {
-    if (!isOpen) {
-      console.log('Opening modal')
-      onOpen()
-      setCurrent({ title, desc, action, onSubmit })
-    }
+    // if (!isOpen) {
+    //   console.log('Opening modal')
+    //   onOpen()
+    //   setCurrent({ title, desc, action, onSubmit })
+    // }
   }
 
   const openUserView = async ({
@@ -97,56 +97,59 @@ export default function ModalProvider({ children }: { children: ReactNode }) {
     user: Account | { username: string }
     update?: boolean
   }) => {
-    const shouldLoad = (user as Account).stars == null
-    setCurrentUserInView({
-      account: user,
-      stuff: [],
-      isLoading: shouldLoad,
-      isStuffLoading: user && ((user as Account).stuff ?? '') != ''
-    })
-    onOpenUserView()
-    if (shouldLoad) {
-      const accInfo = await getAccountAction({ username: user.username })
-      if (!accInfo) {
-        notify('Error al cargar la cuenta', 'error')
-        onClose()
-        return
-      }
-      user = JSON.parse(accInfo) as Account
-    }
-
-    if (update) {
-      const updateInfo = await updateAccountAction(
-        (user as Account).accountid,
-        user.username
-      )
-      if (updateInfo) {
-        const newData = JSON.parse(updateInfo)
-        user = { ...user, ...newData } as Account
-      }
-    }
-    const stuff =
-      (user as Account).stuff != ''
-        ? JSON.parse(
-            await getStuffItemsAction({
-              accountid: (user as Account).accountid
-            })
-          )
-        : []
-    setCurrentUserInView({ account: user as Account, stuff })
+    // const shouldLoad = (user as Account).stars == null
+    // setCurrentUserInView({
+    //   account: user,
+    //   stuff: [],
+    //   isLoading: shouldLoad,
+    //   isStuffLoading: user && ((user as Account).stuff ?? '') != ''
+    // })
+    // onOpenUserView()
+    // if (shouldLoad) {
+    //   const accInfo = await getAccountAction({ username: user.username })
+    //   if (!accInfo) {
+    //     notify('Error al cargar la cuenta', 'error')
+    //     onClose()
+    //     return
+    //   }
+    //   user = JSON.parse(accInfo) as Account
+    // }
+    // if (update) {
+    //   const updateInfo = await updateAccountAction(
+    //     (user as Account).accountid,
+    //     user.username
+    //   )
+    //   if (updateInfo) {
+    //     const newData = JSON.parse(updateInfo)
+    //     user = { ...user, ...newData } as Account
+    //   }
+    // }
+    // const stuff =
+    //   (user as Account).stuff != ''
+    //     ? JSON.parse(
+    //         await getStuffItemsAction({
+    //           accountid: (user as Account).accountid
+    //         })
+    //       )
+    //     : []
+    // setCurrentUserInView({ account: user as Account, stuff })
   }
 
+  // TODO migrar a heroui modal component
   return (
     <ModalContext.Provider
       value={{
         openModal,
         openUserView,
-        onOpenLogin,
-        onOpenSignUp,
-        onOpenPassword
+        // onOpenLogin,
+        // onOpenSignUp,
+        // onOpenPassword
+        onOpenLogin: () => {},
+        onOpenSignUp: () => {},
+        onOpenPassword: () => {}
       }}
     >
-      <UserModalView
+      {/* <UserModalView
         user={currentUserInView}
         onOpenChange={onOpenChangeUserView}
         isOpen={isOpenUserView}
@@ -164,7 +167,7 @@ export default function ModalProvider({ children }: { children: ReactNode }) {
       <ChangePasswordForm
         isOpen={isOpenPassword}
         onOpenChange={onOpenChangePassword}
-      />
+      /> */}
       {children}
     </ModalContext.Provider>
   )

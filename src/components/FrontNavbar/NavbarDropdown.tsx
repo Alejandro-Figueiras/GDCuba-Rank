@@ -1,11 +1,4 @@
-import {
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
-  Button,
-  NavbarItem
-} from '@nextui-org/react'
+import { Dropdown, Button } from '@heroui/react'
 import ChevronDownIcon from '../Icons/ChevonDrownIcon'
 import { usePathname } from 'next/navigation'
 import FrontNavbarItem from './FrontNavbarItem'
@@ -21,54 +14,34 @@ const NavbarDropdown = ({
 }) => {
   const rutaActual = usePathname()
   return (
-    <Dropdown
-      classNames={{
-        content: 'bg-background/90 border border-default-200'
-      }}
-    >
-      <NavbarItem>
-        <DropdownTrigger>
-          <Button
-            disableRipple
-            className={
-              'bg-transparent p-0 text-lg data-[hover=true]:bg-transparent' +
-              (rutaActual.startsWith(info.startsWith) ? ' text-primary' : '')
-            }
-            endContent={<ChevronDownIcon />}
-            radius='sm'
-            variant='light'
-          >
-            {info.title}
-          </Button>
-        </DropdownTrigger>
-      </NavbarItem>
-      <DropdownMenu
-        aria-label={info.title}
-        itemClasses={{
-          base: [
-            'gap-4',
-            'rounded-md',
-            'transition-opacity',
-            'data-[hover=true]:text-foreground',
-            'data-[hover=true]:bg-[#FFFFFF22]',
-            'dark:data-[hover=true]:bg-[#FFFFFF33]',
-            'data-[selectable=true]:focus:bg-[#FFFFFF33]',
-            'data-[pressed=true]:opacity-70',
-            'data-[focus-visible=true]:ring-default-500'
-          ]
-        }}
-      >
-        {info.items.map((item) => (
-          <DropdownItem
-            key={item.key}
-            startContent={<img src={item.img} width='24' alt='' />}
-            href={item.href}
-          >
-            {item.label}
-          </DropdownItem>
-        ))}
-      </DropdownMenu>
-    </Dropdown>
+    <li>
+      <Dropdown>
+        <Button
+          className={
+            'rounded-sm bg-transparent p-0 text-lg' +
+            (rutaActual.startsWith(info.startsWith) ? ' text-primary' : '')
+          }
+          variant='ghost'
+        >
+          {info.title}
+          <ChevronDownIcon />
+        </Button>
+        <Dropdown.Popover className='bg-background/90 rounded-xl border border-gray-700'>
+          <Dropdown.Menu aria-label={info.title}>
+            {info.items.map((item) => (
+              <Dropdown.Item
+                key={item.key}
+                className='hover:text-foreground rounded-xl dark:hover:bg-[#FFFFFF22]'
+                href={item.href}
+              >
+                <img src={item.img} width='24' alt='' />
+                {item.label}
+              </Dropdown.Item>
+            ))}
+          </Dropdown.Menu>
+        </Dropdown.Popover>
+      </Dropdown>
+    </li>
   )
 }
 

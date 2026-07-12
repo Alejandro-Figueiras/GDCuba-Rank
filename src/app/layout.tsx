@@ -48,7 +48,7 @@ export const metadata = {
 const GlobalLayout = async ({ children }: { children: ReactNode }) => {
   updateAccounts({ limit: 5 }) // <- Actualiza los datos de la db
   return (
-    <html lang='es'>
+    <html lang='es' className='dark' data-theme='dark'>
       <body className={inter.className}>
         <Providers>
           {children}

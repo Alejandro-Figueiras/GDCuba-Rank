@@ -8,11 +8,11 @@ import MainInfo from '@/components/LandingPage/MainInfo'
 export default function Home() {
   return (
     <>
-      <div className='global-full-viewport landing-background absolute left-0 top-0 -z-10 flex w-full flex-row justify-center opacity-50'></div>
+      <div className='global-full-viewport landing-background absolute top-0 left-0 -z-10 flex w-full flex-row justify-center opacity-50'></div>
       <MainHero />
-      <MainStats />
+      {/* <MainStats />
       <MainInfo />
-      <MainFooter />
+      <MainFooter /> */}
     </>
   )
 }

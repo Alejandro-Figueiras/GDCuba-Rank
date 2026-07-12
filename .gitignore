@@ -39,3 +39,7 @@ next-env.d.ts
 # inconsistencias entre package managers
 yarn.lock
 package-lock.json
+
+# heroui-agents-md
+.heroui-docs/
+AGENTS.md

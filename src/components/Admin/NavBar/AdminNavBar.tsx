@@ -1,6 +1,5 @@
 'use client'
 import React, { useContext } from 'react'
-import { Navbar, NavbarContent, NavbarItem } from '@nextui-org/navbar'
 
 import { GlobalContext } from '@/app/context/GlobalContext'
 import { BurguerButton } from './BurgerButton'
@@ -10,23 +9,20 @@ const AdminNavBar = () => {
   const { currentUser } = useContext(GlobalContext)
   return (
     <>
-      <Navbar isBordered maxWidth='2xl'>
-        {/* Sidebar Trigger Button */}
-        <NavbarContent className='md:hidden'>
-          <BurguerButton />
-        </NavbarContent>
+      <nav className='border-separator bg-background/70 sticky top-0 z-40 w-full border-b backdrop-blur-lg'>
+        <header className='mx-auto flex h-16 w-full max-w-[1536px] items-center justify-between px-4 sm:px-6'>
+          {/* Sidebar Trigger Button */}
+          <div className='flex items-center md:hidden'>
+            <BurguerButton />
+          </div>
 
-        <NavbarContent
-          className='hidden gap-4 sm:flex'
-          justify='start'
-        ></NavbarContent>
+          <div className='hidden items-center gap-4 sm:flex'></div>
 
-        <NavbarContent justify='end'>
-          <NavbarItem>
+          <div className='flex items-center justify-end'>
             <UserDropdown currentUser={currentUser} />
-          </NavbarItem>
-        </NavbarContent>
-      </Navbar>
+          </div>
+        </header>
+      </nav>
     </>
   )
 }

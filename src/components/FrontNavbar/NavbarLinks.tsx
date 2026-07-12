@@ -1,4 +1,3 @@
-import { NavbarItem, NavbarMenuItem } from '@nextui-org/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { type ReactNode } from 'react'
@@ -13,11 +12,15 @@ export const NavLink = ({
   const rutaActual = usePathname()
 
   return (
-    <NavbarItem isActive={rutaActual == href}>
-      <Link href={href} color={rutaActual == href ? 'primary' : 'foreground'}>
+    <li>
+      <Link
+        href={href}
+        className={rutaActual == href ? 'text-primary' : 'text-foreground'}
+        aria-current={rutaActual == href ? 'page' : undefined}
+      >
         {children}
       </Link>
-    </NavbarItem>
+    </li>
   )
 }
 
@@ -35,14 +38,14 @@ export const NavMenuLink = ({
   const rutaActual = usePathname()
 
   return (
-    <NavbarMenuItem isActive={rutaActual == href} onClick={onClick}>
+    <li onClick={onClick}>
       <Link
         href={href}
-        color='primary'
-        className={`w-full ${fontSize ?? 'text-2xl'}`}
+        className={`block w-full ${fontSize ?? 'text-2xl'} ${rutaActual == href ? 'text-primary' : 'text-foreground'}`}
+        aria-current={rutaActual == href ? 'page' : undefined}
       >
         {children}
       </Link>
-    </NavbarMenuItem>
+    </li>
   )
 }

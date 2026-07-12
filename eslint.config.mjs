@@ -1,14 +1,12 @@
-import { FlatCompat } from '@eslint/eslintrc';
+import { defineConfig, globalIgnores } from 'eslint/config'
+import nextVitals from 'eslint-config-next/core-web-vitals'
+import nextTs from 'eslint-config-next/typescript'
+import prettier from 'eslint-config-prettier/flat'
 
-const compat = new FlatCompat({
-  baseDirectory: import.meta.url,
-});
-
-/** @type {import('eslint').Linter.FlatConfig[]} */
-const eslintConfig = [
-  ...compat.config({
-    extends: ["plugin:react/recommended", 'next', 'plugin:@typescript-eslint/recommended'],
-  }),
+const eslintConfig = defineConfig([
+  ...nextVitals,
+  ...nextTs,
+  prettier,
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     rules: {
@@ -18,9 +16,18 @@ const eslintConfig = [
       '@typescript-eslint/explicit-function-return-type': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-misused-promises': 'off',
-      '@next/next/no-img-element': 'off'
-    },
+      '@typescript-eslint/no-require-imports': 'off',
+      '@next/next/no-img-element': 'off',
+      'react-hooks/immutability': 'off',
+      'react-hooks/set-state-in-effect': 'off'
+    }
   },
-];
+  globalIgnores([
+    '.next/**',
+    'out/**',
+    'build/**',
+    'next-env.d.ts'
+  ])
+])
 
-export default eslintConfig;
+export default eslintConfig

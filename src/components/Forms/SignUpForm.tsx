@@ -1,26 +1,25 @@
 'use client'
-import React, { type MutableRefObject, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { Button } from '@nextui-org/button'
-import { Input } from '@nextui-org/input'
-
-// Modals
 import {
   Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter
-} from '@nextui-org/modal'
+  Button,
+  TextField,
+  Input,
+  Label,
+  FieldError
+} from '@heroui/react'
 import { notify } from '@/libs/toastNotifications'
 import { register } from '@/actions/register/register'
 
+const phoneRegex = /^\+[0-9\s]+$/
+
 const SignUpForm = ({
   isOpen,
-  onOpenChange
+  setOpen
 }: {
   isOpen: boolean
-  onOpenChange: () => void
+  setOpen: (isOpen: boolean) => void
 }) => {
   const [fieldsError, setFieldsError] = useState({
     userField: false,
@@ -30,56 +29,78 @@ const SignUpForm = ({
 
   const [canSubmit, setCanSubmit] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [phone, setPhone] = useState('')
+  const [user, setUser] = useState('')
+  const [password, setPassword] = useState('')
+  const [passwordSecure, setPasswordSecure] = useState('')
 
-  const phoneRef = useRef() as MutableRefObject<HTMLInputElement>
-  const userRef = useRef() as MutableRefObject<HTMLInputElement>
-  const passwordRef = useRef() as MutableRefObject<HTMLInputElement>
-  const passwordSecureRef = useRef() as MutableRefObject<HTMLInputElement>
-  const phoneRegex = /^\+[0-9\s]+$/
+  useEffect(() => {
+    const userCheck = () => {
+      if (user.length === 0) {
+        setFieldsError((prev) => ({
+          ...prev,
+          userField: false
+        }))
+        return false
+      } else
+        setFieldsError((prev) => ({
+          ...prev,
+          userField: false
+        }))
+      return true
+    }
 
-  const updateCanSubmit = () => {
-    const validUser = !fieldsError.userField
-    const validPassword =
-      passwordRef.current.value.length > 0 && !fieldsError.notMatchPassword
-    const validPhone = phoneRegex.test(phoneRef.current.value)
+    const passwordCheck = () => {
+      if (password.length === 0 && passwordSecure.length === 0) {
+        setFieldsError((prev) => ({
+          ...prev,
+          notMatchPassword: false
+        }))
+        return false
+      }
 
-    setCanSubmit(validPassword && validUser && validPhone)
-  }
+      if (password !== passwordSecure) {
+        setFieldsError((prev) => ({
+          ...prev,
+          notMatchPassword: true
+        }))
+        return false
+      } else
+        setFieldsError((prev) => ({
+          ...prev,
+          notMatchPassword: false
+        }))
+      return true
+    }
 
-  const passwordCheck = () => {
-    if (passwordRef.current.value !== passwordSecureRef.current.value) {
-      setFieldsError((prev) => ({
-        ...prev,
-        notMatchPassword: true
-      }))
-    } else
-      setFieldsError((prev) => ({
-        ...prev,
-        notMatchPassword: false
-      }))
-  }
+    const phoneCheck = () => {
+      if (!phoneRegex.test(phone)) {
+        setFieldsError((prev) => ({
+          ...prev,
+          phoneInvalid: phone.length > 0
+        }))
+        return false
+      } else
+        setFieldsError((prev) => ({
+          ...prev,
+          phoneInvalid: false
+        }))
+      return true
+    }
 
-  const phoneCheck = () => {
-    if (!phoneRegex.test(phoneRef.current.value)) {
-      console.log('invalid')
-      setFieldsError((prev) => ({
-        ...prev,
-        phoneInvalid: true
-      }))
-    } else
-      setFieldsError((prev) => ({
-        ...prev,
-        phoneInvalid: false
-      }))
-  }
+    const validUser = userCheck()
+    const validPhone = phoneCheck()
+    const validPw = passwordCheck()
+    setCanSubmit(validPw && validUser && validPhone)
+  }, [phone, password, passwordSecure, user?.length])
 
-  const handleSubmit = async (onClose: () => void) => {
+  const handleSubmit = async () => {
     setCanSubmit(false)
     setIsLoading(true)
     const formData = {
-      username: userRef.current.value,
-      phone: phoneRef.current.value,
-      password: passwordRef.current.value
+      username: user,
+      phone: phone,
+      password: password
     }
 
     const data = JSON.parse(await register(formData))
@@ -87,7 +108,7 @@ const SignUpForm = ({
 
     if (data.status == 200) {
       notify(data.message, 'success')
-      onClose()
+      setOpen(false)
     } else {
       notify(data.error, 'error')
     }
@@ -97,84 +118,87 @@ const SignUpForm = ({
   }
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onOpenChange={onOpenChange}
-      placement='top-center'
-      backdrop='blur'
-    >
-      <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader className='flex flex-col gap-1'>
-              Registrarse
-            </ModalHeader>
-            <ModalBody onKeyUp={updateCanSubmit}>
-              <Input
-                autoFocus
-                label='Número de Teléfono'
-                placeholder='Ej: +53 51234567'
-                type='phone'
-                variant='bordered'
-                ref={phoneRef}
-                onChange={phoneCheck}
-                errorMessage={
-                  fieldsError.phoneInvalid ? 'Número de telefono inválido' : ''
-                }
-              />
-              <Input
-                label='Usuario en GD'
-                placeholder='Introduce tu nombre de usuario'
-                variant='bordered'
-                ref={userRef}
-                onChange={() => {
-                  if (userRef.current.value.length === 0)
-                    setFieldsError((prev) => ({ ...prev, userField: true }))
-                  else setFieldsError((prev) => ({ ...prev, userField: false }))
-                }}
-                errorMessage={
-                  fieldsError.userField ? 'Este campo no puede estar vacio' : ''
-                }
-              />
-              <Input
-                label='Contraseña'
-                placeholder='Introduce tu contraseña'
-                type='password'
-                variant='bordered'
-                ref={passwordRef}
-                onChange={passwordCheck}
-                // onKeyUp={updateCanSubmit}
-              />
-              <Input
-                label='Repite la Contraseña'
-                placeholder='Introduce tu contraseña otra vez, para estar seguros'
-                type='password'
-                variant='bordered'
-                ref={passwordSecureRef}
-                errorMessage={
-                  fieldsError.notMatchPassword
-                    ? 'Las contraseñas no coinciden'
-                    : ''
-                }
-                onChange={passwordCheck}
-                // onKeyUp={updateCanSubmit}
-              />
-            </ModalBody>
-            <ModalFooter>
-              <Button color='default' variant='flat' onPress={onClose}>
+    <Modal isOpen={isOpen} onOpenChange={setOpen}>
+      <Modal.Backdrop>
+        <Modal.Container>
+          <Modal.Dialog>
+            <Modal.Header className='flex flex-col gap-1'>
+              <Modal.Heading className='text-lg'>Registrarse</Modal.Heading>
+              <Modal.CloseTrigger />
+            </Modal.Header>
+            <Modal.Body className='flex flex-col gap-4'>
+              <TextField
+                value={phone}
+                onChange={setPhone}
+                isRequired
+                isInvalid={fieldsError.phoneInvalid}
+              >
+                <Label>Número de Teléfono</Label>
+                <Input
+                  autoFocus
+                  placeholder='Ej: +53 51234567'
+                  className='bordered-input'
+                  type='phone'
+                />
+                {fieldsError.phoneInvalid && (
+                  <FieldError>Número de telefono inválido</FieldError>
+                )}
+              </TextField>
+              <TextField
+                value={user}
+                onChange={setUser}
+                isRequired
+                isInvalid={fieldsError.userField}
+              >
+                <Label>Usuario en GD</Label>
+                <Input
+                  placeholder='Introduce tu nombre de usuario'
+                  className='bordered-input'
+                />
+                {fieldsError.userField && (
+                  <FieldError>Este campo no puede estar vacio</FieldError>
+                )}
+              </TextField>
+              <TextField value={password} onChange={setPassword}>
+                <Label>Contraseña</Label>
+                <Input
+                  placeholder='Introduce tu contraseña'
+                  className='bordered-input'
+                  type='password'
+                />
+              </TextField>
+              <TextField
+                value={passwordSecure}
+                onChange={setPasswordSecure}
+                isRequired
+                isInvalid={fieldsError.notMatchPassword}
+              >
+                <Label>Repite la Contraseña</Label>
+                <Input
+                  placeholder='Introduce tu contraseña otra vez, para estar seguros'
+                  className='bordered-input'
+                  type='password'
+                />
+                {fieldsError.notMatchPassword && (
+                  <FieldError>Las contraseñas no coinciden</FieldError>
+                )}
+              </TextField>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant='tertiary' onPress={() => setOpen(false)}>
                 Cerrar
               </Button>
               <Button
-                isLoading={isLoading}
-                color={canSubmit ? 'primary' : 'default'}
-                onPress={() => canSubmit && handleSubmit(onClose)}
+                isPending={isLoading}
+                isDisabled={!canSubmit}
+                onPress={() => canSubmit && handleSubmit()}
               >
                 Registrarse
               </Button>
-            </ModalFooter>
-          </>
-        )}
-      </ModalContent>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
     </Modal>
   )
 }

@@ -1,43 +1,28 @@
 'use client'
-import React, {
-  type MutableRefObject,
-  useContext,
-  useRef,
-  useState
-} from 'react'
-
-import { Button } from '@nextui-org/button'
-
-// Modals
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter
-} from '@nextui-org/modal'
-import { Input } from '@nextui-org/input'
+import { useContext, useState } from 'react'
+import { Button, Modal, Input, TextField, Label } from '@heroui/react'
 import { GlobalContext } from '@/app/context/GlobalContext'
 import { notify } from '@/libs/toastNotifications'
 import { login } from '@/actions/auth/login'
 
 const LoginForm = ({
   isOpen,
-  onOpenChange
+  setOpen
 }: {
   isOpen: boolean
-  onOpenChange: () => void
+  setOpen: (isOpen: boolean) => void
 }) => {
-  const userRef = useRef() as MutableRefObject<HTMLInputElement>
-  const passwordRef = useRef() as MutableRefObject<HTMLInputElement>
+  const [user, setUser] = useState('')
+  const [password, setPassword] = useState('')
+  // TODO loading
   const [loading, setLoading] = useState(false)
   const { setCurrentUser } = useContext(GlobalContext)
 
   const handleSubmitButton = async (action: string, onClose: () => void) => {
     if (action == 'submit') {
       const formData = {
-        username: userRef.current.value,
-        password: passwordRef.current.value
+        username: user,
+        password: password
       }
       setLoading(true)
 
@@ -64,44 +49,49 @@ const LoginForm = ({
   }
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement='top-center'>
-      <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader className='flex flex-col gap-1'>
-              Inicia sesión
-            </ModalHeader>
-            <ModalBody>
-              <Input
-                autoFocus
-                label='Usuario en GD'
-                placeholder='Introduce tu nombre de usuario'
-                variant='bordered'
-                ref={userRef}
-              />
-              <Input
-                label='Contraseña'
-                placeholder='Introduce tu contraseña'
-                type='password'
-                variant='bordered'
-                ref={passwordRef}
-              />
-            </ModalBody>
-            <ModalFooter>
-              <Button color='default' variant='flat' onPress={onClose}>
+    <Modal isOpen={isOpen} onOpenChange={setOpen}>
+      <Modal.Backdrop>
+        <Modal.Container>
+          <Modal.Dialog>
+            <Modal.Header className='flex flex-row items-center justify-between'>
+              <Modal.Heading className='text-lg'>Inicia sesión</Modal.Heading>
+              <Modal.CloseTrigger />
+            </Modal.Header>
+            <Modal.Body className='flex flex-col gap-4'>
+              <TextField value={user} onChange={setUser}>
+                <Label>Usuario en GD</Label>
+                <Input
+                  autoFocus
+                  placeholder='Introduce tu nombre de usuario'
+                  className='bordered-input'
+                />
+              </TextField>
+              <TextField value={password} onChange={setPassword}>
+                <Label>Contraseña</Label>
+                <Input
+                  placeholder='Introduce tu contraseña'
+                  type='password'
+                  className='bordered-input'
+                />
+              </TextField>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant='tertiary' onPress={() => setOpen(false)}>
                 Cerrar
               </Button>
               <Button
-                color='primary'
-                onPress={() => handleSubmitButton('submit', onClose)}
-                isLoading={loading}
+                // color='primary'
+                onPress={() =>
+                  handleSubmitButton('submit', () => setOpen(false))
+                }
+                // isLoading={loading}
               >
                 Adelante
               </Button>
-            </ModalFooter>
-          </>
-        )}
-      </ModalContent>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
     </Modal>
   )
 }

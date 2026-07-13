@@ -1,17 +1,11 @@
 import { ModalContext } from '@/app/context/ModalContext'
-import {
-  Avatar,
-  Dropdown,
-  useOverlayState,
-  Button,
-  Header
-} from '@heroui/react'
+import { Avatar, Dropdown, Button, Header } from '@heroui/react'
 import { useGDIcon } from '@/robtop/iconkit/useGDIcon'
 import { useContext } from 'react'
 import { usePathname } from 'next/navigation'
 import { logout as logoutAction } from '@/actions/logout/logout'
 import { notify } from '@/libs/toastNotifications'
-import SubmitRecordModal from '../NewRecord/SubmitRecordModal'
+// TODO import SubmitRecordModal from '../NewRecord/SubmitRecordModal'
 import './UserDropdown.css'
 import { CurrentUser } from '@/app/context/GlobalContext'
 
@@ -45,9 +39,9 @@ const UserDropdown = ({
     username: currentUser.username
   })
 
-  // Submit Record
-  const { isOpen: isOpenSubmitRecord, setOpen: setChangeSubmitRecordOpen } =
-    useOverlayState()
+  // // Submit Record
+  // const { isOpen: isOpenSubmitRecord, setOpen: setChangeSubmitRecordOpen } =
+  //   useOverlayState()
 
   // #region Items
   const items = []
@@ -69,14 +63,14 @@ const UserDropdown = ({
       >
         Mi cuenta
       </Dropdown.Item>,
-      <Dropdown.Item
-        key='new-record-btn'
-        onClick={() => {
-          setChangeSubmitRecordOpen(true)
-        }}
-      >
-        Nuevo Record
-      </Dropdown.Item>,
+      // <Dropdown.Item
+      //   key='new-record-btn'
+      //   onClick={() => {
+      //     setChangeSubmitRecordOpen(true)
+      //   }}
+      // >
+      //   Nuevo Record
+      // </Dropdown.Item>,
       <Dropdown.Item key='changePass-btn' onPress={onOpenChangePassword}>
         Cambiar contraseña
       </Dropdown.Item>
@@ -105,12 +99,11 @@ const UserDropdown = ({
   if (logged && !admin) {
     items.push(
       <Dropdown.Item
-        className='text-danger'
-        // TODO color='danger'
+        className='text-danger hover:text-foreground font-semibold transition'
         key='logout-btn'
-        onPress={() => {
+        onPress={async () => {
           openModal({
-            title: `Logout`,
+            title: `Cerrar Sesión`,
             desc: `¿Seguro que deseas salir de la cuenta actual?`,
             action: 'action',
             onSubmit: () => handleLogout()
@@ -130,7 +123,7 @@ const UserDropdown = ({
         <Button
           variant='tertiary'
           // TODO revisar cuando halla cuenta
-          className={`py-4 ${currentUser.username ? `user-dropdown__button` : ''}`}
+          className={`bg-white/10 py-4 ${currentUser.username ? `user-dropdown__button` : ''}`}
         >
           {currentUser.username && (
             <>

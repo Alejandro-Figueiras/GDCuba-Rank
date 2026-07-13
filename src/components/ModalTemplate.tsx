@@ -1,23 +1,16 @@
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter
-} from '@nextui-org/modal'
-import { Button } from '@nextui-org/button'
+import { Button, Modal } from '@heroui/react'
 import { useState } from 'react'
 
 const ModalTemplate = ({
   isOpen,
-  onOpenChange,
+  setOpen,
   title = '',
   action,
   desc = '',
   submit = () => {}
 }: {
   isOpen: boolean
-  onOpenChange: () => void
+  setOpen: (isOpen: boolean) => void
   title?: string
   action?: 'delete' | 'validate' | string
   desc?: string
@@ -25,57 +18,59 @@ const ModalTemplate = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false)
 
-  const onOpen = () => {
-    onOpenChange()
+  const onOpen = (isOpen: boolean) => {
+    setOpen(isOpen)
     setIsLoading(false)
   }
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpen} placement='top-center'>
-      <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader className='flex flex-col gap-1'>
-              <h2
-                className={
+    <Modal isOpen={isOpen} onOpenChange={onOpen}>
+      <Modal.Backdrop isDismissable={!isLoading}>
+        <Modal.Container>
+          <Modal.Dialog>
+            <Modal.Header className='flex flex-col gap-1'>
+              <Modal.Heading
+                className={`text-lg font-semibold ${
                   action != 'delete'
                     ? action != 'validate'
                       ? 'text-blue-500'
                       : 'text-green-500'
                     : 'text-red-500'
-                }
+                }`}
               >
                 {title}
-              </h2>
-            </ModalHeader>
-            <ModalBody>{desc}</ModalBody>
-            <ModalFooter>
+              </Modal.Heading>
+              <Modal.CloseTrigger isDisabled={isLoading} />
+            </Modal.Header>
+            <Modal.Body className='text-foreground py-4 text-base'>
+              {desc}
+            </Modal.Body>
+            <Modal.Footer>
               <Button
-                isLoading={isLoading}
-                color={
-                  action != 'delete'
-                    ? action != 'validate'
-                      ? 'primary'
-                      : 'success'
-                    : 'danger'
-                }
+                isPending={isLoading}
+                variant={action === 'delete' ? 'danger' : 'primary'}
+                className={action === 'validate' ? 'bg-green-700' : undefined}
                 onPress={async () => {
                   setIsLoading(true)
                   await submit()
 
                   setIsLoading(false)
-                  onClose()
+                  setOpen(false)
                 }}
               >
                 <span className='text-white'>{translate(action)}</span>
               </Button>
-              <Button color='default' variant='flat' onPress={onClose}>
+              <Button
+                isDisabled={isLoading}
+                variant='tertiary'
+                onPress={() => onOpen(false)}
+              >
                 Cancelar
               </Button>
-            </ModalFooter>
-          </>
-        )}
-      </ModalContent>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
     </Modal>
   )
 }

@@ -18,7 +18,7 @@ const NavbarDropdown = ({
       <Dropdown>
         <Button
           className={
-            'rounded-sm bg-transparent p-0 text-lg' +
+            'rounded-sm bg-transparent p-0! text-lg' +
             (rutaActual.startsWith(info.startsWith) ? ' text-primary' : '')
           }
           variant='ghost'

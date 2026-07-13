@@ -182,5 +182,6 @@ const FrontNavbar = () => {
     </>
   )
 }
+// TODO movil
 
 export default FrontNavbar

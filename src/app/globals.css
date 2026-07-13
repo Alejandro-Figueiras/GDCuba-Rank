@@ -33,14 +33,41 @@
 }
 
 /* HeroUI components */
+@layer components {
+  :root {
+    --accent: hsl(212.01999999999998 100% 46.67%);
+    --accent-foreground: hsl(0 0% 100%);
+  }
+}
+
 .button {
-  @apply rounded-xl;
+  @apply h-10 min-w-20 rounded-xl px-4 font-normal;
+}
+
+.button--primary {
+  @apply hover:bg-accent rounded-xl font-normal transition-opacity hover:opacity-90;
 }
 
 .dropdown__popover {
-  @apply rounded-xl border-foreground/20;
+  @apply border-foreground/20 rounded-xl;
+}
+
+.input {
+  @apply rounded-xl;
+}
+
+.bordered-input {
+  @apply rounded-md border border-white/20 px-3 py-2 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none;
+
+  &[data-invalid='true'] {
+    @apply outline-none border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500 transition-all;
+  }
 }
 
 .menu-item {
+  @apply rounded-xl transition;
+}
+
+.modal__dialog {
   @apply rounded-xl;
 }

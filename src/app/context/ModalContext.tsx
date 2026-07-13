@@ -9,7 +9,7 @@ import Modal from '@/components/ModalTemplate'
 import UserModalView from '@/components/UserModalView'
 import { notify } from '@/libs/toastNotifications'
 import { Account } from '@/models/Account'
-// import { useDisclosure } from '@nextui-org/react'
+import { useOverlayState } from '@heroui/react'
 import React, { createContext, type ReactNode, useState } from 'react'
 
 export type UserInView = {
@@ -30,9 +30,15 @@ export const ModalContext = createContext({
     user: Account | { username: string }
     update?: boolean
   }) => {},
-  onOpenLogin: () => {},
-  onOpenSignUp: () => {},
-  onOpenPassword: () => {}
+  setOpenLogin: (isOpen: boolean) => {
+    console.warn(`mock function ${isOpen}`)
+  },
+  setOpenSignUp: (isOpen: boolean) => {
+    console.warn(`mock function ${isOpen}`)
+  },
+  setOpenPassword: (isOpen: boolean) => {
+    console.warn(`mock function ${isOpen}`)
+  }
 })
 
 export default function ModalProvider({ children }: { children: ReactNode }) {
@@ -50,27 +56,15 @@ export default function ModalProvider({ children }: { children: ReactNode }) {
   const [currentUserInView, setCurrentUserInView] = useState(
     undefined as undefined | UserInView
   )
-  // const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
-  // const {
-  //   isOpen: isOpenUserView,
-  //   onOpen: onOpenUserView,
-  //   onOpenChange: onOpenChangeUserView
-  // } = useDisclosure()
-  // const {
-  //   isOpen: isOpenLogin,
-  //   onOpen: onOpenLogin,
-  //   onOpenChange: onOpenChangeLogin
-  // } = useDisclosure()
-  // const {
-  //   isOpen: isOpenSignUp,
-  //   onOpen: onOpenSignUp,
-  //   onOpenChange: onOpenChangeSignUp
-  // } = useDisclosure()
-  // const {
-  //   isOpen: isOpenPassword,
-  //   onOpen: onOpenPassword,
-  //   onOpenChange: onOpenChangePassword
-  // } = useDisclosure()
+  const { isOpen, setOpen } = useOverlayState()
+  const {
+    isOpen: isOpenUserView,
+    setOpen: setOpenUserView,
+    close: closeUserView
+  } = useOverlayState()
+  const { isOpen: isOpenLogin, setOpen: setOpenLogin } = useOverlayState()
+  const { isOpen: isOpenSignUp, setOpen: setOpenSignUp } = useOverlayState()
+  const { isOpen: isOpenPassword, setOpen: setOpenPassword } = useOverlayState()
 
   const openModal = ({
     title,
@@ -83,11 +77,11 @@ export default function ModalProvider({ children }: { children: ReactNode }) {
     onSubmit: () => void
     action?: string
   }) => {
-    // if (!isOpen) {
-    //   console.log('Opening modal')
-    //   onOpen()
-    //   setCurrent({ title, desc, action, onSubmit })
-    // }
+    if (!isOpen) {
+      console.log('Opening modal')
+      setOpen(true)
+      setCurrent({ title, desc, action, onSubmit })
+    }
   }
 
   const openUserView = async ({
@@ -97,74 +91,70 @@ export default function ModalProvider({ children }: { children: ReactNode }) {
     user: Account | { username: string }
     update?: boolean
   }) => {
-    // const shouldLoad = (user as Account).stars == null
-    // setCurrentUserInView({
-    //   account: user,
-    //   stuff: [],
-    //   isLoading: shouldLoad,
-    //   isStuffLoading: user && ((user as Account).stuff ?? '') != ''
-    // })
-    // onOpenUserView()
-    // if (shouldLoad) {
-    //   const accInfo = await getAccountAction({ username: user.username })
-    //   if (!accInfo) {
-    //     notify('Error al cargar la cuenta', 'error')
-    //     onClose()
-    //     return
-    //   }
-    //   user = JSON.parse(accInfo) as Account
-    // }
-    // if (update) {
-    //   const updateInfo = await updateAccountAction(
-    //     (user as Account).accountid,
-    //     user.username
-    //   )
-    //   if (updateInfo) {
-    //     const newData = JSON.parse(updateInfo)
-    //     user = { ...user, ...newData } as Account
-    //   }
-    // }
-    // const stuff =
-    //   (user as Account).stuff != ''
-    //     ? JSON.parse(
-    //         await getStuffItemsAction({
-    //           accountid: (user as Account).accountid
-    //         })
-    //       )
-    //     : []
-    // setCurrentUserInView({ account: user as Account, stuff })
+    const shouldLoad = (user as Account).stars == null
+    setCurrentUserInView({
+      account: user,
+      stuff: [],
+      isLoading: shouldLoad,
+      isStuffLoading: user && ((user as Account).stuff ?? '') != ''
+    })
+    setOpenUserView(true)
+    if (shouldLoad) {
+      const accInfo = await getAccountAction({ username: user.username })
+      if (!accInfo) {
+        notify('Error al cargar la cuenta', 'error')
+        closeUserView()
+        return
+      }
+      user = JSON.parse(accInfo) as Account
+    }
+    if (update) {
+      const updateInfo = await updateAccountAction(
+        (user as Account).accountid,
+        user.username
+      )
+      if (updateInfo) {
+        const newData = JSON.parse(updateInfo)
+        user = { ...user, ...newData } as Account
+      }
+    }
+    const stuff =
+      (user as Account).stuff != ''
+        ? JSON.parse(
+            await getStuffItemsAction({
+              accountid: (user as Account).accountid
+            })
+          )
+        : []
+    setCurrentUserInView({ account: user as Account, stuff })
   }
 
-  // TODO migrar a heroui modal component
   return (
     <ModalContext.Provider
       value={{
         openModal,
         openUserView,
-        // onOpenLogin,
-        // onOpenSignUp,
-        // onOpenPassword
-        onOpenLogin: () => {},
-        onOpenSignUp: () => {},
-        onOpenPassword: () => {}
+        setOpenLogin,
+        setOpenSignUp,
+        setOpenPassword
       }}
     >
       {/* <UserModalView
         user={currentUserInView}
         onOpenChange={onOpenChangeUserView}
         isOpen={isOpenUserView}
-      />
+      /> */}
       <Modal
         isOpen={isOpen}
-        onOpenChange={onOpenChange}
+        setOpen={setOpen}
         title={current.title}
         desc={current.desc}
         action={current.action}
         submit={current.onSubmit}
       />
-      <LoginForm isOpen={isOpenLogin} onOpenChange={onOpenChangeLogin} />
-      <SignUpForm isOpen={isOpenSignUp} onOpenChange={onOpenChangeSignUp} />
-      <ChangePasswordForm
+      <LoginForm isOpen={isOpenLogin} setOpen={setOpenLogin} />
+      <SignUpForm isOpen={isOpenSignUp} setOpen={setOpenSignUp} />
+      {/*<ChangePasswordForm
         isOpen={isOpenPassword}
         onOpenChange={onOpenChangePassword}
       /> */}

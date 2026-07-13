@@ -4,15 +4,18 @@
 import { useSesion } from '@/hooks/useSesion'
 import UserDropdown from './UserDropdown'
 import { useState } from 'react'
-import { NavLink, NavMenuLink } from './NavbarLinks'
+import { NavLink } from './NavbarLinks'
 import NavbarDropdown from './NavbarDropdown'
 import { ResponsiveNavAccordion } from './ResponsiveNavAccordion'
 import './FrontNavbar.css'
 import type FrontNavbarItem from './FrontNavbarItem'
+import { Link } from '@heroui/react'
+import { usePathname } from 'next/navigation'
 
 const FrontNavbar = () => {
   const { currentUser, logout, signUp, login, changePassword } = useSesion()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const rutaActual = usePathname()
 
   const menuItems = [{ href: '/', label: 'Home' }]
   const rankItems = {
@@ -86,8 +89,10 @@ const FrontNavbar = () => {
 
   return (
     <>
-      <nav className='border-separator bg-background/70 fixed top-0 z-40 w-full border-b backdrop-blur-lg'>
-        <header className='container mx-auto flex h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6'>
+      <nav
+        className={`border-separator bg-background/70 fixed top-0 z-40 flex w-full flex-col border-b backdrop-blur-xl transition-all ${isMenuOpen && 'h-screen'}`}
+      >
+        <header className='container mx-auto flex min-h-16 w-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6'>
           <div className='flex items-center gap-3'>
             <button
               type='button'
@@ -156,25 +161,27 @@ const FrontNavbar = () => {
           </div>
         </header>
         {isMenuOpen && (
-          <div className='border-separator bg-background/95 border-t md:hidden'>
+          <div className='border-separator grow overflow-y-scroll border-t md:hidden'>
             <ul className='flex flex-col gap-2 p-4'>
               {menuItems.map((m) => (
-                <NavMenuLink
+                <Link
+                  className={`${rutaActual == m.href ? 'font-bold' : ''} px-4 text-lg`}
+                  aria-current={rutaActual == m.href ? 'page' : undefined}
                   key={m.label}
                   href={m.href}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {m.label}
-                </NavMenuLink>
+                </Link>
               ))}
-              {/* <ResponsiveNavAccordion
+              <ResponsiveNavAccordion
                 onLinkSelected={() => setIsMenuOpen(false)}
                 info={rankItems}
               />
               <ResponsiveNavAccordion
                 onLinkSelected={() => setIsMenuOpen(false)}
                 info={listsItems}
-              /> */}
+              />
             </ul>
           </div>
         )}

@@ -22,7 +22,7 @@ const RankTable = ({
     cells: ((player: Account, i: number) => React.JSX.Element)[] = []
 
   cols.push(
-    <Table.Column width={40} key={'col_pos'}>
+    <Table.Column width={40} className='w-8' key={'col_pos'}>
       #
     </Table.Column>
   )
@@ -31,7 +31,7 @@ const RankTable = ({
   ))
 
   cols.push(
-    <Table.Column key={'col_name'} minWidth={180} isRowHeader>
+    <Table.Column key={'col_name'} minWidth={180} isRowHeader className='grow'>
       Jugador
     </Table.Column>
   )
@@ -43,7 +43,7 @@ const RankTable = ({
 
   if (tipo == 'stars') {
     cols.push(
-      <Table.Column width={120} key={'col_stars'}>
+      <Table.Column className='w-26' key={'col_stars'}>
         <span className='flex'>
           <img
             src='/assets/stats/starsIcon.png'
@@ -68,7 +68,7 @@ const RankTable = ({
     ))
 
     cols.push(
-      <Table.Column width={120} key={'col_globalrank'}>
+      <Table.Column className='w-36' key={'col_globalrank'}>
         <span className='flex align-middle'>
           <img
             src='/assets/trofeos/rankIcon_1_001.png'
@@ -93,7 +93,7 @@ const RankTable = ({
     ))
   } else if (tipo == 'demons') {
     cols.push(
-      <Table.Column width={100} key={'col_demons'}>
+      <Table.Column className='w-28' key={'col_demons'}>
         <span className='flex'>
           <img
             src='/assets/dificultades/none/hard_demon.png'
@@ -118,7 +118,7 @@ const RankTable = ({
     ))
   } else if (tipo == 'moons') {
     cols.push(
-      <Table.Column width={100} key={'col_moons'}>
+      <Table.Column className='w-28' key={'col_moons'}>
         <span className='flex'>
           <img
             src='/assets/stats/moonsIcon.png'
@@ -143,7 +143,7 @@ const RankTable = ({
     ))
   } else if (tipo == 'usercoins') {
     cols.push(
-      <Table.Column width={110} key={'col_usercoin'}>
+      <Table.Column className={'w-34 shrink'} key={'col_usercoin'}>
         <span className='flex'>
           <img
             src='/assets/stats/usercoin.png'
@@ -168,7 +168,7 @@ const RankTable = ({
     ))
   } else if (tipo == 'cp') {
     cols.push(
-      <Table.Column width={130} key={'col_cp'}>
+      <Table.Column className='w-36' key={'col_cp'}>
         <span className='flex'>
           <img
             src='/assets/stats/creatorpoints.png'
@@ -193,7 +193,7 @@ const RankTable = ({
     ))
   } else if (tipo == 'extreme_demons') {
     cols.push(
-      <Table.Column width={130} key={'col_extreme'}>
+      <Table.Column className='w-32' key={'col_extreme'}>
         <span className='flex align-middle'>
           <img
             src='/assets/dificultades/none/extreme_demon.png'

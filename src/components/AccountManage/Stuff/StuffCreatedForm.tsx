@@ -3,16 +3,9 @@ import { getLevelsFromGD } from '@/actions/levels/levels'
 import type DictionaryObject from '@/helpers/DictionaryObject'
 import { parseDifficulty } from '@/helpers/levelParser'
 import type Level from '@/models/Level'
-import { Button, Input } from '@nextui-org/react'
+import { Button, Input, TextField } from '@heroui/react'
 
-import {
-  useRef,
-  useState,
-  useEffect,
-  type Dispatch,
-  type SetStateAction,
-  type MutableRefObject
-} from 'react'
+import { useState, useEffect, type Dispatch, type SetStateAction } from 'react'
 
 const StuffCreatedForm = ({
   itemData,
@@ -21,15 +14,14 @@ const StuffCreatedForm = ({
   itemData: DictionaryObject<any>
   setItemData: Dispatch<SetStateAction<DictionaryObject<any>>>
 }) => {
-  const inputRef = useRef() as MutableRefObject<HTMLInputElement>
+  const [input, setInput] = useState('')
   const [selectedLevels, setSelectedLevels] = useState(
     itemData.levels as Level[]
   )
   const [searchResult, setSearchResult] = useState([] as Level[])
 
   const handleSearch = async () => {
-    const value = inputRef.current?.value ?? ''
-    const result = JSON.parse(await getLevelsFromGD({ data: value })) as Level[]
+    const result = JSON.parse(await getLevelsFromGD({ data: input })) as Level[]
     console.log(result)
     setSearchResult(result)
   }
@@ -58,20 +50,30 @@ const StuffCreatedForm = ({
   return (
     <>
       <div className='flex flex-row gap-2'>
-        <Input
-          type='text'
+        <TextField
+          value={input}
+          onChange={setInput}
+          variant='secondary'
+          className='grow'
+        >
+          <Input
+            fullWidth
+            type='text'
+            placeholder='Nombre o ID Preferiblemente'
+          />
+        </TextField>
+        <Button
           size='md'
-          placeholder='Nombre o ID Preferiblemente'
-          label=''
-          ref={inputRef}
-        ></Input>
-        <Button size='md' onClick={handleSearch}>
+          onClick={handleSearch}
+          variant='tertiary'
+          className='text-foreground shrink'
+        >
           Buscar
         </Button>
       </div>
-      <div className='grid grid-cols-1 gap-2 sm:grid-cols-2'>
+      <div className='grid grid-cols-1 gap-2 pt-4 sm:grid-cols-2'>
         <div className='flex flex-col'>
-          <h2 className='text-sm text-default-500'>Busqueda</h2>
+          <h2 className='text-default-500 text-sm'>Busqueda</h2>
           {searchResult.map((level, i) => {
             const encontrado = !!selectedLevels.find(
               (val) => val.id == level.id
@@ -89,7 +91,7 @@ const StuffCreatedForm = ({
           })}
         </div>
         <div className='flex flex-col'>
-          <h2 className='text-sm text-default-500'>Niveles Seleccionados</h2>
+          <h2 className='text-default-500 text-sm'>Niveles Seleccionados</h2>
           {selectedLevels.map((level, i) => (
             <LevelName
               level={level}

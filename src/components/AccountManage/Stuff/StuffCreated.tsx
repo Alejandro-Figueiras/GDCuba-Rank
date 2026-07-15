@@ -23,11 +23,7 @@ const StuffCreated = ({
   manage?: boolean
   accStuff: string
 }) => {
-  const {
-    handleEdit,
-    handleUpdate,
-    modalState: modalDisclosure
-  } = useEditStuffItem({
+  const { handleEdit, handleUpdate, modalState } = useEditStuffItem({
     id,
     handlers,
     notifyTexts: {
@@ -40,7 +36,7 @@ const StuffCreated = ({
     <div className='my-2 flex flex-col'>
       {manage && (
         <StuffEditModal
-          {...modalDisclosure}
+          {...modalState}
           itemDataOld={itemData}
           title='Editar Niveles'
           handleUpdate={handleUpdate}

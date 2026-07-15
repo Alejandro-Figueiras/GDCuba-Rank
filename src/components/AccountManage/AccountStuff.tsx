@@ -115,18 +115,18 @@ const AccountStuff = ({
               />
             )
           }
-          // if (data.type == 'created') {
-          //   return (
-          //     <StuffCreated
-          //       itemData={data}
-          //       key={i}
-          //       id={id}
-          //       handlers={handlers}
-          //       manage={manage}
-          //       accStuff={account.stuff}
-          //     />
-          //   )
-          // }
+          if (data.type == 'created') {
+            return (
+              <StuffCreated
+                itemData={data}
+                key={i}
+                id={id}
+                handlers={handlers}
+                manage={manage}
+                accStuff={account.stuff}
+              />
+            )
+          }
 
           return <p key={i}>{JSON.stringify(data)}</p>
         })}

@@ -1,25 +1,18 @@
 'use client'
 
-import React, {
+import {
   useState,
   useEffect,
   type ReactNode,
   type Dispatch,
   type SetStateAction
 } from 'react'
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button
-} from '@nextui-org/react'
+import { Modal, Button } from '@heroui/react'
 import type DictionaryObject from '@/helpers/DictionaryObject'
 
 const StuffEditModal = ({
   isOpen,
-  onOpenChange,
+  setOpen,
   title,
   itemDataOld = {},
   Form,
@@ -28,7 +21,7 @@ const StuffEditModal = ({
   submitPreventer = () => true
 }: {
   isOpen: boolean
-  onOpenChange: () => void
+  setOpen: (isOpen: boolean) => void
   title: string
   itemDataOld: DictionaryObject<any>
   Form: (props: {
@@ -53,13 +46,13 @@ const StuffEditModal = ({
     setItemData(itemData ? itemData : itemDataOld)
   }
 
-  const handleSubmit = async (onClose: () => void) => {
+  const handleSubmit = async () => {
     if (!submitPreventer(itemData)) return
     setLoading(true)
     await handleUpdate(itemData)
 
     clear(itemData)
-    onClose()
+    setOpen(false)
   }
 
   useEffect(
@@ -68,39 +61,42 @@ const StuffEditModal = ({
   )
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement='top-center'>
-      <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader className='flex flex-col gap-1'>{title}</ModalHeader>
-            <ModalBody>
+    <Modal isOpen={isOpen} onOpenChange={setOpen}>
+      <Modal.Backdrop>
+        <Modal.Container>
+          <Modal.Dialog>
+            <Modal.Header>
+              <Modal.Heading className='flex flex-col gap-1'>
+                {title}
+              </Modal.Heading>
+              <Modal.CloseTrigger />
+            </Modal.Header>
+            <Modal.Body>
               <Form itemData={itemData} setItemData={setItemData} />
-            </ModalBody>
-            <ModalFooter>
+            </Modal.Body>
+            <Modal.Footer>
               <Button
-                color='default'
-                variant='flat'
+                variant='tertiary'
                 onPress={() => {
                   clear()
-                  onClose()
+                  setOpen(false)
                 }}
               >
                 Cerrar
               </Button>
               <Button
-                color='primary'
                 onPress={() => {
-                  handleSubmit(onClose)
+                  handleSubmit()
                 }}
-                isLoading={loading}
+                isPending={loading}
                 isDisabled={disabled}
               >
                 Adelante
               </Button>
-            </ModalFooter>
-          </>
-        )}
-      </ModalContent>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
     </Modal>
   )
 }

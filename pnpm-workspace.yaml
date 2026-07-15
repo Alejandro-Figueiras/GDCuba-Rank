@@ -1,3 +1,8 @@
+allowBuilds:
+  bufferutil: true
+  docsify: true
+  sharp: true
+  unrs-resolver: true
 onlyBuiltDependencies:
   - bufferutil
   - docsify

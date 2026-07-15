@@ -24,7 +24,7 @@ const SearchLevel = ({
 
   return (
     <>
-      <div className='w-100'>
+      <div className='w-full'>
         <SearchLevelPrompt
           setNiveles={setNiveles}
           setNewLevel={setNewLevel}

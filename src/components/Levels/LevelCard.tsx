@@ -1,6 +1,6 @@
 import { getLengthName, parseDifficulty } from '@/helpers/levelParser'
 import type Level from '@/models/Level'
-import { Card, CardBody, Image } from '@nextui-org/react'
+import { Card } from '@heroui/react'
 
 const LevelCard = ({
   level,
@@ -12,7 +12,7 @@ const LevelCard = ({
   const dificultad = parseDifficulty(level)
   return (
     <div className='flex justify-center'>
-      <Card
+      {/* <Card
         isBlurred
         className={`
       w-[400px] overflow-hidden border-3 border-solid border-divider 
@@ -20,10 +20,14 @@ const LevelCard = ({
       ${hover ? 'hover:bg-primary-50' : ''}`}
         shadow='sm'
       >
-        <CardBody>
+        <CardBody> */}
+      <Card
+        className={`border-divider bg-background/60 dark:bg-default-100/50 w-full overflow-hidden border-3 border-solid ${hover && 'transition hover:cursor-pointer hover:border-white/10 hover:bg-[#001731]'}`}
+      >
+        <Card.Content>
           <div className='grid grid-cols-12 items-center justify-center gap-4'>
             <div className='relative col-span-4 flex justify-center'>
-              <Image
+              <img
                 alt='Difficulty'
                 className='object-cover'
                 src={dificultad.path}
@@ -34,13 +38,13 @@ const LevelCard = ({
             <div className='col-span-8 flex flex-col'>
               <div className='flex items-start justify-between'>
                 <div className='flex flex-col gap-0'>
-                  <h1 className='mt-2 text-xl font-medium'>
+                  <h1 className='text-foreground mt-2 text-xl font-medium'>
                     {level.levelname}
                   </h1>
-                  <h3 className='font-medium text-foreground/90'>
+                  <h3 className='text-foreground/90 font-medium'>
                     <span>{level.author}</span>
                   </h3>
-                  <p className='flex flex-wrap text-small text-foreground/80'>
+                  <p className='text-small text-foreground/80 flex flex-wrap'>
                     <span className='mr-2 flex'>
                       <img
                         src={`/assets/stats/${level.platformer ? 'moons' : 'stars'}Icon${level.stars ? '' : 'BN'}.png`}
@@ -98,7 +102,7 @@ const LevelCard = ({
               </div>
             </div>
           </div>
-        </CardBody>
+        </Card.Content>
       </Card>
     </div>
   )

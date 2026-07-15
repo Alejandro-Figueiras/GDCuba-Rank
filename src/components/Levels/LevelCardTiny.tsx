@@ -1,6 +1,6 @@
 import { getLengthName, parseDifficulty } from '@/helpers/levelParser'
 import type Level from '@/models/Level'
-import { Card, CardBody, Image } from '@nextui-org/react'
+import { Card } from '@heroui/react'
 
 const LevelCardTiny = ({
   level,
@@ -12,17 +12,12 @@ const LevelCardTiny = ({
   const dificultad = parseDifficulty(level)
   return (
     <Card
-      isBlurred
-      className={`
-      w-full overflow-hidden border-3 border-solid border-divider 
-      bg-background/60 dark:bg-default-100/50
-      ${hover ? 'hover:bg-primary-50' : ''}`}
-      shadow='sm'
+      className={`border-divider bg-background/60 dark:bg-default-100/50 w-full overflow-hidden border-3 border-solid ${hover && 'transition hover:cursor-pointer hover:border-white/10 hover:bg-[#001731]'}`}
     >
-      <CardBody>
+      <Card.Content>
         <div className='flex flex-row items-center justify-start gap-4'>
           <div className='relative flex min-w-14 justify-center'>
-            <Image
+            <img
               alt='Difficulty'
               className='object-cover'
               src={dificultad.path}
@@ -35,14 +30,14 @@ const LevelCardTiny = ({
               <div className='flex flex-col gap-0'>
                 <div className=' '>
                   <h1 className='mt-2 flex flex-row flex-wrap font-medium'>
-                    <span className='text-xl '>{level.levelname}</span>
-                    <span className='ml-2 text-nowrap text-lg text-foreground/70'>
+                    <span className='text-xl'>{level.levelname}</span>
+                    <span className='text-foreground/70 ml-2 text-lg text-nowrap'>
                       by {level.author}
                     </span>
                   </h1>
-                  <h3 className='font-medium '></h3>
+                  <h3 className='font-medium'></h3>
                 </div>
-                <p className='flex gap-2 text-small text-foreground/80'>
+                <p className='text-small text-foreground/80 flex gap-2'>
                   <span className='flex'>
                     <img
                       src={`/assets/stats/${level.platformer ? 'moons' : 'stars'}Icon${level.stars ? '' : 'BN'}.png`}
@@ -82,7 +77,7 @@ const LevelCardTiny = ({
             </div>
           </div>
         </div>
-      </CardBody>
+      </Card.Content>
     </Card>
   )
 }

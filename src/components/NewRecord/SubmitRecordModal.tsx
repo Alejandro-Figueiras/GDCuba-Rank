@@ -2,31 +2,30 @@ import {
   Button,
   Input,
   Modal,
-  ModalBody,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
   Slider,
   Select,
-  SelectItem,
-  Spinner
-} from '@nextui-org/react'
-import React, { useEffect, useState, useRef, MutableRefObject } from 'react'
+  Spinner,
+  TextField,
+  Label
+} from '@heroui/react'
+import React, { useEffect, useState } from 'react'
 import SearchLevel from '@/components/NewRecord/SearchLevel'
-import LevelCard from '@/components/Levels/LevelCard'
+// import LevelCard from '@/components/Levels/LevelCard'
 import { submitRecord } from '@/actions/record/submitRecord'
 import SubmitResult from './SubmitResult'
 import { submitRecordAdminAction } from '@/actions/admin/submitRecordAdminAction'
 import { getAllAccountsAction } from '@/actions/admin/getAllAccountsAction'
 import { Account } from '@/models/Account'
 import type Level from '@/models/Level'
+import YouTubeIcon from '../Icons/YouTubeIcon'
+import LevelCard from '../Levels/LevelCard'
 
 export default function SubmitRecordModal({
-  onOpenChange,
+  setOpen,
   isOpen,
   admin = false
 }: {
-  onOpenChange: () => void
+  setOpen: (isOpen: boolean) => void
   isOpen: boolean
   admin?: boolean
 }) {
@@ -35,13 +34,13 @@ export default function SubmitRecordModal({
   const [account, setAccount] = useState(undefined as Account | undefined) // Only admin
   const [accountList, setAccountList] = useState([] as Account[]) // Only admin
   const [loading, setLoading] = useState(false)
-  const sliderValue = useRef(100)
-  const videoRef = useRef() as MutableRefObject<HTMLInputElement>
+  const [sliderValue, setSliderValue] = useState(100)
+  const [videoURL, setVideoURL] = useState('')
 
   // Submit
   const handleSubmit = async () => {
-    const percent = sliderValue.current
-    let video = videoRef.current.value
+    const percent = sliderValue
+    let video = videoURL
     video.replace('m.youtube', 'www.youtube')
     if (!video.includes('youtube.com') && !video.includes('youtu.be'))
       video = ''
@@ -76,12 +75,15 @@ export default function SubmitRecordModal({
 
     setSubmitResult(submitResult)
     setLoading(false)
+    setVideoURL('')
+    setLevel(undefined)
+    setSliderValue(100)
   }
 
   // Si es plataforma, poner 100% por default
   useEffect(() => {
     if (level && level.platformer) {
-      sliderValue.current = 100
+      setSliderValue(100)
     }
   }, [level])
 
@@ -105,24 +107,29 @@ export default function SubmitRecordModal({
 
   return (
     <Modal
-      onOpenChange={onOpenChange}
+      onOpenChange={setOpen}
       isOpen={isOpen}
-      size={submitResult == 0 ? 'xl' : 'sm'}
-      scrollBehavior='inside'
+      // size={submitResult == 0 ? 'xl' : 'sm'}
+      // scrollBehavior='inside'
     >
-      <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader>Nuevo Record {admin && `(admin)`}</ModalHeader>
-            <ModalBody>
+      <Modal.Backdrop>
+        <Modal.Container size={submitResult == 0 ? 'lg' : 'md'} scroll='inside'>
+          <Modal.Dialog>
+            <Modal.Header>
+              <Modal.Heading className='text-lg'>
+                Nuevo Record {admin && `(admin)`}
+              </Modal.Heading>
+              <Modal.CloseTrigger />
+            </Modal.Header>
+            <Modal.Body>
               {loading ? (
-                <div className='flex flex-col justify-center gap-4'>
-                  <Spinner />
-                  <p className='text text-center text-medium'>Cargando...</p>
+                <div className='flex flex-col items-center justify-center gap-4'>
+                  <Spinner size='lg' />
+                  <p className='text text-medium text-center'>Cargando...</p>
                 </div>
               ) : submitResult == 0 ? (
                 <div className=''>
-                  {admin && (
+                  {/* {admin && (
                     <Select
                       items={accountList}
                       label='Cuenta objetivo'
@@ -151,12 +158,12 @@ export default function SubmitRecordModal({
                         </SelectItem>
                       )}
                     </Select>
-                  )}
+                  )} */}
                   <SearchLevel setNewLevel={setLevel} />
                   {level && (
                     <>
                       <LevelCard level={level} />
-                      <div className='mt-2 flex flex-col gap-4'>
+                      <div className='mt-2 flex w-full flex-col gap-4'>
                         {level.platformer ? (
                           <span className='text-center'>
                             Los niveles del modo plataforma se tomarán como
@@ -166,26 +173,32 @@ export default function SubmitRecordModal({
                           </span>
                         ) : (
                           <Slider
-                            color='success'
-                            step={1}
-                            onChange={(value) => {
-                              sliderValue.current = value as number
-                            }}
-                            maxValue={100}
-                            minValue={0}
+                            className='border-success w-full'
                             defaultValue={100}
-                            label='Porciento Completado'
-                            className='mx-auto max-w-md'
-                          />
+                            minValue={0}
+                            maxValue={100}
+                            value={sliderValue}
+                            onChange={(value) =>
+                              setSliderValue(value as number)
+                            }
+                          >
+                            <Label>Porcentaje Completado</Label>
+                            <Slider.Output>{sliderValue}%</Slider.Output>
+                            <Slider.Track className='border-l-success'>
+                              <Slider.Fill className='bg-success' />
+                              <Slider.Thumb className='border-4 border-[#107d3f]' />
+                            </Slider.Track>
+                          </Slider>
                         )}
-                        <Input
-                          type='text'
-                          className='mx-auto max-w-md'
-                          size='lg'
-                          radius='sm'
-                          ref={videoRef}
-                          placeholder='YouTube Video URL (Opcional)'
-                        />
+                        <TextField value={videoURL} onChange={setVideoURL}>
+                          <Label>YouTube Video URL</Label>
+                          <Input
+                            className='mx-auto'
+                            placeholder='https://youtu.be/...'
+                            fullWidth
+                            variant='secondary'
+                          />
+                        </TextField>
                       </div>
                     </>
                   )}
@@ -193,25 +206,25 @@ export default function SubmitRecordModal({
               ) : (
                 <SubmitResult submitResult={submitResult} />
               )}
-            </ModalBody>
-            <ModalFooter>
+            </Modal.Body>
+            <Modal.Footer>
               {submitResult == 0 && !loading && (
                 <Button
-                  color='success'
-                  variant='flat'
+                  className='text-green-500'
+                  variant='tertiary'
                   onPress={handleSubmit}
                   isDisabled={!level || (admin && !account?.username)}
                 >
                   Enviar Record
                 </Button>
               )}
-              <Button color='default' variant='flat' onPress={onClose}>
+              <Button variant='tertiary' onPress={() => setOpen(false)}>
                 {submitResult == 0 ? 'Cerrar' : 'Aceptar'}
               </Button>
-            </ModalFooter>
-          </>
-        )}
-      </ModalContent>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
     </Modal>
   )
 }

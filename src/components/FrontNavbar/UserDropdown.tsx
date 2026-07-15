@@ -1,11 +1,17 @@
 import { ModalContext } from '@/app/context/ModalContext'
-import { Avatar, Dropdown, Button, Header } from '@heroui/react'
+import {
+  Avatar,
+  Dropdown,
+  Button,
+  Header,
+  useOverlayState
+} from '@heroui/react'
 import { useGDIcon } from '@/robtop/iconkit/useGDIcon'
 import { useContext } from 'react'
 import { usePathname } from 'next/navigation'
 import { logout as logoutAction } from '@/actions/logout/logout'
 import { notify } from '@/libs/toastNotifications'
-// TODO import SubmitRecordModal from '../NewRecord/SubmitRecordModal'
+import SubmitRecordModal from '../NewRecord/SubmitRecordModal'
 import './UserDropdown.css'
 import { CurrentUser } from '@/app/context/GlobalContext'
 
@@ -39,9 +45,9 @@ const UserDropdown = ({
     username: currentUser.username
   })
 
-  // // Submit Record
-  // const { isOpen: isOpenSubmitRecord, setOpen: setChangeSubmitRecordOpen } =
-  //   useOverlayState()
+  // Submit Record
+  const { isOpen: isOpenSubmitRecord, setOpen: setOpenSubmitRecord } =
+    useOverlayState()
 
   // #region Items
   const items = []
@@ -63,14 +69,14 @@ const UserDropdown = ({
       >
         Mi cuenta
       </Dropdown.Item>,
-      // <Dropdown.Item
-      //   key='new-record-btn'
-      //   onClick={() => {
-      //     setChangeSubmitRecordOpen(true)
-      //   }}
-      // >
-      //   Nuevo Record
-      // </Dropdown.Item>,
+      <Dropdown.Item
+        key='new-record-btn'
+        onClick={() => {
+          setOpenSubmitRecord(true)
+        }}
+      >
+        Nuevo Record
+      </Dropdown.Item>,
       <Dropdown.Item key='changePass-btn' onPress={onOpenChangePassword}>
         Cambiar contraseña
       </Dropdown.Item>
@@ -122,7 +128,6 @@ const UserDropdown = ({
       <Dropdown>
         <Button
           variant='tertiary'
-          // TODO revisar cuando halla cuenta
           className={`bg-white/10 py-4 ${currentUser.username ? `user-dropdown__button` : ''}`}
         >
           {currentUser.username && (
@@ -176,11 +181,10 @@ const UserDropdown = ({
           </Dropdown.Menu>
         </Dropdown.Popover>
       </Dropdown>
-      {/* TODO fix modal */}
-      {/* <SubmitRecordModal
+      <SubmitRecordModal
         isOpen={isOpenSubmitRecord}
-        onOpenChange={setChangeSubmitRecordOpen}
-      /> */}
+        setOpen={setOpenSubmitRecord}
+      />
     </>
   )
   //#endregion

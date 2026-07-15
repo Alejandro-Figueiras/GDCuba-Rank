@@ -1,15 +1,7 @@
 'use client'
 import { calcularTrofeo } from '@/helpers/calcularTrofeoGR'
 import { useUser } from '@/hooks/useUser'
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell,
-  Spinner
-} from '@nextui-org/react'
+import { Table, Spinner, EmptyState, Card } from '@heroui/react'
 import UsernameCell from './UsernameCell'
 import React from 'react'
 import { type Account } from '@/models/Account'
@@ -30,28 +22,28 @@ const RankTable = ({
     cells: ((player: Account, i: number) => React.JSX.Element)[] = []
 
   cols.push(
-    <TableColumn width={40} key={'col_pos'}>
+    <Table.Column width={40} key={'col_pos'}>
       #
-    </TableColumn>
+    </Table.Column>
   )
   cells.push((player, i) => (
-    <TableCell key={`cell${i}_${player.username}_pos`}>{i + 1}</TableCell>
+    <Table.Cell key={`cell${i}_${player.username}_pos`}>{i + 1}</Table.Cell>
   ))
 
   cols.push(
-    <TableColumn key={'col_name'} minWidth={180}>
+    <Table.Column key={'col_name'} minWidth={180} isRowHeader>
       Jugador
-    </TableColumn>
+    </Table.Column>
   )
   cells.push((player, i) => (
-    <TableCell key={`cell${i}_${player.username}_name`}>
+    <Table.Cell key={`cell${i}_${player.username}_name`}>
       <UsernameCell player={player} />
-    </TableCell>
+    </Table.Cell>
   ))
 
   if (tipo == 'stars') {
     cols.push(
-      <TableColumn width={120} key={'col_stars'}>
+      <Table.Column width={120} key={'col_stars'}>
         <span className='flex'>
           <img
             src='/assets/stats/starsIcon.png'
@@ -60,10 +52,10 @@ const RankTable = ({
           />{' '}
           Estrellas
         </span>
-      </TableColumn>
+      </Table.Column>
     )
     cells.push((player, i) => (
-      <TableCell key={`cell${i}_${player.username}_stars`}>
+      <Table.Cell key={`cell${i}_${player.username}_stars`}>
         <span className='flex align-middle'>
           <img
             src='/assets/stats/starsIcon.png'
@@ -72,11 +64,11 @@ const RankTable = ({
           />{' '}
           {player.stars}
         </span>
-      </TableCell>
+      </Table.Cell>
     ))
 
     cols.push(
-      <TableColumn width={120} key={'col_globalrank'}>
+      <Table.Column width={120} key={'col_globalrank'}>
         <span className='flex align-middle'>
           <img
             src='/assets/trofeos/rankIcon_1_001.png'
@@ -85,10 +77,10 @@ const RankTable = ({
           />{' '}
           Global Rank
         </span>
-      </TableColumn>
+      </Table.Column>
     )
     cells.push((player, i) => (
-      <TableCell key={`cell${i}_${player.username}_globalrank`}>
+      <Table.Cell key={`cell${i}_${player.username}_globalrank`}>
         <span className='flex align-middle'>
           <img
             src={calcularTrofeo(player.globalrank)}
@@ -97,11 +89,11 @@ const RankTable = ({
           />{' '}
           {player.globalrank}
         </span>
-      </TableCell>
+      </Table.Cell>
     ))
   } else if (tipo == 'demons') {
     cols.push(
-      <TableColumn width={100} key={'col_demons'}>
+      <Table.Column width={100} key={'col_demons'}>
         <span className='flex'>
           <img
             src='/assets/dificultades/none/hard_demon.png'
@@ -110,10 +102,10 @@ const RankTable = ({
           />{' '}
           Demons
         </span>
-      </TableColumn>
+      </Table.Column>
     )
     cells.push((player, i) => (
-      <TableCell key={`cell${i}_${player.username}_demons`}>
+      <Table.Cell key={`cell${i}_${player.username}_demons`}>
         <span className='flex align-middle'>
           <img
             src='/assets/dificultades/none/hard_demon.png'
@@ -122,11 +114,11 @@ const RankTable = ({
           />{' '}
           {player.demons}
         </span>
-      </TableCell>
+      </Table.Cell>
     ))
   } else if (tipo == 'moons') {
     cols.push(
-      <TableColumn width={100} key={'col_moons'}>
+      <Table.Column width={100} key={'col_moons'}>
         <span className='flex'>
           <img
             src='/assets/stats/moonsIcon.png'
@@ -135,10 +127,10 @@ const RankTable = ({
           />{' '}
           Lunas
         </span>
-      </TableColumn>
+      </Table.Column>
     )
     cells.push((player, i) => (
-      <TableCell key={`cell${i}_${player.username}_moons`}>
+      <Table.Cell key={`cell${i}_${player.username}_moons`}>
         <span className='flex align-middle'>
           <img
             src='/assets/stats/moonsIcon.png'
@@ -147,11 +139,11 @@ const RankTable = ({
           />{' '}
           {player.moons}
         </span>
-      </TableCell>
+      </Table.Cell>
     ))
   } else if (tipo == 'usercoins') {
     cols.push(
-      <TableColumn width={110} key={'col_usercoin'}>
+      <Table.Column width={110} key={'col_usercoin'}>
         <span className='flex'>
           <img
             src='/assets/stats/usercoin.png'
@@ -160,10 +152,10 @@ const RankTable = ({
           />{' '}
           User Coins
         </span>
-      </TableColumn>
+      </Table.Column>
     )
     cells.push((player, i) => (
-      <TableCell key={`cell${i}_${player.username}_usercoins`}>
+      <Table.Cell key={`cell${i}_${player.username}_usercoins`}>
         <span className='flex align-middle'>
           <img
             src='/assets/stats/usercoin.png'
@@ -172,11 +164,11 @@ const RankTable = ({
           />{' '}
           {player.usercoins}
         </span>
-      </TableCell>
+      </Table.Cell>
     ))
   } else if (tipo == 'cp') {
     cols.push(
-      <TableColumn width={130} key={'col_cp'}>
+      <Table.Column width={130} key={'col_cp'}>
         <span className='flex'>
           <img
             src='/assets/stats/creatorpoints.png'
@@ -185,10 +177,10 @@ const RankTable = ({
           />{' '}
           Creator Points
         </span>
-      </TableColumn>
+      </Table.Column>
     )
     cells.push((player, i) => (
-      <TableCell key={`cell${i}_${player.username}_cp`}>
+      <Table.Cell key={`cell${i}_${player.username}_cp`}>
         <span className='flex align-middle'>
           <img
             src='/assets/stats/creatorpoints.png'
@@ -197,11 +189,11 @@ const RankTable = ({
           />{' '}
           {player.creatorpoints}
         </span>
-      </TableCell>
+      </Table.Cell>
     ))
   } else if (tipo == 'extreme_demons') {
     cols.push(
-      <TableColumn width={130} key={'col_extreme'}>
+      <Table.Column width={130} key={'col_extreme'}>
         <span className='flex align-middle'>
           <img
             src='/assets/dificultades/none/extreme_demon.png'
@@ -212,10 +204,10 @@ const RankTable = ({
           <br />
           Demons
         </span>
-      </TableColumn>
+      </Table.Column>
     )
     cells.push((player, i) => (
-      <TableCell key={`cell${i}_${player.username}_extreme`}>
+      <Table.Cell key={`cell${i}_${player.username}_extreme`}>
         <span className='flex align-middle'>
           <img
             src='/assets/dificultades/none/extreme_demon.png'
@@ -224,32 +216,55 @@ const RankTable = ({
           />{' '}
           {player.verified_extreme_demons}
         </span>
-      </TableCell>
+      </Table.Cell>
     ))
   }
 
   return (
     <div className='m-2 sm:m-4'>
-      <Table
-        selectionMode='single'
-        classNames={{
-          table: `${tipo == 'stars' ? 'min-w-[480px]' : 'min-w-[320px]'} overflow-scroll ${loading ? 'min-h-[400px]' : ''}`
-        }}
-        aria-label='Rank Table'
-      >
-        <TableHeader>{cols}</TableHeader>
-        <TableBody
-          isLoading={loading}
-          loadingContent={<Spinner label='Cargando datos...' />}
-          emptyContent={loading ? null : 'No hay usuarios para mostrar'}
-        >
-          {ranking.map((player, i) => (
-            <TableRow key={i + 1} onClick={() => openUserView(player, true)}>
-              {cells.map((cell) => cell(player, i))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+      <Card>
+        <Card.Content>
+          <Table variant='secondary'>
+            <Table.ScrollContainer>
+              <Table.Content
+                aria-label='Rank Table'
+                className={`${tipo == 'stars' ? 'min-w-120' : 'min-w-[320px]'} overflow-scroll ${loading ? 'min-h-100' : ''}`}
+              >
+                <Table.Header>{cols}</Table.Header>
+
+                <Table.Body
+                  renderEmptyState={() =>
+                    loading ? (
+                      <EmptyState className='flex h-full w-full flex-col items-center justify-center gap-4 text-center'>
+                        <Spinner size='lg' color='current' />
+                        <span>Cargando datos</span>
+                      </EmptyState>
+                    ) : (
+                      <EmptyState className='flex h-full w-full flex-col items-center justify-center gap-4 text-center'>
+                        <span className='text-muted text-sm'>
+                          No hay usuarios para mostrar
+                        </span>
+                      </EmptyState>
+                    )
+                  }
+                  // isLoading={loading}
+                  // loadingContent={<Spinner label='Cargando datos...' />}
+                  // emptyContent={loading ? null : 'No hay usuarios para mostrar'}
+                >
+                  {ranking.map((player, i) => (
+                    <Table.Row
+                      key={i + 1}
+                      onClick={() => openUserView(player, true)}
+                    >
+                      {cells.map((cell) => cell(player, i))}
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table.Content>
+            </Table.ScrollContainer>
+          </Table>
+        </Card.Content>
+      </Card>
     </div>
   )
 }

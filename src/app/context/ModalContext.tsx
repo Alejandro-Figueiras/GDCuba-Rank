@@ -154,10 +154,7 @@ export default function ModalProvider({ children }: { children: ReactNode }) {
       />
       <LoginForm isOpen={isOpenLogin} setOpen={setOpenLogin} />
       <SignUpForm isOpen={isOpenSignUp} setOpen={setOpenSignUp} />
-      {/*<ChangePasswordForm
-        isOpen={isOpenPassword}
-        onOpenChange={onOpenChangePassword}
-      /> */}
+      <ChangePasswordForm isOpen={isOpenPassword} setOpen={setOpenPassword} />
       {children}
     </ModalContext.Provider>
   )

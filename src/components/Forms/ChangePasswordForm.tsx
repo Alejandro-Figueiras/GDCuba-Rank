@@ -1,27 +1,25 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
-import { Button } from '@nextui-org/button'
-
-// Modals
 import {
+  Button,
   Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter
-} from '@nextui-org/modal'
-import { Input } from '@nextui-org/input'
+  Input,
+  TextField,
+  Label,
+  Spinner,
+  ErrorMessage
+} from '@heroui/react'
 import { notify } from '@/libs/toastNotifications'
 import { useSesion } from '@/hooks/useSesion'
 import { changePasswordAction } from '@/actions/auth/changePassword'
 
 const ChangePasswordForm = ({
   isOpen,
-  onOpenChange
+  setOpen
 }: {
   isOpen: boolean
-  onOpenChange: () => void
+  setOpen: (isOpen: boolean) => void
 }) => {
   const [oldPassword, setOldPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
@@ -31,7 +29,7 @@ const ChangePasswordForm = ({
   const [loading, setLoading] = useState(false)
   const { currentUser } = useSesion()
 
-  const handleSubmitButton = async (action: string, onClose: () => void) => {
+  const handleSubmitButton = async (action: string) => {
     if (action == 'submit') {
       if (!currentUser.username) {
         return
@@ -51,7 +49,10 @@ const ChangePasswordForm = ({
         return
       }
       notify(data.message, 'success')
-      onClose()
+      setOpen(false)
+      setOldPassword('')
+      setNewPassword('')
+      setNewPassword2('')
     }
   }
 
@@ -74,67 +75,77 @@ const ChangePasswordForm = ({
   }, [newPassword, newPassword2])
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement='top-center'>
-      <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader className='flex flex-col gap-1'>
-              Cambiar contraseña
-            </ModalHeader>
-            <ModalBody>
+    <Modal isOpen={isOpen} onOpenChange={setOpen}>
+      <Modal.Backdrop>
+        <Modal.Container>
+          <Modal.Dialog>
+            <Modal.Header>
+              <Modal.Heading className='flex flex-col gap-1 text-lg'>
+                Cambiar contraseña
+              </Modal.Heading>
+              <Modal.CloseTrigger />
+            </Modal.Header>
+            <Modal.Body>
               {/* Esto esta puesto para ayudar a Google Passwords y demás Password Managers */}
               {currentUser.username && (
-                <Input
-                  label='Usuario'
-                  type='user'
-                  variant='bordered'
-                  value={currentUser.username}
-                  aria-hidden={true}
-                  className='hidden'
-                />
+                <TextField className='hidden' variant='secondary'>
+                  <Label>Usuario</Label>
+                  <Input
+                    type='user'
+                    value={currentUser.username}
+                    aria-hidden={true}
+                    className='hidden'
+                  />
+                </TextField>
               )}
-              <Input
-                label='Contraseña antigua'
+              <TextField
+                value={oldPassword}
+                onChange={setOldPassword}
                 type='password'
-                variant='bordered'
-                onValueChange={(value) => {
-                  setOldPassword(value)
-                }}
-              />
-              <Input
-                label='Nueva Contraseña'
+                variant='secondary'
+              >
+                <Label>Contraseña antigua</Label>
+                <Input placeholder='Escribe tu antigua contraseña' />
+              </TextField>
+              <TextField
+                value={newPassword}
+                onChange={setNewPassword}
                 type='password'
-                variant='bordered'
-                onValueChange={(value) => {
-                  setNewPassword(value)
-                }}
-              />
-              <Input
-                label='Repite la Contraseña'
+                variant='secondary'
+                className='pt-2'
+              >
+                <Label>Nueva contraseña</Label>
+                <Input placeholder='Escribe tu contraseña nueva' />
+              </TextField>
+              <TextField
+                value={newPassword2}
+                onChange={setNewPassword2}
+                isInvalid={!!newPassword2Error}
                 type='password'
-                variant='bordered'
-                onValueChange={(value) => {
-                  setNewPassword2(value)
-                }}
-                errorMessage={newPassword2Error}
-              />
-            </ModalBody>
-            <ModalFooter>
-              <Button color='default' variant='flat' onPress={onClose}>
+                variant='secondary'
+                className='pt-2'
+              >
+                <Label>Repite la Contraseña</Label>
+                <Input placeholder='Escribela de nuevo, para estar seguros' />
+                <ErrorMessage>{newPassword2Error}</ErrorMessage>
+              </TextField>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant='tertiary' onPress={() => setOpen(false)}>
                 Cerrar
               </Button>
               <Button
-                color='primary'
-                onPress={() => handleSubmitButton('submit', onClose)}
-                isLoading={loading}
+                onPress={() => handleSubmitButton('submit')}
+                isPending={loading}
                 isDisabled={disabled}
               >
+                {loading ? <Spinner color='current' size='sm' /> : null}
                 Adelante
               </Button>
-            </ModalFooter>
-          </>
-        )}
-      </ModalContent>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
     </Modal>
   )
 }

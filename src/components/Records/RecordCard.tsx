@@ -24,9 +24,7 @@ const RecordCard = ({
         <div className='flex flex-row justify-between gap-3'>
           <img
             alt='diff'
-            height={!mini ? 40 : 35}
-            width={!mini ? 40 : 35}
-            className='rounded-sm'
+            className={`aspect-square rounded-sm ${!mini ? 'max-h-12 max-w-12' : 'max-h-10 max-w-10'}`}
             src={getDifficultyPath({
               featured: record.featured,
               difficultyName: getDifficultyNameByNumber(record.difficulty)
@@ -43,15 +41,17 @@ const RecordCard = ({
             </p>
             {!mini ? (
               record.aval == 1 ? (
-                <p className='text-small text-default-500'>
+                <p className='text-small text-muted text-start'>
                   {getDifficultyNameByNumber(record.difficulty)}
                 </p>
               ) : record.aval == 0 ? (
-                <p className='text-small text-warning-500'>Sin revisión</p>
+                <p className='text-small text-warning text-start'>
+                  Sin revisión
+                </p>
               ) : record.aval == -2 ? (
-                <p className='text-small text-warning-500'>Pendiente</p>
+                <p className='text-small text-warning text-start'>Pendiente</p>
               ) : (
-                <p className='text-small text-danger-500'>Denegado</p>
+                <p className='text-small text-danger text-start'>Denegado</p>
               )
             ) : null}
           </div>

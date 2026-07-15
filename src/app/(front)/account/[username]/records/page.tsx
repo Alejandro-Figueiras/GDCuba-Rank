@@ -3,7 +3,6 @@ import { getAllRecordsUserViewAction } from '@/actions/record/getAllRecordsUser'
 import RecordCard from '@/components/Records/RecordCard'
 import { useGDIcon } from '@/robtop/iconkit/useGDIcon'
 import { useState, useEffect } from 'react'
-import { Image } from '@nextui-org/react'
 import { type Record } from '@/models/Record'
 
 const sortAvalsPredicate = (a: Record, b: Record) => {
@@ -24,7 +23,7 @@ const DifficultySection = ({
   records: Record[]
 }) => {
   return (
-    <div className='mx-auto max-w-[1200px] text-center'>
+    <div className='mx-auto max-w-300 text-center'>
       <h2 className='mt-4 text-xl'>{title}</h2>
       <div className='flex flex-row flex-wrap justify-center'>
         {records.map((record, i) => (
@@ -95,9 +94,9 @@ const AccountRecordsPage = ({
       <div className='my-6 flex flex-row justify-center'>
         <a
           href={`/account/${username}`}
-          className='flex gap-3 hover:text-default-700'
+          className='hover:text-default-700 flex gap-3'
         >
-          <Image alt='Cube' radius='none' src={iconAvatar} width={40} />
+          <img alt='Cube' src={iconAvatar} width={40} />
           <div className='flex flex-col justify-center'>
             <p className='text-2xl'>{username}</p>
           </div>

@@ -1,23 +1,14 @@
 'use client'
 
 import { useState, useEffect, type SetStateAction, type Dispatch } from 'react'
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Select,
-  SelectItem,
-  Button
-} from '@nextui-org/react'
+import { Modal, Select, Button, Label, ListBox } from '@heroui/react'
 import StuffBioForm from './Stuff/StuffBioForm'
+// import StuffCreatedForm from './Stuff/StuffCreatedForm'
 import {
   submitStuffItemAction,
   updateAccountStuffAction
 } from '@/actions/accounts/stuffActions'
 import { useSesion } from '@/hooks/useSesion'
-import StuffCreatedForm from './Stuff/StuffCreatedForm'
 import { type Account } from '@/models/Account'
 import type StuffItem from '@/models/StuffItem'
 import type DictionaryObject from '@/helpers/DictionaryObject'
@@ -31,14 +22,14 @@ const ITEM_TYPES: DictionaryObject<string> = {
 
 const AddStuffModal = ({
   isOpen,
-  onOpenChange,
+  setOpen,
   account,
   setAccount,
   stuffItems = [],
   setStuffItems
 }: {
   isOpen: boolean
-  onOpenChange: () => void
+  setOpen: (isOpen: boolean) => void
   account: Account
   setAccount: Dispatch<SetStateAction<Account | undefined>>
   stuffItems: StuffItem[]
@@ -57,7 +48,7 @@ const AddStuffModal = ({
     setItemData({})
   }
 
-  const handleSubmit = async (onClose: () => void) => {
+  const handleSubmit = async () => {
     if (itemType == 'bio' || itemType == 'hardest' || itemType == 'created') {
       if (itemType == 'bio' && itemData.text == '') return
       if (itemType == 'created' && itemData.levels.length == 0) return
@@ -98,7 +89,7 @@ const AddStuffModal = ({
       setAccount(newAcc)
 
       clear()
-      onClose()
+      setOpen(false)
     }
   }
 
@@ -123,90 +114,106 @@ const AddStuffModal = ({
   return (
     <Modal
       isOpen={isOpen}
-      onOpenChange={onOpenChange}
-      placement='top-center'
-      size='xl'
+      onOpenChange={setOpen}
+      // size='lg'
     >
-      <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader className='flex flex-col gap-1'>
-              Agregar Item
-            </ModalHeader>
-            <ModalBody>
+      <Modal.Backdrop>
+        <Modal.Container>
+          <Modal.Dialog>
+            <Modal.Header className='flex flex-col gap-1'>
+              <Modal.Heading>Agregar Item</Modal.Heading>
+              <Modal.CloseTrigger />
+            </Modal.Header>
+            <Modal.Body>
               <Select
-                label='Seleccione un tipo'
-                className=''
-                onChange={({ target }) => {
-                  setItemType(target.value == '' ? 'none' : target.value)
+                // TODO revisar completo esto
+                placeholder='-'
+                variant='secondary'
+                value={itemType}
+                onChange={(value) => {
+                  setItemType(
+                    !value || value == ''
+                      ? 'none'
+                      : (value as 'bio' | 'created')
+                  )
                   const data = {
-                    type: target.value
+                    type: value
                   } as DictionaryObject<any>
 
                   // DEFAULT VALUES OF ITEM DATA
-                  if (target.value == 'bio') data.text = ''
-                  if (target.value == 'created') data.levels = []
+                  if (value == 'bio') data.text = ''
+                  if (value == 'created') data.levels = []
                   // ---------------------------
 
                   setItemData(data)
                 }}
               >
-                {Object.keys(ITEM_TYPES)
-                  .filter((val) => {
-                    if (['bio', 'hardest', 'created'].includes(val)) {
-                      for (const item of stuffItems) {
-                        if (!account.stuff.split(',').includes(`${item.id}`))
-                          continue
-                        const { type } =
-                          typeof item.data == 'string'
-                            ? JSON.parse(item.data)
-                            : item.data
-                        if (type == val) return false
-                      }
-                    }
-                    return true
-                  })
-                  .map((key) => (
-                    <SelectItem key={key} value={key}>
-                      {ITEM_TYPES[key]}
-                    </SelectItem>
-                  ))}
+                <Label>Seleccione un tipo</Label>
+                <Select.Trigger>
+                  <Select.Value />
+                  <Select.Indicator />
+                </Select.Trigger>
+                <Select.Popover className='bg-surface-secondary'>
+                  <ListBox>
+                    {Object.keys(ITEM_TYPES)
+                      .filter((val) => {
+                        if (['bio', 'hardest', 'created'].includes(val)) {
+                          for (const item of stuffItems) {
+                            if (
+                              !account.stuff.split(',').includes(`${item.id}`)
+                            )
+                              continue
+                            const { type } =
+                              typeof item.data == 'string'
+                                ? JSON.parse(item.data)
+                                : item.data
+                            if (type == val) return false
+                          }
+                        }
+                        return true
+                      })
+                      .map((key) => (
+                        <ListBox.Item key={key} id={key}>
+                          <Label>{ITEM_TYPES[key]}</Label>
+                          <ListBox.ItemIndicator />
+                        </ListBox.Item>
+                      ))}
+                  </ListBox>
+                </Select.Popover>
               </Select>
               {itemType == 'bio' && (
                 <StuffBioForm itemData={itemData} setItemData={setItemData} />
               )}
-              {itemType == 'created' && (
+              {/* {itemType == 'created' && (
                 <StuffCreatedForm
                   itemData={itemData}
                   setItemData={setItemData}
                 />
-              )}
-            </ModalBody>
-            <ModalFooter>
+              )} */}
+            </Modal.Body>
+            <Modal.Footer>
               <Button
-                color='default'
-                variant='flat'
+                variant='ghost'
                 onPress={() => {
                   clear()
-                  onClose()
+                  setOpen(false)
                 }}
               >
                 Cerrar
               </Button>
               <Button
-                color='primary'
                 onPress={() => {
-                  handleSubmit(onClose)
+                  handleSubmit()
                 }}
-                isLoading={loading}
+                isPending={loading}
                 isDisabled={disabled}
               >
                 Adelante
               </Button>
-            </ModalFooter>
-          </>
-        )}
-      </ModalContent>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
     </Modal>
   )
 }

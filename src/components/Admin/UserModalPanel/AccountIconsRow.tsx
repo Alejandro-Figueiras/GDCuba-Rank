@@ -1,5 +1,5 @@
 import { useGDIconRef } from '@/robtop/iconkit/useGDIcon'
-import { Card, CardBody, Spinner } from '@nextui-org/react'
+import { Card, Spinner } from '@heroui/react'
 import { useEffect, useState } from 'react'
 
 import './AccountIcons.css'
@@ -47,7 +47,7 @@ const AccountIcon = ({
         <img
           ref={icon}
           alt='Icon'
-          className={`${sizeClass} w-100 ${loading ? 'hidden' : ''}`}
+          className={`${sizeClass} max-w-100 ${loading ? 'hidden' : ''}`}
           onLoad={() => setLoading(false)}
         />
       </div>
@@ -68,8 +68,8 @@ const AccountIconsRow = ({ user }: { user: Account }) => {
   }
 
   return (
-    <Card className='w-full max-w-full overflow-visible bg-default-200'>
-      <CardBody className='p-4'>
+    <Card className='w-full max-w-full overflow-visible' variant='tertiary'>
+      <Card.Content className='p-1'>
         <div className={rowsClassnames}>
           <AccountIcon type='cube' iconNumber={user.accicon} {...comunProps} />
           <a
@@ -147,7 +147,7 @@ const AccountIconsRow = ({ user }: { user: Account }) => {
             {...comunProps}
           />
         </div>
-      </CardBody>
+      </Card.Content>
     </Card>
   )
 }

@@ -1,13 +1,6 @@
 'use client'
 import React, { useCallback, useEffect, useState } from 'react'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Divider,
-  Image,
-  Spinner
-} from '@nextui-org/react'
+import { Card, Separator, Spinner } from '@heroui/react'
 import { useGDIcon } from '@/robtop/iconkit/useGDIcon'
 import { getAccountAction } from '@/actions/accounts/getAccountAction'
 import AccountStatsRow from '../Admin/UserModalPanel/AccountStatsRow'
@@ -62,10 +55,10 @@ export default function AccountView({
 
   return (
     <>
-      <Card className='w-[800px] max-w-[1000px]'>
-        <CardHeader className='flex justify-between'>
+      <Card className='w-200 max-w-250'>
+        <Card.Header className='flex flex-row justify-between'>
           <div className='flex flex-row gap-3'>
-            <Image alt='Cube' radius='none' src={iconAvatar} width={40} />
+            <img alt='Cube' src={iconAvatar} width={40} />
             <div className='flex flex-col justify-center'>
               <p className='text-2xl'>{username}</p>
             </div>
@@ -73,14 +66,14 @@ export default function AccountView({
           <div className='flex'>
             {username && <RecordsLinkButton username={username} mini={true} />}
           </div>
-        </CardHeader>
-        <Divider />
-        <CardBody className='flex flex-col items-center justify-center gap-3'>
+        </Card.Header>
+        <Separator />
+        <Card.Content className='flex flex-col items-center justify-center gap-3'>
           {account != undefined ? (
             <>
               <AccountStatsRow user={account} />
               <AccountIconsRow user={account} />
-              <Divider />
+              <Separator />
               <AccountStuff
                 account={account}
                 setAccount={setAccount}
@@ -91,12 +84,12 @@ export default function AccountView({
               />
             </>
           ) : (
-            <div className='flex h-[300px] flex-col items-center justify-center'>
+            <div className='flex h-75 flex-col items-center justify-center'>
               <Spinner />
               <p className='text-medium'>Descargando cuenta</p>
             </div>
           )}
-        </CardBody>
+        </Card.Content>
       </Card>
     </>
   )

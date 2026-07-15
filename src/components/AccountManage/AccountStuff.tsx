@@ -1,5 +1,5 @@
 'use client'
-import { Button, useDisclosure } from '@nextui-org/react'
+import { Button, useOverlayState } from '@heroui/react'
 import AddStuffModal from './AddStuffModal'
 import StuffBio from './Stuff/StuffBio'
 import { useStuff } from './useStuff'
@@ -32,7 +32,7 @@ const AccountStuff = ({
   manage?: boolean
 }) => {
   const { stuff, itemTypesLeft } = useStuff({ account, stuffItems })
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const { isOpen, setOpen } = useOverlayState()
 
   const handleDelete = async (id: number) => {
     notify('Realizando cambios en la cuenta', 'info')
@@ -79,7 +79,7 @@ const AccountStuff = ({
     <div className='flex w-full flex-col gap-2'>
       <AddStuffModal
         isOpen={isOpen}
-        onOpenChange={onOpenChange}
+        setOpen={setOpen}
         account={account}
         setAccount={setAccount}
         stuffItems={stuffItems}
@@ -103,38 +103,36 @@ const AccountStuff = ({
               />
             )
           }
-          if (data.type == 'hardest') {
-            return (
-              <StuffHardest
-                itemData={data}
-                key={i}
-                id={id}
-                handlers={handlers}
-                manage={manage}
-                accStuff={account.stuff}
-              />
-            )
-          }
-          if (data.type == 'created') {
-            return (
-              <StuffCreated
-                itemData={data}
-                key={i}
-                id={id}
-                handlers={handlers}
-                manage={manage}
-                accStuff={account.stuff}
-              />
-            )
-          }
+          // if (data.type == 'hardest') {
+          //   return (
+          //     <StuffHardest
+          //       itemData={data}
+          //       key={i}
+          //       id={id}
+          //       handlers={handlers}
+          //       manage={manage}
+          //       accStuff={account.stuff}
+          //     />
+          //   )
+          // }
+          // if (data.type == 'created') {
+          //   return (
+          //     <StuffCreated
+          //       itemData={data}
+          //       key={i}
+          //       id={id}
+          //       handlers={handlers}
+          //       manage={manage}
+          //       accStuff={account.stuff}
+          //     />
+          //   )
+          // }
 
           return <p key={i}>{JSON.stringify(data)}</p>
         })}
       </div>
       {manage && itemTypesLeft != 0 && (
-        <Button color='primary' onClick={onOpen}>
-          Agregar Item
-        </Button>
+        <Button onClick={() => setOpen(true)}>Agregar Item</Button>
       )}
     </div>
   )

@@ -1,11 +1,7 @@
 'use client'
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem
-} from '@nextui-org/react'
+import { Dropdown, Label } from '@heroui/react'
 import type StuffHandlers from './StuffHandlers'
+import { ReactNode } from 'react'
 
 const StuffItemTitle = ({
   title,
@@ -39,60 +35,62 @@ const StuffItemTitle = ({
   }
 
   const titleSpan = (
-    <span className='text-xs font-medium text-default-500'>{title}</span>
+    <span className='text-default-500 text-xs font-medium'>{title}</span>
   )
 
-  const dynamicItems: JSX.Element[] = []
+  const dynamicItems: ReactNode[] = []
   if (handlers?.handleEdit) {
     dynamicItems.push(
-      <DropdownItem
+      <Dropdown.Item
         onPress={() => {
           if (handlers.handleEdit) handlers.handleEdit()
         }}
         key={`stuff_${id}_editDropdownItem`}
       >
-        Editar
-      </DropdownItem>
+        <Label>Editar</Label>
+      </Dropdown.Item>
     )
   }
   if (!accStuff.startsWith(id.toString())) {
     dynamicItems.push(
-      <DropdownItem
+      <Dropdown.Item
         key={`stuff_${id}_moveUpDropdownItem`}
         onPress={() => handleMove(false)}
       >
-        Subir
-      </DropdownItem>
+        <Label>Subir</Label>
+      </Dropdown.Item>
     )
   }
   if (!accStuff.endsWith(id.toString())) {
     dynamicItems.push(
-      <DropdownItem
+      <Dropdown.Item
         key={`stuff_${id}_moveDownDropdownItem`}
         onPress={() => handleMove(true)}
       >
-        Bajar
-      </DropdownItem>
+        <Label>Bajar</Label>
+      </Dropdown.Item>
     )
   }
   dynamicItems.push(
-    <DropdownItem
-      color='danger'
+    <Dropdown.Item
+      variant='danger'
       className='text-danger'
       onPress={() => {
         if (handlers?.handleDelete) handlers.handleDelete(id)
       }}
       key={`stuff_${id}_deleteDropdownItem`}
     >
-      Eliminar
-    </DropdownItem>
+      <Label>Eliminar</Label>
+    </Dropdown.Item>
   )
 
   return manage ? (
     <div className='flex flex-row justify-start'>
       <Dropdown>
-        <DropdownTrigger>{titleSpan}</DropdownTrigger>
-        <DropdownMenu aria-label='Dynamic Actions'>{dynamicItems}</DropdownMenu>
+        <Dropdown.Trigger>{titleSpan}</Dropdown.Trigger>
+        <Dropdown.Popover aria-label='Dynamic Actions'>
+          <Dropdown.Menu>{dynamicItems}</Dropdown.Menu>
+        </Dropdown.Popover>
       </Dropdown>
     </div>
   ) : (

@@ -23,7 +23,11 @@ const StuffCreated = ({
   manage?: boolean
   accStuff: string
 }) => {
-  const { handleEdit, handleUpdate, modalDisclosure } = useEditStuffItem({
+  const {
+    handleEdit,
+    handleUpdate,
+    modalState: modalDisclosure
+  } = useEditStuffItem({
     id,
     handlers,
     notifyTexts: {
@@ -66,7 +70,7 @@ const StuffCreated = ({
           <CreatedLevelCard
             key={i}
             level={level}
-            className='record-card__mini border-2 border-default'
+            className='record-card__mini border-default border-2'
           />
         ))}
       </div>

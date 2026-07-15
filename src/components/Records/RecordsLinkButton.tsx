@@ -1,5 +1,5 @@
 'use client'
-import { Button } from '@nextui-org/react'
+import { Button } from '@heroui/react'
 
 const RecordsLinkButton = ({
   username,
@@ -10,12 +10,17 @@ const RecordsLinkButton = ({
 }) => {
   return (
     <a href={`/account/${username}/records`}>
-      <Button isIconOnly={true} className={mini ? 'sm:hidden' : 'hidden'}>
+      <Button
+        isIconOnly={true}
+        className={mini ? 'sm:hidden' : 'hidden'}
+        variant='tertiary'
+      >
         <img src='/assets/ui/success.png' alt='' width={30} />
       </Button>
       <Button
         className={mini ? 'hidden sm:flex' : ''}
-        href={`/account/${username}/records`}
+        variant='tertiary'
+        // href={`/account/${username}/records`}
       >
         <img src='/assets/ui/success.png' alt='' width={24} />
         Records

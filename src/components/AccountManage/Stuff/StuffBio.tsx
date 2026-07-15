@@ -20,7 +20,11 @@ const StuffBio = ({
   manage?: boolean
   accStuff: string
 }) => {
-  const { handleEdit, handleUpdate, modalDisclosure } = useEditStuffItem({
+  const {
+    handleEdit,
+    handleUpdate,
+    modalState: modalState
+  } = useEditStuffItem({
     id,
     handlers,
     notifyTexts: {
@@ -31,7 +35,7 @@ const StuffBio = ({
 
   return (
     <div className='my-2 flex flex-col'>
-      {manage && (
+      {/* {manage && (
         <StuffEditModal
           {...modalDisclosure}
           itemDataOld={itemData}
@@ -50,7 +54,7 @@ const StuffBio = ({
             return true
           }}
         />
-      )}
+      )} */}
 
       <StuffItemTitle
         title='Biografía'

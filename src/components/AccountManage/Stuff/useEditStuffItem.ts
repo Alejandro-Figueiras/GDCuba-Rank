@@ -1,7 +1,7 @@
 import { updateStuffItemDataAction } from '@/actions/accounts/stuffActions'
 import { useSesion } from '@/hooks/useSesion'
 import { notify } from '@/libs/toastNotifications'
-import { useDisclosure } from '@nextui-org/react'
+import { useOverlayState } from '@heroui/react'
 import type StuffHandlers from './StuffHandlers'
 import type DictionaryObject from '@/helpers/DictionaryObject'
 import type StuffItem from '@/models/StuffItem'
@@ -19,10 +19,10 @@ export const useEditStuffItem = ({
   }
 }) => {
   const { currentUser } = useSesion()
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const { isOpen, setOpen } = useOverlayState()
 
   const handleEdit = () => {
-    onOpen()
+    setOpen(true)
   }
 
   const handleUpdate = async (itemData: DictionaryObject<any>) => {
@@ -57,10 +57,9 @@ export const useEditStuffItem = ({
   return {
     handleEdit,
     handleUpdate,
-    modalDisclosure: {
+    modalState: {
       isOpen,
-      onOpen,
-      onOpenChange
+      setOpen
     }
   }
 }

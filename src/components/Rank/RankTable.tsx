@@ -247,14 +247,12 @@ const RankTable = ({
                       </EmptyState>
                     )
                   }
-                  // isLoading={loading}
-                  // loadingContent={<Spinner label='Cargando datos...' />}
-                  // emptyContent={loading ? null : 'No hay usuarios para mostrar'}
                 >
                   {ranking.map((player, i) => (
                     <Table.Row
                       key={i + 1}
-                      onClick={() => openUserView(player, true)}
+                      onAction={() => openUserView(player, true)}
+                      className='cursor-pointer'
                     >
                       {cells.map((cell) => cell(player, i))}
                     </Table.Row>

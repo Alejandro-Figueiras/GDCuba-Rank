@@ -139,11 +139,11 @@ export default function ModalProvider({ children }: { children: ReactNode }) {
         setOpenPassword
       }}
     >
-      {/* <UserModalView
+      <UserModalView
         user={currentUserInView}
-        onOpenChange={onOpenChangeUserView}
         isOpen={isOpenUserView}
-      /> */}
+        setOpen={setOpenUserView}
+      />
       <Modal
         isOpen={isOpen}
         setOpen={setOpen}

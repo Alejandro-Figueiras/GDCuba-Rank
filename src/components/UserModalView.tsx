@@ -1,14 +1,5 @@
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-  Divider,
-  Spinner
-} from '@nextui-org/react'
-import React, { useEffect, useState } from 'react'
+import { Modal, Button, Separator, Spinner } from '@heroui/react'
+import { useEffect, useState } from 'react'
 
 import AccountStatsRow from './Admin/UserModalPanel/AccountStatsRow'
 import AccountIconsRow from './Admin/UserModalPanel/AccountIconsRow'
@@ -20,11 +11,11 @@ import { Account } from '@/models/Account'
 const UserModalView = ({
   user = { account: { username: '' }, stuff: [] },
   isOpen,
-  onOpenChange
+  setOpen
 }: {
   user: UserInView | undefined
   isOpen: boolean
-  onOpenChange: () => void
+  setOpen: (isOpen: boolean) => void
 }) => {
   const { account, stuff = [] } = user
   const [isLoading, setIsLoading] = useState(false)
@@ -39,26 +30,27 @@ const UserModalView = ({
   return (
     <Modal
       isOpen={isOpen}
-      onOpenChange={onOpenChange}
-      size={!isLoading ? '3xl' : undefined}
-      scrollBehavior='inside'
+      onOpenChange={setOpen}
+      // scrollBehavior='inside'
     >
-      <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader className='flex flex-col gap-1 text-center'>
-              {account.username}
-            </ModalHeader>
+      <Modal.Backdrop>
+        <Modal.Container>
+          <Modal.Dialog className={!isLoading ? 'max-w-180' : undefined}>
+            <Modal.Header>
+              <Modal.Heading className='flex flex-col gap-1 text-center text-lg'>
+                {account.username}
+              </Modal.Heading>
+            </Modal.Header>
             {isLoading ? (
               <div className='my-6 flex h-10 w-full flex-col items-center justify-center p-2'>
                 <Spinner />
               </div>
             ) : (
               <>
-                <ModalBody>
+                <Modal.Body>
                   <AccountStatsRow user={account as Account} />
                   <AccountIconsRow user={account as Account} />
-                  {(account as Account).stuff != '' && <Divider />}
+                  {(account as Account).stuff != '' && <Separator />}
                   <AccountStuff
                     account={account as Account}
                     stuffItems={stuff}
@@ -70,23 +62,22 @@ const UserModalView = ({
                       <p className='text-medium'>Cargando stuff...</p>
                     </div>
                   )}
-                </ModalBody>
-                <ModalFooter>
+                </Modal.Body>
+                <Modal.Footer>
                   <RecordsLinkButton username={account.username} />
                   <Button
-                    color='primary'
                     onPress={async () => {
-                      onClose()
+                      setOpen(false)
                     }}
                   >
                     Cerrar
                   </Button>
-                </ModalFooter>
+                </Modal.Footer>
               </>
             )}
-          </>
-        )}
-      </ModalContent>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
     </Modal>
   )
 }

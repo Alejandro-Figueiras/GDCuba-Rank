@@ -103,18 +103,18 @@ const AccountStuff = ({
               />
             )
           }
-          // if (data.type == 'hardest') {
-          //   return (
-          //     <StuffHardest
-          //       itemData={data}
-          //       key={i}
-          //       id={id}
-          //       handlers={handlers}
-          //       manage={manage}
-          //       accStuff={account.stuff}
-          //     />
-          //   )
-          // }
+          if (data.type == 'hardest') {
+            return (
+              <StuffHardest
+                itemData={data}
+                key={i}
+                id={id}
+                handlers={handlers}
+                manage={manage}
+                accStuff={account.stuff}
+              />
+            )
+          }
           // if (data.type == 'created') {
           //   return (
           //     <StuffCreated

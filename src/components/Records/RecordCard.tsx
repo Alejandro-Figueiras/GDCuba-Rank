@@ -1,5 +1,5 @@
 'use client'
-import { Card, CardBody, Image, Link } from '@nextui-org/react'
+import { Card, Link } from '@heroui/react'
 import {
   getDifficultyNameByNumber,
   getDifficultyPath
@@ -13,21 +13,20 @@ const RecordCard = ({
   mini = false
 }: {
   record:
-    | Record
-    | (RecordLevel & { aval: number; video?: string; percent?: number })
+    Record | (RecordLevel & { aval: number; video?: string; percent?: number })
   className?: string
   mini?: boolean
 }) => {
   if (!record) return null
   return (
-    <Card className={`w-[300px] ${className}`}>
-      <CardBody className='flex flex-row justify-between'>
+    <Card className={`w-75 p-3 ${className} border-white/10`}>
+      <Card.Content className='flex flex-row justify-between'>
         <div className='flex flex-row justify-between gap-3'>
-          <Image
+          <img
             alt='diff'
             height={!mini ? 40 : 35}
             width={!mini ? 40 : 35}
-            radius='sm'
+            className='rounded-sm'
             src={getDifficultyPath({
               featured: record.featured,
               difficultyName: getDifficultyNameByNumber(record.difficulty)
@@ -37,7 +36,7 @@ const RecordCard = ({
             <p className='text-md flex gap-2'>
               {record.levelname}{' '}
               {record.video && (
-                <Link href={record.video} isExternal>
+                <Link href={record.video}>
                   <YouTubeIcon />
                 </Link>
               )}
@@ -70,7 +69,7 @@ const RecordCard = ({
             )}
           </div>
         )}
-      </CardBody>
+      </Card.Content>
     </Card>
   )
 }

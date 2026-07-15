@@ -48,6 +48,10 @@
   @apply hover:bg-accent rounded-xl font-normal transition-opacity hover:opacity-90;
 }
 
+.card {
+  @apply rounded-xl
+}
+
 .dropdown__popover {
   @apply border-foreground/20 rounded-xl;
 }

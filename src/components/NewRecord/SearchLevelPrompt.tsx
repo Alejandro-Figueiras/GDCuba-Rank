@@ -3,8 +3,8 @@ import {
   getLevelsAction
 } from '@/actions/admin/getLevelAction'
 import { isNumeric } from '@/libs/utils'
-import { MouseEventHandler, MutableRefObject, useRef, useState } from 'react'
-import { Button, Input, InputGroup, TextField } from '@heroui/react'
+import { useState } from 'react'
+import { Button, InputGroup, TextField } from '@heroui/react'
 import SearchIcon from '../Icons/SearchIcon'
 import type Level from '@/models/Level'
 
@@ -37,7 +37,7 @@ const SearchLevelPrompt = ({
   }
 
   return (
-    <div className='flex w-full flex-row gap-2'>
+    <div className='flex w-full flex-row flex-wrap gap-2'>
       <TextField value={value} onChange={setValue} className='grow'>
         <InputGroup variant='secondary' fullWidth>
           <InputGroup.Prefix>
@@ -53,7 +53,7 @@ const SearchLevelPrompt = ({
         onPress={handleSearch}
         size='lg'
         variant='tertiary'
-        className='shrink'
+        className='w-full shrink-0 sm:w-auto sm:shrink'
       >
         Buscar
       </Button>

@@ -55,7 +55,7 @@ export default function AccountView({
 
   return (
     <>
-      <Card className='w-200 max-w-250'>
+      <Card className='max-w-250 min-w-0'>
         <Card.Header className='flex flex-row justify-between'>
           <div className='flex flex-row gap-3'>
             <img alt='Cube' src={iconAvatar} width={40} />

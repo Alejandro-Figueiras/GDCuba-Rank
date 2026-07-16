@@ -38,7 +38,7 @@ export const NavMenuLink = ({
   const rutaActual = usePathname()
 
   return (
-    <li onClick={onClick}>
+    <div onClick={onClick}>
       <Link
         href={href}
         className={`block w-full ${fontSize ?? 'text-2xl'} ${rutaActual == href ? 'text-primary' : 'text-foreground'}`}
@@ -46,6 +46,6 @@ export const NavMenuLink = ({
       >
         {children}
       </Link>
-    </li>
+    </div>
   )
 }

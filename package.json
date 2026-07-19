@@ -37,7 +37,7 @@
     "axios": "^1.6.7",
     "bcryptjs": "^2.4.3",
     "cookie": "^1.0.2",
-    "dotenv": "^16.4.5",
+    "dotenv": "^17.4.2",
     "framer-motion": "^11.0.12",
     "jose": "^5.2.3",
     "jsonwebtoken": "^9.0.2",

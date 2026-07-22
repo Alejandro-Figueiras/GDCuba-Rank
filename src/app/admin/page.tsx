@@ -13,8 +13,8 @@ const AdminHome = () => {
       </header>
       <br />
       {/* <p>Estádistica general</p> */}
-      <AdminUsuariosPanel home />
-      <AdminRecordsPanel home />
+      {/* <AdminUsuariosPanel home />
+      <AdminRecordsPanel home /> */}
     </div>
   )
 }

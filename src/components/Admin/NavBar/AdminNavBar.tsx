@@ -10,7 +10,7 @@ const AdminNavBar = () => {
   return (
     <>
       <nav className='border-separator bg-background/70 sticky top-0 z-40 w-full border-b backdrop-blur-lg'>
-        <header className='mx-auto flex h-16 w-full max-w-[1536px] items-center justify-between px-4 sm:px-6'>
+        <header className='mx-auto flex h-16 w-full max-w-384 items-center justify-between px-4 sm:px-6'>
           {/* Sidebar Trigger Button */}
           <div className='flex items-center md:hidden'>
             <BurguerButton />

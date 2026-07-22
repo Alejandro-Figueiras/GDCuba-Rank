@@ -1,5 +1,5 @@
 import UserModalPanel from '@/components/Admin/UserModalPanel/UserModalPanel'
-import { useDisclosure } from '@nextui-org/react'
+import { useOverlayState } from '@heroui/react'
 import React, { createContext, type ReactNode, useState } from 'react'
 import { notify } from '@/libs/toastNotifications'
 import { responseText } from '@/locales/siteText'
@@ -27,12 +27,12 @@ export default function AdminProvider({ children }: { children: ReactNode }) {
   const [userInCheck, setUserInCheck] = useState(
     undefined as UserInCheck | undefined
   )
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure()
+  const { isOpen, setOpen } = useOverlayState()
   const [loadingUser, setLoadingUser] = useState(false)
 
   const openUserGestorFor = async (user: User, updateData: () => void) => {
     setUserInCheck({ user })
-    onOpen()
+    setOpen(true)
     setLoadingUser(true)
 
     const accountInfo = await getAccountAction({ username: user.username })
@@ -44,7 +44,7 @@ export default function AdminProvider({ children }: { children: ReactNode }) {
         updateData: updateData
       })
     } else {
-      onClose()
+      setOpen(false)
       notify(responseText.error, 'error')
     }
     setLoadingUser(false)
@@ -54,12 +54,12 @@ export default function AdminProvider({ children }: { children: ReactNode }) {
     <AdminContext.Provider
       value={{ userInCheck, setUserInCheck, openUserGestorFor }}
     >
-      <UserModalPanel
+      {/* <UserModalPanel
         isOpen={isOpen}
-        onOpenChange={onOpenChange}
+        setOpen={setOpen}
         userInfo={userInCheck}
         isLoading={loadingUser}
-      />
+      /> */}
       {children}
     </AdminContext.Provider>
   )

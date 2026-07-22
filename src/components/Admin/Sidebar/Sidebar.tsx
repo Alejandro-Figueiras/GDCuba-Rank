@@ -20,7 +20,7 @@ const SidebarMain = () => {
   const { collapsed, setCollapsed } = useSidebarContext()
   const ruta = usePathname()
   return (
-    <aside className='sticky top-0 z-[202] h-screen'>
+    <aside className='sticky top-0 z-202 h-screen'>
       {collapsed ? (
         <div className={Sidebar.Overlay()} onClick={setCollapsed} />
       ) : null}
@@ -33,10 +33,10 @@ const SidebarMain = () => {
           <div className='flex items-center gap-2'>
             <img src='/assets/SD_256.png' alt='Logo' width='42' />
             <div className='flex flex-col gap-4'>
-              <h3 className='m-0 -mb-4 whitespace-nowrap text-xl font-medium text-default-900'>
+              <h3 className='text-default-900 m-0 -mb-4 text-xl font-medium whitespace-nowrap'>
                 GD Cuba ΔΔΔ
               </h3>
-              <span className='text-xs font-medium text-default-500'>
+              <span className='text-default-500 text-xs font-medium'>
                 Admin Dashboard
               </span>
             </div>

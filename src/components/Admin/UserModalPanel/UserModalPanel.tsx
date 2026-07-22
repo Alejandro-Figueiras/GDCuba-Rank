@@ -1,14 +1,6 @@
 import { ModalContext } from '@/app/context/ModalContext'
 import { notify } from '@/libs/toastNotifications'
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-  Spinner
-} from '@nextui-org/react'
+import { Modal, Button, Spinner, Key } from '@heroui/react'
 import React, { useContext, useEffect, useState } from 'react'
 
 import BodyCard from './BodyCard'
@@ -29,12 +21,12 @@ import { type User } from '@/models/User'
 export default function UserModalPanel({
   userInfo,
   isOpen,
-  onOpenChange,
+  setOpen,
   isLoading
 }: {
   userInfo: UserInCheck | undefined
   isOpen: boolean
-  onOpenChange: () => void
+  setOpen: (isOpen: boolean) => void
   isLoading: boolean
 }) {
   const { currentUser } = useSesion()
@@ -46,26 +38,21 @@ export default function UserModalPanel({
   })
 
   const [changes, setChanges] = useState([] as string[])
-  const [fields, setFields] = useState({
-    role: new Set([] as string[]),
-    status: new Set([] as string[])
-  })
+  const [fields, setFields] = useState<{
+    role?: string
+    status?: string
+  }>({})
 
   const { openModal } = useContext(ModalContext)
 
   const handleSelectionChange = (
-    e: React.ChangeEvent<HTMLSelectElement>,
+    key: Key | null,
     whatChange: 'role' | 'status'
   ) => {
-    if (e.target.value == '') return
-
-    const value = new Set([e.target.value])
-
-    setFields((prev) => ({ ...prev, [whatChange]: value }))
-    if (
-      e.target.value != oldValues[whatChange] &&
-      !changes.includes(e.target.value)
-    ) {
+    if (!key || key == '') return
+    console.log(key.toString())
+    setFields((prev) => ({ ...prev, [whatChange]: key.toString() }))
+    if (key != oldValues[whatChange] && !changes.includes(whatChange)) {
       setChanges((prev) => [...prev, whatChange])
     } else {
       setChanges((prev) => prev.filter((v) => v != whatChange))
@@ -75,8 +62,8 @@ export default function UserModalPanel({
   useEffect(() => {
     setLoadingExtra(false)
     setFields({
-      role: new Set([userInfo?.user.role ?? '']),
-      status: new Set([userInfo?.user.status ?? ''])
+      role: userInfo?.user.role,
+      status: userInfo?.user.status
     })
     setOldValues({
       role: userInfo?.user.role ?? '',
@@ -85,7 +72,7 @@ export default function UserModalPanel({
     setChanges([])
   }, [userInfo])
 
-  const handleDelete = (onClose: () => void) => {
+  const handleDelete = () => {
     if (!userInfo?.user) return
     openModal({
       title: `Eliminar ${userInfo.user.username}`,
@@ -97,10 +84,10 @@ export default function UserModalPanel({
 
         if (result) {
           notify(`Usuario ${userInfo?.user.username} eliminado`, 'success')
-          onClose()
+          setOpen(false)
         } else {
           notify(`Error al eliminar a ${userInfo?.user.username}`, 'error')
-          onClose()
+          setOpen(false)
         }
 
         if (userInfo?.updateData) userInfo.updateData()
@@ -113,9 +100,9 @@ export default function UserModalPanel({
     if (!userInfo?.user) return
     for (const change of changes) {
       if (change == 'status') {
-        if (fields[change].has('b')) {
+        if (fields[change] == 'b') {
           await banUserAction({ user: userInfo.user.username })
-        } else if (fields[change].has('v')) {
+        } else if (fields[change] == 'v') {
           await validateUserAction({
             user: userInfo.user.username,
             unvalidate: false
@@ -127,11 +114,12 @@ export default function UserModalPanel({
           })
         }
       } else if (change == 'role' && currentUser.role == 'owner') {
-        const role = fields.role.has('owner')
-          ? 'owner'
-          : fields.role.has('admin')
-            ? 'admin'
-            : 'user'
+        const role =
+          fields.role == 'owner'
+            ? 'owner'
+            : fields.role == 'admin'
+              ? 'admin'
+              : 'user'
         await changeUserRoleAction({ user: userInfo.user.username, role })
       }
     }
@@ -141,43 +129,48 @@ export default function UserModalPanel({
   return (
     <Modal
       isOpen={isOpen}
-      onOpenChange={onOpenChange}
-      size={!isLoading ? '2xl' : undefined}
+      onOpenChange={setOpen}
+      // scrollBehavior='inside'
     >
-      <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader className='flex flex-col gap-1 text-center'>
-              {userInfo?.user.username}
-            </ModalHeader>
+      <Modal.Backdrop>
+        <Modal.Container>
+          <Modal.Dialog className={!isLoading ? 'max-w-180' : undefined}>
+            <Modal.Header className='flex flex-col gap-1 text-center'>
+              <Modal.Heading>{userInfo?.user.username}</Modal.Heading>
+              <Modal.CloseTrigger />
+            </Modal.Header>
+
             {isLoading || loadingExtra ? (
-              <div className='my-6 flex h-10 w-full flex-col items-center justify-center p-2'>
+              <Modal.Body className='my-6 flex h-10 w-full flex-col items-center justify-center p-2'>
                 <Spinner />
-              </div>
+              </Modal.Body>
             ) : (
               <>
-                <ModalBody>
+                <Modal.Body>
                   <AccountStatsRow user={userInfo?.account as Account} />
                   <AccountIconsRow user={userInfo?.account as Account} />
-                  <div className='grid h-[300px] grid-cols-[0.5fr,_1fr] gap-2'>
+                  <div className='grid h-75 grid-cols-3 gap-2 pt-2'>
                     {/* grid grid-cols-[0.5fr,_1fr] gap-2 */}
                     <AccountInfoColumn
                       user={userInfo?.user as User}
                       canResetPw={currentUser.role == 'owner'}
                     />
-                    <BodyCard cardTitle={'Datos y Permisos'}>
+                    <BodyCard
+                      cardTitle={'Datos y Permisos'}
+                      className='col-span-2'
+                    >
                       <CardSelect
                         items={ROLES}
                         label={'Nivel'}
-                        selectedKeys={fields.role}
-                        onChange={(e) => handleSelectionChange(e, 'role')}
+                        value={fields.role as Key}
+                        setValue={(key) => handleSelectionChange(key, 'role')}
                         isDisabled={currentUser.role != 'owner'}
                       />
                       <CardSelect
                         items={STATUS}
                         label={'Estado'}
-                        selectedKeys={fields.status}
-                        onChange={(e) => handleSelectionChange(e, 'status')}
+                        value={fields.status as Key}
+                        setValue={(key) => handleSelectionChange(key, 'status')}
                         isDisabled={
                           userInfo?.user.role != 'user' &&
                           currentUser.role != 'owner'
@@ -185,14 +178,13 @@ export default function UserModalPanel({
                       />
                     </BodyCard>
                   </div>
-                </ModalBody>
-                <ModalFooter>
+                </Modal.Body>
+                <Modal.Footer>
                   <Button
-                    color='primary'
                     onPress={async () => {
                       setLoadingExtra(true)
                       await handleUpdate()
-                      onClose()
+                      setOpen(false)
                     }}
                     isDisabled={changes.length == 0}
                   >
@@ -200,22 +192,19 @@ export default function UserModalPanel({
                   </Button>
                   {(userInfo?.user.role == 'user' ||
                     currentUser.role == 'owner') && (
-                    <Button
-                      color='danger'
-                      onClick={() => handleDelete(onClose)}
-                    >
+                    <Button variant='danger' onClick={() => handleDelete()}>
                       Eliminar
                     </Button>
                   )}
-                  <Button color='danger' variant='light' onPress={onClose}>
+                  <Button variant='tertiary' onPress={() => setOpen(false)}>
                     Cancelar
                   </Button>
-                </ModalFooter>
+                </Modal.Footer>
               </>
             )}
-          </>
-        )}
-      </ModalContent>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
     </Modal>
   )
 }

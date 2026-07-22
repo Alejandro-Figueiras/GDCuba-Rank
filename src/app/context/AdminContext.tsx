@@ -54,12 +54,12 @@ export default function AdminProvider({ children }: { children: ReactNode }) {
     <AdminContext.Provider
       value={{ userInCheck, setUserInCheck, openUserGestorFor }}
     >
-      {/* <UserModalPanel
+      <UserModalPanel
         isOpen={isOpen}
         setOpen={setOpen}
         userInfo={userInCheck}
         isLoading={loadingUser}
-      /> */}
+      />
       {children}
     </AdminContext.Provider>
   )

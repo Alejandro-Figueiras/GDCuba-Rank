@@ -92,7 +92,7 @@ const TablaUsuarios = ({
                   <Table.Row
                     key={user.id}
                     className='cursor-pointer duration-75 hover:bg-zinc-700'
-                    onClick={() => openUserGestorFor(user, updateData)}
+                    onAction={() => openUserGestorFor(user, updateData)}
                   >
                     <Table.Cell>{user.id}</Table.Cell>
                     <Table.Cell>{user.username}</Table.Cell>

@@ -1,12 +1,12 @@
-import { Select, SelectItem } from '@nextui-org/react'
-import { ChangeEventHandler } from 'react'
+import { Key, Label, ListBox, Select } from '@heroui/react'
+import React from 'react'
 
 const CardSelect = ({
   items,
   placeholder,
   label,
-  onChange,
-  selectedKeys,
+  value,
+  setValue,
   isDisabled = false
 }: {
   items: {
@@ -15,25 +15,32 @@ const CardSelect = ({
   }[]
   placeholder?: string
   label: string
-  onChange: ChangeEventHandler<HTMLSelectElement>
-  selectedKeys: 'all' | Iterable<string> | undefined
+  setValue: React.Dispatch<Key | null>
+  value: Key | null
   isDisabled?: boolean
 }) => {
   return (
     <Select
-      items={items}
-      label={label}
       placeholder={placeholder}
-      className='max-w-xs'
-      selectedKeys={selectedKeys}
-      onChange={onChange}
+      value={value}
+      onChange={(value) => setValue(value)}
       isDisabled={isDisabled}
     >
-      {items.map((item) => (
-        <SelectItem key={item.key} value={item.key}>
-          {item.label}
-        </SelectItem>
-      ))}
+      <Label>{label}</Label>
+      <Select.Trigger>
+        <Select.Value />
+        <Select.Indicator />
+      </Select.Trigger>
+      <Select.Popover className='max-w-xs'>
+        <ListBox>
+          {items.map((item) => (
+            <ListBox.Item key={item.key} id={item.key} textValue={item.label}>
+              {item.label}
+              <ListBox.ItemIndicator />
+            </ListBox.Item>
+          ))}
+        </ListBox>
+      </Select.Popover>
     </Select>
   )
 }

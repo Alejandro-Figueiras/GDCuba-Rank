@@ -1,7 +1,7 @@
 import { resetPasswordAction } from '@/actions/admin/resetPasswordAction'
 import { notify } from '@/libs/toastNotifications'
 import { type User } from '@/models/User'
-import { Card, CardHeader, Button } from '@nextui-org/react'
+import { Card, Button } from '@heroui/react'
 
 const AccountInfoColumn = ({
   user,
@@ -22,23 +22,23 @@ const AccountInfoColumn = ({
 
   return (
     <div>
-      <Card classNames={{ base: 'mb-2' }}>
-        <CardHeader className='justify-between text-small'>
+      <Card className='mb-2' variant='secondary'>
+        <Card.Content className='text-small flex flex-row justify-between'>
           <b>ID</b>
           <p>{user.accountid}</p>
-        </CardHeader>
+        </Card.Content>
       </Card>
 
-      <Card classNames={{ base: 'mb-2' }}>
-        <CardHeader className='justify-between text-small'>
+      <Card className='mb-2' variant='secondary'>
+        <Card.Content className='text-small flex flex-row justify-between'>
           <b>Teléfono</b>
           <p>{user.phone}</p>
-        </CardHeader>
+        </Card.Content>
       </Card>
 
       <Button
-        className='mb-2 w-full'
-        color='warning'
+        className='bg-warning mb-2 w-full text-black hover:opacity-50'
+        // color='warning'
         onPress={handleResetPassword}
         isDisabled={!canResetPw}
       >

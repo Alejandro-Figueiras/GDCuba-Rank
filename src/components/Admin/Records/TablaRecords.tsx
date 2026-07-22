@@ -3,17 +3,7 @@ import {
   getDifficultyNameByNumber,
   getDifficultyPath
 } from '@/helpers/levelParser'
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell,
-  Button,
-  Link,
-  Spinner
-} from '@nextui-org/react'
+import { Table, Button, Link, Spinner, EmptyState } from '@heroui/react'
 import RecordAvalDropdown from './RecordAvalDropdown'
 import { removeRecord } from '@/actions/admin/changeRecord'
 import { useContext } from 'react'
@@ -52,74 +42,86 @@ const TablaRecords = ({
 
   return (
     <>
-      <Table
-        aria-label='Todos los records'
-        classNames={{ table: loading ? 'min-h-[300px]' : '' }}
-      >
-        <TableHeader>
-          <TableColumn>ID</TableColumn>
-          <TableColumn>Usuario</TableColumn>
-          <TableColumn>Nivel</TableColumn>
-          <TableColumn>Porcentaje</TableColumn>
-          <TableColumn>Video</TableColumn>
-          <TableColumn>Aval</TableColumn>
-          <TableColumn>Acciones</TableColumn>
-        </TableHeader>
-        <TableBody
-          isLoading={loading}
-          loadingContent={<Spinner label='Cargando datos...' />}
-          emptyContent={loading ? null : 'No hay records para mostrar'}
-        >
-          {records &&
-            records.map((record) => (
-              <TableRow key={record.id}>
-                <TableCell>{record.id}</TableCell>
-                <TableCell>{record.username}</TableCell>
-                <TableCell>
-                  <div className='flex gap-2 align-middle'>
-                    <img
-                      src={getDifficultyPath({
-                        featured: record.featured,
-                        difficultyName: getDifficultyNameByNumber(
-                          record.difficulty
-                        )
-                      })}
-                      style={{ height: '24px' }}
-                      alt=''
-                    />
+      <Table>
+        <Table.ScrollContainer>
+          <Table.Content
+            aria-label='Todos los records'
+            className={loading ? 'min-h-75' : ''}
+          >
+            <Table.Header>
+              <Table.Column>ID</Table.Column>
+              <Table.Column isRowHeader>Usuario</Table.Column>
+              <Table.Column>Nivel</Table.Column>
+              <Table.Column>Porcentaje</Table.Column>
+              <Table.Column>Video</Table.Column>
+              <Table.Column>Aval</Table.Column>
+              <Table.Column>Acciones</Table.Column>
+            </Table.Header>
 
-                    {record.levelname}
-                  </div>
-                </TableCell>
-                <TableCell>{record.percent}%</TableCell>
-                <TableCell>
-                  {record.video != '' ? (
-                    <Link
-                      isExternal
-                      className='cursor-pointer'
-                      href={record.video}
-                    >
-                      Video
-                    </Link>
+            <Table.Body
+              renderEmptyState={() => (
+                <EmptyState className='flex h-full w-full flex-col items-center justify-center gap-4 text-center'>
+                  {loading ? (
+                    <>
+                      <Spinner className='text-muted size-6' />
+                      <span className='text-muted text-sm'>Cargando datos</span>
+                    </>
                   ) : (
-                    <p>No Tiene</p>
+                    <span className='text-muted text-sm'>
+                      No hay records para mostrar
+                    </span>
                   )}
-                </TableCell>
-                <TableCell>
-                  <RecordAvalDropdown record={record} />
-                </TableCell>
-                <TableCell>
-                  <Button
-                    size='sm'
-                    color='danger'
-                    onPress={() => handleDelete(record)}
-                  >
-                    Eliminar
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
+                </EmptyState>
+              )}
+            >
+              {records &&
+                records.map((record) => (
+                  <Table.Row key={record.id}>
+                    <Table.Cell>{record.id}</Table.Cell>
+                    <Table.Cell>{record.username}</Table.Cell>
+                    <Table.Cell>
+                      <div className='flex gap-2 align-middle'>
+                        <img
+                          src={getDifficultyPath({
+                            featured: record.featured,
+                            difficultyName: getDifficultyNameByNumber(
+                              record.difficulty
+                            )
+                          })}
+                          style={{ height: '24px' }}
+                          alt=''
+                        />
+
+                        {record.levelname}
+                      </div>
+                    </Table.Cell>
+                    <Table.Cell>{record.percent}%</Table.Cell>
+                    <Table.Cell>
+                      {record.video != '' ? (
+                        <Link className='cursor-pointer' href={record.video}>
+                          Video
+                        </Link>
+                      ) : (
+                        <p>No Tiene</p>
+                      )}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <RecordAvalDropdown record={record} />
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Button
+                        size='sm'
+                        variant='danger'
+                        onPress={() => handleDelete(record)}
+                      >
+                        Eliminar
+                      </Button>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+            </Table.Body>
+          </Table.Content>
+        </Table.ScrollContainer>
       </Table>
     </>
   )

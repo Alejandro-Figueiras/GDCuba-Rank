@@ -1,5 +1,5 @@
 'use client'
-import { Button } from '@nextui-org/react'
+import { Button } from '@heroui/react'
 import { type ReactNode } from 'react'
 
 const TablaHeader = ({
@@ -17,7 +17,7 @@ const TablaHeader = ({
         <h2 className='pb-2 text-center text-2xl sm:text-start'>{title}</h2>
         <div className='flex gap-2'>
           {buttons.map((button, i) => (
-            <Button onClick={button.handleClick} key={i}>
+            <Button onClick={button.handleClick} key={i} variant='tertiary'>
               {button.text}
             </Button>
           ))}

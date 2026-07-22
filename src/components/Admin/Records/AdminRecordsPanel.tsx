@@ -6,7 +6,7 @@ import {
 import TablaRecords from '@/components/Admin/Records/TablaRecords'
 import { useEffect, useState } from 'react'
 import TablaHeader from '@/components/Admin/TablaHeader'
-import { useDisclosure } from '@nextui-org/react'
+import { useOverlayState } from '@heroui/react'
 import SubmitRecordModal from '@/components/NewRecord/SubmitRecordModal'
 import { type Record } from '@/models/Record'
 import { notify } from '@/libs/toastNotifications'
@@ -14,7 +14,7 @@ import { notify } from '@/libs/toastNotifications'
 const AdminRecordsPanel = ({ home = false }) => {
   const [records, setRecords] = useState([] as Record[])
   const [loading, setLoading] = useState(true)
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const { isOpen, setOpen } = useOverlayState()
 
   const updateRecords = () => {
     ;(home ? getUnverifiedRecordsAction() : getAllRecordsAction()).then(
@@ -49,7 +49,9 @@ const AdminRecordsPanel = ({ home = false }) => {
           : [
               {
                 text: 'Agregar Record',
-                handleClick: onOpen
+                handleClick: () => {
+                  setOpen(true)
+                }
               },
               {
                 text: 'Refresh',
@@ -63,7 +65,7 @@ const AdminRecordsPanel = ({ home = false }) => {
         updateRecords={updateRecords}
         loading={loading}
       />
-      <SubmitRecordModal isOpen={isOpen} onOpenChange={onOpenChange} admin />
+      <SubmitRecordModal isOpen={isOpen} setOpen={setOpen} admin />
     </TablaHeader>
   )
 }

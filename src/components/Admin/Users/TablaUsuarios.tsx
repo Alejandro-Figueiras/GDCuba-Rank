@@ -1,27 +1,11 @@
 'use client'
 import { AdminContext } from '@/app/context/AdminContext'
 import { type User } from '@/models/User'
-import { Chip } from '@nextui-org/chip'
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell,
-  Link,
-  Spinner
-} from '@nextui-org/react'
+import { Chip, Table, Link, Spinner, EmptyState } from '@heroui/react'
 import { useContext } from 'react'
 
 const renderRoleOrStatus = (arg: string) => {
-  let color:
-      | 'default'
-      | 'success'
-      | 'secondary'
-      | 'warning'
-      | 'danger'
-      | undefined,
+  let color: 'default' | 'success' | 'warning' | 'danger' | undefined,
     texto: string | undefined
   switch (arg) {
     case 'user':
@@ -33,7 +17,7 @@ const renderRoleOrStatus = (arg: string) => {
       texto = 'Admin'
       break
     case 'owner':
-      color = 'secondary'
+      color = 'success'
       texto = 'Owner'
       break
     case 'v':
@@ -51,7 +35,7 @@ const renderRoleOrStatus = (arg: string) => {
   }
 
   return (
-    <Chip size='sm' variant='flat' color={color}>
+    <Chip size='sm' variant='soft' color={color}>
       <span className='text-xs capitalize'>{texto ?? 'Desconocido'}</span>
     </Chip>
   )
@@ -73,47 +57,60 @@ const TablaUsuarios = ({
   const { openUserGestorFor } = useContext(AdminContext)
   return (
     <>
-      <Table
-        aria-label='Todos los usuarios'
-        classNames={{ table: loading ? 'min-h-[300px]' : '' }}
-      >
-        <TableHeader>
-          <TableColumn>ID</TableColumn>
-          <TableColumn>Usuario</TableColumn>
-          <TableColumn>Teléfono</TableColumn>
-          <TableColumn>AccountID</TableColumn>
-          <TableColumn>Rol</TableColumn>
-          <TableColumn>Estado</TableColumn>
-        </TableHeader>
-        <TableBody
-          isLoading={loading}
-          loadingContent={<Spinner label='Cargando datos...' />}
-          emptyContent={loading ? null : 'No hay usuarios para mostrar'}
-        >
-          {usuarios &&
-            usuarios.map((user) => (
-              <TableRow
-                key={user.id}
-                className='cursor-pointer duration-75 hover:bg-zinc-700'
-                onClick={() => openUserGestorFor(user, updateData)}
-              >
-                <TableCell>{user.id}</TableCell>
-                <TableCell>{user.username}</TableCell>
-                <TableCell>
-                  <Link
-                    href={getWhatsAppURL(user.phone)}
-                    className='text-white underline'
-                    isExternal
+      <Table>
+        <Table.ScrollContainer>
+          <Table.Content
+            className={loading ? 'min-h-75' : ''}
+            aria-label='Todos los usuarios'
+          >
+            <Table.Header>
+              <Table.Column>ID</Table.Column>
+              <Table.Column isRowHeader>Usuario</Table.Column>
+              <Table.Column>Teléfono</Table.Column>
+              <Table.Column>Rol</Table.Column>
+              <Table.Column>Estado</Table.Column>
+            </Table.Header>
+
+            <Table.Body
+              renderEmptyState={() => (
+                <EmptyState className='flex h-full w-full flex-col items-center justify-center gap-4 text-center'>
+                  {loading ? (
+                    <>
+                      <Spinner className='text-muted size-6' />
+                      <span className='text-muted text-sm'>Cargando datos</span>
+                    </>
+                  ) : (
+                    <span className='text-muted text-sm'>
+                      No hay usuarios para mostrar
+                    </span>
+                  )}
+                </EmptyState>
+              )}
+            >
+              {usuarios &&
+                usuarios.map((user) => (
+                  <Table.Row
+                    key={user.id}
+                    className='cursor-pointer duration-75 hover:bg-zinc-700'
+                    onClick={() => openUserGestorFor(user, updateData)}
                   >
-                    {user.phone}
-                  </Link>
-                </TableCell>
-                <TableCell>{user.accountid}</TableCell>
-                <TableCell>{renderRoleOrStatus(user.role)}</TableCell>
-                <TableCell>{renderRoleOrStatus(user.status)}</TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
+                    <Table.Cell>{user.id}</Table.Cell>
+                    <Table.Cell>{user.username}</Table.Cell>
+                    <Table.Cell>
+                      <Link
+                        href={getWhatsAppURL(user.phone)}
+                        className='text-white underline'
+                      >
+                        {user.phone}
+                      </Link>
+                    </Table.Cell>
+                    <Table.Cell>{renderRoleOrStatus(user.role)}</Table.Cell>
+                    <Table.Cell>{renderRoleOrStatus(user.status)}</Table.Cell>
+                  </Table.Row>
+                ))}
+            </Table.Body>
+          </Table.Content>
+        </Table.ScrollContainer>
       </Table>
     </>
   )

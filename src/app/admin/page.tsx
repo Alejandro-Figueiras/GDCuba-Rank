@@ -12,9 +12,8 @@ const AdminHome = () => {
         </h2>
       </header>
       <br />
-      {/* <p>Estádistica general</p> */}
-      {/* <AdminUsuariosPanel home />
-      <AdminRecordsPanel home /> */}
+      <AdminUsuariosPanel home />
+      <AdminRecordsPanel home />
     </div>
   )
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, type SetStateAction, type Dispatch } from 'react'
-import { Modal, Select, Button, Label, ListBox } from '@heroui/react'
+import { Modal, Select, Button, Label, ListBox, Spinner } from '@heroui/react'
 import StuffBioForm from './Stuff/StuffBioForm'
 // import StuffCreatedForm from './Stuff/StuffCreatedForm'
 import {
@@ -126,7 +126,6 @@ const AddStuffModal = ({
             </Modal.Header>
             <Modal.Body>
               <Select
-                // TODO revisar completo esto
                 placeholder='-'
                 variant='secondary'
                 value={itemType}
@@ -208,6 +207,7 @@ const AddStuffModal = ({
                 isPending={loading}
                 isDisabled={disabled}
               >
+                {loading && <Spinner color='current' size='sm' />}
                 Adelante
               </Button>
             </Modal.Footer>

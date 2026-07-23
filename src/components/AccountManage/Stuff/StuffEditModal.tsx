@@ -7,7 +7,7 @@ import {
   type Dispatch,
   type SetStateAction
 } from 'react'
-import { Modal, Button } from '@heroui/react'
+import { Modal, Button, Spinner } from '@heroui/react'
 import type DictionaryObject from '@/helpers/DictionaryObject'
 
 const StuffEditModal = ({
@@ -91,6 +91,7 @@ const StuffEditModal = ({
                 isPending={loading}
                 isDisabled={disabled}
               >
+                {loading && <Spinner color='current' size='sm' />}
                 Adelante
               </Button>
             </Modal.Footer>

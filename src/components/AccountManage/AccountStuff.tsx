@@ -132,7 +132,15 @@ const AccountStuff = ({
         })}
       </div>
       {manage && itemTypesLeft != 0 && (
-        <Button onClick={() => setOpen(true)}>Agregar Item</Button>
+        <div className='w-full px-4'>
+          <Button
+            onClick={() => setOpen(true)}
+            variant='tertiary'
+            className='w-full'
+          >
+            Agregar Item
+          </Button>
+        </div>
       )}
     </div>
   )

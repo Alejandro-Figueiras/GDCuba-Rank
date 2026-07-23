@@ -1,6 +1,6 @@
 'use client'
 import { useContext, useState } from 'react'
-import { Button, Modal, Input, TextField, Label } from '@heroui/react'
+import { Button, Modal, Input, TextField, Label, Spinner } from '@heroui/react'
 import { GlobalContext } from '@/app/context/GlobalContext'
 import { notify } from '@/libs/toastNotifications'
 import { login } from '@/actions/auth/login'
@@ -84,8 +84,9 @@ const LoginForm = ({
                 onPress={() =>
                   handleSubmitButton('submit', () => setOpen(false))
                 }
-                // isLoading={loading}
+                isPending={loading}
               >
+                {loading && <Spinner color='current' size='sm' />}
                 Adelante
               </Button>
             </Modal.Footer>

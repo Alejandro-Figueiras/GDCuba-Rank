@@ -1,4 +1,4 @@
-import { Button, Modal } from '@heroui/react'
+import { Button, Modal, Spinner } from '@heroui/react'
 import { useState } from 'react'
 
 const ModalTemplate = ({
@@ -58,6 +58,7 @@ const ModalTemplate = ({
                   setOpen(false)
                 }}
               >
+                {isLoading && <Spinner color='current' size='sm' />}\
                 <span className='text-white'>{translate(action)}</span>
               </Button>
               <Button

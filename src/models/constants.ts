@@ -6,18 +6,22 @@ export const COOKIES_INFO = {
 export const RECORDS_AVAL_VALUES = {
   '0': {
     value: 'Sin verificar',
-    color: 'warning'
+    color: 'warning',
+    colorClassName: ''
   },
   '1': {
     value: 'Verificado',
-    color: 'success'
+    color: 'success',
+    colorClassName: 'bg-green-500/30'
   },
   '-1': {
     value: 'Denegado',
-    color: 'danger'
+    color: 'danger',
+    colorClassName: 'bg-danger-soft'
   },
   '-2': {
     value: 'Pendiente',
-    color: 'warning'
+    color: 'warning',
+    colorClassName: 'bg-warning'
   }
 }

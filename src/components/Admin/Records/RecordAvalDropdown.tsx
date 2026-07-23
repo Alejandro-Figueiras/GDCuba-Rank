@@ -24,25 +24,15 @@ const RecordAvalDropdown = ({ record }: { record: Record }) => {
 
   return (
     <Dropdown>
-      <Dropdown.Trigger>
-        <Button
-          variant='tertiary'
-          size='sm'
-          // color={
-          //   RECORDS_AVAL_VALUES[aval as 1 | 0 | -1 | -2].color as
-          //     | 'success'
-          //     | 'warning'
-          //     | 'danger'
-          //     | undefined
-          // }
-        >
-          {RECORDS_AVAL_VALUES[aval as Aval].value}
-        </Button>
-      </Dropdown.Trigger>
+      <Button
+        variant='tertiary'
+        size='sm'
+        className={[RECORDS_AVAL_VALUES[aval as Aval].colorClassName].join(' ')}
+      >
+        {RECORDS_AVAL_VALUES[aval as Aval].value}
+      </Button>
       <Dropdown.Popover>
         <Dropdown.Menu
-          // aria-label='Aval Dropdown'
-          // variant='bordered'
           disallowEmptySelection
           selectionMode='single'
           onSelectionChange={(keys) => handleChange(keys as Set<Key>)}

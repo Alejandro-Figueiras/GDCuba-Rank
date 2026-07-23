@@ -1,15 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import {
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-  Button,
-  Input
-} from '@nextui-org/react'
+import { Modal, Button, Spinner, NumberField, Label } from '@heroui/react'
 import { reposicionarLevelAction } from '@/actions/admin/recordLevelsAction'
 import { notify } from '@/libs/toastNotifications'
 import RecordCard from '@/components/Records/RecordCard'
@@ -17,13 +9,13 @@ import { type RecordLevel } from '@/models/Record'
 
 const NivelesRescoreModal = ({
   isOpen,
-  onOpenChange,
+  setOpen,
   level,
   levels,
   handleRefresh
 }: {
   isOpen: boolean
-  onOpenChange: () => void
+  setOpen: (isOpen: boolean) => void
   level: RecordLevel
   levels: RecordLevel[]
   handleRefresh?: () => void
@@ -43,7 +35,7 @@ const NivelesRescoreModal = ({
     return Math.max(...levels.map((level) => level.difficultyscore))
   }
 
-  const handleSubmit = async (onClose: () => void) => {
+  const handleSubmit = async () => {
     setLoading(true)
 
     const result = await reposicionarLevelAction({
@@ -52,7 +44,7 @@ const NivelesRescoreModal = ({
       newScore: scoreRequested,
       platformer: !!level.platformer
     })
-    if (result > 0) {
+    if (result && result > 0) {
       notify(`Nivel reposicionado correctamente.`, 'success')
     } else {
       notify(`Error al actualizar nivel.`, 'error')
@@ -60,7 +52,7 @@ const NivelesRescoreModal = ({
     if (handleRefresh) handleRefresh()
 
     clear()
-    onClose()
+    setOpen(false)
   }
 
   useEffect(() => {
@@ -87,55 +79,59 @@ const NivelesRescoreModal = ({
   console.log(level)
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement='top-center'>
-      <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader className='flex flex-col gap-1'>
-              Reposicionar nivel
-            </ModalHeader>
-            <ModalBody>
-              <Input
-                type='number'
-                size='sm'
-                min={1}
-                max={getMaxDifficultyScore(levels) + 1}
-                defaultValue={level.difficultyscore.toString()}
-                onValueChange={(value) => setScoreRequested(parseFloat(value))}
-                label='Score'
-              />
-              <div className='flex flex-row justify-center'>
+    <Modal isOpen={isOpen} onOpenChange={setOpen}>
+      <Modal.Backdrop>
+        <Modal.Container>
+          <Modal.Dialog>
+            <Modal.Header>
+              <Modal.Heading>Reposicionar nivel</Modal.Heading>
+              <Modal.CloseTrigger />
+            </Modal.Header>
+            <Modal.Body>
+              <NumberField
+                name='name'
+                value={scoreRequested}
+                onChange={setScoreRequested}
+                variant='secondary'
+              >
+                <Label>Score</Label>
+                <NumberField.Group>
+                  <NumberField.DecrementButton />
+                  <NumberField.Input />
+                  <NumberField.IncrementButton />
+                </NumberField.Group>
+              </NumberField>
+              <div className='flex flex-row justify-center pt-2'>
                 <RecordCard
                   record={{ ...level, aval: 1 }}
-                  className='border-1 border-default-200'
+                  className='border-default-200 border'
                 />
               </div>
-            </ModalBody>
-            <ModalFooter>
+            </Modal.Body>
+            <Modal.Footer>
               <Button
-                color='default'
-                variant='flat'
+                variant='tertiary'
                 onPress={() => {
                   clear()
-                  onClose()
+                  setOpen(false)
                 }}
               >
                 Cerrar
               </Button>
               <Button
-                color='primary'
                 onPress={() => {
-                  handleSubmit(onClose)
+                  handleSubmit()
                 }}
-                isLoading={loading}
+                isPending={loading}
                 isDisabled={disabled}
               >
+                {loading && <Spinner color='current' size='sm' />}
                 Adelante
               </Button>
-            </ModalFooter>
-          </>
-        )}
-      </ModalContent>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
     </Modal>
   )
 }

@@ -5,16 +5,12 @@ import {
 } from '@/helpers/levelParser'
 import {
   Table,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell,
   Button,
   Chip,
   Spinner,
-  useDisclosure
-} from '@nextui-org/react'
+  useOverlayState,
+  EmptyState
+} from '@heroui/react'
 import { useState } from 'react'
 import NivelesRescoreModal from './NivelesRescoreModal'
 import { type RecordLevel } from '@/models/Record'
@@ -28,7 +24,7 @@ const TablaNivelesDifficultyScore = ({
   handleRefresh?: () => void
   loading?: boolean
 }) => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure()
+  const { isOpen, setOpen } = useOverlayState()
   const [selectedLevel, setSelectedLevel] = useState({} as RecordLevel)
 
   const levels = [...unsortedLevels].sort((a, b) => {
@@ -40,74 +36,87 @@ const TablaNivelesDifficultyScore = ({
 
   const handleRescore = (level: RecordLevel) => {
     setSelectedLevel(level)
-    onOpen()
+    setOpen(true)
   }
 
   return (
     <>
       <NivelesRescoreModal
         isOpen={isOpen}
-        onOpenChange={onOpenChange}
+        setOpen={setOpen}
         level={selectedLevel}
         levels={levels}
         handleRefresh={handleRefresh}
       />
-      <Table
-        aria-label='Todos los records'
-        classNames={{ table: loading ? 'min-h-[300px]' : '' }}
-      >
-        <TableHeader>
-          <TableColumn>Nivel</TableColumn>
-          <TableColumn className='text-center'>Score</TableColumn>
-          <TableColumn>Acciones</TableColumn>
-        </TableHeader>
-        <TableBody
-          isLoading={loading}
-          loadingContent={<Spinner label='Cargando datos...' />}
-          emptyContent={loading ? null : 'No hay niveles para mostrar'}
-        >
-          {levels &&
-            levels.map((level) => (
-              <TableRow key={level.levelid}>
-                <TableCell>
-                  <div className='flex gap-2 align-middle'>
-                    <img
-                      src={getDifficultyPath({
-                        featured: level.featured,
-                        difficultyName: getDifficultyNameByNumber(
-                          level.difficulty
-                        )
-                      })}
-                      style={{
-                        height: '24px',
-                        filter: `grayscale(${level.difficultyscore == 0 ? 100 : 0}%)`
-                      }}
-                      alt=''
-                    />
+      <Table>
+        <Table.ScrollContainer>
+          <Table.Content
+            className={loading ? 'min-h-75' : ''}
+            aria-label='Niveles'
+          >
+            <Table.Header>
+              <Table.Column isRowHeader>Nivel</Table.Column>
+              <Table.Column className='text-center'>Score</Table.Column>
+              <Table.Column>Acciones</Table.Column>
+            </Table.Header>
+            <Table.Body
+              renderEmptyState={() => (
+                <EmptyState className='flex h-full w-full flex-col items-center justify-center gap-4 text-center'>
+                  {loading ? (
+                    <>
+                      <Spinner className='text-muted size-6' />
+                      <span className='text-muted text-sm'>Cargando datos</span>
+                    </>
+                  ) : (
+                    <span className='text-muted text-sm'>
+                      No hay niveles para mostrar
+                    </span>
+                  )}
+                </EmptyState>
+              )}
+            >
+              {levels &&
+                levels.map((level) => (
+                  <Table.Row key={level.levelid}>
+                    <Table.Cell>
+                      <div className='flex gap-2 align-middle'>
+                        <img
+                          src={getDifficultyPath({
+                            featured: level.featured,
+                            difficultyName: getDifficultyNameByNumber(
+                              level.difficulty
+                            )
+                          })}
+                          style={{
+                            height: '24px',
+                            filter: `grayscale(${level.difficultyscore == 0 ? 100 : 0}%)`
+                          }}
+                          alt=''
+                        />
 
-                    {level.levelname}
-                    {!level.difficultyscore && (
-                      <Chip size='sm' color='danger' variant='flat'>
-                        unscored
-                      </Chip>
-                    )}
-                  </div>
-                </TableCell>
-                <TableCell className='text-center'>
-                  {level.difficultyscore}
-                </TableCell>
-                <TableCell>
-                  <Button
-                    size='sm'
-                    color='default'
-                    onPress={() => handleRescore(level)}
-                  >
-                    Reposicionar
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
+                        {level.levelname}
+                        {!level.difficultyscore && (
+                          <Chip color='danger'>unscored</Chip>
+                        )}
+                      </div>
+                    </Table.Cell>
+                    <Table.Cell className='text-center'>
+                      {level.difficultyscore}
+                    </Table.Cell>
+                    <Table.Cell>
+                      <Button
+                        size='sm'
+                        variant='secondary'
+                        onPress={() => handleRescore(level)}
+                      >
+                        Reposicionar
+                      </Button>
+                    </Table.Cell>
+                  </Table.Row>
+                ))}
+            </Table.Body>
+          </Table.Content>
+        </Table.ScrollContainer>
       </Table>
     </>
   )

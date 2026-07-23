@@ -31,7 +31,7 @@ const RecordCard = ({
             })}
           />
           <div className='flex flex-col justify-center'>
-            <p className='text-md flex gap-2'>
+            <p className='text-foreground flex gap-2 text-lg'>
               {record.levelname}{' '}
               {record.video && (
                 <Link href={record.video}>

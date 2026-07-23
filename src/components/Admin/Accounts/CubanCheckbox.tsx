@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import { Checkbox } from '@nextui-org/react'
+import { Checkbox } from '@heroui/react'
 import { changeCubanAction } from '@/actions/admin/accountsActions'
 import { notify } from '@/libs/toastNotifications'
 import { type Account } from '@/models/Account'
@@ -48,8 +48,13 @@ const CubanCheckbox = ({
   }
 
   return (
-    <Checkbox isSelected={value} onValueChange={handleChange} size='md'>
-      Cubano
+    <Checkbox variant='secondary' isSelected={value} onChange={handleChange}>
+      <Checkbox.Content>
+        <Checkbox.Control className='size-5'>
+          <Checkbox.Indicator />
+        </Checkbox.Control>
+        Cubano
+      </Checkbox.Content>
     </Checkbox>
   )
 }

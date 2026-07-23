@@ -56,63 +56,61 @@ const TablaUsuarios = ({
 }) => {
   const { openUserGestorFor } = useContext(AdminContext)
   return (
-    <>
-      <Table>
-        <Table.ScrollContainer>
-          <Table.Content
-            className={loading ? 'min-h-75' : ''}
-            aria-label='Todos los usuarios'
-          >
-            <Table.Header>
-              <Table.Column>ID</Table.Column>
-              <Table.Column isRowHeader>Usuario</Table.Column>
-              <Table.Column>Teléfono</Table.Column>
-              <Table.Column>Rol</Table.Column>
-              <Table.Column>Estado</Table.Column>
-            </Table.Header>
+    <Table>
+      <Table.ScrollContainer>
+        <Table.Content
+          className={loading ? 'min-h-75' : ''}
+          aria-label='Todos los usuarios'
+        >
+          <Table.Header>
+            <Table.Column>ID</Table.Column>
+            <Table.Column isRowHeader>Usuario</Table.Column>
+            <Table.Column>Teléfono</Table.Column>
+            <Table.Column>Rol</Table.Column>
+            <Table.Column>Estado</Table.Column>
+          </Table.Header>
 
-            <Table.Body
-              renderEmptyState={() => (
-                <EmptyState className='flex h-full w-full flex-col items-center justify-center gap-4 text-center'>
-                  {loading ? (
-                    <>
-                      <Spinner className='text-muted size-6' />
-                      <span className='text-muted text-sm'>Cargando datos</span>
-                    </>
-                  ) : (
-                    <span className='text-muted text-sm'>
-                      No hay usuarios para mostrar
-                    </span>
-                  )}
-                </EmptyState>
-              )}
-            >
-              {usuarios &&
-                usuarios.map((user) => (
-                  <Table.Row
-                    key={user.id}
-                    className='cursor-pointer duration-75 hover:bg-zinc-700'
-                    onAction={() => openUserGestorFor(user, updateData)}
-                  >
-                    <Table.Cell>{user.id}</Table.Cell>
-                    <Table.Cell>{user.username}</Table.Cell>
-                    <Table.Cell>
-                      <Link
-                        href={getWhatsAppURL(user.phone)}
-                        className='text-white underline'
-                      >
-                        {user.phone}
-                      </Link>
-                    </Table.Cell>
-                    <Table.Cell>{renderRoleOrStatus(user.role)}</Table.Cell>
-                    <Table.Cell>{renderRoleOrStatus(user.status)}</Table.Cell>
-                  </Table.Row>
-                ))}
-            </Table.Body>
-          </Table.Content>
-        </Table.ScrollContainer>
-      </Table>
-    </>
+          <Table.Body
+            renderEmptyState={() => (
+              <EmptyState className='flex h-full w-full flex-col items-center justify-center gap-4 text-center'>
+                {loading ? (
+                  <>
+                    <Spinner className='text-muted size-6' />
+                    <span className='text-muted text-sm'>Cargando datos</span>
+                  </>
+                ) : (
+                  <span className='text-muted text-sm'>
+                    No hay usuarios para mostrar
+                  </span>
+                )}
+              </EmptyState>
+            )}
+          >
+            {usuarios &&
+              usuarios.map((user) => (
+                <Table.Row
+                  key={user.id}
+                  className='cursor-pointer duration-75 hover:bg-zinc-700'
+                  onAction={() => openUserGestorFor(user, updateData)}
+                >
+                  <Table.Cell>{user.id}</Table.Cell>
+                  <Table.Cell>{user.username}</Table.Cell>
+                  <Table.Cell>
+                    <Link
+                      href={getWhatsAppURL(user.phone)}
+                      className='text-white underline'
+                    >
+                      {user.phone}
+                    </Link>
+                  </Table.Cell>
+                  <Table.Cell>{renderRoleOrStatus(user.role)}</Table.Cell>
+                  <Table.Cell>{renderRoleOrStatus(user.status)}</Table.Cell>
+                </Table.Row>
+              ))}
+          </Table.Body>
+        </Table.Content>
+      </Table.ScrollContainer>
+    </Table>
   )
 }
 

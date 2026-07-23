@@ -2,7 +2,7 @@
 import { getAllAccountsAction } from '@/actions/admin/getAllAccountsAction'
 import TablaAccounts from '@/components/Admin/Accounts/TablaAccounts'
 import { useEffect, useState } from 'react'
-import { useDisclosure } from '@nextui-org/react'
+import { useOverlayState } from '@heroui/react'
 import AddAccount from '../../../components/Admin/Accounts/AddAccount'
 import TablaHeader from '@/components/Admin/TablaHeader'
 import { type Account } from '@/models/Account'
@@ -10,7 +10,7 @@ import { type Account } from '@/models/Account'
 const AdminAccountsPage = () => {
   const [accounts, setAccounts] = useState([] as Account[])
   const [loading, setLoading] = useState(true)
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, setOpen } = useOverlayState()
 
   const updateAccounts = () => {
     setLoading(true)
@@ -25,7 +25,7 @@ const AdminAccountsPage = () => {
   }
 
   const agregarCuenta = () => {
-    onOpen()
+    setOpen(true)
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,7 +51,7 @@ const AdminAccountsPage = () => {
           loading={loading}
         />
       </TablaHeader>
-      <AddAccount isOpen={isOpen} onClose={onClose} />
+      <AddAccount isOpen={isOpen} setOpen={setOpen} />
     </>
   )
 }

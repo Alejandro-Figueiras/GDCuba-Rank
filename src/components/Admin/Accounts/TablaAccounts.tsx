@@ -1,13 +1,4 @@
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableColumn,
-  TableRow,
-  TableCell,
-  Button,
-  Spinner
-} from '@nextui-org/react'
+import { Table, Button, Spinner, EmptyState } from '@heroui/react'
 import { useContext } from 'react'
 import { ModalContext } from '@/app/context/ModalContext'
 import { notify } from '@/libs/toastNotifications'
@@ -45,50 +36,68 @@ const TablaAccounts = ({
   }
 
   return (
-    <>
-      <Table
-        aria-label='Todos los records'
-        classNames={{ table: loading ? 'min-h-[300px]' : '' }}
-      >
-        <TableHeader>
-          <TableColumn>ID</TableColumn>
-          <TableColumn>Usuario</TableColumn>
-          <TableColumn>Cubano</TableColumn>
-          <TableColumn>Acciones</TableColumn>
-        </TableHeader>
-        <TableBody
-          isLoading={loading}
-          loadingContent={<Spinner label='Cargando datos...' />}
-          emptyContent={loading ? null : 'No hay cuentas para mostrar'}
+    <Table>
+      <Table.ScrollContainer>
+        <Table.Content
+          className={loading ? 'min-h-75' : ''}
+          aria-label='Todos los records'
         >
-          {gdaccounts &&
-            gdaccounts.map((acc) => (
-              <TableRow key={acc.id}>
-                <TableCell>{acc.id}</TableCell>
-                <TableCell>
-                  <UsernameCell player={acc} />
-                </TableCell>
-                <TableCell>
-                  <CubanCheckbox
-                    acc={acc}
-                    updateData={updateAccounts}
-                    openModal={openModal}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Button
-                    size='sm'
-                    color='danger'
-                    onPress={() => handleDelete(acc)}
-                  >
-                    Eliminar
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-        </TableBody>
-      </Table>
-    </>
+          <Table.Header>
+            <Table.Column>ID</Table.Column>
+            <Table.Column isRowHeader>Usuario</Table.Column>
+            <Table.Column>Cubano</Table.Column>
+            <Table.Column>Acciones</Table.Column>
+          </Table.Header>
+
+          <Table.Body
+            renderEmptyState={() => (
+              <EmptyState className='flex h-full w-full flex-col items-center justify-center gap-4 text-center'>
+                {loading ? (
+                  <>
+                    <Spinner className='text-muted size-6' />
+                    <span className='text-muted text-sm'>Cargando datos</span>
+                  </>
+                ) : (
+                  <span className='text-muted text-sm'>
+                    No hay cuentas para mostrar
+                  </span>
+                )}
+              </EmptyState>
+            )}
+          >
+            {gdaccounts &&
+              gdaccounts.map((acc) => (
+                <Table.Row key={acc.id}>
+                  <Table.Cell>{acc.id}</Table.Cell>
+                  <Table.Cell>
+                    <UsernameCell player={acc} />
+                  </Table.Cell>
+                  <Table.Cell>
+                    <CubanCheckbox
+                      acc={acc}
+                      updateData={updateAccounts}
+                      openModal={openModal}
+                    />
+                  </Table.Cell>
+                  <Table.Cell>
+                    <Button
+                      size='sm'
+                      variant='danger'
+                      onPress={() => handleDelete(acc)}
+                    >
+                      Eliminar
+                    </Button>
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+          </Table.Body>
+        </Table.Content>
+      </Table.ScrollContainer>
+    </Table>
+
+    //     </TableBody>
+    //   </Table>
+    // </>
   )
 }
 

@@ -3,36 +3,28 @@ import {
   getAccountAction,
   getAccountFromRobTopAction
 } from '@/actions/accounts/getAccountAction'
-import {
-  Input,
-  Button,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter
-} from '@nextui-org/react'
-import { type MutableRefObject, useRef, useState } from 'react'
+import { Button, Modal, TextField, InputGroup } from '@heroui/react'
+import { useState } from 'react'
 import AccountCard from './AccountCard'
 import { notify } from '@/libs/toastNotifications'
 import { addNewAccountAction } from '@/actions/admin/addNewAccountAction'
 import { changeCubanAction } from '@/actions/admin/accountsActions'
 import { type Account } from '@/models/Account'
+import SearchIcon from '@/components/Icons/SearchIcon'
 
 const AddAccount = ({
   isOpen,
-  onClose
+  setOpen
 }: {
   isOpen: boolean
-  onClose: () => void
+  setOpen: (isOpen: boolean) => void
 }) => {
-  const inputRef = useRef() as MutableRefObject<HTMLInputElement>
+  const [input, setInput] = useState('')
   const [account, setAccount] = useState(undefined as Account | undefined)
 
   const handleSearch = async () => {
-    const user = inputRef.current.value as string
     const newAccount = JSON.parse(
-      await getAccountFromRobTopAction({ username: user })
+      await getAccountFromRobTopAction({ username: input })
     ) as Account
     console.log(newAccount)
     setAccount(newAccount)
@@ -70,57 +62,70 @@ const AddAccount = ({
       notify('La cuenta fue agregada exitosamente', 'success')
     }
     setAccount(undefined)
-    inputRef.current.value = ''
+    setInput('')
   }
 
   return (
-    <Modal size='xl' isOpen={isOpen} onClose={onClose}>
-      <ModalContent>
-        {(onClose) => (
-          <>
-            <ModalHeader className='flex flex-col gap-1'>
-              Agregar cuenta
-            </ModalHeader>
-            <ModalBody>
-              <div className='w-100 m-4'>
-                <div className='flex flex-row justify-center gap-2 align-middle'>
-                  <Input
-                    size='sm'
-                    type='text'
-                    label='GD Account Username'
-                    className='w-96'
-                    ref={inputRef}
-                  />
-                  <Button
-                    size='lg'
-                    className='rounded-md'
-                    onClick={handleSearch}
-                  >
-                    Buscar
-                  </Button>
-                </div>
-                <div className='w-100 mt-6'>
-                  {account?.username ? (
-                    <AccountCard
-                      account={account}
-                      submitAccount={submitAccount}
+    <Modal
+      isOpen={isOpen}
+      onOpenChange={setOpen}
+      // scrollBehavior='inside'
+    >
+      <Modal.Backdrop>
+        <Modal.Container>
+          <Modal.Dialog className='max-w-180'>
+            <Modal.Header className='flex flex-col gap-1'>
+              <Modal.Heading>Agregar cuenta</Modal.Heading>
+              <Modal.CloseTrigger />
+            </Modal.Header>
+            <Modal.Body>
+              <div className='flex w-full flex-row flex-wrap gap-2'>
+                <TextField value={input} onChange={setInput} className='grow'>
+                  <InputGroup variant='secondary' fullWidth>
+                    <InputGroup.Prefix>
+                      <SearchIcon />
+                    </InputGroup.Prefix>
+                    <InputGroup.Input
+                      placeholder='GD Account Username'
+                      className='h-10'
                     />
-                  ) : (
-                    <p className='text-center'>
-                      {!account ? 'No existe esta cuenta' : 'Vacío.'}
-                    </p>
-                  )}
-                </div>
+                  </InputGroup>
+                </TextField>
+                <Button
+                  onPress={handleSearch}
+                  size='lg'
+                  variant='tertiary'
+                  className='w-full shrink-0 sm:w-auto sm:shrink'
+                >
+                  Buscar
+                </Button>
               </div>
-            </ModalBody>
-            <ModalFooter>
-              <Button color='default' variant='flat' onPress={onClose}>
+              <div className='mt-6 w-full'>
+                {account?.username ? (
+                  <AccountCard
+                    account={account}
+                    submitAccount={submitAccount}
+                  />
+                ) : (
+                  <p className='text-center'>
+                    {!account ? 'No existe esta cuenta' : 'Vacío.'}
+                  </p>
+                )}
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button
+                variant='tertiary'
+                onPress={() => {
+                  setOpen(false)
+                }}
+              >
                 Cerrar
               </Button>
-            </ModalFooter>
-          </>
-        )}
-      </ModalContent>
+            </Modal.Footer>
+          </Modal.Dialog>
+        </Modal.Container>
+      </Modal.Backdrop>
     </Modal>
   )
 }

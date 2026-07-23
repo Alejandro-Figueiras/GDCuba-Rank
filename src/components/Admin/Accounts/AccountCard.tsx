@@ -2,16 +2,8 @@ import AccountIconsRow from '@/components/Admin/UserModalPanel/AccountIconsRow'
 import AccountStatsRow from '@/components/Admin/UserModalPanel/AccountStatsRow'
 import { type Account } from '@/models/Account'
 import { useGDIcon } from '@/robtop/iconkit/useGDIcon'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Divider,
-  Checkbox,
-  Button
-} from '@nextui-org/react'
-import { useRef } from 'react'
+import { Card, Separator, Checkbox, Button } from '@heroui/react'
+import { useState } from 'react'
 
 const AccountCard = ({
   account,
@@ -20,7 +12,7 @@ const AccountCard = ({
   account: Account
   submitAccount: (props: { account: Account; cuba: boolean }) => void
 }) => {
-  const cubanCheck = useRef(true)
+  const [cubanCheck, setCubanCheck] = useState(true)
 
   const { icon } = useGDIcon({
     type: 'cube',
@@ -34,42 +26,42 @@ const AccountCard = ({
   const handleSubmit = () => {
     submitAccount({
       account,
-      cuba: cubanCheck.current
+      cuba: cubanCheck
     })
   }
 
   return (
-    <Card className='mx-auto max-w-[800px]'>
-      <CardHeader className='flex gap-3'>
+    <Card className='mx-auto max-w-200' variant='secondary'>
+      <Card.Header className='flex flex-row gap-3'>
         <img src={icon} width={40} height={40} alt='' />
-        <div className='flex flex-col'>
-          <p className='text-md'>{account.username}</p>
+        <div className='flex w-full flex-row items-center justify-between'>
+          <p className='text-foreground text-xl font-semibold'>
+            {account.username}
+          </p>
           <p className='text-small text-default-500'>
             AccountID: {account.accountid}
           </p>
         </div>
-      </CardHeader>
-      <Divider />
-      <CardBody>
+      </Card.Header>
+      <Separator />
+      <Card.Content>
         <div className='mx-8 my-2'>
           <AccountStatsRow user={account} />
         </div>
         <AccountIconsRow user={account} />
-      </CardBody>
-      <Divider />
-      <CardFooter className='flex justify-end gap-4'>
-        <Checkbox
-          defaultSelected
-          onValueChange={(isSelected) => {
-            cubanCheck.current = isSelected
-          }}
-        >
-          Cubano
+      </Card.Content>
+      <Separator />
+      <Card.Footer className='flex justify-end gap-4'>
+        <Checkbox isSelected={cubanCheck} onChange={setCubanCheck}>
+          <Checkbox.Content>
+            <Checkbox.Control className='size-5'>
+              <Checkbox.Indicator />
+            </Checkbox.Control>
+            Cubano
+          </Checkbox.Content>
         </Checkbox>
-        <Button color='primary' onPress={handleSubmit}>
-          Agregar al Rank
-        </Button>
-      </CardFooter>
+        <Button onPress={handleSubmit}>Agregar al Rank</Button>
+      </Card.Footer>
     </Card>
   )
 }
